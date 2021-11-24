@@ -1,9 +1,26 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<PageTitle>Project Bank</PageTitle>
 
-Welcome to your new app.
+<AuthorizeView>
+    <Authorized>
+        <h1>Hello, @context.User.Identity?.Name!</h1>
+        <p>Showing all posts</p>
+        <PostContainer Title="Biology Project 101" Author="Jesper Bengtson" Description="This is the projects description, describing the projects theme" Tags="@Tags">
+        </PostContainer>
+        <PostContainer Title="Biology Project 202" Author="Morten Sficer" Description="This is the projects description, describing the projects theme" Tags="@Tags">
+        </PostContainer>
+        <PostContainer Title="Biology Project 303" Author="Jannick Henderson" Description="This is the projects description, describing the projects theme" Tags="@Tags">
+        </PostContainer>
+    </Authorized>
+    <NotAuthorized>
+        <h1>Welcome to project bank, log in <a href="authentication/login">here</a></h1>
+    </NotAuthorized>
+</AuthorizeView>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+
+@code
+{
+    public List<String>? Tags = new List<string>() {"Biology", "Chemistry"};
+}

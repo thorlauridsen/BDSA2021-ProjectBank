@@ -1,0 +1,44 @@
+﻿<div class="post-container container border rounded p-3 my-4 bg-ligt bg-gradient">
+    <div class="d-flex justify-content-between">
+        <h2 class="bold">
+            @Title
+        </h2>
+        <h2>
+            @Author
+        </h2>
+    </div>
+    <div>
+        @Description
+    </div>
+    <div class="d-flex justify-content-start">
+        @for (int i = 0; i < @Tags.Count; i++)
+        {
+            <p>
+                @Tags[@i]
+                @if (@i != @Tags.Count - 1)
+                {
+                    <span>,</span>
+                }
+            </p>
+        }
+    </div>
+</div>
+
+@code {
+    // Title of the project
+    [Parameter]
+    public string Title { get; set; }
+
+    // Name of the project's author
+    [Parameter]
+    public string Author { get; set; }
+
+    // List of tags applied to a project. [optional]
+    [Parameter]
+    public List<String>? Tags { get; set; }
+
+    // The project's description
+    [Parameter]
+    public string Description { get; set; }
+
+}
