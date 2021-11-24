@@ -7,6 +7,6 @@ namespace ProjectBank.Server.Controllers
     [ApiController]
     public class CommentController : ControllerBase
     {
-
+        
     }
 }

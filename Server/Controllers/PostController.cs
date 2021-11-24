@@ -6,10 +6,8 @@ using ProjectBank.Server.Model;
 
 namespace MyApp.Server.Controllers
 {
-    [Authorize]
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
-    [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
     public class PostController : ControllerBase
     {
         private readonly ILogger<PostController> _logger;
