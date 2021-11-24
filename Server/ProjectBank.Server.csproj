@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>ProjectBank.Server-63E4C216-0AD6-4C0D-9793-380C0E4A7172</UserSecretsId>
+    <UserSecretsId>ProjectBank.Server-5F4DE3EB-0667-435C-9702-46698B0DB5B8</UserSecretsId>
     <WebProject_DirectoryAccessLevelKey>0</WebProject_DirectoryAccessLevelKey>
   </PropertyGroup>
 
