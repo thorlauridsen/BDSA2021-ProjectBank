@@ -1,0 +1,36 @@
+﻿@using Core
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@attribute [Authorize]
+@inject HttpClient Http
+
+<p>Loaded test posts:</p>
+@if (@Posts != null)
+{
+    @for (int i = 0; i < @Posts.Count; i++)
+    {
+        <p>
+            @Posts[@i].Title
+            @if (@i != @Posts.Count - 1)
+            {
+                <span>,</span>
+            }
+        </p>
+    }
+}
+
+@code {
+    private List<PostDto>? Posts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            Posts = await Http.GetFromJsonAsync<List<PostDto>>("Post");
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+    }
+}

@@ -1,17 +1,21 @@
 ﻿@page "/"
 
-
 <PageTitle>Project Bank</PageTitle>
 
 <AuthorizeView>
     <Authorized>
         <h1>Hello, @context.User.Identity?.Name!</h1>
+        <FetchPostData />
+        <AddPost />
         <p>Showing all posts</p>
-        <PostContainer Title="Biology Project 101" Author="Jesper Bengtson" Description="This is the projects description, describing the projects theme" Tags="@Tags">
+        <PostContainer Title="Biology Project 101" Author="Jesper Bengtson"
+            Description="This is the projects description, describing the projects theme" Tags="@Tags">
         </PostContainer>
-        <PostContainer Title="Biology Project 202" Author="Morten Sficer" Description="This is the projects description, describing the projects theme" Tags="@Tags">
+        <PostContainer Title="Biology Project 202" Author="Morten Sficer"
+            Description="This is the projects description, describing the projects theme" Tags="@Tags">
         </PostContainer>
-        <PostContainer Title="Biology Project 303" Author="Jannick Henderson" Description="This is the projects description, describing the projects theme" Tags="@Tags">
+        <PostContainer Title="Biology Project 303" Author="Jannick Henderson"
+            Description="This is the projects description, describing the projects theme" Tags="@Tags">
         </PostContainer>
     </Authorized>
     <NotAuthorized>
@@ -22,5 +26,5 @@
 
 @code
 {
-    public List<String>? Tags = new List<string>() {"Biology", "Chemistry"};
+    public List<String>? Tags = new List<string>() { "Biology", "Chemistry" };
 }
