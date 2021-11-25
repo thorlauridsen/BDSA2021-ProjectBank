@@ -1,0 +1,57 @@
+﻿div.messageContainer{
+    margin-top: -1.1rem;
+}
+div.messagesSideBar {   
+    margin-left: -2rem;
+    border-right: 1px solid rgba(0,0,0,.125);
+}
+
+div.chat-area{
+    width: 500px;
+    height: 99vh;
+    height: calc(100vh - 56px);
+    border-right: 1px solid rgba(0,0,0,.125);
+}
+
+div.chat-area-inner{
+    width: 100%;
+    height: 85%;
+}
+
+div.chat-area-input{
+    width: 100%;
+    height: 15%;
+}
+.chat-messages {
+    width: 100%;
+}
+
+.message {
+    text-align: right;
+    display: block;
+    padding: 0.5rem 1rem;
+}
+
+.message.other {
+    text-align: left;
+}
+
+.message p {
+    background: #2f0d4d;
+    display: inline;
+    color: white;
+    padding: 10px;
+    border-radius: 100px 100px 50px 100px;
+}
+
+.message.other p {
+    border-radius: 100px 100px 100px 50px;
+    background: grey;
+}
+
+.d-flex.flex-nowrap {
+    margin-top: -1.1rem;
+}
+.scrollarea {
+    overflow-y: auto;
+}
