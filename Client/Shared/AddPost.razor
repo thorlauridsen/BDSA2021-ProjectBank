@@ -1,0 +1,26 @@
+@using Core
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@attribute [Authorize]
+@inject HttpClient Http
+@inject NavigationManager uriHelper;
+
+<button @onclick="AddTestPost">
+    Add test post
+</button>
+
+@code {
+    private async Task AddTestPost()
+    {
+        try
+        {
+            var post = new PostCreateDto("Math Project", "5 + 2 = 7");
+            var response = await Http.PostAsJsonAsync("Post", post);
+            uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+    }
+}

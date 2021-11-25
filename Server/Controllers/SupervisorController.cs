@@ -8,7 +8,7 @@ namespace ProjectBank.Server.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
     public class SupervisorController : ControllerBase
     {
