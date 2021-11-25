@@ -17,12 +17,9 @@
     </div>
     <div class="form-floating my-3">
         <InputTextArea id="content" class="form-control" placeholder="Content of the project" style="height: 100px" @bind-Value="postFormModel.Content"></InputTextArea>
-        <label for="content">Content</label>    
+        <label for="content">Content</label>
     </div>
-    <div class="form-floating my-3">
-        <InputTextArea id="tags" class="form-control" placeholder="Content of the project" style="height: 100px"></InputTextArea>
-        <label for="tags">Tags</label>    
-    </div>
+    <InputTag Id="tags" Label="test" @bind-Value="postFormModel.Tags"></InputTag>
     <div class="d-grid gap-2 col-6 mx-auto">
         <button type="submit" class="btn btn-outline-primary btn-lg" disabled="@formInvalid">Submit</button>
     </div>
