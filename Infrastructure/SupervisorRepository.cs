@@ -13,7 +13,7 @@ namespace ProjectBank.Core
 
         public async Task<SupervisorDetailsDto> CreateAsync(SupervisorCreateDto supervisor)
         {
-            var entity = new Supervisor(supervisor.Name, supervisor.Salary);
+            var entity = new Supervisor { Name = supervisor.Name };
 
             _context.Supervisors.Add(entity);
 
@@ -21,19 +21,17 @@ namespace ProjectBank.Core
 
             return new SupervisorDetailsDto(
                                  entity.Id,
-                                 entity.Name,
-                                 entity.Salary
+                                 entity.Name
                              );
         }
 
         public async Task<Option<SupervisorDetailsDto>> ReadAsync(int supervisorId)
         {
-            var supervisors = from c in _context.Supervisors
-                              where c.Id == supervisorId
+            var supervisors = from s in _context.Supervisors
+                              where s.Id == supervisorId
                               select new SupervisorDetailsDto(
-                                  c.Id,
-                                  c.Name,
-                                  c.Salary
+                                    s.Id,
+                                    s.Name
                               );
 
             return await supervisors.FirstOrDefaultAsync();
@@ -41,13 +39,16 @@ namespace ProjectBank.Core
 
         public async Task<IReadOnlyCollection<SupervisorDto>> ReadAsync() =>
             (await _context.Supervisors
-                           .Select(c => new SupervisorDto(c.Id, c.Name, c.Salary))
+                           .Select(s => new SupervisorDto(
+                                s.Id,
+                                s.Name
+                            ))
                            .ToListAsync())
                            .AsReadOnly();
 
         public async Task<Status> UpdateAsync(int id, SupervisorUpdateDto supervisor)
         {
-            var entity = await _context.Supervisors.FirstOrDefaultAsync(c => c.Id == supervisor.Id);
+            var entity = await _context.Supervisors.FirstOrDefaultAsync(s => s.Id == supervisor.Id);
 
             if (entity == null)
             {
@@ -55,7 +56,6 @@ namespace ProjectBank.Core
             }
 
             entity.Name = supervisor.Name;
-            entity.Salary = supervisor.Salary;
 
             await _context.SaveChangesAsync();
 

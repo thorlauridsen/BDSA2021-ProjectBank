@@ -7,13 +7,10 @@ namespace ProjectBank.Infrastructure
         [StringLength(50)]
         public string Title { get; set; }
 
-        [StringLength(50)]
         public string Content { get; set; }
 
-        public Post(string title, string content)
-        {
-            Title = title;
-            Content = content;
-        }
+        public Supervisor? Author { get; set; }
+
+        public ICollection<Tag> Tags { get; set; } = null!;
     }
 }

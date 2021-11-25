@@ -5,6 +5,7 @@ namespace ProjectBank.Infrastructure
         public DbSet<Student> Students => Set<Student>();
         public DbSet<Supervisor> Supervisors => Set<Supervisor>();
         public DbSet<Post> Posts => Set<Post>();
+        public DbSet<Tag> Tags => Set<Tag>();
 
         public ProjectBankContext(DbContextOptions<ProjectBankContext> options) : base(options) { }
 
