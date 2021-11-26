@@ -9,16 +9,22 @@ namespace ProjectBank.Infrastructure
 
         public string Content { get; set; }
 
+        public DateTime DateAdded { get; set; }
+
         public Supervisor Author { get; set; }
 
         public ICollection<Tag> Tags { get; set; } = null!;
 
-        public Post(string title, string content, Supervisor author, ICollection<Tag> tags)
+        public ICollection<Comment> Comments { get; set; } = null!;
+
+        public Post(string title, string content, DateTime dateAdded, Supervisor author, ICollection<Tag> tags, ICollection<Comment> comments)
         {
             Title = title;
             Content = content;
             Author = author;
             Tags = tags;
+            Comments = comments;
+            DateAdded = dateAdded;
         }
     }
 }

@@ -16,8 +16,10 @@ namespace ProjectBank.Core
             var entity = new Post(
                 post.Title,
                 post.Content,
+                DateTime.Now,
                 await GetSupervisorAsync(post.SupervisorId),
-                await GetTagsAsync(post.Tags).ToListAsync()
+                await GetTagsAsync(post.Tags).ToListAsync(),
+                await GetCommentsAsync(post.Comments).ToListAsync()
             );
 
             _context.Posts.Add(entity);
@@ -28,21 +30,25 @@ namespace ProjectBank.Core
                 entity.Id,
                 entity.Title,
                 entity.Content,
+                entity.DateAdded,
                 entity.Author.Id,
-                entity.Tags.Select(c => c.Name).ToHashSet()
+                entity.Tags.Select(t => t.Name).ToHashSet(),
+                entity.Comments.Select(c => c.Id).ToHashSet()
             );
         }
 
         public async Task<Option<PostDetailsDto>> ReadAsync(int postId)
         {
-            var posts = from c in _context.Posts
-                        where c.Id == postId
+            var posts = from p in _context.Posts
+                        where p.Id == postId
                         select new PostDetailsDto(
-                            c.Id,
-                            c.Title,
-                            c.Content,
-                            c.Author.Id,
-                            c.Tags.Select(c => c.Name).ToHashSet()
+                            p.Id,
+                            p.Title,
+                            p.Content,
+                            p.DateAdded,
+                            p.Author.Id,
+                            p.Tags.Select(t => t.Name).ToHashSet(),
+                            p.Comments.Select(c => c.Id).ToHashSet()
                         );
 
             return await posts.FirstOrDefaultAsync();
@@ -50,12 +56,14 @@ namespace ProjectBank.Core
 
         public async Task<IReadOnlyCollection<PostDto>> ReadAsync() =>
             (await _context.Posts
-                           .Select(c => new PostDto(
-                                c.Id,
-                                c.Title,
-                                c.Content,
-                                c.Author.Id,
-                                c.Tags.Select(c => c.Name).ToHashSet()
+                           .Select(p => new PostDto(
+                                p.Id,
+                                p.Title,
+                                p.Content,
+                                p.DateAdded,
+                                p.Author.Id,
+                                p.Tags.Select(t => t.Name).ToHashSet(),
+                                p.Comments.Select(c => c.Id).ToHashSet()
                             ))
                            .ToListAsync())
                            .AsReadOnly();
@@ -65,8 +73,10 @@ namespace ProjectBank.Core
                                 p.Id,
                                 p.Title,
                                 p.Content,
+                                p.DateAdded,
                                 p.Author.Id,
-                                p.Tags.Select(t => t.Name).ToHashSet()
+                                p.Tags.Select(t => t.Name).ToHashSet(),
+                                p.Comments.Select(c => c.Id).ToHashSet()
                             ))
                            .Where(p => p.SupervisorId == supervisorId)
                            .ToListAsync())
@@ -78,8 +88,10 @@ namespace ProjectBank.Core
                                 p.Id,
                                 p.Title,
                                 p.Content,
+                                p.DateAdded,
                                 p.Author.Id,
-                                p.Tags.Select(t => t.Name).ToHashSet()
+                                p.Tags.Select(t => t.Name).ToHashSet(),
+                                p.Comments.Select(c => c.Id).ToHashSet()
                             ))
                            .Where(p => p.Tags.Contains(tag))
                            .ToListAsync())
@@ -128,6 +140,16 @@ namespace ProjectBank.Core
             foreach (var tag in tags)
             {
                 yield return existing.TryGetValue(tag, out var t) ? t : new Tag(tag);
+            }
+        }
+
+        private async IAsyncEnumerable<Comment> GetCommentsAsync(IEnumerable<int> comments)
+        {
+            var existing = await _context.Comments.Where(c => comments.Contains(c.Id)).ToDictionaryAsync(c => c.Id);
+
+            foreach (var comment in comments)
+            {
+                yield return existing.TryGetValue(comment, out var c) ? c : null;
             }
         }
     }

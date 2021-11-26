@@ -14,7 +14,13 @@
     {
         try
         {
-            var post = new PostCreateDto("Math Project", "5 + 2 = 7", 1, new HashSet<string>() { "Math" });
+            var post = new PostCreateDto(
+            "Math Project",
+            "5 + 2 = 7",
+            1,
+            new HashSet<string>() { "Math" },
+            new HashSet<int>() { }
+            );
             var response = await Http.PostAsJsonAsync("Post", post);
             uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
         }
