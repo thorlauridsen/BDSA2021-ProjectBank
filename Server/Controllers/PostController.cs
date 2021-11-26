@@ -6,6 +6,7 @@ using ProjectBank.Server.Model;
 
 namespace ProjectBank.Server.Controllers
 {
+    //Test
     [Route("[controller]")]
     [ApiController]
     public class PostController : ControllerBase
