@@ -1,0 +1,22 @@
+@page "/Notifications"
+<div class="d-flex flex-nowrap col-12">
+    <div class="d-flex flex-column col-12 align-items-stretch flex-shrink-0 bg-white">
+        <div
+            class="d-flex align-items-center justify-content-between flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+            <span class="fs-5 fw-semibold">Notifications</span>
+        </div>
+        <div class="list-group list-group-flush border-bottom scrollarea message-list">
+            @for (var i = 0; i < 10; i++)
+            {
+                <NotificationItem Read="true" Title="New comment" Description="Peter has commented on your post" Link="/" LastMessageDate="DateTime.Now">
+                </NotificationItem>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+
+    
+
+}
