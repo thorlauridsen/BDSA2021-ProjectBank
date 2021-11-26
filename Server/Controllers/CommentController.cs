@@ -10,14 +10,14 @@ namespace ProjectBank.Server.Controllers
     [ApiController]
     [Route("[controller]")]
     [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
-    public class StudentController : ControllerBase
+    public class CommentController : ControllerBase
     {
-        private readonly ILogger<StudentController> _logger;
-        private readonly IStudentRepository _repository;
+        private readonly ILogger<CommentController> _logger;
+        private readonly ICommentRepository _repository;
 
-        public StudentController(
-            ILogger<StudentController> logger,
-            IStudentRepository repository)
+        public CommentController(
+            ILogger<CommentController> logger,
+            ICommentRepository repository)
         {
             _logger = logger;
             _repository = repository;
@@ -25,22 +25,22 @@ namespace ProjectBank.Server.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IReadOnlyCollection<StudentDto>> Get()
+        public async Task<IReadOnlyCollection<CommentDto>> Get()
             => await _repository.ReadAsync();
 
         [AllowAnonymous]
         [ProducesResponseType(404)]
-        [ProducesResponseType(typeof(StudentDetailsDto), 200)]
+        [ProducesResponseType(typeof(CommentDto), 200)]
         [HttpGet("{id}")]
-        public async Task<ActionResult<StudentDetailsDto>> Get(int id)
+        public async Task<ActionResult<CommentDetailsDto>> Get(int id)
             => (await _repository.ReadAsync(id)).ToActionResult();
 
         [Authorize]
         [HttpPost]
-        [ProducesResponseType(typeof(StudentDetailsDto), 201)]
-        public async Task<IActionResult> Post(StudentCreateDto student)
+        [ProducesResponseType(typeof(CommentDetailsDto), 201)]
+        public async Task<IActionResult> Post(CommentCreateDto comment)
         {
-            var created = await _repository.CreateAsync(student);
+            var created = await _repository.CreateAsync(comment);
 
             return CreatedAtRoute(nameof(Get), new { created.Id }, created);
         }
@@ -49,8 +49,8 @@ namespace ProjectBank.Server.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> Put(int id, [FromBody] StudentUpdateDto student)
-               => (await _repository.UpdateAsync(id, student)).ToActionResult();
+        public async Task<IActionResult> Put(int id, [FromBody] CommentUpdateDto comment)
+               => (await _repository.UpdateAsync(id, comment)).ToActionResult();
 
         [Authorize]
         [HttpDelete("{id}")]

@@ -45,6 +45,17 @@ namespace ProjectBank.Server.Model
             {
                 context.Posts.Add(post);
             }
+            var comment = new Comment(
+                "Nice post",
+                1,
+                DateTime.Now,
+                1
+            );
+            if (!context.Comments.Any())
+            {
+                context.Comments.Add(comment);
+            }
+
             context.SaveChanges();
         }
     }

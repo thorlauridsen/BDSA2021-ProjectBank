@@ -15,7 +15,9 @@ namespace ProjectBank.Server.Controllers
         private readonly ILogger<SupervisorController> _logger;
         private readonly ISupervisorRepository _repository;
 
-        public SupervisorController(ILogger<SupervisorController> logger, ISupervisorRepository repository)
+        public SupervisorController(
+            ILogger<SupervisorController> logger,
+            ISupervisorRepository repository)
         {
             _logger = logger;
             _repository = repository;

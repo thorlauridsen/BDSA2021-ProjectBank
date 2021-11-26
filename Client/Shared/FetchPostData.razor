@@ -11,9 +11,22 @@
     {
         <p>
             @Posts[@i].Title
+            @Posts[@i].Content
+            @Posts[@i].SupervisorId
+            @Posts[@i].DateAdded
+
             @if (@i != @Posts.Count - 1)
             {
                 <span>,</span>
+            }
+            @if (@PostComments.ContainsKey(@i))
+            {
+                @for (int j = 0; j < @PostComments.GetValueOrDefault(@i).Count; j++)
+                {
+                <p>
+                        @PostComments.GetValueOrDefault(@i)[@j].Content
+                </p>
+                }
             }
         </p>
     }
@@ -21,16 +34,27 @@
 
 @code {
     private List<PostDto>? Posts;
+    private Dictionary<int, List<CommentDto>?> PostComments = new Dictionary<int, List<CommentDto>?>();
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
             Posts = await Http.GetFromJsonAsync<List<PostDto>>("Post");
+
+            foreach (var post in Posts)
+            {
+                PostComments.Add(post.Id, await Http.GetFromJsonAsync<List<CommentDto>>("Post/" + post.Id + "/comments"));
+            }
         }
         catch (AccessTokenNotAvailableException exception)
         {
             exception.Redirect();
         }
+    }
+
+    public async Task<List<CommentDto>> GetComments(int postId)
+    {
+        return await Http.GetFromJsonAsync<List<CommentDto>>("Post/" + postId + "/comments");
     }
 }
