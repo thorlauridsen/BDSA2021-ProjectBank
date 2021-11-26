@@ -24,6 +24,7 @@ div.chat-area-input{
 }
 .chat-messages {
     width: 100%;
+    height: 100%;
 }
 
 .message {
@@ -54,4 +55,8 @@ div.chat-area-input{
 }
 .scrollarea {
     overflow-y: auto;
+}
+
+.message-list{
+    height: calc(100vh - 119px);
 }

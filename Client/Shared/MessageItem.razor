@@ -4,7 +4,7 @@
         <strong class="mb-1">@Recipient</strong>
         <small>@_lastMessageDataString</small>
     </div>
-    <div class="col-10 mb-1 small">@_relatedPostsString.</div>
+    <div class="col-10 mb-1 small">@_relatedPostString.</div>
 </a>
 
 @code {
@@ -18,9 +18,9 @@
     private string _lastMessageDataString { get; set; }
 
     [Parameter]
-    public IEnumerable<PostDetailsDto> RelatedPosts { get; set; }
+    public PostDetailsDto RelatedPost { get; set; }
 
-    private string _relatedPostsString { get; set; }
+    private string _relatedPostString { get; set; }
     
     [Parameter]
     public bool Read { get; set; }
@@ -61,7 +61,7 @@
             _lastMessageDataString = "Now";
         }
         //Convert related posts to string
-        _relatedPostsString = string.Join(", ", RelatedPosts.Select(p => p.Title));
+        _relatedPostString = RelatedPost.Title;
 
         _extraCSS = Read ? "" : "unread";
         

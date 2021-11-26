@@ -5,21 +5,21 @@
         <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
             <span class="fs-5 fw-semibold">Messages</span>
         </a>
-        <div class="list-group list-group-flush border-bottom scrollarea">
-            <MessageItem Read="false" Recipient="Peter Nielsen" RelatedPosts="@testPosts" LastMessageDate="DateTime.Now"></MessageItem>
-            <MessageItem Read="false" Recipient="Peter Nielsen" RelatedPosts="@testPosts" LastMessageDate="new DateTime(2000, 5, 14)"></MessageItem>
-            <MessageItem Read="true" Recipient="Peter Nielsen" RelatedPosts="@testPosts" LastMessageDate="new DateTime(2021, 11, 23)"></MessageItem>
-            <MessageItem Read="false" Recipient="Peter Nielsen" RelatedPosts="@testPosts" LastMessageDate="DateTime.Now.Subtract(TimeSpan.FromMinutes(25))"></MessageItem>
-            <MessageItem Read="true" Recipient="Peter Nielsen" RelatedPosts="@testPosts" LastMessageDate="new DateTime(2021, 6, 24)"></MessageItem>
+        <div class="list-group list-group-flush border-bottom scrollarea message-list">
+            <MessageItem Read="false" Recipient="Peter Nielsen" RelatedPost="@testPost" LastMessageDate="DateTime.Now"></MessageItem>
+            <MessageItem Read="false" Recipient="Peter Nielsen" RelatedPost="@testPost" LastMessageDate="new DateTime(2000, 5, 14)"></MessageItem>
+            <MessageItem Read="true" Recipient="Peter Nielsen" RelatedPost="@testPost" LastMessageDate="new DateTime(2021, 11, 23)"></MessageItem>
+            <MessageItem Read="false" Recipient="Peter Nielsen" RelatedPost="@testPost" LastMessageDate="DateTime.Now.Subtract(TimeSpan.FromMinutes(25))"></MessageItem>
+            <MessageItem Read="true" Recipient="Peter Nielsen" RelatedPost="@testPost" LastMessageDate="new DateTime(2021, 6, 24)"></MessageItem>
             @for (var i = 0; i < 10; i++)
             {
-                <MessageItem Read="true" Recipient="Peter Nielsen" RelatedPosts="@testPosts" LastMessageDate="DateTime.Now"></MessageItem>
+                <MessageItem Read="true" Recipient="Peter Nielsen" RelatedPost="@testPost" LastMessageDate="DateTime.Now"></MessageItem>
             }
         </div>
     </div>
     <div class="d-flex flex-column chat-area">
         <div class="chat-area-inner d-flex flex-row align-items-end">
-            <div class="chat-messages">
+            <div class="chat-messages scrollarea">
                 <div class="message other">
                     <p>Hello</p>
                 </div>
@@ -28,13 +28,13 @@
                 </div>
             </div>
         </div>
-        <div class="chat-area-input row p-2">
+        <div class="align-content-center chat-area-input d-flex p-2 row">
             <div class="col-9">
                 <label for="message-input" class="form-label">Message</label>
                 <input type="text" id="message-input" class="form-control"/>
             </div>
-            <div class="align-items-center col-3 d-flex justify-content-center">
-                <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="col-3 d-flex">
+                <button type="submit" class="btn btn-primary col-12">Submit</button>
             </div>
         </div>
     </div>
@@ -42,10 +42,6 @@
 
 @code {
 
-    private IEnumerable<PostDetailsDto> testPosts = new[]
-    {
-        new PostDetailsDto(5, "Example title", "content"),
-        new PostDetailsDto(2, "Another example", "content")
-    };
+    private PostDetailsDto testPost = new PostDetailsDto(5, "Biology project 101", "content");
 
 }
