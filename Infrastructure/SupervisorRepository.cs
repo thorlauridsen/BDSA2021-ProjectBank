@@ -1,6 +1,7 @@
+using ProjectBank.Core;
 using ProjectBank.Infrastructure;
 
-namespace ProjectBank.Core
+namespace ProjectBank.Infrastructure
 {
     public class SupervisorRepository : ISupervisorRepository
     {
