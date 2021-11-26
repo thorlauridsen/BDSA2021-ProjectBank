@@ -1,0 +1,31 @@
+﻿div.messagesSideBar {  
+    border-right: 1px solid rgba(0,0,0,.125);
+}
+
+div.chat-area{
+    height: 99vh;
+    height: calc(100vh - 56px);
+    border-right: 1px solid rgba(0,0,0,.125);
+}
+
+div.chat-area-inner{
+    width: 100%;
+    height: 85%;
+}
+
+div.chat-area-input{
+    width: 100%;
+    height: 15%;
+}
+.chat-messages {
+    width: 100%;
+    height: 100%;
+}
+
+.scrollarea {
+    overflow-y: auto;
+}
+
+.message-list{
+    height: calc(100vh - 119px);
+}

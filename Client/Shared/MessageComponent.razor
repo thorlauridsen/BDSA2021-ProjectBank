@@ -1,0 +1,23 @@
+@using System.ComponentModel.DataAnnotations
+<div class="message @_cssClasses">
+    <p>@Text</p>
+</div>
+
+@code {
+
+    [Required]
+    [Parameter]
+    public string Text { get; set; }
+
+    [Parameter]
+    public bool Received { get; set; }
+
+    private string _cssClasses { get; set; }
+
+    protected override void OnInitialized()
+    {
+    //Convert related posts to string
+        _cssClasses = Received ? "received" : "";
+    }
+
+}
