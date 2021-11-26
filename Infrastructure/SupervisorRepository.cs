@@ -1,5 +1,4 @@
 using ProjectBank.Core;
-using ProjectBank.Infrastructure;
 
 namespace ProjectBank.Infrastructure
 {

@@ -1,6 +1,7 @@
-using ProjectBank.Infrastructure;
 
-namespace ProjectBank.Core
+using ProjectBank.Core;
+
+namespace ProjectBank.Infrastructure
 {
     public class StudentRepository : IStudentRepository
     {

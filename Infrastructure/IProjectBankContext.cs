@@ -2,6 +2,7 @@ namespace ProjectBank.Infrastructure
 {
     public interface IProjectBankContext : IDisposable
     {
+        DbSet<User> Users { get; }
         DbSet<Supervisor> Supervisors { get; }
         DbSet<Student> Students { get; }
         DbSet<Post> Posts { get; }

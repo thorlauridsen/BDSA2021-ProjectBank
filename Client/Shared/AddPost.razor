@@ -19,11 +19,19 @@
             "5 + 2 = 7",
             DateTime.Now,
             1,
-            new HashSet<string>() { "Math" },
-            new HashSet<int>() { }
+            new HashSet<string>() { "Math" }
             );
             var response = await Http.PostAsJsonAsync("Post", post);
             uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
+
+            @* var comment = new CommentCreateDto(
+                "Nice post",
+                DateTime.Now,
+                1,
+                1
+                );
+                var response = await Http.PostAsJsonAsync("Comment", comment);
+                uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true); *@
         }
         catch (AccessTokenNotAvailableException exception)
         {

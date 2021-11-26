@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using ProjectBank.Infrastructure;
 
 namespace ProjectBank.Core
@@ -19,8 +18,7 @@ namespace ProjectBank.Core
                 post.Content,
                 DateTime.Now,
                 await GetSupervisorAsync(post.SupervisorId),
-                await GetTagsAsync(post.Tags).ToListAsync(),
-                await GetCommentsAsync(post.Comments).ToListAsync()
+                await GetTagsAsync(post.Tags).ToListAsync()
             );
 
             _context.Posts.Add(entity);
@@ -33,8 +31,7 @@ namespace ProjectBank.Core
                 entity.Content,
                 entity.DateAdded,
                 entity.Author.Id,
-                entity.Tags.Select(t => t.Name).ToHashSet(),
-                entity.Comments.Select(c => c.Id).ToHashSet()
+                entity.Tags.Select(t => t.Name).ToHashSet()
             );
         }
 
@@ -48,8 +45,7 @@ namespace ProjectBank.Core
                             p.Content,
                             p.DateAdded,
                             p.Author.Id,
-                            p.Tags.Select(t => t.Name).ToHashSet(),
-                            p.Comments.Select(c => c.Id).ToHashSet()
+                            p.Tags.Select(t => t.Name).ToHashSet()
                         );
 
             return await posts.FirstOrDefaultAsync();
@@ -63,8 +59,7 @@ namespace ProjectBank.Core
                                 p.Content,
                                 p.DateAdded,
                                 p.Author.Id,
-                                p.Tags.Select(t => t.Name).ToHashSet(),
-                                p.Comments.Select(c => c.Id).ToHashSet()
+                                p.Tags.Select(t => t.Name).ToHashSet()
                             ))
                            .ToListAsync())
                            .AsReadOnly();
@@ -76,8 +71,7 @@ namespace ProjectBank.Core
                                 p.Content,
                                 p.DateAdded,
                                 p.Author.Id,
-                                p.Tags.Select(t => t.Name).ToHashSet(),
-                                p.Comments.Select(c => c.Id).ToHashSet()
+                                p.Tags.Select(t => t.Name).ToHashSet()
                             ))
                            .Where(p => p.SupervisorId == supervisorId)
                            .ToListAsync())
@@ -91,8 +85,7 @@ namespace ProjectBank.Core
                                 p.Content,
                                 p.DateAdded,
                                 p.Author.Id,
-                                p.Tags.Select(t => t.Name).ToHashSet(),
-                                p.Comments.Select(c => c.Id).ToHashSet()
+                                p.Tags.Select(t => t.Name).ToHashSet()
                             ))
                            .Where(p => p.Tags.Contains(tag))
                            .ToListAsync())
@@ -129,7 +122,6 @@ namespace ProjectBank.Core
             entity.Content = post.Content;
             entity.Author = await GetSupervisorAsync(post.SupervisorId);
             entity.Tags = await GetTagsAsync(post.Tags).ToListAsync();
-            entity.Comments = await GetCommentsAsync(post.Comments).ToListAsync();
 
             await _context.SaveChangesAsync();
 
@@ -161,19 +153,6 @@ namespace ProjectBank.Core
             foreach (var tag in tags)
             {
                 yield return existing.TryGetValue(tag, out var t) ? t : new Tag(tag);
-            }
-        }
-
-        private async IAsyncEnumerable<Comment> GetCommentsAsync(IEnumerable<int> comments)
-        {
-            var existing = await _context.Comments.Where(c => comments.Contains(c.Id)).ToDictionaryAsync(c => c.Id);
-
-            foreach (var comment in comments)
-            {
-                if (existing.ContainsKey(comment))
-                {
-                    yield return existing.TryGetValue(comment, out var c) ? c : null;
-                }
             }
         }
     }

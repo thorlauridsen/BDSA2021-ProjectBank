@@ -8,8 +8,7 @@ namespace ProjectBank.Core
         string Content,
         DateTime DateAdded,
         int SupervisorId,
-        HashSet<string> Tags,
-        HashSet<int> Comments
+        HashSet<string> Tags
     );
 
     public record PostDetailsDto(
@@ -18,9 +17,8 @@ namespace ProjectBank.Core
         string Content,
         DateTime DateAdded,
         int SupervisorId,
-        HashSet<string> Tags,
-        HashSet<int> Comments
-    ) : PostDto(Id, Title, Content, DateAdded, SupervisorId, Tags, Comments);
+        HashSet<string> Tags
+    ) : PostDto(Id, Title, Content, DateAdded, SupervisorId, Tags);
 
     public record PostCreateDto
     {
@@ -29,15 +27,13 @@ namespace ProjectBank.Core
             string content,
             DateTime dateAdded,
             int supervisorId,
-            HashSet<string> tags,
-            HashSet<int> comments)
+            HashSet<string> tags)
         {
             Title = title;
             Content = content;
             DateAdded = dateAdded;
             SupervisorId = supervisorId;
             Tags = tags;
-            Comments = comments;
         }
 
         [StringLength(50)]
@@ -46,7 +42,6 @@ namespace ProjectBank.Core
         public DateTime DateAdded { get; init; }
         public int SupervisorId { get; init; }
         public HashSet<string> Tags { get; init; }
-        public HashSet<int> Comments { get; init; }
     }
 
     public record PostUpdateDto : PostCreateDto
@@ -56,9 +51,8 @@ namespace ProjectBank.Core
             string content,
             DateTime dateAdded,
             int supervisorId,
-            HashSet<string> tags,
-            HashSet<int> comments
-        ) : base(title, content, dateAdded, supervisorId, tags, comments) { }
+            HashSet<string> tags
+        ) : base(title, content, dateAdded, supervisorId, tags) { }
 
         public int Id { get; init; }
     }

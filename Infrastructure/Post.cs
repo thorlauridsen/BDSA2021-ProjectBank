@@ -15,15 +15,12 @@ namespace ProjectBank.Infrastructure
 
         public ICollection<Tag> Tags { get; set; } = null!;
 
-        public ICollection<Comment> Comments { get; set; } = null!;
-
-        public Post(string title, string content, DateTime dateAdded, Supervisor author, ICollection<Tag> tags, ICollection<Comment> comments)
+        public Post(string title, string content, DateTime dateAdded, Supervisor author, ICollection<Tag> tags)
         {
             Title = title;
             Content = content;
             Author = author;
             Tags = tags;
-            Comments = comments;
             DateAdded = dateAdded;
         }
     }

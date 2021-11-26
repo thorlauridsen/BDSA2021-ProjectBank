@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ProjectBank.Core
 {
@@ -21,21 +21,16 @@ namespace ProjectBank.Core
     public record CommentCreateDto
     {
         public CommentCreateDto(
-            string title,
             string content,
             DateTime dateAdded,
             int userId,
             int postId)
         {
-            Title = title;
             Content = content;
             DateAdded = dateAdded;
             UserId = userId;
             PostId = postId;
         }
-
-        [StringLength(50)]
-        public string Title { get; init; }
         public string Content { get; init; }
         public DateTime DateAdded { get; init; }
         public int UserId { get; init; }
@@ -45,12 +40,11 @@ namespace ProjectBank.Core
     public record CommentUpdateDto : CommentCreateDto
     {
         public CommentUpdateDto(
-            string title,
             string content,
             DateTime dateAdded,
             int userId,
             int postId
-        ) : base(title, content, dateAdded, userId, postId) { }
+        ) : base(content, dateAdded, userId, postId) { }
 
         public int Id { get; init; }
     }

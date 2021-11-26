@@ -28,8 +28,7 @@ namespace ProjectBank.Server.Model
                 "My Cool Biology Project",
                 DateTime.Now,
                 supervisor,
-                new HashSet<Tag>() { new Tag("Biology") },
-                new HashSet<Comment>() { }
+                new HashSet<Tag>() { new Tag("Biology") }
             );
 
             if (!context.Students.Any())
