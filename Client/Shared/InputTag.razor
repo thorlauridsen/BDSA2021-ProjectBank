@@ -1,0 +1,61 @@
+﻿@using System.Linq.Expressions
+@inherits InputBase<string>
+
+<div class="form-control-wrapper">
+    <p>Post tags:</p>
+    <input class="form-control @CssClass visually-hidden" id="@Id" @bind-value:event="oninput" @bind-value="TagsString"/>
+    <label class="tab-label form-control-label flex p-3 col-12 border rounded" for="@Id">
+        @foreach (var tag in Tags)
+        {
+            <Tag Name="@tag"></Tag>
+        }
+
+    </label>
+    <p class="italic">Split tags using a comma</p>
+</div>
+
+@code
+{
+    [Parameter]
+    public string Id { get; set; }
+
+    private string _TagsString;
+    public string TagsString
+    {
+        get => _TagsString;
+        set
+        {
+            _TagsString = value;
+            UpdateTags();
+            CurrentValue = value;
+        }
+    }
+    
+    public IEnumerable<string> Tags = new List<string>();
+
+    protected override bool TryParseValueFromString(string value, out string result,
+        out string validationErrorMessage)
+    {
+        if (value.Trim().Equals(""))
+        {
+            result = default;
+            validationErrorMessage = "You must give at least one tag";
+        }
+        else
+        {
+            result = value.Trim();
+            validationErrorMessage = null;
+        }
+        return true;
+    }
+
+    private void UpdateTags()
+    {
+        if (_TagsString == null || _TagsString.Trim().Equals(""))
+        {
+            Tags = new List<string>();
+            return;
+        }
+        Tags = _TagsString.Split(",").Select(t => t.Trim());
+    }
+}
