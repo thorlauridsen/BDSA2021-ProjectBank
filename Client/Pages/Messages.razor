@@ -1,7 +1,7 @@
 ﻿@page "/Messages"
 @using ProjectBank.Core
-<div class="d-flex flex-nowrap messageContainer">
-    <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white messagesSideBar" style="width: 380px;">
+<div class="d-flex flex-nowrap messageContainer col-12">
+    <div class="d-flex flex-column col-4 align-items-stretch flex-shrink-0 bg-white messagesSideBar">
         <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
             <span class="fs-5 fw-semibold">Messages</span>
         </a>
@@ -17,7 +17,7 @@
             }
         </div>
     </div>
-    <div class="d-flex flex-column chat-area">
+    <div class="d-flex flex-column chat-area col-5">
         <div class="chat-area-inner d-flex flex-row align-items-end">
             <div class="chat-messages scrollarea">
                 <div class="message other">
@@ -30,7 +30,6 @@
         </div>
         <div class="align-content-center chat-area-input d-flex p-2 row">
             <div class="col-9">
-                <label for="message-input" class="form-label">Message</label>
                 <input type="text" id="message-input" class="form-control"/>
             </div>
             <div class="col-3 d-flex">
@@ -38,10 +37,26 @@
             </div>
         </div>
     </div>
+    <div class="d-flex flex-column col-3 align-items-stretch flex-shrink-0 bg-white messagesSideBar">
+            <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+                <span class="fs-5 fw-semibold">Projects</span>
+            </a>
+            <div class="list-group list-group-flush border-bottom scrollarea message-list">
+                <MessageItem Read="false" Recipient="Peter Nielsen" RelatedPost="@testPost" LastMessageDate="DateTime.Now"></MessageItem>
+                <MessageItem Read="false" Recipient="Peter Nielsen" RelatedPost="@testPost" LastMessageDate="new DateTime(2000, 5, 14)"></MessageItem>
+                <MessageItem Read="true" Recipient="Peter Nielsen" RelatedPost="@testPost" LastMessageDate="new DateTime(2021, 11, 23)"></MessageItem>
+                <MessageItem Read="false" Recipient="Peter Nielsen" RelatedPost="@testPost" LastMessageDate="DateTime.Now.Subtract(TimeSpan.FromMinutes(25))"></MessageItem>
+                <MessageItem Read="true" Recipient="Peter Nielsen" RelatedPost="@testPost" LastMessageDate="new DateTime(2021, 6, 24)"></MessageItem>
+                @for (var i = 0; i < 10; i++)
+                {
+                    <MessageItem Read="true" Recipient="Peter Nielsen" RelatedPost="@testPost" LastMessageDate="DateTime.Now"></MessageItem>
+                }
+            </div>
+        </div>
 </div>
 
 @code {
 
-    private PostDetailsDto testPost = new PostDetailsDto(5, "Biology project 101", "content");
+    private PostDetailsDto testPost = new(5, "Biology project 101", "content");
 
 }

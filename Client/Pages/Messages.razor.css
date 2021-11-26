@@ -1,8 +1,4 @@
-﻿div.messageContainer{
-    margin-top: -1.1rem;
-}
-div.messagesSideBar {   
-    margin-left: -2rem;
+﻿div.messagesSideBar {  
     border-right: 1px solid rgba(0,0,0,.125);
 }
 
@@ -50,9 +46,6 @@ div.chat-area-input{
     background: grey;
 }
 
-.d-flex.flex-nowrap {
-    margin-top: -1.1rem;
-}
 .scrollarea {
     overflow-y: auto;
 }
