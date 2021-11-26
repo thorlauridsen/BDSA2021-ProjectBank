@@ -6,6 +6,7 @@ using ProjectBank.Core;
 using ProjectBank.Infrastructure;
 using ProjectBank.Server.Model;
 
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,11 +36,19 @@ builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<ISupervisorRepository, SupervisorRepository>();
 
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "MyApp.Server", Version = "v1" });
+    c.UseInlineDefinitionsForEnums();
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseSwagger();
+    app.UseSwaggerUI();
     app.UseDeveloperExceptionPage();
     app.UseWebAssemblyDebugging();
 }
