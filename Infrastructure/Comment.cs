@@ -7,18 +7,18 @@ namespace ProjectBank.Infrastructure
         [StringLength(50)]
         public string Content { get; set; }
 
-        public User Author { get; set; }
+        public int UserId { get; set; }
 
         public DateTime DateAdded { get; set; }
 
-        public Post Post { get; set; }
+        public int PostId { get; set; }
 
-        public Comment(string content, User author, DateTime dateAdded, Post post)
+        public Comment(string content, int userId, DateTime dateAdded, int postId)
         {
             Content = content;
-            Author = author;
+            UserId = userId;
             DateAdded = dateAdded;
-            Post = post;
+            PostId = postId;
         }
     }
 }
