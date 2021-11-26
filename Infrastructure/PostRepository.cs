@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using ProjectBank.Infrastructure;
 
 namespace ProjectBank.Core
@@ -96,6 +97,25 @@ namespace ProjectBank.Core
                            .Where(p => p.Tags.Contains(tag))
                            .ToListAsync())
                            .AsReadOnly();
+
+        public async Task<IReadOnlyCollection<CommentDto>> ReadAsyncComments(int postId)
+        {
+            var comments = await _context.Comments.Where(c => c.Post.Id == postId).ToListAsync();
+
+            var result = new List<CommentDto>();
+            foreach (var comment in comments)
+            {
+                result.Add(new CommentDto(
+                    comment.Id,
+                    comment.Content,
+                    comment.DateAdded,
+                    comment.Author.Id,
+                    comment.Post.Id
+                ));
+            }
+            return result;
+        }
+
         public async Task<Status> UpdateAsync(int id, PostUpdateDto post)
         {
             var entity = await _context.Posts.FirstOrDefaultAsync(c => c.Id == post.Id);
