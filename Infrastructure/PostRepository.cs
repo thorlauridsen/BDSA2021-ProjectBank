@@ -13,13 +13,12 @@ namespace ProjectBank.Core
 
         public async Task<PostDetailsDto> CreateAsync(PostCreateDto post)
         {
-            var entity = new Post
-            {
-                Title = post.Title,
-                Content = post.Content,
-                Author = await GetSupervisorAsync(post.SupervisorId),
-                Tags = await GetTagsAsync(post.Tags).ToListAsync()
-            };
+            var entity = new Post(
+                post.Title,
+                post.Content,
+                await GetSupervisorAsync(post.SupervisorId),
+                await GetTagsAsync(post.Tags).ToListAsync()
+            );
 
             _context.Posts.Add(entity);
 
@@ -60,7 +59,31 @@ namespace ProjectBank.Core
                             ))
                            .ToListAsync())
                            .AsReadOnly();
+        public async Task<IReadOnlyCollection<PostDto>> ReadAsyncBySupervisor(int supervisorId) =>
+            (await _context.Posts
+                           .Select(p => new PostDto(
+                                p.Id,
+                                p.Title,
+                                p.Content,
+                                p.Author.Id,
+                                p.Tags.Select(t => t.Name).ToHashSet()
+                            ))
+                           .Where(p => p.SupervisorId == supervisorId)
+                           .ToListAsync())
+                           .AsReadOnly();
 
+        public async Task<IReadOnlyCollection<PostDto>> ReadAsyncByTag(string tag) =>
+            (await _context.Posts
+                           .Select(p => new PostDto(
+                                p.Id,
+                                p.Title,
+                                p.Content,
+                                p.Author.Id,
+                                p.Tags.Select(t => t.Name).ToHashSet()
+                            ))
+                           .Where(p => p.Tags.Contains(tag))
+                           .ToListAsync())
+                           .AsReadOnly();
         public async Task<Status> UpdateAsync(int id, PostUpdateDto post)
         {
             var entity = await _context.Posts.FirstOrDefaultAsync(c => c.Id == post.Id);
@@ -95,8 +118,8 @@ namespace ProjectBank.Core
             return Deleted;
         }
 
-        private async Task<Supervisor?> GetSupervisorAsync(int supervisorId) =>
-            await _context.Supervisors.FirstOrDefaultAsync(c => c.Id == supervisorId);
+        private async Task<Supervisor> GetSupervisorAsync(int supervisorId) =>
+            await _context.Supervisors.FirstAsync(c => c.Id == supervisorId);
 
         private async IAsyncEnumerable<Tag> GetTagsAsync(IEnumerable<string> tags)
         {

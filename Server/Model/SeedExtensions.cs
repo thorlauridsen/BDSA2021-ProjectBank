@@ -23,12 +23,12 @@ namespace ProjectBank.Server.Model
             var student = new Student("Tue", "Chemistry");
             var supervisor = new Supervisor { Name = "Paolo" };
             var post = new Post
-            {
-                Title = "Biology Project",
-                Content = "My Cool Biology Project",
-                Author = supervisor,
-                Tags = new HashSet<Tag>() { new Tag("Biology") }
-            };
+            (
+                "Biology Project",
+                "My Cool Biology Project",
+                supervisor,
+                new HashSet<Tag>() { new Tag("Biology") }
+            );
 
             if (!context.Students.Any())
             {

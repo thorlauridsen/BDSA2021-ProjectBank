@@ -9,8 +9,16 @@ namespace ProjectBank.Infrastructure
 
         public string Content { get; set; }
 
-        public Supervisor? Author { get; set; }
+        public Supervisor Author { get; set; }
 
         public ICollection<Tag> Tags { get; set; } = null!;
+
+        public Post(string title, string content, Supervisor author, ICollection<Tag> tags)
+        {
+            Title = title;
+            Content = content;
+            Author = author;
+            Tags = tags;
+        }
     }
 }
