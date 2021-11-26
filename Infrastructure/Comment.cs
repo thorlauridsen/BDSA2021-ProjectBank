@@ -11,14 +11,14 @@ namespace ProjectBank.Infrastructure
 
         public DateTime DateAdded { get; set; }
 
-        public ICollection<Post> Post { get; set; } = null!;
+        public Post Post { get; set; }
 
-
-        public Comment(string content, User author, DateTime dateAdded)
+        public Comment(string content, User author, DateTime dateAdded, Post post)
         {
             Content = content;
             Author = author;
             DateAdded = dateAdded;
+            Post = post;
         }
     }
 }

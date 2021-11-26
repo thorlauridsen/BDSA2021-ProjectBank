@@ -109,6 +109,7 @@ namespace ProjectBank.Core
             entity.Content = post.Content;
             entity.Author = await GetSupervisorAsync(post.SupervisorId);
             entity.Tags = await GetTagsAsync(post.Tags).ToListAsync();
+            entity.Comments = await GetCommentsAsync(post.Comments).ToListAsync();
 
             await _context.SaveChangesAsync();
 
@@ -149,7 +150,10 @@ namespace ProjectBank.Core
 
             foreach (var comment in comments)
             {
-                yield return existing.TryGetValue(comment, out var c) ? c : null;
+                if (existing.ContainsKey(comment))
+                {
+                    yield return existing.TryGetValue(comment, out var c) ? c : null;
+                }
             }
         }
     }
