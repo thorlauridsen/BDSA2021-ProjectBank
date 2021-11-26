@@ -1,38 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProjectBank.Core
 {
-    public record PostDTO
+    public record PostDto(int Id, string Title, string Content, int SupervisorId, HashSet<string> Tags);
+
+    public record PostDetailsDto(int Id, string Title, string Content, int SupervisorId, HashSet<string> Tags) : PostDto(Id, Title, Content, SupervisorId, Tags);
+
+    public record PostCreateDto
     {
-        public string name;
+        public PostCreateDto(string title, string content, int supervisorId, HashSet<string> tags)
+        {
+            Title = title;
+            Content = content;
+            SupervisorId = supervisorId;
+            Tags = tags;
+        }
 
-        //public record CharacterCreateDto
-        //{
-        //    [StringLength(50)]
-        //    public string? GivenName { get; init; }
+        [StringLength(50)]
+        public string Title { get; init; }
+        public string Content { get; init; }
+        public int SupervisorId { get; init; }
+        public HashSet<string> Tags { get; init; }
+    }
 
-        //    [StringLength(50)]
-        //    public string? Surname { get; init; }
+    public record PostUpdateDto : PostCreateDto
+    {
+        public PostUpdateDto(string title, string content, int supervisorId, HashSet<string> tags) : base(title, content, supervisorId, tags) { }
 
-        //    [StringLength(50)]
-        //    public string? AlterEgo { get; init; }
-
-        //    [Range(1900, 2100)]
-        //    public int? FirstAppearance { get; init; }
-
-        //    [StringLength(50)]
-        //    public string? Occupation { get; init; }
-
-        //    public string? City { get; init; }
-
-        //    public Gender Gender { get; init; }
-
-        //    [Required]
-        //    public ISet<string> Powers { get; init; } = null!;
-        //}
+        public int Id { get; init; }
     }
 }
