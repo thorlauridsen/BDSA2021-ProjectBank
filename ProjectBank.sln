@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.0.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 16.0.0.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectBank.Server", "Server\ProjectBank.Server.csproj", "{AC1F095C-0331-4D5D-8E83-AD0D170FA470}"
 EndProject
@@ -15,6 +15,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectBank.Infrastructure.Tests", "Infrastructure.Tests\ProjectBank.Infrastructure.Tests.csproj", "{F926EEAB-0D9B-44B6-9EB9-66B07548F099}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectBank.Server.Tests", "Server.Tests\ProjectBank.Server.Tests.csproj", "{90D5B805-9714-4955-A17F-30108B236DA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectBank.Core", "Core\ProjectBank.Core.csproj", "{439A5481-F0C0-440C-9ADD-6E14F5C5CAC7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectBank.Infrastructure", "Infrastructure\ProjectBank.Infrastructure.csproj", "{CC4BBD83-5F72-4D8B-8039-D38F5C044366}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

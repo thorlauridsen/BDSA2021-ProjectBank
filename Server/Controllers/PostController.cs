@@ -26,6 +26,8 @@ namespace ProjectBank.Server.Controllers
         public async Task<IReadOnlyCollection<PostDto>> Get()
             => await _repository.ReadAsync();
 
+        
+        // GET: api/<PostController>
         [AllowAnonymous]
         [ProducesResponseType(404)]
         [ProducesResponseType(typeof(PostDetailsDto), 200)]
@@ -50,6 +52,7 @@ namespace ProjectBank.Server.Controllers
         public async Task<IActionResult> Put(int id, [FromBody] PostUpdateDto post)
                => (await _repository.UpdateAsync(id, post)).ToActionResult();
 
+         // DELETE api/<PostController>/5
         [Authorize]
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
