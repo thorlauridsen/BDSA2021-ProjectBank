@@ -4,7 +4,7 @@ using Microsoft.Identity.Web.Resource;
 using ProjectBank.Core;
 using ProjectBank.Server.Model;
 
-namespace MyApp.Server.Controllers
+namespace ProjectBank.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
