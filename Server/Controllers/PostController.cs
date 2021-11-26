@@ -6,7 +6,7 @@ using ProjectBank.Server.Model;
 
 namespace ProjectBank.Server.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class PostController : ControllerBase
     {
