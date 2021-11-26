@@ -1,0 +1,22 @@
+.message {
+    text-align: right;
+    display: block;
+    padding: 0.5rem 1rem;
+}
+
+.message.received {
+    text-align: left;
+}
+
+.message p {
+    background: #2f0d4d;
+    display: inline;
+    color: white;
+    padding: 10px;
+    border-radius: 100px 100px 50px 100px;
+}
+
+.message.received p {
+    border-radius: 100px 100px 100px 50px;
+    background: grey;
+}

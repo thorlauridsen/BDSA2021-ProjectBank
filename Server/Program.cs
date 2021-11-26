@@ -29,7 +29,7 @@ builder.Services.AddControllersWithViews().AddJsonOptions(c =>
 builder.Services.AddRazorPages();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddDbContext<ProjectBankContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ProjectBank")));
+builder.Services.AddDbContext<ProjectBankContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ProjectBank"), options => options.EnableRetryOnFailure()));
 builder.Services.AddScoped<IProjectBankContext, ProjectBankContext>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
