@@ -19,7 +19,7 @@
             <MessageItem Read="true" Recipient="Peter Nielsen" RelatedPost="@testPost" LastMessageDate="new DateTime(2021, 6, 24)"></MessageItem>
             @for (var i = 0; i < 10; i++)
             {
-                <MessageItem Read="true" Recipient="Peter Nielsen" RelatedPost="@testPost" LastMessageDate="DateTime.Now"></MessageItem>
+                <MessageItem Read="true" Recipient="Peter Nielsen" RelatedPost="@testPost" LastMessageDate=""></MessageItem>
             }
         </div>
     </div>
@@ -48,7 +48,7 @@
 
 @code {
 
-    private PostDetailsDto testPost = new(5, "Biology project 101", "content");
+    private PostDetailsDto testPost = new(5, "Biology project 101", "content", DateTime.Now, 1, new(), new());
 
     @code {
         PostSelectorModel postSelectorModel = new PostSelectorModel();
