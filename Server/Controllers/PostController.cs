@@ -1,11 +1,10 @@
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web.Resource;
 using ProjectBank.Core;
 using ProjectBank.Server.Model;
 
-namespace MyApp.Server.Controllers
+namespace ProjectBank.Server.Controllers
 {
     [Authorize]
     [ApiController]

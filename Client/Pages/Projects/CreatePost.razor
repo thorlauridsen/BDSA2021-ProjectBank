@@ -1,0 +1,63 @@
+﻿@page "/projects/create"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components
+@using ProjectBank.Shared.forms
+@attribute [Authorize]
+@implements IDisposable
+@inject ILogger<CreatePost> Logger
+<PageTitle>Create post</PageTitle>
+
+<h1>Create post</h1>
+<EditForm EditContext="@editContext"  OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+    <div class="form-floating my-3">
+        <InputText id="title" class="form-control" placeholder="Title of the project" @bind-Value="postFormModel.Title"/>
+        <label for="title">Title</label>
+    </div>
+    <div class="form-floating my-3">
+        <InputTextArea id="content" class="form-control" placeholder="Content of the project" style="height: 100px" @bind-Value="postFormModel.Content"></InputTextArea>
+        <label for="content">Content</label>
+    </div>
+    <InputTag Id="tags" Label="test" @bind-Value="postFormModel.Tags"></InputTag>
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <button type="submit" class="btn btn-outline-primary btn-lg" disabled="@formInvalid">Submit</button>
+    </div>
+</EditForm>
+
+
+@code {
+    private PostFormModel postFormModel = new();
+    
+    private bool formInvalid = true;
+    private EditContext? editContext;
+
+    protected override void OnInitialized()
+    {
+        editContext = new EditContext(postFormModel);
+        editContext.OnFieldChanged += HandleFieldChanged;
+    }
+
+    private void HandleFieldChanged(object? sender, FieldChangedEventArgs e)
+    {
+        if (editContext is null) return;
+        formInvalid = !editContext.Validate();
+        StateHasChanged();
+    }
+
+    private void HandleValidSubmit()
+    {
+        Logger.LogInformation("HandleValidSubmit called");
+
+    // Process the valid form
+    }
+
+    public void Dispose()
+    {
+        if (editContext is not null)
+        {
+            editContext.OnFieldChanged -= HandleFieldChanged;
+        }
+    }
+
+}

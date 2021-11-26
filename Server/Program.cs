@@ -2,10 +2,10 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
+using Microsoft.OpenApi.Models;
 using ProjectBank.Core;
 using ProjectBank.Infrastructure;
 using ProjectBank.Server.Model;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +29,12 @@ builder.Services.AddControllersWithViews().AddJsonOptions(c =>
 builder.Services.AddRazorPages();
 
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "MyApp.Server", Version = "v1" });
+    c.UseInlineDefinitionsForEnums();
+});
+
 builder.Services.AddDbContext<ProjectBankContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ProjectBank"), options => options.EnableRetryOnFailure()));
 builder.Services.AddScoped<IProjectBankContext, ProjectBankContext>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
@@ -40,6 +46,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseSwagger();
+    app.UseSwaggerUI();
     app.UseDeveloperExceptionPage();
     app.UseWebAssemblyDebugging();
 }

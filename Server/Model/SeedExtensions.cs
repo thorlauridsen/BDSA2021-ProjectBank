@@ -1,38 +1,49 @@
 using Microsoft.EntityFrameworkCore;
 using ProjectBank.Infrastructure;
 
-namespace ProjectBank.Server.Model;
-
-public static class SeedExtensions
+namespace ProjectBank.Server.Model
 {
-    public static IHost Seed(this IHost host)
+    public static class SeedExtensions
     {
-        using (var scope = host.Services.CreateScope())
+        public static IHost Seed(this IHost host)
         {
-            var context = scope.ServiceProvider.GetRequiredService<ProjectBankContext>();
+            using (var scope = host.Services.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<ProjectBankContext>();
 
-            SeedCharacters(context);
+                SeedCharacters(context);
+            }
+            return host;
         }
-        return host;
-    }
 
-    private static void SeedCharacters(ProjectBankContext context)
-    {
-        context.Database.Migrate();
+        private static void SeedCharacters(ProjectBankContext context)
+        {
+            context.Database.Migrate();
 
-        if (!context.Students.Any())
-        {
-            context.Students.Add(new Student("Tue", "Dropout"));
-            context.SaveChanges();
-        }
-        if (!context.Supervisors.Any())
-        {
-            context.Supervisors.Add(new Supervisor("Paolo", 30));
-            context.SaveChanges();
-        }
-        if (!context.Posts.Any())
-        {
-            context.Posts.Add(new Post("Biology Project", "My Cool Biology Project"));
+            var student = new Student("Tue", "Chemistry");
+            var supervisor = new Supervisor { Name = "Paolo" };
+            var post = new Post
+            (
+                "Biology Project",
+                "My Cool Biology Project",
+                DateTime.Now,
+                supervisor,
+                new HashSet<Tag>() { new Tag("Biology") },
+                new HashSet<Comment>() { }
+            );
+
+            if (!context.Students.Any())
+            {
+                context.Students.Add(student);
+            }
+            if (!context.Supervisors.Any())
+            {
+                context.Supervisors.Add(supervisor);
+            }
+            if (!context.Posts.Any())
+            {
+                context.Posts.Add(post);
+            }
             context.SaveChanges();
         }
     }

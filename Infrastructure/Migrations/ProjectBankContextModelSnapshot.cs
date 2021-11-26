@@ -22,6 +22,21 @@ namespace ProjectBank.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("PostTag", b =>
+                {
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TagsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PostId", "TagsId");
+
+                    b.HasIndex("TagsId");
+
+                    b.ToTable("PostTag");
+                });
+
             modelBuilder.Entity("ProjectBank.Infrastructure.Post", b =>
                 {
                     b.Property<int>("Id")
@@ -30,13 +45,12 @@ namespace ProjectBank.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int?>("AuthorId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int?>("SupervisorId")
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -45,7 +59,7 @@ namespace ProjectBank.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SupervisorId");
+                    b.HasIndex("AuthorId");
 
                     b.ToTable("Posts");
                 });
@@ -84,24 +98,51 @@ namespace ProjectBank.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("Salary")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.ToTable("Supervisors");
                 });
 
-            modelBuilder.Entity("ProjectBank.Infrastructure.Post", b =>
+            modelBuilder.Entity("ProjectBank.Infrastructure.Tag", b =>
                 {
-                    b.HasOne("ProjectBank.Infrastructure.Supervisor", null)
-                        .WithMany("posts")
-                        .HasForeignKey("SupervisorId");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tags");
                 });
 
-            modelBuilder.Entity("ProjectBank.Infrastructure.Supervisor", b =>
+            modelBuilder.Entity("PostTag", b =>
                 {
-                    b.Navigation("posts");
+                    b.HasOne("ProjectBank.Infrastructure.Post", null)
+                        .WithMany()
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProjectBank.Infrastructure.Tag", null)
+                        .WithMany()
+                        .HasForeignKey("TagsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ProjectBank.Infrastructure.Post", b =>
+                {
+                    b.HasOne("ProjectBank.Infrastructure.Supervisor", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId");
+
+                    b.Navigation("Author");
                 });
 #pragma warning restore 612, 618
         }
