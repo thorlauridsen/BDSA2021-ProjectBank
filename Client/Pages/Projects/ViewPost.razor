@@ -1,0 +1,62 @@
+@page "/Projects/{id:int}"
+@using ProjectBank.Core
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@inject HttpClient _http
+<Content>
+    <ChildContent>
+        <div class="d-flex flex-md-row flex-sm-column align-items-md-stretch align-items-center justify-content-around">
+            <div class="col-md-8 col-10 p-4 shadow">
+                <h3>@Post?.Title</h3>
+
+                @if (Post?.DateAdded != null)
+                {
+                    <small class="italic">Published on: @Post?.DateAdded.ToLongDateString()</small>
+                }
+                else
+                {
+                    <small class="italic">Unknown date</small>
+                }
+                <div class="flex">
+                    @if (@Post?.Tags != null)
+                    {
+                        foreach (var tag in @Post?.Tags)
+                        {
+                            <Tag Name="@tag"></Tag>
+                        }
+                    }
+                </div>
+                <p>@Post?.Content</p>
+            </div>
+            <div class="col-md-4 col-10 shadow p-4">
+                <p>Supervisor: @Creator?.Name</p>
+            </div>
+        </div>
+    </ChildContent>
+</Content>
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    private PostDto? Post { get; set; }
+    private UserDto? Creator { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            Post = await _http.GetFromJsonAsync<PostDto>("Post/" + Id);
+            Creator = await _http.GetFromJsonAsync<UserDto>("User/" + Post?.SupervisorId);
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+    }
+
+    /*foreach (var post in Posts)
+            {
+                PostComments.Add(post.Id, await WebRequestMethods.Http.GetFromJsonAsync<List<CommentDto>>("Post/" + post.Id + "/comments"));
+            }*/
+}
