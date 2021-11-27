@@ -22,10 +22,6 @@ div.chat-area-input{
     height: 100%;
 }
 
-.scrollarea {
-    overflow-y: auto;
-}
-
 .message-list{
     height: calc(100vh - 119px);
 }
