@@ -1,4 +1,3 @@
-
 using ProjectBank.Core;
 
 namespace ProjectBank.Infrastructure
@@ -21,10 +20,10 @@ namespace ProjectBank.Infrastructure
             await _context.SaveChangesAsync();
 
             return new StudentDetailsDto(
-                                 entity.Id,
-                                 entity.Name,
-                                 entity.Course
-                             );
+                entity.Id,
+                entity.Name,
+                entity.Course
+            );
         }
 
         public async Task<Option<StudentDetailsDto>> ReadAsync(int studentId)

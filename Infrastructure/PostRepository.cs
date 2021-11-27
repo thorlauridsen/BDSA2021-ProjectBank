@@ -13,13 +13,14 @@ namespace ProjectBank.Core
 
         public async Task<PostDetailsDto> CreateAsync(PostCreateDto post)
         {
-            var entity = new Post(
-                post.Title,
-                post.Content,
-                DateTime.Now,
-                await GetSupervisorAsync(post.SupervisorId),
-                await GetTagsAsync(post.Tags).ToListAsync()
-            );
+            var entity = new Post
+            {
+                Title = post.Title,
+                Content = post.Content,
+                DateAdded = DateTime.Now,
+                SupervisorId = post.SupervisorId,
+                Tags = await GetTagsAsync(post.Tags).ToListAsync()
+            };
 
             _context.Posts.Add(entity);
 
@@ -30,7 +31,7 @@ namespace ProjectBank.Core
                 entity.Title,
                 entity.Content,
                 entity.DateAdded,
-                entity.Author.Id,
+                entity.SupervisorId,
                 entity.Tags.Select(t => t.Name).ToHashSet()
             );
         }
@@ -44,7 +45,7 @@ namespace ProjectBank.Core
                             p.Title,
                             p.Content,
                             p.DateAdded,
-                            p.Author.Id,
+                            p.SupervisorId,
                             p.Tags.Select(t => t.Name).ToHashSet()
                         );
 
@@ -58,7 +59,7 @@ namespace ProjectBank.Core
                                 p.Title,
                                 p.Content,
                                 p.DateAdded,
-                                p.Author.Id,
+                                p.SupervisorId,
                                 p.Tags.Select(t => t.Name).ToHashSet()
                             ))
                            .ToListAsync())
@@ -70,7 +71,7 @@ namespace ProjectBank.Core
                                 p.Title,
                                 p.Content,
                                 p.DateAdded,
-                                p.Author.Id,
+                                p.SupervisorId,
                                 p.Tags.Select(t => t.Name).ToHashSet()
                             ))
                            .Where(p => p.SupervisorId == supervisorId)
@@ -84,7 +85,7 @@ namespace ProjectBank.Core
                                 p.Title,
                                 p.Content,
                                 p.DateAdded,
-                                p.Author.Id,
+                                p.SupervisorId,
                                 p.Tags.Select(t => t.Name).ToHashSet()
                             ))
                            .Where(p => p.Tags.Contains(tag))
@@ -93,7 +94,7 @@ namespace ProjectBank.Core
 
         public async Task<IReadOnlyCollection<CommentDto>> ReadAsyncComments(int postId)
         {
-            var comments = await _context.Comments.Where(c => c.Post.Id == postId).ToListAsync();
+            var comments = await _context.Comments.Where(c => c.PostId == postId).ToListAsync();
 
             var result = new List<CommentDto>();
             foreach (var comment in comments)
@@ -102,8 +103,8 @@ namespace ProjectBank.Core
                     comment.Id,
                     comment.Content,
                     comment.DateAdded,
-                    comment.Author.Id,
-                    comment.Post.Id
+                    comment.UserId,
+                    comment.PostId
                 ));
             }
             return result;
@@ -120,7 +121,7 @@ namespace ProjectBank.Core
 
             entity.Title = post.Title;
             entity.Content = post.Content;
-            entity.Author = await GetSupervisorAsync(post.SupervisorId);
+            entity.SupervisorId = post.SupervisorId;
             entity.Tags = await GetTagsAsync(post.Tags).ToListAsync();
 
             await _context.SaveChangesAsync();

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ProjectBank.Core
+﻿namespace ProjectBank.Core
 {
     public record CommentDto(
         int Id,

@@ -27,11 +27,11 @@ namespace ProjectBank.Infrastructure
 
         public async Task<Option<UserDetailsDto>> ReadAsync(int userId)
         {
-            var users = from s in _context.Users
-                        where s.Id == userId
+            var users = from u in _context.Users
+                        where u.Id == userId
                         select new UserDetailsDto(
-                              s.Id,
-                              s.Name
+                              u.Id,
+                              u.Name
                         );
 
             return await users.FirstOrDefaultAsync();
@@ -39,16 +39,16 @@ namespace ProjectBank.Infrastructure
 
         public async Task<IReadOnlyCollection<UserDto>> ReadAsync() =>
             (await _context.Users
-                           .Select(s => new UserDto(
-                                s.Id,
-                                s.Name
+                           .Select(u => new UserDto(
+                                u.Id,
+                                u.Name
                             ))
                            .ToListAsync())
                            .AsReadOnly();
 
         public async Task<Status> UpdateAsync(int id, UserUpdateDto user)
         {
-            var entity = await _context.Users.FirstOrDefaultAsync(s => s.Id == user.Id);
+            var entity = await _context.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
 
             if (entity == null)
             {
@@ -62,16 +62,16 @@ namespace ProjectBank.Infrastructure
             return Updated;
         }
 
-        public async Task<Status> DeleteAsync(int studentId)
+        public async Task<Status> DeleteAsync(int userId)
         {
-            var entity = await _context.Students.FindAsync(studentId);
+            var entity = await _context.Users.FindAsync(userId);
 
             if (entity == null)
             {
                 return NotFound;
             }
 
-            _context.Students.Remove(entity);
+            _context.Users.Remove(entity);
             await _context.SaveChangesAsync();
 
             return Deleted;

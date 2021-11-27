@@ -21,28 +21,41 @@ namespace ProjectBank.Server.Model
             context.Database.Migrate();
 
             var student = new Student("Tue", "Chemistry");
-            var supervisor = new Supervisor { Name = "Paolo" };
-            var post = new Post
-            (
-                "Biology Project",
-                "My Cool Biology Project",
-                DateTime.Now,
-                supervisor,
-                new HashSet<Tag>() { new Tag("Biology") }
-            );
+            var supervisor = new User { Name = "Paolo" };
 
             if (!context.Students.Any())
             {
                 context.Students.Add(student);
             }
-            if (!context.Supervisors.Any())
+            if (!context.Users.Any())
             {
-                context.Supervisors.Add(supervisor);
+                context.Users.Add(supervisor);
             }
+
+            var post = new Post
+            {
+                Title = "Biology Project",
+                Content = "My Cool Biology Project",
+                DateAdded = DateTime.Now,
+                SupervisorId = 1,
+                Tags = new HashSet<Tag>() { new Tag("Biology") }
+            };
+
             if (!context.Posts.Any())
             {
                 context.Posts.Add(post);
             }
+            var comment = new Comment(
+                "Nice post",
+                1,
+                DateTime.Now,
+                1
+            );
+            if (!context.Comments.Any())
+            {
+                context.Comments.Add(comment);
+            }
+
             context.SaveChanges();
         }
     }

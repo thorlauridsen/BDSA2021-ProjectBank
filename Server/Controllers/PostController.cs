@@ -15,7 +15,9 @@ namespace ProjectBank.Server.Controllers
         private readonly ILogger<PostController> _logger;
         private readonly IPostRepository _repository;
 
-        public PostController(ILogger<PostController> logger, IPostRepository repository)
+        public PostController(
+            ILogger<PostController> logger,
+            IPostRepository repository)
         {
             _logger = logger;
             _repository = repository;
@@ -32,6 +34,11 @@ namespace ProjectBank.Server.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<PostDetailsDto>> Get(int id)
             => (await _repository.ReadAsync(id)).ToActionResult();
+
+        [AllowAnonymous]
+        [HttpGet("{id}/comments")]
+        public async Task<IReadOnlyCollection<CommentDto>> GetComments(int id)
+            => await _repository.ReadAsyncComments(id);
 
         [Authorize]
         [HttpPost]

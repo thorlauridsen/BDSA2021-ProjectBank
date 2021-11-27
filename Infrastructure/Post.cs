@@ -11,17 +11,8 @@ namespace ProjectBank.Infrastructure
 
         public DateTime DateAdded { get; set; }
 
-        public Supervisor Author { get; set; }
+        public int SupervisorId { get; set; }
 
         public ICollection<Tag> Tags { get; set; } = null!;
-
-        public Post(string title, string content, DateTime dateAdded, Supervisor author, ICollection<Tag> tags)
-        {
-            Title = title;
-            Content = content;
-            Author = author;
-            Tags = tags;
-            DateAdded = dateAdded;
-        }
     }
 }
