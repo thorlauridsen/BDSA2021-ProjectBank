@@ -1,0 +1,35 @@
+﻿@using ProjectBank.Client.Extensions
+<div class="d-flex flex-start my-4">
+    <img
+        class="rounded-circle shadow me-3"
+        src="@Src"
+        alt="avatar"
+        width="40"
+        height="40"/>
+    <div class="flex-grow-1 flex-shrink-1 border rounded py-1 px-2">
+        <div class="d-flex justify-content-between align-items-center">
+            <p class="mb-1">
+                @Name <span class="small">- @Published.GetTimeSince()</span>
+            </p>
+        </div>
+        <p class="small mb-0">
+            @Content
+        </p>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public string Src { get; set; }
+
+    [Parameter]
+    public string Name { get; set; }
+
+    [Parameter]
+    public string Content { get; set; }
+
+    [Parameter]
+    public DateTime Published { get; set; }
+
+}

@@ -1,8 +1,9 @@
 ﻿@using ProjectBank.Core
+@using ProjectBank.Client.Extensions
 <a href="#" class="list-group-item list-group-item-action py-3 lh-tight @_extraCSS" aria-current="true">
     <div class="d-flex w-100 align-items-center justify-content-between">
         <strong class="mb-1">@Recipient</strong>
-        <small>@_lastMessageDataString</small>
+        <small>@_lastMessageDateString</small>
     </div>
     <div class="col-10 mb-1 small">@_relatedPostString.</div>
 </a>
@@ -15,7 +16,7 @@
     [Parameter]
     public DateTime LastMessageDate { get; set; }
 
-    private string _lastMessageDataString { get; set; }
+    private string _lastMessageDateString { get; set; }
 
     [Parameter]
     public PostDetailsDto RelatedPost { get; set; }
@@ -29,37 +30,7 @@
     protected override void OnInitialized()
     {
         //Calculate time
-        var currentDate = DateTime.Now;
-        var diff = currentDate - LastMessageDate;
-        if (diff >= TimeSpan.FromDays(365.2425))
-        {
-            var years = (int) Math.Floor(diff.Days / 365.2425);
-            _lastMessageDataString = $"{years} {(years > 1 ? "years" : "year")} ago";
-        }
-        else if (diff >= TimeSpan.FromDays(30.436875))
-        {
-            var months = (int) Math.Floor(diff.Days / 30.436875);
-            _lastMessageDataString = $"{months} {(months > 1 ? "months" : "month")} ago";
-        }
-        else if (diff >= TimeSpan.FromDays(1))
-        {
-            var days = diff.Days;
-            _lastMessageDataString = $"{days} {(days > 1 ? "days" : "day")} ago";
-        }
-        else if (diff >= TimeSpan.FromHours(1))
-        {
-            var hours = diff.Hours;
-            _lastMessageDataString = $"{hours} {(hours > 1 ? "hours" : "hour")} ago";
-        }
-        else if (diff >= TimeSpan.FromMinutes(1))
-        {
-            var minutes = diff.Minutes;
-            _lastMessageDataString = $"{minutes} {(minutes > 1 ? "minutes" : "minute")} ago";
-        }
-        else
-        {
-            _lastMessageDataString = "Now";
-        }
+        _lastMessageDateString = LastMessageDate.GetTimeSince();
         //Convert related posts to string
         _relatedPostString = RelatedPost.Title;
 

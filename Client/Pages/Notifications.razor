@@ -8,12 +8,12 @@
         <div class="list-group list-group-flush border-bottom scrollarea message-list">
             @for (var i = 0; i < 3; i++)
             {
-                <NotificationItem Read="false" Title="New comment" Description="Peter has commented on your post" Link="/" LastMessageDate="DateTime.Now">
+                <NotificationItem Read="false" Title="New comment" Description="Peter has commented on your post" Link="/" Date="DateTime.Now">
                 </NotificationItem>
             }
             @for (var i = 0; i < 7; i++)
             {
-                <NotificationItem Read="true" Title="New comment" Description="Peter has commented on your post" Link="/" LastMessageDate="DateTime.Now">
+                <NotificationItem Read="true" Title="New comment" Description="Peter has commented on your post" Link="/" Date="DateTime.Now">
                 </NotificationItem>
             }
         </div>
