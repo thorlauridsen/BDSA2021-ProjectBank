@@ -54,9 +54,7 @@ namespace ProjectBank.Infrastructure
             {
                 return NotFound;
             }
-
             entity.Name = user.Name;
-
             await _context.SaveChangesAsync();
 
             return Updated;
@@ -70,7 +68,6 @@ namespace ProjectBank.Infrastructure
             {
                 return NotFound;
             }
-
             _context.Users.Remove(entity);
             await _context.SaveChangesAsync();
 

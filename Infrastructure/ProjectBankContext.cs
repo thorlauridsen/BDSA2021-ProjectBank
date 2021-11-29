@@ -8,6 +8,10 @@ namespace ProjectBank.Infrastructure
         public DbSet<Post> Posts => Set<Post>();
         public DbSet<Tag> Tags => Set<Tag>();
         public DbSet<Comment> Comments => Set<Comment>();
+        public DbSet<Chat> Chats => Set<Chat>();
+        public DbSet<ChatUser> ChatUsers => Set<ChatUser>();
+        public DbSet<ChatMessage> ChatMessages => Set<ChatMessage>();
+        public DbSet<Notification> Notifications => Set<Notification>();
 
         public ProjectBankContext(DbContextOptions<ProjectBankContext> options) : base(options) { }
 

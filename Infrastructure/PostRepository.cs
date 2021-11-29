@@ -121,7 +121,7 @@ namespace ProjectBank.Core
 
             entity.Title = post.Title;
             entity.Content = post.Content;
-            entity.SupervisorId = post.SupervisorId;
+            //entity.SupervisorId = post.SupervisorId;
             entity.Tags = await GetTagsAsync(post.Tags).ToListAsync();
 
             await _context.SaveChangesAsync();

@@ -30,7 +30,7 @@ namespace ProjectBank.Server.Controllers
 
         [AllowAnonymous]
         [ProducesResponseType(404)]
-        [ProducesResponseType(typeof(CommentDto), 200)]
+        [ProducesResponseType(200)]
         [HttpGet("{id}")]
         public async Task<ActionResult<CommentDetailsDto>> Get(int id)
             => (await _repository.ReadAsync(id)).ToActionResult();
