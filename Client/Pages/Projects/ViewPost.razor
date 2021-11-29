@@ -27,8 +27,10 @@
                 </div>
                 <p>@Post?.Content</p>
             </div>
-            <div class="col-md-4 col-10 shadow p-4">
-                <p>Supervisor: @Creator?.Name</p>
+            <div class="col-md-3 col-10 shadow p-4 text-center">
+                <h3>Supervisor info</h3>
+                <img class="rounded-circle" src="https://eu.ui-avatars.com/api/?name=@Creator?.Name.Replace(' ','+')&background=random">
+                <p>@Creator?.Name</p>
             </div>
         </div>
     </ChildContent>
