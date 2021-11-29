@@ -1,0 +1,31 @@
+﻿<div class="container my-4">
+    <div class="row d-flex justify-content-center">
+        <div class="px-4 shadow">
+            <Comment Src="https://eu.ui-avatars.com/api/?name=Philip+Cronval&background=random" Name="Philip Cronval" Published="DateTime.Now" Content="Vel aliquam et voluptatum est nam quia dolorem aspernatur. Et aliquid et quibusdam ut totam. Ut beatae ut rerum provident. Non ut dolores molestiae repellendus exercitationem odio maiores. Veritatis dignis"></Comment>
+            <Comment Src="https://eu.ui-avatars.com/api/?name=Philip+Cronval&background=random" Name="Philip Cronval" Published="DateTime.Now" Content="Vel aliquam et voluptatum est nam quia dolorem aspernatur. Et aliquid et quibusdam ut totam. Ut beatae ut rerum provident. Non ut dolores molestiae repellendus exercitationem odio maiores. Veritatis dignis"></Comment>
+            <EditForm Model="commentModel">
+                <DataAnnotationsValidator/>
+                <ValidationSummary/>
+                <div class="d-flex my-4">
+                    <div class="col-9">
+                        <InputText @bind-Value="commentModel.comment" type="text" id="comment-input" class="form-control" placeholder="Message"/>
+                    </div>
+                    <div class="col-3 d-flex">
+                        <button type="submit" class="btn btn-primary col-12">Comment</button>
+                    </div>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    CommentModel commentModel = new CommentModel();
+
+    class CommentModel
+    {
+        public string comment { get; set; }
+    }
+
+
+}

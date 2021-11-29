@@ -1,8 +1,9 @@
 ﻿@using ProjectBank.Core
+@using ProjectBank.Client.Extensions
 <a href="@Link" class="list-group-item list-group-item-action py-3 lh-tight @_extraCSS" aria-current="true">
     <div class="d-flex w-100 align-items-center justify-content-between">
         <strong class="mb-1">@Title</strong>
-        <small>@_lastMessageDataString</small>
+        <small>@_DateString</small>
     </div>
     <div class="col-10 mb-1 small">@Description.</div>
 </a>
@@ -13,9 +14,9 @@
     public string Title { get; set; }
 
     [Parameter]
-    public DateTime LastMessageDate { get; set; }
+    public DateTime Date { get; set; }
 
-    private string _lastMessageDataString { get; set; }
+    private string _DateString { get; set; }
 
     [Parameter]
     public string Description { get; set; }
@@ -30,37 +31,7 @@
     protected override void OnInitialized()
     {
         //Calculate time
-        var currentDate = DateTime.Now;
-        var diff = currentDate - LastMessageDate;
-        if (diff >= TimeSpan.FromDays(365.2425))
-        {
-            var years = (int) Math.Floor(diff.Days / 365.2425);
-            _lastMessageDataString = $"{years} {(years > 1 ? "years" : "year")} ago";
-        }
-        else if (diff >= TimeSpan.FromDays(30.436875))
-        {
-            var months = (int) Math.Floor(diff.Days / 30.436875);
-            _lastMessageDataString = $"{months} {(months > 1 ? "months" : "month")} ago";
-        }
-        else if (diff >= TimeSpan.FromDays(1))
-        {
-            var days = diff.Days;
-            _lastMessageDataString = $"{days} {(days > 1 ? "days" : "day")} ago";
-        }
-        else if (diff >= TimeSpan.FromHours(1))
-        {
-            var hours = diff.Hours;
-            _lastMessageDataString = $"{hours} {(hours > 1 ? "hours" : "hour")} ago";
-        }
-        else if (diff >= TimeSpan.FromMinutes(1))
-        {
-            var minutes = diff.Minutes;
-            _lastMessageDataString = $"{minutes} {(minutes > 1 ? "minutes" : "minute")} ago";
-        }
-        else
-        {
-            _lastMessageDataString = "Now";
-        }
+        _DateString = Date.GetTimeSince();
 
         _extraCSS = Read ? "read" : "";
         
