@@ -13,7 +13,7 @@ namespace ProjectBank.Infrastructure
 
         public async Task<StudentDetailsDto> CreateAsync(StudentCreateDto student)
         {
-            var entity = new Student(student.Name, student.Course);
+            var entity = new Student { Name = student.Name };
 
             _context.Students.Add(entity);
 
@@ -21,8 +21,7 @@ namespace ProjectBank.Infrastructure
 
             return new StudentDetailsDto(
                 entity.Id,
-                entity.Name,
-                entity.Course
+                entity.Name
             );
         }
 
@@ -32,8 +31,7 @@ namespace ProjectBank.Infrastructure
                            where c.Id == studentId
                            select new StudentDetailsDto(
                                c.Id,
-                               c.Name,
-                               c.Course
+                               c.Name
                            );
 
             return await students.FirstOrDefaultAsync();
@@ -41,7 +39,7 @@ namespace ProjectBank.Infrastructure
 
         public async Task<IReadOnlyCollection<StudentDto>> ReadAsync() =>
             (await _context.Students
-                           .Select(c => new StudentDto(c.Id, c.Name, c.Course))
+                           .Select(c => new StudentDto(c.Id, c.Name))
                            .ToListAsync())
                            .AsReadOnly();
 
@@ -55,7 +53,6 @@ namespace ProjectBank.Infrastructure
             }
 
             entity.Name = student.Name;
-            entity.Course = student.Course;
 
             await _context.SaveChangesAsync();
 

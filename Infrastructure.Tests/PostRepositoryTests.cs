@@ -63,14 +63,6 @@ namespace Infrastructure.Tests
         }
 
         [Fact]
-        public async Task ReadAsync_given_non_existing_id_returns_None()
-        {
-            var option = await _repository.ReadAsync(11);
-
-            Assert.True(option.IsNone);
-        }
-
-        [Fact]
         public async Task ReadAsync_given_existing_id_returns_post()
         {
             var option = await _repository.ReadAsync(1);
@@ -81,6 +73,14 @@ namespace Infrastructure.Tests
             Assert.Equal(today, option.Value.DateAdded);
             Assert.Equal(1, option.Value.SupervisorId);
             Assert.Equal(1, option.Value.Tags.Count);
+        }
+
+        [Fact]
+        public async Task ReadAsync_given_non_existing_id_returns_None()
+        {
+            var option = await _repository.ReadAsync(11);
+
+            Assert.True(option.IsNone);
         }
 
         [Fact]

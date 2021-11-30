@@ -8,12 +8,12 @@ using static ProjectBank.Core.Status;
 
 namespace Infrastructure.Tests;
 
-public class StudentRepositoryTests : IDisposable
+public class CommentRepositoryTests : IDisposable
 {
     private readonly ProjectBankContext _context;
-    private readonly StudentRepository _repository;
+    private readonly CommentRepository _repository;
 
-    public StudentRepositoryTests()
+    public CommentRepositoryTests()
     {
         var connection = new SqliteConnection("Filename=:memory:");
         connection.Open();
@@ -22,39 +22,12 @@ public class StudentRepositoryTests : IDisposable
         var context = new ProjectBankContext(builder.Options);
         context.Database.EnsureCreated();
 
-        var user = new Student { Id = 1, Name = "Claus" };
-        context.Students.Add(user);
+        //Add things...
+        //context.
         context.SaveChanges();
 
         _context = context;
-        _repository = new StudentRepository(_context);
-    }
-
-    [Fact]
-    public async Task CreateAsync_creates_new_user_with_generated_id()
-    {
-        var user = new StudentCreateDto { Name = "Karsten" };
-        var created = await _repository.CreateAsync(user);
-
-        Assert.Equal(2, created.Id);
-        Assert.Equal(user.Name, created.Name);
-
-        var users = await _repository.ReadAsync();
-
-        Assert.Collection(users,
-            s => Assert.Equal(new StudentDto(1, "Claus"), s),
-            s => Assert.Equal(new StudentDto(2, "Karsten"), s)
-        );
-    }
-
-    [Fact]
-    public async Task ReadAsync_returns_all_users()
-    {
-        var users = await _repository.ReadAsync();
-
-        Assert.Collection(users,
-            s => Assert.Equal(new StudentDto(1, "Claus"), s)
-        );
+        _repository = new CommentRepository(_context);
     }
 
     [Fact]

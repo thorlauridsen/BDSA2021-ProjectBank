@@ -1,4 +1,3 @@
-
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using ProjectBank.Core;
@@ -8,12 +7,12 @@ using static ProjectBank.Core.Status;
 
 namespace Infrastructure.Tests;
 
-public class StudentRepositoryTests : IDisposable
+public class UserRepositoryTests : IDisposable
 {
     private readonly ProjectBankContext _context;
-    private readonly StudentRepository _repository;
+    private readonly UserRepository _repository;
 
-    public StudentRepositoryTests()
+    public UserRepositoryTests()
     {
         var connection = new SqliteConnection("Filename=:memory:");
         connection.Open();
@@ -22,18 +21,19 @@ public class StudentRepositoryTests : IDisposable
         var context = new ProjectBankContext(builder.Options);
         context.Database.EnsureCreated();
 
-        var user = new Student { Id = 1, Name = "Claus" };
-        context.Students.Add(user);
+        var user = new User { Id = 1, Name = "Claus" };
+        context.Users.Add(user);
         context.SaveChanges();
 
         _context = context;
-        _repository = new StudentRepository(_context);
+        _repository = new UserRepository(_context);
     }
 
     [Fact]
     public async Task CreateAsync_creates_new_user_with_generated_id()
     {
-        var user = new StudentCreateDto { Name = "Karsten" };
+        var user = new UserCreateDto { Name = "Karsten" };
+
         var created = await _repository.CreateAsync(user);
 
         Assert.Equal(2, created.Id);
@@ -42,8 +42,8 @@ public class StudentRepositoryTests : IDisposable
         var users = await _repository.ReadAsync();
 
         Assert.Collection(users,
-            s => Assert.Equal(new StudentDto(1, "Claus"), s),
-            s => Assert.Equal(new StudentDto(2, "Karsten"), s)
+            s => Assert.Equal(new UserDto(1, "Claus"), s),
+            s => Assert.Equal(new UserDto(2, "Karsten"), s)
         );
     }
 
@@ -53,7 +53,7 @@ public class StudentRepositoryTests : IDisposable
         var users = await _repository.ReadAsync();
 
         Assert.Collection(users,
-            s => Assert.Equal(new StudentDto(1, "Claus"), s)
+            s => Assert.Equal(new UserDto(1, "Claus"), s)
         );
     }
 

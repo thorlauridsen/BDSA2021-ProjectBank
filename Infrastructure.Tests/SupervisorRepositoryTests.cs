@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ProjectBank.Core;
 using ProjectBank.Infrastructure;
 using Xunit;
+using static ProjectBank.Core.Status;
 
 namespace Infrastructure.Tests;
 
@@ -20,12 +21,8 @@ public class SupervisorRepositoryTests : IDisposable
         var context = new ProjectBankContext(builder.Options);
         context.Database.EnsureCreated();
 
-        var claus = new Supervisor { Id = 1, Name = "Claus" };
-
-        context.Supervisors.AddRangeAsync(
-            claus
-            );
-
+        var user = new Supervisor { Id = 1, Name = "Claus" };
+        context.Supervisors.Add(user);
         context.SaveChanges();
 
         _context = context;
@@ -33,31 +30,47 @@ public class SupervisorRepositoryTests : IDisposable
     }
 
     [Fact]
-    public async Task CreateAsync_creates_new_supervisor_with_generated_id()
+    public async Task CreateAsync_creates_new_user_with_generated_id()
     {
-        var supervisor = new SupervisorCreateDto { Name = "Karsten" };
+        var user = new SupervisorCreateDto { Name = "Karsten" };
 
-        var created = await _repository.CreateAsync(supervisor);
+        var created = await _repository.CreateAsync(user);
 
         Assert.Equal(2, created.Id);
-        Assert.Equal(supervisor.Name, created.Name);
+        Assert.Equal(user.Name, created.Name);
 
-        var supervisors = await _repository.ReadAsync();
+        var users = await _repository.ReadAsync();
 
-        Assert.Collection(supervisors,
+        Assert.Collection(users,
             s => Assert.Equal(new SupervisorDto(1, "Claus"), s),
             s => Assert.Equal(new SupervisorDto(2, "Karsten"), s)
         );
     }
 
     [Fact]
-    public async Task ReadAsync_returns_all_supervisors()
+    public async Task ReadAsync_returns_all_users()
     {
-        var supervisors = await _repository.ReadAsync();
+        var users = await _repository.ReadAsync();
 
-        Assert.Collection(supervisors,
+        Assert.Collection(users,
             s => Assert.Equal(new SupervisorDto(1, "Claus"), s)
         );
+    }
+
+    [Fact]
+    public async Task ReadAsync_given_non_existing_id_returns_None()
+    {
+        var option = await _repository.ReadAsync(11);
+
+        Assert.True(option.IsNone);
+    }
+
+    [Fact]
+    public async Task DeleteAsync_given_non_existing_Id_returns_NotFound()
+    {
+        var response = await _repository.DeleteAsync(11);
+
+        Assert.Equal(NotFound, response);
     }
 
     private bool disposed;

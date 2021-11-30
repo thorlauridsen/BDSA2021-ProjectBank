@@ -20,7 +20,7 @@ namespace ProjectBank.Server.Model
         {
             context.Database.Migrate();
 
-            var student = new Student("Tue", "Chemistry");
+            var student = new Student { Name = "Tue" };
             var supervisor = new User { Name = "Paolo" };
 
             if (!context.Students.Any())

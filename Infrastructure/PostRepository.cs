@@ -121,7 +121,6 @@ namespace ProjectBank.Core
 
             entity.Title = post.Title;
             entity.Content = post.Content;
-            //entity.SupervisorId = post.SupervisorId;
             entity.Tags = await GetTagsAsync(post.Tags).ToListAsync();
 
             await _context.SaveChangesAsync();
@@ -149,7 +148,8 @@ namespace ProjectBank.Core
 
         private async IAsyncEnumerable<Tag> GetTagsAsync(IEnumerable<string> tags)
         {
-            var existing = await _context.Tags.Where(t => tags.Contains(t.Name)).ToDictionaryAsync(t => t.Name);
+            var existing = await _context.Tags.Where(t => tags.Contains(t.Name))
+                                              .ToDictionaryAsync(t => t.Name);
 
             foreach (var tag in tags)
             {
