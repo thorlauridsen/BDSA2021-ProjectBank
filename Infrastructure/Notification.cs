@@ -11,7 +11,7 @@ namespace ProjectBank.Infrastructure
 
         public DateTime Timestamp { get; set; }
 
-        public int UserId { get; set; }
+        public User User { get; set; }
 
         public string Link { get; set; }
 

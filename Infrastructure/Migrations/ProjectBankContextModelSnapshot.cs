@@ -45,10 +45,12 @@ namespace ProjectBank.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("ProjectId")
+                    b.Property<int?>("PostId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PostId");
 
                     b.ToTable("Chats");
                 });
@@ -168,6 +170,8 @@ namespace ProjectBank.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("Notifications");
                 });
 
@@ -186,15 +190,17 @@ namespace ProjectBank.Infrastructure.Migrations
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("SupervisorId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Posts");
                 });
@@ -245,11 +251,6 @@ namespace ProjectBank.Infrastructure.Migrations
                 {
                     b.HasBaseType("ProjectBank.Infrastructure.User");
 
-                    b.Property<string>("Course")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.HasDiscriminator().HasValue("Student");
                 });
 
@@ -273,6 +274,15 @@ namespace ProjectBank.Infrastructure.Migrations
                         .HasForeignKey("TagsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ProjectBank.Infrastructure.Chat", b =>
+                {
+                    b.HasOne("ProjectBank.Infrastructure.Post", "Post")
+                        .WithMany()
+                        .HasForeignKey("PostId");
+
+                    b.Navigation("Post");
                 });
 
             modelBuilder.Entity("ProjectBank.Infrastructure.ChatMessage", b =>
@@ -300,6 +310,28 @@ namespace ProjectBank.Infrastructure.Migrations
                         .WithMany("ChatUsers")
                         .HasForeignKey("ChatId");
 
+                    b.HasOne("ProjectBank.Infrastructure.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ProjectBank.Infrastructure.Notification", b =>
+                {
+                    b.HasOne("ProjectBank.Infrastructure.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ProjectBank.Infrastructure.Post", b =>
+                {
                     b.HasOne("ProjectBank.Infrastructure.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")

@@ -11,7 +11,7 @@ namespace ProjectBank.Infrastructure
 
         public DateTime DateAdded { get; set; }
 
-        public int SupervisorId { get; set; }
+        public User User { get; set; }
 
         public ICollection<Tag> Tags { get; set; } = null!;
     }

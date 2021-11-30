@@ -23,13 +23,16 @@ namespace Infrastructure.Tests
             var context = new ProjectBankContext(builder.Options);
             context.Database.EnsureCreated();
 
+            var user = new User { Name = "Bob" };
+            context.Users.Add(user);
+
             var post = new Post
             {
                 Id = 1,
                 Title = "Math Project",
                 Content = "Bla bla bla bla",
                 DateAdded = today,
-                SupervisorId = 1,
+                User = user,
                 Tags = new HashSet<Tag> { new Tag("Math") }
             };
             context.Posts.Add(post);

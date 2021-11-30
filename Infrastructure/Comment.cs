@@ -12,13 +12,5 @@ namespace ProjectBank.Infrastructure
         public DateTime DateAdded { get; set; }
 
         public int PostId { get; set; }
-
-        public Comment(string content, int userId, DateTime dateAdded, int postId)
-        {
-            Content = content;
-            UserId = userId;
-            DateAdded = dateAdded;
-            PostId = postId;
-        }
     }
 }

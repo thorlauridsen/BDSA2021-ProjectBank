@@ -13,12 +13,13 @@ namespace ProjectBank.Infrastructure
 
         public async Task<CommentDetailsDto> CreateAsync(CommentCreateDto comment)
         {
-            var entity = new Comment(
-                comment.Content,
-                comment.UserId,
-                comment.DateAdded,
-                comment.PostId
-            );
+            var entity = new Comment
+            {
+                Content = comment.Content,
+                UserId = comment.UserId,
+                DateAdded = comment.DateAdded,
+                PostId = comment.PostId
+            };
 
             _context.Comments.Add(entity);
 

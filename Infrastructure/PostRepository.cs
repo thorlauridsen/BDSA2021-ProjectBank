@@ -18,7 +18,7 @@ namespace ProjectBank.Core
                 Title = post.Title,
                 Content = post.Content,
                 DateAdded = post.DateAdded,
-                SupervisorId = post.SupervisorId,
+                User = await GetUserAsync(post.SupervisorId),
                 Tags = await GetTagsAsync(post.Tags).ToListAsync()
             };
 
@@ -31,7 +31,7 @@ namespace ProjectBank.Core
                 entity.Title,
                 entity.Content,
                 entity.DateAdded,
-                entity.SupervisorId,
+                entity.User.Id,
                 entity.Tags.Select(t => t.Name).ToHashSet()
             );
         }
@@ -45,7 +45,7 @@ namespace ProjectBank.Core
                             p.Title,
                             p.Content,
                             p.DateAdded,
-                            p.SupervisorId,
+                            p.User.Id,
                             p.Tags.Select(t => t.Name).ToHashSet()
                         );
 
@@ -59,7 +59,7 @@ namespace ProjectBank.Core
                                 p.Title,
                                 p.Content,
                                 p.DateAdded,
-                                p.SupervisorId,
+                                p.User.Id,
                                 p.Tags.Select(t => t.Name).ToHashSet()
                             ))
                            .ToListAsync())
@@ -71,7 +71,7 @@ namespace ProjectBank.Core
                                 p.Title,
                                 p.Content,
                                 p.DateAdded,
-                                p.SupervisorId,
+                                p.User.Id,
                                 p.Tags.Select(t => t.Name).ToHashSet()
                             ))
                            .Where(p => p.SupervisorId == supervisorId)
@@ -85,7 +85,7 @@ namespace ProjectBank.Core
                                 p.Title,
                                 p.Content,
                                 p.DateAdded,
-                                p.SupervisorId,
+                                p.User.Id,
                                 p.Tags.Select(t => t.Name).ToHashSet()
                             ))
                            .Where(p => p.Tags.Contains(tag))
@@ -156,5 +156,8 @@ namespace ProjectBank.Core
                 yield return existing.TryGetValue(tag, out var t) ? t : new Tag(tag);
             }
         }
+
+        private async Task<User> GetUserAsync(int userId) =>
+            await _context.Users.FirstAsync(u => u.Id == userId);
     }
 }

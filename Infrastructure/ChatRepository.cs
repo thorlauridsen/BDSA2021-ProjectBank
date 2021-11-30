@@ -26,7 +26,7 @@ namespace ProjectBank.Infrastructure
             }
             var entityChat = new Chat
             {
-                ProjectId = chat.ProjectId,
+                Post = await GetPostAsync(chat.ProjectId),
                 ChatUsers = chatUsers,
             };
             _context.Chats.Add(entityChat);
@@ -140,5 +140,8 @@ namespace ProjectBank.Infrastructure
 
         private async Task<User> GetUserAsync(int userId) =>
             await _context.Users.FirstAsync(u => u.Id == userId);
+
+        private async Task<Post> GetPostAsync(int postId) =>
+            await _context.Posts.FirstAsync(p => p.Id == postId);
     }
 }
