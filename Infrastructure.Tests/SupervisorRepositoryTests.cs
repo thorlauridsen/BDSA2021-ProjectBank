@@ -35,17 +35,13 @@ public class SupervisorRepositoryTests : IDisposable
     [Fact]
     public async Task CreateAsync_creates_new_supervisor_with_generated_id()
     {
-        var supervisor = new SupervisorCreateDto("Karsten");
+        var supervisor = new SupervisorCreateDto { Name = "Karsten" };
 
         var created = await _repository.CreateAsync(supervisor);
 
         Assert.Equal(2, created.Id);
         Assert.Equal(supervisor.Name, created.Name);
-    }
 
-    [Fact]
-    public async Task ReadAsync_returns_all_supervisors()
-    {
         var supervisors = await _repository.ReadAsync();
 
         Assert.Collection(supervisors,
@@ -54,9 +50,34 @@ public class SupervisorRepositoryTests : IDisposable
         );
     }
 
+    [Fact]
+    public async Task ReadAsync_returns_all_supervisors()
+    {
+        var supervisors = await _repository.ReadAsync();
+
+        Assert.Collection(supervisors,
+            s => Assert.Equal(new SupervisorDto(1, "Claus"), s)
+        );
+    }
+
+    private bool disposed;
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!disposed)
+        {
+            if (disposing)
+            {
+                _context.Dispose();
+            }
+            disposed = true;
+        }
+    }
 
     public void Dispose()
     {
+        // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        Dispose(disposing: true);
         GC.SuppressFinalize(this);
     }
 }

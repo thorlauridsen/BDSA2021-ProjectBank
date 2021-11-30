@@ -17,7 +17,7 @@ namespace ProjectBank.Core
             {
                 Title = post.Title,
                 Content = post.Content,
-                DateAdded = DateTime.Now,
+                DateAdded = post.DateAdded,
                 SupervisorId = post.SupervisorId,
                 Tags = await GetTagsAsync(post.Tags).ToListAsync()
             };

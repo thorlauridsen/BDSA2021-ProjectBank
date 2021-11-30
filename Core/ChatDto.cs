@@ -2,17 +2,6 @@ namespace ProjectBank.Core
 {
     public record ChatCreateDto
     {
-        public ChatCreateDto(
-            int projectId,
-            int fromUserId,
-            string content,
-            HashSet<int> chatUserIds)
-        {
-            ProjectId = projectId;
-            FromUserId = fromUserId;
-            ChatUserIds = chatUserIds;
-        }
-
         public int ProjectId { get; init; }
         public int FromUserId { get; init; }
         public HashSet<int> ChatUserIds { get; init; }

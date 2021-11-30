@@ -8,11 +8,6 @@ namespace ProjectBank.Core
 
     public record StudentCreateDto
     {
-        public StudentCreateDto(string name, string course)
-        {
-            Name = name;
-            Course = course;
-        }
 
         [StringLength(50)]
         public string Name { get; init; }
@@ -24,8 +19,6 @@ namespace ProjectBank.Core
 
     public record StudentUpdateDto : StudentCreateDto
     {
-        protected StudentUpdateDto(StudentCreateDto original) : base(original) { }
-
         public int Id { get; init; }
     }
 }

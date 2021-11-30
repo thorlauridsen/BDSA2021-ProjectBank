@@ -14,22 +14,24 @@
     {
         try
         {
-            var post = new PostCreateDto(
-            "Math Project",
-            "5 + 2 = 7",
-            DateTime.Now,
-            1,
-            new HashSet<string>() { "Math" }
-            );
+            var post = new PostCreateDto
+            {
+                Title = "Math Project",
+                Content = "5 + 2 = 7",
+                DateAdded = DateTime.Now,
+                SupervisorId = 1,
+                Tags = new HashSet<string>() { "Math" }
+            };
             var response = await Http.PostAsJsonAsync("Post", post);
             uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
 
-            var comment = new CommentCreateDto(
-            "Very nice post",
-            DateTime.Now,
-            1,
-            1
-            );
+            var comment = new CommentCreateDto
+            {
+                Content = "Very nice post",
+                DateAdded = DateTime.Now,
+                UserId = 1,
+                PostId = 1
+            };
             var response2 = await Http.PostAsJsonAsync("Comment", comment);
             uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
         }

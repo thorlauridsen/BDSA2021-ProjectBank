@@ -8,11 +8,6 @@ namespace ProjectBank.Core
 
     public record SupervisorCreateDto
     {
-        public SupervisorCreateDto(string name)
-        {
-            Name = name;
-        }
-
         [StringLength(50)]
         public string Name { get; init; }
 
@@ -20,8 +15,6 @@ namespace ProjectBank.Core
 
     public record SupervisorUpdateDto : SupervisorCreateDto
     {
-        protected SupervisorUpdateDto(SupervisorCreateDto original) : base(original) { }
-
         public int Id { get; init; }
     }
 }

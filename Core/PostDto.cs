@@ -22,20 +22,6 @@ namespace ProjectBank.Core
 
     public record PostCreateDto
     {
-        public PostCreateDto(
-            string title,
-            string content,
-            DateTime dateAdded,
-            int supervisorId,
-            HashSet<string> tags)
-        {
-            Title = title;
-            Content = content;
-            DateAdded = dateAdded;
-            SupervisorId = supervisorId;
-            Tags = tags;
-        }
-
         [StringLength(50)]
         public string Title { get; init; }
         public string Content { get; init; }
@@ -46,14 +32,6 @@ namespace ProjectBank.Core
 
     public record PostUpdateDto : PostCreateDto
     {
-        public PostUpdateDto(
-            string title,
-            string content,
-            DateTime dateAdded,
-            int supervisorId,
-            HashSet<string> tags
-        ) : base(title, content, dateAdded, supervisorId, tags) { }
-
         public int Id { get; init; }
     }
 }
