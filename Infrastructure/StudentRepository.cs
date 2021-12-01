@@ -25,17 +25,13 @@ namespace ProjectBank.Infrastructure
             );
         }
 
-        public async Task<Option<StudentDetailsDto>> ReadAsync(int userId)
-        {
-            var students = from c in _context.Students
-                           where c.Id == userId
-                           select new StudentDetailsDto(
-                               c.Id,
-                               c.Name
-                           );
-
-            return await students.FirstOrDefaultAsync();
-        }
+        public async Task<Option<StudentDetailsDto>> ReadAsync(int userId) =>
+            await _context.Users.Where(u => u.Id == userId)
+                                .Select(u => new StudentDetailsDto(
+                                    u.Id,
+                                    u.Name
+                                ))
+                                .FirstOrDefaultAsync();
 
         public async Task<IReadOnlyCollection<StudentDto>> ReadAsync() =>
             (await _context.Students

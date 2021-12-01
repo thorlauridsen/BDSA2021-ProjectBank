@@ -36,21 +36,17 @@ namespace ProjectBank.Core
             );
         }
 
-        public async Task<Option<PostDetailsDto>> ReadAsync(int postId)
-        {
-            var posts = from p in _context.Posts
-                        where p.Id == postId
-                        select new PostDetailsDto(
-                            p.Id,
-                            p.Title,
-                            p.Content,
-                            p.DateAdded,
-                            p.User.Id,
-                            p.Tags.Select(t => t.Name).ToHashSet()
-                        );
-
-            return await posts.FirstOrDefaultAsync();
-        }
+        public async Task<Option<PostDetailsDto>> ReadAsync(int postId) =>
+            await _context.Posts.Where(p => p.Id == postId)
+                                .Select(p => new PostDetailsDto(
+                                    p.Id,
+                                    p.Title,
+                                    p.Content,
+                                    p.DateAdded,
+                                    p.User.Id,
+                                    p.Tags.Select(t => t.Name).ToHashSet()
+                                ))
+                                .FirstOrDefaultAsync();
 
         public async Task<IReadOnlyCollection<PostDto>> ReadAsync() =>
             (await _context.Posts

@@ -25,17 +25,14 @@ namespace ProjectBank.Infrastructure
                              );
         }
 
-        public async Task<Option<SupervisorDetailsDto>> ReadAsync(int userId)
-        {
-            var supervisors = from s in _context.Supervisors
-                              where s.Id == userId
-                              select new SupervisorDetailsDto(
-                                    s.Id,
-                                    s.Name
-                              );
+        public async Task<Option<SupervisorDetailsDto>> ReadAsync(int userId) =>
+            await _context.Users.Where(u => u.Id == userId)
+                                .Select(u => new SupervisorDetailsDto(
+                                    u.Id,
+                                    u.Name
+                                ))
+                                .FirstOrDefaultAsync();
 
-            return await supervisors.FirstOrDefaultAsync();
-        }
 
         public async Task<IReadOnlyCollection<SupervisorDto>> ReadAsync() =>
             (await _context.Supervisors

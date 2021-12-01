@@ -37,6 +37,10 @@ namespace ProjectBank.Infrastructure
 
         public async Task<Status> CreateNewChatMessageAsync(ChatMessageCreateDto chatMessage)
         {
+            if (chatMessage.Content.Trim().Equals(""))
+            {
+                return BadRequest;
+            }
             var entityChatMessage = new ChatMessage
             {
                 Chat = await GetChatAsync(chatMessage.ChatId),
@@ -45,15 +49,16 @@ namespace ProjectBank.Infrastructure
                 FromUser = await GetUserAsync(chatMessage.FromUserId)
             };
 
-            //entityChatMessage.Chat.ChatUsers.Where(c => c.Id != chatMessage.FromUserId);
+            entityChatMessage.Chat.ChatUsers.Where(cu => cu.Id != chatMessage.FromUserId)
+                                            .Select(cu => cu.SeenLatestMessage = false);
 
-            foreach (var chatUser in entityChatMessage.Chat.ChatUsers)
-            {
-                if (chatUser.Id != chatMessage.FromUserId)
-                {
-                    chatUser.SeenLatestMessage = false;
-                }
-            }
+            // foreach (var chatUser in entityChatMessage.Chat.ChatUsers)
+            // {
+            //     if (chatUser.Id != chatMessage.FromUserId)
+            //     {
+            //         chatUser.SeenLatestMessage = false;
+            //     }
+            // }
 
             _context.ChatMessages.Add(entityChatMessage);
             await _context.SaveChangesAsync();

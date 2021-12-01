@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ProjectBank.Core;
 using ProjectBank.Infrastructure;
 using Xunit;
+using static ProjectBank.Core.Status;
 
 namespace Infrastructure.Tests
 {
@@ -45,7 +46,7 @@ namespace Infrastructure.Tests
         }
 
         [Fact]
-        public async void ReadAllAsync_given_user_id()
+        public async Task ReadAllAsync_given_user_id()
         {
             var actual = await _repository.ReadAllChatsAsync(1);
 
@@ -66,6 +67,32 @@ namespace Infrastructure.Tests
             Assert.Equal(expected2.LatestMessageUserId, actual2.LatestMessageUserId);
             Assert.Equal(expected2.LatestMessage, actual2.LatestMessage);
             Assert.False(actual2.SeenLatestMessage);
+        }
+
+        [Fact]
+        public async Task CreateNewChatMessage_given_Content_returns_Created()
+        {
+            var chatMessage = new ChatMessageCreateDto
+            {
+                FromUserId = 1,
+                ChatId = 1,
+                Content = "Hello"
+            };
+            var response = await _repository.CreateNewChatMessageAsync(chatMessage);
+            Assert.Equal(Created, response);
+        }
+
+        [Fact]
+        public async Task CreateNewChatMessage_given_no_Content_returns_BadRequest()
+        {
+            var chatMessage = new ChatMessageCreateDto
+            {
+                FromUserId = 1,
+                ChatId = 1,
+                Content = ""
+            };
+            var response = await _repository.CreateNewChatMessageAsync(chatMessage);
+            Assert.Equal(BadRequest, response);
         }
 
         private bool disposed;
