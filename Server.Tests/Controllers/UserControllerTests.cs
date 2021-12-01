@@ -8,18 +8,18 @@ using static ProjectBank.Core.Status;
 
 namespace ProjectBank.Server.Tests.Controllers
 {
-    public class StudentControllerTests
+    public class UserControllerTests
     {
         [Fact]
-        public async Task Create_creates_Student()
+        public async Task Create_creates_User()
         {
             // Arrange
-            var logger = new Mock<ILogger<StudentController>>();
-            var toCreate = new StudentCreateDto();
-            var created = new StudentDetailsDto(1, "John");
-            var repository = new Mock<IStudentRepository>();
+            var logger = new Mock<ILogger<UserController>>();
+            var toCreate = new UserCreateDto();
+            var created = new UserDetailsDto(1, "John");
+            var repository = new Mock<IUserRepository>();
             repository.Setup(m => m.CreateAsync(toCreate)).ReturnsAsync(created);
-            var controller = new StudentController(logger.Object, repository.Object);
+            var controller = new UserController(logger.Object, repository.Object);
 
             // Act
             var result = await controller.Post(toCreate) as CreatedAtRouteResult;
@@ -31,14 +31,14 @@ namespace ProjectBank.Server.Tests.Controllers
         }
 
         [Fact]
-        public async Task Get_returns_Students_from_repo()
+        public async Task Get_returns_Users_from_repo()
         {
             // Arrange
-            var logger = new Mock<ILogger<StudentController>>();
-            var expected = Array.Empty<StudentDto>();
-            var repository = new Mock<IStudentRepository>();
+            var logger = new Mock<ILogger<UserController>>();
+            var expected = Array.Empty<UserDto>();
+            var repository = new Mock<IUserRepository>();
             repository.Setup(m => m.ReadAsync()).ReturnsAsync(expected);
-            var controller = new StudentController(logger.Object, repository.Object);
+            var controller = new UserController(logger.Object, repository.Object);
 
             // Act
             var actual = await controller.Get();
@@ -51,10 +51,10 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Get_given_non_existing_returns_NotFound()
         {
             // Arrange
-            var logger = new Mock<ILogger<StudentController>>();
-            var repository = new Mock<IStudentRepository>();
-            repository.Setup(m => m.ReadAsync(42)).ReturnsAsync(default(StudentDetailsDto));
-            var controller = new StudentController(logger.Object, repository.Object);
+            var logger = new Mock<ILogger<UserController>>();
+            var repository = new Mock<IUserRepository>();
+            repository.Setup(m => m.ReadAsync(42)).ReturnsAsync(default(UserDetailsDto));
+            var controller = new UserController(logger.Object, repository.Object);
 
             // Act
             var response = await controller.Get(42);
@@ -64,14 +64,14 @@ namespace ProjectBank.Server.Tests.Controllers
         }
 
         [Fact]
-        public async Task Get_given_existing_returns_Student()
+        public async Task Get_given_existing_returns_User()
         {
             // Arrange
-            var logger = new Mock<ILogger<StudentController>>();
-            var repository = new Mock<IStudentRepository>();
-            var character = new StudentDetailsDto(1, "Jack");
+            var logger = new Mock<ILogger<UserController>>();
+            var repository = new Mock<IUserRepository>();
+            var character = new UserDetailsDto(1, "Jack");
             repository.Setup(m => m.ReadAsync(1)).ReturnsAsync(character);
-            var controller = new StudentController(logger.Object, repository.Object);
+            var controller = new UserController(logger.Object, repository.Object);
 
             // Act
             var response = await controller.Get(1);
@@ -81,14 +81,14 @@ namespace ProjectBank.Server.Tests.Controllers
         }
 
         [Fact]
-        public async Task Put_updates_Student()
+        public async Task Put_updates_User()
         {
             // Arrange
-            var logger = new Mock<ILogger<StudentController>>();
-            var character = new StudentUpdateDto();
-            var repository = new Mock<IStudentRepository>();
+            var logger = new Mock<ILogger<UserController>>();
+            var character = new UserUpdateDto();
+            var repository = new Mock<IUserRepository>();
             repository.Setup(m => m.UpdateAsync(1, character)).ReturnsAsync(Updated);
-            var controller = new StudentController(logger.Object, repository.Object);
+            var controller = new UserController(logger.Object, repository.Object);
 
             // Act
             var response = await controller.Put(1, character);
@@ -101,11 +101,11 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Put_given_unknown_id_returns_NotFound()
         {
             // Arrange
-            var logger = new Mock<ILogger<StudentController>>();
-            var character = new StudentUpdateDto();
-            var repository = new Mock<IStudentRepository>();
+            var logger = new Mock<ILogger<UserController>>();
+            var character = new UserUpdateDto();
+            var repository = new Mock<IUserRepository>();
             repository.Setup(m => m.UpdateAsync(1, character)).ReturnsAsync(NotFound);
-            var controller = new StudentController(logger.Object, repository.Object);
+            var controller = new UserController(logger.Object, repository.Object);
 
             // Act
             var response = await controller.Put(1, character);
@@ -118,10 +118,10 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Delete_given_non_existing_returns_NotFound()
         {
             // Arrange
-            var logger = new Mock<ILogger<StudentController>>();
-            var repository = new Mock<IStudentRepository>();
+            var logger = new Mock<ILogger<UserController>>();
+            var repository = new Mock<IUserRepository>();
             repository.Setup(m => m.DeleteAsync(42)).ReturnsAsync(Status.NotFound);
-            var controller = new StudentController(logger.Object, repository.Object);
+            var controller = new UserController(logger.Object, repository.Object);
 
             // Act
             var response = await controller.Delete(42);
@@ -134,10 +134,10 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Delete_given_existing_returns_NoContent()
         {
             // Arrange
-            var logger = new Mock<ILogger<StudentController>>();
-            var repository = new Mock<IStudentRepository>();
+            var logger = new Mock<ILogger<UserController>>();
+            var repository = new Mock<IUserRepository>();
             repository.Setup(m => m.DeleteAsync(1)).ReturnsAsync(Status.Deleted);
-            var controller = new StudentController(logger.Object, repository.Object);
+            var controller = new UserController(logger.Object, repository.Object);
 
             // Act
             var response = await controller.Delete(1);

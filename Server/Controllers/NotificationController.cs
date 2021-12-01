@@ -42,6 +42,5 @@ namespace ProjectBank.Server.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> SeenNotification(int notificationId)
             => (await _repository.SeenNotificationAsync(notificationId)).ToActionResult();
-
     }
 }

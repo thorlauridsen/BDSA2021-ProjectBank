@@ -1,7 +1,5 @@
-
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using ProjectBank.Core;
 using ProjectBank.Infrastructure;
 using Xunit;
 using static ProjectBank.Core.Status;
