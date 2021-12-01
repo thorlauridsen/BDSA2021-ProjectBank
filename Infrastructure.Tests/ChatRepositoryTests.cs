@@ -24,18 +24,19 @@ namespace Infrastructure.Tests
             User bo = new User { Id = 2, Name = "bo" };
             User alice = new User { Id = 3, Name = "alice" };
 
-            ChatUser chatPer = new ChatUser { Id = 1, User = per };
-            ChatUser chatBo = new ChatUser { Id = 2, User = bo };
-            ChatUser chatAlice = new ChatUser { Id = 3, User = alice };
+            ChatUser chatPer1 = new ChatUser { Id = 1, User = per };
+            ChatUser chatPer2 = new ChatUser { Id = 2, User = per };
+            ChatUser chatBo = new ChatUser { Id = 3, User = bo };
+            ChatUser chatAlice = new ChatUser { Id = 4, User = alice };
 
-            Chat chad = new Chat { Id = 1, ChatUsers = new HashSet<ChatUser>() { chatPer, chatBo } };
-            Chat epicChad = new Chat { Id = 2, ChatUsers = new HashSet<ChatUser>() { chatPer, chatAlice } };
+            Chat chad = new Chat { Id = 1, ChatUsers = new HashSet<ChatUser>() { chatPer1, chatBo } };
+            Chat epicChad = new Chat { Id = 2, ChatUsers = new HashSet<ChatUser>() { chatPer2, chatAlice } };
 
             ChatMessage fromPerToBo = new ChatMessage { Id = 1, Chat = chad, Content = "to Bo", FromUser = per };
             ChatMessage fromAliceToPer = new ChatMessage { Id = 2, Chat = epicChad, Content = "to Per", FromUser = alice };
 
             context.Chats.AddRange(chad, epicChad);
-            context.ChatUsers.AddRange(chatPer, chatBo, chatAlice);
+            context.ChatUsers.AddRange(chatPer1, chatPer2, chatBo, chatAlice);
             context.ChatMessages.AddRange(fromPerToBo, fromAliceToPer);
             context.SaveChanges();
 
@@ -49,7 +50,7 @@ namespace Infrastructure.Tests
             var actual = await _repository.ReadAllChatsAsync(1);
 
             var expected1 = new ChatDetailsDto { ChatId = 1, TargetUserId = 2, LatestMessageUserId = 1, LatestMessage = "to Bo", SeenLatestMessage = false };
-            var expected2 = new ChatDetailsDto { ChatId = 2, TargetUserId = 1, LatestMessageUserId = 1, LatestMessage = "to Per", SeenLatestMessage = false };
+            var expected2 = new ChatDetailsDto { ChatId = 2, TargetUserId = 3, LatestMessageUserId = 3, LatestMessage = "to Per", SeenLatestMessage = false };
 
             var actual1 = actual.ElementAt(0);
             var actual2 = actual.ElementAt(1);
@@ -65,25 +66,6 @@ namespace Infrastructure.Tests
             Assert.Equal(expected2.LatestMessageUserId, actual2.LatestMessageUserId);
             Assert.Equal(expected2.LatestMessage, actual2.LatestMessage);
             Assert.False(actual2.SeenLatestMessage);
-
-            // Assert.Collection(actual,
-            //     c =>
-            //     {
-            //         Assert.Equal(expected1.ChatId, c.ChatId);
-            //         Assert.Equal(expected1.TargetUserId, c.TargetUserId);
-            //         Assert.Equal(expected1.LatestMessageUserId, c.LatestMessageUserId);
-            //         Assert.Equal(expected1.LatestMessage, c.LatestMessage);
-            //         Assert.False(c.SeenLatestMessage);
-            //     },
-            //     c =>
-            //     {
-            //         Assert.Equal(expected2.ChatId, c.ChatId);
-            //         Assert.Equal(expected2.TargetUserId, c.TargetUserId);
-            //         Assert.Equal(expected2.LatestMessageUserId, c.LatestMessageUserId);
-            //         Assert.Equal(expected2.LatestMessage, c.LatestMessage);
-            //         Assert.False(c.SeenLatestMessage);
-            //     }
-            // );
         }
 
         private bool disposed;
