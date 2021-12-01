@@ -53,11 +53,11 @@ namespace ProjectBank.Server.Tests.Controllers
             // Arrange
             var logger = new Mock<ILogger<UserController>>();
             var repository = new Mock<IUserRepository>();
-            repository.Setup(m => m.ReadAsync(42)).ReturnsAsync(default(UserDetailsDto));
+            repository.Setup(m => m.ReadAsync(11)).ReturnsAsync(default(UserDetailsDto));
             var controller = new UserController(logger.Object, repository.Object);
 
             // Act
-            var response = await controller.Get(42);
+            var response = await controller.Get(11);
 
             // Assert
             Assert.IsType<NotFoundResult>(response.Result);
@@ -120,11 +120,11 @@ namespace ProjectBank.Server.Tests.Controllers
             // Arrange
             var logger = new Mock<ILogger<UserController>>();
             var repository = new Mock<IUserRepository>();
-            repository.Setup(m => m.DeleteAsync(42)).ReturnsAsync(Status.NotFound);
+            repository.Setup(m => m.DeleteAsync(11)).ReturnsAsync(Status.NotFound);
             var controller = new UserController(logger.Object, repository.Object);
 
             // Act
-            var response = await controller.Delete(42);
+            var response = await controller.Delete(11);
 
             // Assert
             Assert.IsType<NotFoundResult>(response);
