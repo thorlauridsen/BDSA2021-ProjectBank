@@ -69,9 +69,7 @@ namespace ProjectBank.Infrastructure
             {
                 return NotFound;
             }
-
             entity.Content = comment.Content;
-
             await _context.SaveChangesAsync();
 
             return Updated;

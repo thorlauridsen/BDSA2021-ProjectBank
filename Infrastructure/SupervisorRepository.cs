@@ -25,10 +25,10 @@ namespace ProjectBank.Infrastructure
                              );
         }
 
-        public async Task<Option<SupervisorDetailsDto>> ReadAsync(int supervisorId)
+        public async Task<Option<SupervisorDetailsDto>> ReadAsync(int userId)
         {
             var supervisors = from s in _context.Supervisors
-                              where s.Id == supervisorId
+                              where s.Id == userId
                               select new SupervisorDetailsDto(
                                     s.Id,
                                     s.Name
@@ -46,7 +46,7 @@ namespace ProjectBank.Infrastructure
                            .ToListAsync())
                            .AsReadOnly();
 
-        public async Task<Status> UpdateAsync(int id, SupervisorUpdateDto supervisor)
+        public async Task<Status> UpdateAsync(int userId, SupervisorUpdateDto supervisor)
         {
             var entity = await _context.Supervisors.FirstOrDefaultAsync(s => s.Id == supervisor.Id);
 
@@ -54,23 +54,20 @@ namespace ProjectBank.Infrastructure
             {
                 return NotFound;
             }
-
             entity.Name = supervisor.Name;
-
             await _context.SaveChangesAsync();
 
             return Updated;
         }
 
-        public async Task<Status> DeleteAsync(int studentId)
+        public async Task<Status> DeleteAsync(int userId)
         {
-            var entity = await _context.Students.FindAsync(studentId);
+            var entity = await _context.Students.FindAsync(userId);
 
             if (entity == null)
             {
                 return NotFound;
             }
-
             _context.Students.Remove(entity);
             await _context.SaveChangesAsync();
 

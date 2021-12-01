@@ -29,11 +29,11 @@ namespace ProjectBank.Server.Controllers
             => await _repository.ReadAsync();
 
         [AllowAnonymous]
-        [ProducesResponseType(404)]
+        [HttpGet("{userId}")]
         [ProducesResponseType(typeof(UserDetailsDto), 200)]
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UserDetailsDto>> Get(int id)
-            => (await _repository.ReadAsync(id)).ToActionResult();
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<UserDetailsDto>> Get(int userId)
+            => (await _repository.ReadAsync(userId)).ToActionResult();
 
         [Authorize]
         [HttpPost]
@@ -41,22 +41,21 @@ namespace ProjectBank.Server.Controllers
         public async Task<IActionResult> Post(UserCreateDto user)
         {
             var created = await _repository.CreateAsync(user);
-
             return CreatedAtRoute(nameof(Get), new { created.Id }, created);
         }
 
         [Authorize]
-        [HttpPut("{id}")]
+        [HttpPut("{userId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> Put(int id, [FromBody] UserUpdateDto user)
-               => (await _repository.UpdateAsync(id, user)).ToActionResult();
+        public async Task<IActionResult> Put(int userId, [FromBody] UserUpdateDto user)
+            => (await _repository.UpdateAsync(userId, user)).ToActionResult();
 
         [Authorize]
-        [HttpDelete("{id}")]
+        [HttpDelete("{userId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> Delete(int id)
-              => (await _repository.DeleteAsync(id)).ToActionResult();
+        public async Task<IActionResult> Delete(int userId)
+            => (await _repository.DeleteAsync(userId)).ToActionResult();
     }
 }

@@ -25,10 +25,10 @@ namespace ProjectBank.Infrastructure
             );
         }
 
-        public async Task<Option<StudentDetailsDto>> ReadAsync(int studentId)
+        public async Task<Option<StudentDetailsDto>> ReadAsync(int userId)
         {
             var students = from c in _context.Students
-                           where c.Id == studentId
+                           where c.Id == userId
                            select new StudentDetailsDto(
                                c.Id,
                                c.Name
@@ -43,7 +43,7 @@ namespace ProjectBank.Infrastructure
                            .ToListAsync())
                            .AsReadOnly();
 
-        public async Task<Status> UpdateAsync(int id, StudentUpdateDto student)
+        public async Task<Status> UpdateAsync(int userId, StudentUpdateDto student)
         {
             var entity = await _context.Students.FirstOrDefaultAsync(c => c.Id == student.Id);
 
@@ -51,23 +51,20 @@ namespace ProjectBank.Infrastructure
             {
                 return NotFound;
             }
-
             entity.Name = student.Name;
-
             await _context.SaveChangesAsync();
 
             return Updated;
         }
 
-        public async Task<Status> DeleteAsync(int studentId)
+        public async Task<Status> DeleteAsync(int userId)
         {
-            var entity = await _context.Students.FindAsync(studentId);
+            var entity = await _context.Students.FindAsync(userId);
 
             if (entity == null)
             {
                 return NotFound;
             }
-
             _context.Students.Remove(entity);
             await _context.SaveChangesAsync();
 

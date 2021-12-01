@@ -46,7 +46,7 @@ namespace ProjectBank.Infrastructure
                            .ToListAsync())
                            .AsReadOnly();
 
-        public async Task<Status> UpdateAsync(int id, UserUpdateDto user)
+        public async Task<Status> UpdateAsync(int userId, UserUpdateDto user)
         {
             var entity = await _context.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
 

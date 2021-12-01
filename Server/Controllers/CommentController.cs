@@ -29,11 +29,11 @@ namespace ProjectBank.Server.Controllers
             => await _repository.ReadAsync();
 
         [AllowAnonymous]
-        [ProducesResponseType(404)]
+        [HttpGet("{commentId}")]
         [ProducesResponseType(200)]
-        [HttpGet("{id}")]
-        public async Task<ActionResult<CommentDetailsDto>> Get(int id)
-            => (await _repository.ReadAsync(id)).ToActionResult();
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<CommentDetailsDto>> Get(int commentId)
+            => (await _repository.ReadAsync(commentId)).ToActionResult();
 
         [Authorize]
         [HttpPost]
@@ -41,22 +41,21 @@ namespace ProjectBank.Server.Controllers
         public async Task<IActionResult> Post(CommentCreateDto comment)
         {
             var created = await _repository.CreateAsync(comment);
-
             return CreatedAtRoute(nameof(Get), new { created.Id }, created);
         }
 
         [Authorize]
-        [HttpPut("{id}")]
+        [HttpPut("{commentId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> Put(int id, [FromBody] CommentUpdateDto comment)
-               => (await _repository.UpdateAsync(id, comment)).ToActionResult();
+        public async Task<IActionResult> Put(int commentId, [FromBody] CommentUpdateDto comment)
+            => (await _repository.UpdateAsync(commentId, comment)).ToActionResult();
 
         [Authorize]
-        [HttpDelete("{id}")]
+        [HttpDelete("{commentId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> Delete(int id)
-              => (await _repository.DeleteAsync(id)).ToActionResult();
+        public async Task<IActionResult> Delete(int commentId)
+            => (await _repository.DeleteAsync(commentId)).ToActionResult();
     }
 }
