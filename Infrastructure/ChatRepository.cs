@@ -79,7 +79,7 @@ namespace ProjectBank.Infrastructure
                           }).ToListAsync();
         }
 
-        public async Task<IReadOnlyCollection<ChatMessageDto>> ReadChatAsync(int chatId) =>
+        public async Task<IReadOnlyCollection<ChatMessageDto>> ReadSpecificChatAsync(int chatId) =>
             (await _context.ChatMessages.Where(c => c.Chat.Id == chatId)
                                         .Select(c => new ChatMessageDto
                                         {

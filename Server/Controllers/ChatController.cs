@@ -35,7 +35,7 @@ namespace ProjectBank.Server.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<IReadOnlyCollection<ChatMessageDto>> GetChatMessages(int userId)
-            => await _repository.ReadChatAsync(userId);
+            => await _repository.ReadSpecificChatAsync(userId);
 
         [Authorize]
         [HttpPost]
