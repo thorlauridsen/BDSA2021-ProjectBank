@@ -10,11 +10,13 @@ namespace ProjectBank.Server.Tests.Controllers
 {
     public class SupervisorControllerTests
     {
+        private Mock<ILogger<SupervisorController>> logger
+            = new Mock<ILogger<SupervisorController>>();
+
         [Fact]
         public async Task Create_creates_Supervisor()
         {
             // Arrange
-            var logger = new Mock<ILogger<SupervisorController>>();
             var toCreate = new SupervisorCreateDto();
             var created = new SupervisorDetailsDto(1, "John");
             var repository = new Mock<ISupervisorRepository>();
@@ -34,7 +36,6 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Get_returns_Supervisors_from_repo()
         {
             // Arrange
-            var logger = new Mock<ILogger<SupervisorController>>();
             var expected = Array.Empty<SupervisorDto>();
             var repository = new Mock<ISupervisorRepository>();
             repository.Setup(m => m.ReadAsync()).ReturnsAsync(expected);
@@ -51,7 +52,6 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Get_given_non_existing_returns_NotFound()
         {
             // Arrange
-            var logger = new Mock<ILogger<SupervisorController>>();
             var repository = new Mock<ISupervisorRepository>();
             repository.Setup(m => m.ReadAsync(11)).ReturnsAsync(default(SupervisorDetailsDto));
             var controller = new SupervisorController(logger.Object, repository.Object);
@@ -67,7 +67,6 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Get_given_existing_returns_Supervisor()
         {
             // Arrange
-            var logger = new Mock<ILogger<SupervisorController>>();
             var repository = new Mock<ISupervisorRepository>();
             var character = new SupervisorDetailsDto(1, "Jack");
             repository.Setup(m => m.ReadAsync(1)).ReturnsAsync(character);
@@ -84,7 +83,6 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Put_updates_Supervisor()
         {
             // Arrange
-            var logger = new Mock<ILogger<SupervisorController>>();
             var character = new SupervisorUpdateDto();
             var repository = new Mock<ISupervisorRepository>();
             repository.Setup(m => m.UpdateAsync(1, character)).ReturnsAsync(Updated);
@@ -101,7 +99,6 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Put_given_unknown_id_returns_NotFound()
         {
             // Arrange
-            var logger = new Mock<ILogger<SupervisorController>>();
             var character = new SupervisorUpdateDto();
             var repository = new Mock<ISupervisorRepository>();
             repository.Setup(m => m.UpdateAsync(1, character)).ReturnsAsync(NotFound);
@@ -118,7 +115,6 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Delete_given_non_existing_returns_NotFound()
         {
             // Arrange
-            var logger = new Mock<ILogger<SupervisorController>>();
             var repository = new Mock<ISupervisorRepository>();
             repository.Setup(m => m.DeleteAsync(11)).ReturnsAsync(Status.NotFound);
             var controller = new SupervisorController(logger.Object, repository.Object);
@@ -134,7 +130,6 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Delete_given_existing_returns_NoContent()
         {
             // Arrange
-            var logger = new Mock<ILogger<SupervisorController>>();
             var repository = new Mock<ISupervisorRepository>();
             repository.Setup(m => m.DeleteAsync(1)).ReturnsAsync(Status.Deleted);
             var controller = new SupervisorController(logger.Object, repository.Object);

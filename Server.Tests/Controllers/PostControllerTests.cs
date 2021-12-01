@@ -10,11 +10,13 @@ namespace ProjectBank.Server.Tests.Controllers
 {
     public class PostControllerTests
     {
+        private Mock<ILogger<PostController>> logger
+            = new Mock<ILogger<PostController>>();
+
         [Fact]
         public async Task Create_creates_Post()
         {
             // Arrange
-            var logger = new Mock<ILogger<PostController>>();
             var toCreate = new PostCreateDto();
             var created = new PostDetailsDto
             (
@@ -42,7 +44,6 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Get_returns_Posts_from_repo()
         {
             // Arrange
-            var logger = new Mock<ILogger<PostController>>();
             var expected = Array.Empty<PostDto>();
             var repository = new Mock<IPostRepository>();
             repository.Setup(m => m.ReadAsync()).ReturnsAsync(expected);
@@ -59,7 +60,6 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Get_given_non_existing_returns_NotFound()
         {
             // Arrange
-            var logger = new Mock<ILogger<PostController>>();
             var repository = new Mock<IPostRepository>();
             repository.Setup(m => m.ReadAsync(11)).ReturnsAsync(default(PostDetailsDto));
             var controller = new PostController(logger.Object, repository.Object);
@@ -75,7 +75,6 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Get_given_existing_returns_Post()
         {
             // Arrange
-            var logger = new Mock<ILogger<PostController>>();
             var repository = new Mock<IPostRepository>();
             var post = new PostDetailsDto
             (
@@ -97,10 +96,57 @@ namespace ProjectBank.Server.Tests.Controllers
         }
 
         [Fact]
+        public async Task GetBySupervisor_given_existing_returns_Post()
+        {
+            // Arrange
+            var expected = Array.Empty<PostDto>();
+            var repository = new Mock<IPostRepository>();
+            repository.Setup(m => m.ReadAsyncBySupervisor(1)).ReturnsAsync(expected);
+            var controller = new PostController(logger.Object, repository.Object);
+
+            // Act
+            var response = await controller.GetBySupervisor(1);
+
+            // Assert
+            Assert.Equal(expected, response);
+        }
+
+        [Fact]
+        public async Task GetByTag_given_existing_returns_Post()
+        {
+            // Arrange
+            var expected = Array.Empty<PostDto>();
+            var repository = new Mock<IPostRepository>();
+            repository.Setup(m => m.ReadAsyncByTag("Math")).ReturnsAsync(expected);
+            var controller = new PostController(logger.Object, repository.Object);
+
+            // Act
+            var response = await controller.GetByTag("Math");
+
+            // Assert
+            Assert.Equal(expected, response);
+        }
+
+        [Fact]
+        public async Task GetComments_given_existing_postId_returns_Comments()
+        {
+            // Arrange
+            var expected = Array.Empty<CommentDto>();
+            var repository = new Mock<IPostRepository>();
+            repository.Setup(m => m.ReadAsyncComments(1)).ReturnsAsync(expected);
+            var controller = new PostController(logger.Object, repository.Object);
+
+            // Act
+            var response = await controller.GetComments(1);
+
+            // Assert
+            Assert.Equal(expected, response);
+        }
+
+        [Fact]
         public async Task Put_updates_Post()
         {
             // Arrange
-            var logger = new Mock<ILogger<PostController>>();
             var post = new PostUpdateDto();
             var repository = new Mock<IPostRepository>();
             repository.Setup(m => m.UpdateAsync(1, post)).ReturnsAsync(Updated);
@@ -117,7 +163,6 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Put_given_unknown_id_returns_NotFound()
         {
             // Arrange
-            var logger = new Mock<ILogger<PostController>>();
             var post = new PostUpdateDto();
             var repository = new Mock<IPostRepository>();
             repository.Setup(m => m.UpdateAsync(1, post)).ReturnsAsync(NotFound);
@@ -134,7 +179,6 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Delete_given_non_existing_returns_NotFound()
         {
             // Arrange
-            var logger = new Mock<ILogger<PostController>>();
             var repository = new Mock<IPostRepository>();
             repository.Setup(m => m.DeleteAsync(11)).ReturnsAsync(Status.NotFound);
             var controller = new PostController(logger.Object, repository.Object);
@@ -150,7 +194,6 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Delete_given_existing_returns_NoContent()
         {
             // Arrange
-            var logger = new Mock<ILogger<PostController>>();
             var repository = new Mock<IPostRepository>();
             repository.Setup(m => m.DeleteAsync(1)).ReturnsAsync(Status.Deleted);
             var controller = new PostController(logger.Object, repository.Object);

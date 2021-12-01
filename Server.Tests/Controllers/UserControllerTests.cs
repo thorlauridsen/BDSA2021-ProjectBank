@@ -10,11 +10,13 @@ namespace ProjectBank.Server.Tests.Controllers
 {
     public class UserControllerTests
     {
+        private Mock<ILogger<UserController>> logger
+            = new Mock<ILogger<UserController>>();
+
         [Fact]
         public async Task Create_creates_User()
         {
             // Arrange
-            var logger = new Mock<ILogger<UserController>>();
             var toCreate = new UserCreateDto();
             var created = new UserDetailsDto(1, "John");
             var repository = new Mock<IUserRepository>();
@@ -34,7 +36,6 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Get_returns_Users_from_repo()
         {
             // Arrange
-            var logger = new Mock<ILogger<UserController>>();
             var expected = Array.Empty<UserDto>();
             var repository = new Mock<IUserRepository>();
             repository.Setup(m => m.ReadAsync()).ReturnsAsync(expected);
@@ -51,7 +52,6 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Get_given_non_existing_returns_NotFound()
         {
             // Arrange
-            var logger = new Mock<ILogger<UserController>>();
             var repository = new Mock<IUserRepository>();
             repository.Setup(m => m.ReadAsync(11)).ReturnsAsync(default(UserDetailsDto));
             var controller = new UserController(logger.Object, repository.Object);
@@ -67,7 +67,6 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Get_given_existing_returns_User()
         {
             // Arrange
-            var logger = new Mock<ILogger<UserController>>();
             var repository = new Mock<IUserRepository>();
             var character = new UserDetailsDto(1, "Jack");
             repository.Setup(m => m.ReadAsync(1)).ReturnsAsync(character);
@@ -84,7 +83,6 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Put_updates_User()
         {
             // Arrange
-            var logger = new Mock<ILogger<UserController>>();
             var character = new UserUpdateDto();
             var repository = new Mock<IUserRepository>();
             repository.Setup(m => m.UpdateAsync(1, character)).ReturnsAsync(Updated);
@@ -101,7 +99,6 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Put_given_unknown_id_returns_NotFound()
         {
             // Arrange
-            var logger = new Mock<ILogger<UserController>>();
             var character = new UserUpdateDto();
             var repository = new Mock<IUserRepository>();
             repository.Setup(m => m.UpdateAsync(1, character)).ReturnsAsync(NotFound);
@@ -118,7 +115,6 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Delete_given_non_existing_returns_NotFound()
         {
             // Arrange
-            var logger = new Mock<ILogger<UserController>>();
             var repository = new Mock<IUserRepository>();
             repository.Setup(m => m.DeleteAsync(11)).ReturnsAsync(Status.NotFound);
             var controller = new UserController(logger.Object, repository.Object);
@@ -134,7 +130,6 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Delete_given_existing_returns_NoContent()
         {
             // Arrange
-            var logger = new Mock<ILogger<UserController>>();
             var repository = new Mock<IUserRepository>();
             repository.Setup(m => m.DeleteAsync(1)).ReturnsAsync(Status.Deleted);
             var controller = new UserController(logger.Object, repository.Object);

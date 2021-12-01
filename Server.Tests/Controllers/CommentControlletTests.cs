@@ -10,11 +10,13 @@ namespace ProjectBank.Server.Tests.Controllers
 {
     public class CommentControllerTests
     {
+        private Mock<ILogger<CommentController>> logger
+            = new Mock<ILogger<CommentController>>();
+
         [Fact]
         public async Task Create_creates_Comment()
         {
             // Arrange
-            var logger = new Mock<ILogger<CommentController>>();
             var toCreate = new CommentCreateDto();
             var created = new CommentDetailsDto(1, "Hello there", DateTime.Now, 1, 1);
             var repository = new Mock<ICommentRepository>();
@@ -34,7 +36,6 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Get_returns_Comments_from_repo()
         {
             // Arrange
-            var logger = new Mock<ILogger<CommentController>>();
             var expected = Array.Empty<CommentDto>();
             var repository = new Mock<ICommentRepository>();
             repository.Setup(m => m.ReadAsync()).ReturnsAsync(expected);
@@ -51,7 +52,6 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Get_given_non_existing_returns_NotFound()
         {
             // Arrange
-            var logger = new Mock<ILogger<CommentController>>();
             var repository = new Mock<ICommentRepository>();
             repository.Setup(m => m.ReadAsync(11)).ReturnsAsync(default(CommentDetailsDto));
             var controller = new CommentController(logger.Object, repository.Object);
@@ -67,7 +67,6 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Get_given_existing_returns_Comment()
         {
             // Arrange
-            var logger = new Mock<ILogger<CommentController>>();
             var repository = new Mock<ICommentRepository>();
             var comment = new CommentDetailsDto(1, "Hello there", DateTime.Now, 1, 1);
             repository.Setup(m => m.ReadAsync(1)).ReturnsAsync(comment);
@@ -84,7 +83,6 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Put_updates_Comment()
         {
             // Arrange
-            var logger = new Mock<ILogger<CommentController>>();
             var comment = new CommentUpdateDto();
             var repository = new Mock<ICommentRepository>();
             repository.Setup(m => m.UpdateAsync(1, comment)).ReturnsAsync(Updated);
@@ -101,7 +99,6 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Put_given_unknown_id_returns_NotFound()
         {
             // Arrange
-            var logger = new Mock<ILogger<CommentController>>();
             var comment = new CommentUpdateDto();
             var repository = new Mock<ICommentRepository>();
             repository.Setup(m => m.UpdateAsync(1, comment)).ReturnsAsync(NotFound);
@@ -118,7 +115,6 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Delete_given_non_existing_returns_NotFound()
         {
             // Arrange
-            var logger = new Mock<ILogger<CommentController>>();
             var repository = new Mock<ICommentRepository>();
             repository.Setup(m => m.DeleteAsync(11)).ReturnsAsync(Status.NotFound);
             var controller = new CommentController(logger.Object, repository.Object);
@@ -134,7 +130,6 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Delete_given_existing_returns_NoContent()
         {
             // Arrange
-            var logger = new Mock<ILogger<CommentController>>();
             var repository = new Mock<ICommentRepository>();
             repository.Setup(m => m.DeleteAsync(1)).ReturnsAsync(Status.Deleted);
             var controller = new CommentController(logger.Object, repository.Object);

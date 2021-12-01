@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using ProjectBank.Core;
@@ -9,11 +8,13 @@ namespace ProjectBank.Server.Tests.Controllers
 {
     public class NotificationControllerTests
     {
+        private Mock<ILogger<NotificationController>> logger
+            = new Mock<ILogger<NotificationController>>();
+
         [Fact]
         public async Task Get_returns_Notifications_from_repo()
         {
             // Arrange
-            var logger = new Mock<ILogger<NotificationController>>();
             var expected = Array.Empty<NotificationDetailsDto>();
             var repository = new Mock<INotificationRepository>();
             repository.Setup(m => m.GetNotificationsAsync(1)).ReturnsAsync(expected);
@@ -24,6 +25,18 @@ namespace ProjectBank.Server.Tests.Controllers
 
             // Assert
             Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public async Task CreateAsync_creates_Notification()
+        {
+            //TODO: Implement CreateAsync unit test
+        }
+
+        [Fact]
+        public async Task SeenNotification()
+        {
+            //TODO: Implement SeenNotification unit test
         }
     }
 }
