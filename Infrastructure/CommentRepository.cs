@@ -17,7 +17,7 @@ namespace ProjectBank.Infrastructure
             {
                 Content = comment.Content,
                 UserId = comment.UserId,
-                DateAdded = comment.DateAdded,
+                DateAdded = DateTime.Now,
                 PostId = comment.PostId
             };
 
@@ -71,7 +71,6 @@ namespace ProjectBank.Infrastructure
             }
 
             entity.Content = comment.Content;
-            entity.DateAdded = comment.DateAdded;
 
             await _context.SaveChangesAsync();
 

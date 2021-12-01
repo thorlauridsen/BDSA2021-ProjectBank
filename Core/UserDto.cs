@@ -8,15 +8,12 @@ namespace ProjectBank.Core
 
     public record UserCreateDto
     {
-
         [StringLength(50)]
         public string Name { get; init; }
-
     }
 
     public record UserUpdateDto : UserCreateDto
     {
-
         public int Id { get; init; }
     }
 }
