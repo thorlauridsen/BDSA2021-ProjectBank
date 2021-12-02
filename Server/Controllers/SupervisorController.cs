@@ -29,10 +29,10 @@ namespace ProjectBank.Server.Controllers
             => await _repository.ReadAsync();
 
         [AllowAnonymous]
-        [HttpGet("{userId}")]
+        [HttpGet("{userId}", Name = "GetBySupervisorId")]
         [ProducesResponseType(typeof(SupervisorDetailsDto), 200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<SupervisorDetailsDto>> Get(int userId)
+        public async Task<ActionResult<SupervisorDetailsDto>> GetBySupervisorId(int userId)
             => (await _repository.ReadAsync(userId)).ToActionResult();
 
         [Authorize]
@@ -41,7 +41,7 @@ namespace ProjectBank.Server.Controllers
         public async Task<IActionResult> Post(SupervisorCreateDto supervisor)
         {
             var created = await _repository.CreateAsync(supervisor);
-            return CreatedAtRoute(nameof(Get), new { created.Id }, created);
+            return CreatedAtRoute(nameof(GetBySupervisorId), new { created.Id }, created);
         }
 
         [Authorize]

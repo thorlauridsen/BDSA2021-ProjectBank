@@ -3,6 +3,9 @@
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using Microsoft.Extensions.DependencyInjection
 @inject HttpClient _http
+@implements IDisposable
+@inject ILogger<CommentSection> Logger
+@inject NavigationManager uriHelper;
 
 <div class="container my-4">
     <div class="row d-flex justify-content-center">
@@ -18,7 +21,7 @@
                     <Comment UserID="@comment.UserId" CommentID="@comment.Id" Published="@comment.DateAdded" Content="@comment.Content"></Comment>
                 }
             }
-            <EditForm Model="commentModel">
+            <EditForm EditContext="@editContext"  OnValidSubmit="@HandleValidSubmit">
                 <DataAnnotationsValidator/>
                 <ValidationSummary/>
                 <div class="d-flex my-4">
@@ -26,7 +29,7 @@
                         <InputText @bind-Value="commentModel.comment" type="text" id="comment-input" class="form-control" placeholder="Message"/>
                     </div>
                     <div class="col-3 d-flex">
-                        <button type="submit" class="btn btn-primary col-12">Comment</button>
+                        <button type="submit" class="btn btn-primary col-12" disabled="@formInvalid">Comment</button>
                     </div>
                 </div>
             </EditForm>
@@ -40,7 +43,53 @@
 
     private IList<CommentDto>? _postComments { get; set; }
     CommentModel commentModel = new CommentModel();
+    
+    private EditContext? editContext;
+    private bool formInvalid = true;
+    
+    protected override void OnInitialized()
+    {
+        editContext = new EditContext(commentModel);
+        editContext.OnFieldChanged += HandleFieldChanged;
+    }
+    
+    private void HandleFieldChanged(object? sender, FieldChangedEventArgs e)
+    {
+        if (editContext is null) return;
+        formInvalid = !editContext.Validate();
+        StateHasChanged();
+    }
+    
+    private async void HandleValidSubmit()
+    {
+        Logger.LogInformation("HandleValidSubmit called");
+        Logger.LogInformation(commentModel.comment); 
+        var comment = new CommentCreateDto
+        {
+            Content = commentModel.comment,
+            UserId = 1, // TODO: Get correct userId from database.
+            PostId = Post.Id
+        };
+        var response = await _http.PostAsJsonAsync("Comment", comment);
+        if (response.IsSuccessStatusCode)
+        {
+            uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true); // TODO: Add a legitimate error handling. (below)
+        } else
+        {
+            Logger.LogCritical("Critical status code: " + response.StatusCode);
+        }
 
+    // Process the valid form
+    }
+
+    public void Dispose()
+    {
+        if (editContext is not null)
+        {
+            editContext.OnFieldChanged -= HandleFieldChanged;
+        }
+    }
+    
     class CommentModel
     {
         public string comment { get; set; }
@@ -56,7 +105,6 @@
             exception.Redirect();
         }
     }
-    
-    
+
 
 }

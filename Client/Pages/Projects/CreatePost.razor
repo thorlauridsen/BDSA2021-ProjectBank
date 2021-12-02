@@ -1,10 +1,14 @@
 ﻿@page "/projects/create"
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components
+@using ProjectBank.Core
 @using ProjectBank.Shared.forms
 @attribute [Authorize]
 @implements IDisposable
 @inject ILogger<CreatePost> Logger
+@inject NavigationManager uriHelper;
+@inject HttpClient _http
+
 <PageTitle>Create post</PageTitle>
 
 <h1>Create post</h1>
@@ -45,13 +49,30 @@
         StateHasChanged();
     }
 
-    private void HandleValidSubmit()
+    private async void HandleValidSubmit()
     {
-        Logger.LogInformation("HandleValidSubmit called");
-
+        Logger.LogInformation("CreatePost called");
+        var post = new PostCreateDto()
+        {
+            Title = postFormModel.Title,
+            Content = postFormModel.Content,
+            SupervisorId = 1, // TODO: Get correct SupervisorId from database. Be aware of friday 3. 
+            Tags = postFormModel.Tags.Split(",").Select(t => t.Trim()).ToHashSet()
+        };
+        var response = await _http.PostAsJsonAsync("Post", post);
+        if (response.IsSuccessStatusCode)
+        {
+            var postId = await response.Content.ReadFromJsonAsync<PostDetailsDto>();
+            uriHelper.NavigateTo("/Projects/" + postId.Id, forceLoad: true); // TODO: Is supposed to navigate to the post's personal uri. Currently returns a crit code. 
+        }
+        else
+        {
+            Logger.LogCritical("Critical status code: " + response.StatusCode);
+        }
     // Process the valid form
     }
-
+    
+    
     public void Dispose()
     {
         if (editContext is not null)
