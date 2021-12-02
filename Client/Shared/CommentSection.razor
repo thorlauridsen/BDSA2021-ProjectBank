@@ -1,8 +1,23 @@
-﻿<div class="container my-4">
+﻿@using ProjectBank.Core
+@using System.Net
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using Microsoft.Extensions.DependencyInjection
+@inject HttpClient _http
+
+<div class="container my-4">
     <div class="row d-flex justify-content-center">
         <div class="px-4 shadow">
-            <Comment Src="https://eu.ui-avatars.com/api/?name=Philip+Cronval&background=random" Name="Philip Cronval" Published="DateTime.Now" Content="Vel aliquam et voluptatum est nam quia dolorem aspernatur. Et aliquid et quibusdam ut totam. Ut beatae ut rerum provident. Non ut dolores molestiae repellendus exercitationem odio maiores. Veritatis dignis"></Comment>
-            <Comment Src="https://eu.ui-avatars.com/api/?name=Philip+Cronval&background=random" Name="Philip Cronval" Published="DateTime.Now" Content="Vel aliquam et voluptatum est nam quia dolorem aspernatur. Et aliquid et quibusdam ut totam. Ut beatae ut rerum provident. Non ut dolores molestiae repellendus exercitationem odio maiores. Veritatis dignis"></Comment>
+            @if (_postComments == null)
+            {
+                <p>Loading...</p>
+            }
+            else
+            {
+                @foreach (var comment in _postComments)
+                {
+                    <Comment UserID="@comment.UserId" CommentID="@comment.Id" Published="@comment.DateAdded" Content="@comment.Content"></Comment>
+                }
+            }
             <EditForm Model="commentModel">
                 <DataAnnotationsValidator/>
                 <ValidationSummary/>
@@ -20,12 +35,28 @@
 </div>
 
 @code {
+    [Parameter] 
+    public PostDto Post { get; set; }
+
+    private IList<CommentDto>? _postComments { get; set; }
     CommentModel commentModel = new CommentModel();
 
     class CommentModel
     {
         public string comment { get; set; }
     }
-
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _postComments = await _http.GetFromJsonAsync<List<CommentDto>>("Post/" + Post.Id + "/comments");
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+    }
+    
+    
 
 }

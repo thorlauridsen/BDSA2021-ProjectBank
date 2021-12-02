@@ -28,7 +28,7 @@
                         </div>
                     </div>
 
-                    <CommentSection></CommentSection>
+                    <CommentSection post="@Post"></CommentSection>
                 </div>
                 <div class="col-md-3 col-10">
                     <div class="shadow p-4 text-center m-2">
@@ -75,8 +75,4 @@
         }
     }
 
-    /*foreach (var post in Posts)
-            {
-                PostComments.Add(post.Id, await WebRequestMethods.Http.GetFromJsonAsync<List<CommentDto>>("Post/" + post.Id + "/comments"));
-            }*/
 }

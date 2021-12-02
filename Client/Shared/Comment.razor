@@ -1,8 +1,14 @@
 ﻿@using ProjectBank.Client.Extensions
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using ProjectBank.Core
+@inject IJSRuntime JsRuntime
+@inject HttpClient _http
+@inject NavigationManager uriHelper;
+
 <div class="d-flex flex-start my-4">
     <img
         class="rounded-circle shadow me-3"
-        src="@Src"
+        src="@ImgSrc"
         alt="avatar"
         width="40"
         height="40"/>
@@ -11,6 +17,7 @@
             <p class="mb-1">
                 @Name <span class="small">- @Published.GetTimeSince()</span>
             </p>
+            <button class="btn btn-danger" onclick="@DeleteComment">Delete</button>
         </div>
         <p class="small mb-0">
             @Content
@@ -19,12 +26,16 @@
 </div>
 
 @code {
-
     [Parameter]
-    public string Src { get; set; }
-
+    public int CommentID { get; set; }
+    
     [Parameter]
-    public string Name { get; set; }
+    public int UserID { get; set; }
+    
+    private string ImgSrc { get; set; }
+
+    
+    private string Name { get; set; }
 
     [Parameter]
     public string Content { get; set; }
@@ -32,4 +43,38 @@
     [Parameter]
     public DateTime Published { get; set; }
 
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            ImgSrc = "https://eu.ui-avatars.com/api/?name=Philip+Cronval&background=random";
+            var _user = await _http.GetFromJsonAsync<UserDetailsDto>("User/" + UserID);
+            Name = _user.Name;
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+    }
+    
+    private async Task DeleteComment(MouseEventArgs mouseEventArgs)
+    {
+        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?"); // Confirm
+        if(confirmed)
+        {
+            var _response = await _http.DeleteAsync($"Comment/{CommentID}");
+            if(_response.IsSuccessStatusCode){
+            reloadPage();
+            }
+            else
+            {
+                await JsRuntime.InvokeAsync<bool>("alert", "Deletion of comment failed"); // Confirm
+            }
+        }
+    }
+
+    private void reloadPage()
+    {
+        uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
+    }
 }
