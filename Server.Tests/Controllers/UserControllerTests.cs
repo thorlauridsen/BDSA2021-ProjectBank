@@ -28,8 +28,8 @@ namespace ProjectBank.Server.Tests.Controllers
 
             // Assert
             Assert.Equal(created, result?.Value);
-            Assert.Equal("Get", result?.RouteName);
-            Assert.Equal(KeyValuePair.Create("Id", (object?)1), result?.RouteValues?.Single());
+            Assert.Equal("GetByUserId", result?.RouteName);
+            Assert.Equal(KeyValuePair.Create("userId", (object?)1), result?.RouteValues?.Single());
         }
 
         [Fact]
@@ -57,7 +57,7 @@ namespace ProjectBank.Server.Tests.Controllers
             var controller = new UserController(logger.Object, repository.Object);
 
             // Act
-            var response = await controller.Get(11);
+            var response = await controller.GetByUserId(11);
 
             // Assert
             Assert.IsType<NotFoundResult>(response.Result);
@@ -73,7 +73,7 @@ namespace ProjectBank.Server.Tests.Controllers
             var controller = new UserController(logger.Object, repository.Object);
 
             // Act
-            var response = await controller.Get(1);
+            var response = await controller.GetByUserId(1);
 
             // Assert
             Assert.Equal(character, response.Value);

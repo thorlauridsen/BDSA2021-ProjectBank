@@ -36,7 +36,7 @@ namespace ProjectBank.Server.Tests.Controllers
 
             // Assert
             Assert.Equal(created, result?.Value);
-            Assert.Equal("Get", result?.RouteName);
+            Assert.Equal("GetByPostId", result?.RouteName);
             Assert.Equal(KeyValuePair.Create("Id", (object?)1), result?.RouteValues?.Single());
         }
 
@@ -65,7 +65,7 @@ namespace ProjectBank.Server.Tests.Controllers
             var controller = new PostController(logger.Object, repository.Object);
 
             // Act
-            var response = await controller.Get(11);
+            var response = await controller.GetByPostId(11);
 
             // Assert
             Assert.IsType<NotFoundResult>(response.Result);
@@ -89,7 +89,7 @@ namespace ProjectBank.Server.Tests.Controllers
             var controller = new PostController(logger.Object, repository.Object);
 
             // Act
-            var response = await controller.Get(1);
+            var response = await controller.GetByPostId(1);
 
             // Assert
             Assert.Equal(post, response.Value);
