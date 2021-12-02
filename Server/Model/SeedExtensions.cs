@@ -40,13 +40,61 @@ namespace ProjectBank.Server.Model
                 context.Users.Add(generatedUser3);
             }
 
+            var tag_biology = new Tag("Biology");
+            var tag_machine_learning = new Tag("machine learning");
+            var tag_data_science = new Tag("data science");
+            var tag_medical_imaging = new Tag("medical imaging");
+            var tag_natural_language_processing = new Tag("natural language processing");
+            var tag_literature_review = new Tag("literature review");
+            var tag_Satellite = new Tag("Satellite");
+            var tag_Cubesat = new Tag("Cubesat");
+            var tag_Image_processing = new Tag("Image processing");
+            var tag_edge = new Tag("edge");
+            var tag_IoT = new Tag("IoT");
+            var tag_sensors = new Tag("sensors");
+            var tag_security = new Tag("security");
+            var tag_acoustics = new Tag("acoustics");
+            var tag_LoRaWAN = new Tag("LoRaWAN");
+            var tag_LPWAN = new Tag("LPWAN");
+            var tag_networks = new Tag("networks");
+            var tag_computer_vision = new Tag("computer vision");
+            var tag_constrained_computing = new Tag("constrained computing");
+            var tag_location = new Tag("location");
+            var tag_spatial_data_analysis = new Tag("spatial data analysis");
+            var tag_OSM_data = new Tag("OSM data");
+            var tag_visualisation = new Tag("visualisation");
+            var tag_Python = new Tag("Python");
+            var tag_graph_summaries = new Tag("graph summaries");
+            var tag_hyperbolic_embeddings = new Tag("hyperbolic embeddings");
+            var tag_graph_neural_networks = new Tag("graph neural networks");
+            var tag_timeseries_data = new Tag("timeseries data");
+            var tag_multimedia_analytics = new Tag("multimedia analytics");
+            var tag_scalability = new Tag("scalability");
+            var tag_diversity = new Tag("diversity");
+            var tag_video_search = new Tag("video search");
+            var tag_photocube = new Tag("photocube");
+            var tag_virtual_reality = new Tag("virtual reality");
+            var tag_SSD = new Tag("SSD");
+            var tag_benchmarking = new Tag("benchmarking");
+            var tag_ARM = new Tag("ARM");
+            var tag_SOC = new Tag("SoC");
+            var tag_fabric = new Tag("fabric");
+            var tag_computational_storage = new Tag("computational storage");
+            var tag_NVIDIA_JETSON = new Tag("NVIDIA Jetson");
+            var tag_Raspberry_Pi = new Tag("Raspberry Pi");
+            var tag_Odroid = new Tag("Odroid");
+            var tag_hardware_resource_consumption = new Tag("hardware resource consumption");
+            var tag_deep_learning_frameworks = new Tag("deep learning frameworks");
+            var tag_network_design = new Tag("Network Design");
+            var tag_scalable_algorithms = new Tag("Scalable Algorithms");
+            var tag_Spotify_data = new Tag("Spotify data");
             var post = new Post
             {
                 Title = "Biology Project",
                 Content = "My Cool Biology Project",
                 DateAdded = DateTime.Now,
                 User = user1,
-                Tags = new HashSet<Tag>() {new Tag("Biology")}
+                Tags = new HashSet<Tag>() {tag_biology}
             };
             if (!context.Posts.Any())
             {
@@ -58,7 +106,7 @@ namespace ProjectBank.Server.Model
                     DateAdded = DateTime.Now,
                     User = generatedUser0,
                     Tags = new HashSet<Tag>()
-                        {new Tag("machine learning"), new Tag("data science"), new Tag("medical imaging")}
+                        {tag_machine_learning, tag_data_science, tag_medical_imaging}
                 };
                 context.Posts.Add(generatedPost0);
                 var generatedPost1 = new Post
@@ -70,8 +118,8 @@ namespace ProjectBank.Server.Model
                     User = generatedUser0,
                     Tags = new HashSet<Tag>()
                     {
-                        new Tag("machine learning"), new Tag("natural language processing"), new Tag("medical imaging"),
-                        new Tag("literature review")
+                        tag_machine_learning, tag_natural_language_processing, tag_medical_imaging,
+                        tag_literature_review
                     }
                 };
                 context.Posts.Add(generatedPost1);
@@ -83,7 +131,7 @@ namespace ProjectBank.Server.Model
                     DateAdded = DateTime.Now,
                     User = generatedUser0,
                     Tags = new HashSet<Tag>()
-                        {new Tag("machine learning"), new Tag("data science"), new Tag("medical imaging")}
+                        {tag_machine_learning, tag_data_science, tag_medical_imaging}
                 };
                 context.Posts.Add(generatedPost2);
                 var generatedPost3 = new Post
@@ -95,9 +143,9 @@ namespace ProjectBank.Server.Model
                     User = generatedUser1,
                     Tags = new HashSet<Tag>()
                     {
-                        new Tag("Satellite"), new Tag("Cubesat"), new Tag("Image processing"),
-                        new Tag("Machine Learning"),
-                        new Tag("edge"), new Tag("constrained computing")
+                        tag_Satellite, tag_Cubesat, tag_Image_processing,
+                        tag_machine_learning,
+                        tag_edge, tag_constrained_computing
                     }
                 };
                 context.Posts.Add(generatedPost3);
@@ -110,8 +158,8 @@ namespace ProjectBank.Server.Model
                     User = generatedUser1,
                     Tags = new HashSet<Tag>()
                     {
-                        new Tag("IoT"), new Tag("ML"), new Tag("machineLearning"), new Tag("sensors"),
-                        new Tag("security")
+                        tag_IoT, tag_machine_learning, tag_sensors,
+                        tag_security
                     }
                 };
                 context.Posts.Add(generatedPost4);
@@ -123,7 +171,7 @@ namespace ProjectBank.Server.Model
                     DateAdded = DateTime.Now,
                     User = generatedUser1,
                     Tags = new HashSet<Tag>()
-                        {new Tag("IoT"), new Tag("sensors"), new Tag("machine learning"), new Tag("acoustics")}
+                        {tag_IoT, tag_sensors, tag_machine_learning, tag_acoustics}
                 };
                 context.Posts.Add(generatedPost5);
                 var generatedPost6 = new Post
@@ -135,8 +183,8 @@ namespace ProjectBank.Server.Model
                     User = generatedUser1,
                     Tags = new HashSet<Tag>()
                     {
-                        new Tag("IoT"), new Tag("LoRaWAN"), new Tag("LPWAN"), new Tag("satellite"), new Tag("networks"),
-                        new Tag("edge"), new Tag("security")
+                        tag_IoT, tag_LoRaWAN, tag_LPWAN, tag_Satellite, tag_networks,
+                        tag_edge, tag_security
                     }
                 };
                 context.Posts.Add(generatedPost6);
@@ -148,7 +196,7 @@ namespace ProjectBank.Server.Model
                     DateAdded = DateTime.Now,
                     User = generatedUser1,
                     Tags = new HashSet<Tag>()
-                        {new Tag("IoT"), new Tag("sensors"), new Tag("machine learning"), new Tag("computer vision")}
+                        {tag_IoT, tag_sensors, tag_machine_learning, tag_computer_vision}
                 };
                 context.Posts.Add(generatedPost7);
                 var generatedPost8 = new Post
@@ -160,8 +208,8 @@ namespace ProjectBank.Server.Model
                     User = generatedUser1,
                     Tags = new HashSet<Tag>()
                     {
-                        new Tag("Satellite"), new Tag("Image processing"), new Tag("Machine Learning"), new Tag("edge"),
-                        new Tag("constrained computing"), new Tag("IoT"), new Tag("sensors"), new Tag("location")
+                        tag_Satellite, tag_Image_processing, tag_machine_learning, tag_edge,
+                        tag_constrained_computing, tag_IoT, tag_sensors, tag_location
                     }
                 };
                 context.Posts.Add(generatedPost8);
@@ -174,9 +222,9 @@ namespace ProjectBank.Server.Model
                     User = generatedUser1,
                     Tags = new HashSet<Tag>()
                     {
-                        new Tag("Satellite"), new Tag("Cubesat"), new Tag("Image processing"),
-                        new Tag("Machine Learning"),
-                        new Tag("edge"), new Tag("constrained computing")
+                        tag_Satellite, tag_Cubesat, tag_Image_processing,
+                        tag_machine_learning,
+                        tag_edge, tag_constrained_computing
                     }
                 };
                 context.Posts.Add(generatedPost9);
@@ -189,8 +237,8 @@ namespace ProjectBank.Server.Model
                     User = generatedUser2,
                     Tags = new HashSet<Tag>()
                     {
-                        new Tag("spatial data analysis"), new Tag("visualisation"), new Tag("Python"),
-                        new Tag("OSM data")
+                        tag_spatial_data_analysis, tag_visualisation, tag_Python,
+                        tag_OSM_data
                     }
                 };
                 context.Posts.Add(generatedPost10);
@@ -203,8 +251,8 @@ namespace ProjectBank.Server.Model
                     User = generatedUser2,
                     Tags = new HashSet<Tag>()
                     {
-                        new Tag("spatial data analysis"), new Tag("network design"), new Tag("Python"),
-                        new Tag("OSM data")
+                        tag_spatial_data_analysis, tag_network_design, tag_Python,
+                        tag_OSM_data
                     }
                 };
                 context.Posts.Add(generatedPost11);
@@ -217,8 +265,8 @@ namespace ProjectBank.Server.Model
                     User = generatedUser2,
                     Tags = new HashSet<Tag>()
                     {
-                        new Tag("spatial data analysis"), new Tag("graph summaries"), new Tag("Python"),
-                        new Tag("OSM data")
+                        tag_spatial_data_analysis, tag_graph_summaries, tag_Python,
+                        tag_OSM_data
                     }
                 };
                 context.Posts.Add(generatedPost12);
@@ -231,8 +279,8 @@ namespace ProjectBank.Server.Model
                     User = generatedUser2,
                     Tags = new HashSet<Tag>()
                     {
-                        new Tag("scalable algorithms"), new Tag("hyperbolic embeddings"), new Tag("Python"),
-                        new Tag("Spotify data")
+                        tag_scalable_algorithms, tag_hyperbolic_embeddings, tag_Python,
+                        tag_Spotify_data
                     }
                 };
                 context.Posts.Add(generatedPost13);
@@ -245,8 +293,8 @@ namespace ProjectBank.Server.Model
                     User = generatedUser2,
                     Tags = new HashSet<Tag>()
                     {
-                        new Tag("spatial data analysis"), new Tag("graph neural networks"), new Tag("Python"),
-                        new Tag("timeseries data")
+                        tag_spatial_data_analysis, tag_graph_neural_networks, tag_Python,
+                        tag_timeseries_data
                     }
                 };
                 context.Posts.Add(generatedPost14);
@@ -258,7 +306,7 @@ namespace ProjectBank.Server.Model
                     DateAdded = DateTime.Now,
                     User = generatedUser3,
                     Tags = new HashSet<Tag>()
-                        {new Tag("multimedia analytics"), new Tag("scalability"), new Tag("diversity")}
+                        {tag_multimedia_analytics, tag_scalability, tag_diversity}
                 };
                 context.Posts.Add(generatedPost15);
                 var generatedPost16 = new Post
@@ -268,7 +316,7 @@ namespace ProjectBank.Server.Model
                         "In interactive learning systems, such as Exquisitor, the system presents potentially relevant images to users who label them as either relevant or irrelevant. Currently, Exquisitor uses a cluster-based index, which allows it to return results from a collection of 100 million images in 0.3 seconds. The goal of this project is to study the application of hash-based indexing to interactive learning",
                     DateAdded = DateTime.Now,
                     User = generatedUser3,
-                    Tags = new HashSet<Tag>() {new Tag("multimedia analytics"), new Tag("diversity")}
+                    Tags = new HashSet<Tag>() {tag_multimedia_analytics, tag_diversity}
                 };
                 context.Posts.Add(generatedPost16);
                 var generatedPost17 = new Post
@@ -279,7 +327,7 @@ namespace ProjectBank.Server.Model
                     DateAdded = DateTime.Now,
                     User = generatedUser3,
                     Tags = new HashSet<Tag>()
-                        {new Tag("video search"), new Tag("multimedia analytics"), new Tag("photocube")}
+                        {tag_video_search, tag_multimedia_analytics, tag_photocube}
                 };
                 context.Posts.Add(generatedPost17);
                 var generatedPost18 = new Post
@@ -289,19 +337,10 @@ namespace ProjectBank.Server.Model
                         "We are actively developing a new prototype for analysing large multimedia collections in virtual reality, based on the ObjectCube data model. There are many ways in which students can contribute to the project, including work on the user interface and the back-end, and later on running large-scale user experiments. Read more",
                     DateAdded = DateTime.Now,
                     User = generatedUser4,
-                    Tags = new HashSet<Tag>() {new Tag("virtual reality"), new Tag("multimedia analytics")}
+                    Tags = new HashSet<Tag>() {tag_virtual_reality, tag_multimedia_analytics}
                 };
                 context.Posts.Add(generatedPost18);
-                var generatedPost19 = new Post
-                {
-                    Title = "Virtual Reality Analytics",
-                    Content =
-                        "We are actively developing a new prototype for analysing large multimedia collections in virtual reality, based on the ObjectCube data model. There are many ways in which students can contribute to the project, including work on the user interface and the back-end, and later on running large-scale user experiments. Read more",
-                    DateAdded = DateTime.Now,
-                    User = generatedUser4,
-                    Tags = new HashSet<Tag>() {new Tag("virtual reality"), new Tag("multimedia analytics")}
-                };
-                context.Posts.Add(generatedPost19);
+               
                 var generatedPost20 = new Post
                 {
                     Title = "Analysis of NVMe SSDs and the IO stack",
@@ -309,7 +348,7 @@ namespace ProjectBank.Server.Model
                         "NVMe SSDs are not a uniform class of devices. IO software stack is not uniform either. Understanding the performance characteristics of new-generation SSDs and the impact of the IO stack on their performance is crucial while determining how to design data-intensive systems. In this project, we would like to characterize the performance of a range of NVMe SSDs (e.g., Samsung Z-SSD, Intel Optane,",
                     DateAdded = DateTime.Now,
                     User = generatedUser5,
-                    Tags = new HashSet<Tag>() {new Tag("SSD"), new Tag("benchmarking")}
+                    Tags = new HashSet<Tag>() {tag_SSD, tag_benchmarking}
                 };
                 context.Posts.Add(generatedPost20);
                 var generatedPost21 = new Post
@@ -321,8 +360,8 @@ namespace ProjectBank.Server.Model
                     User = generatedUser5,
                     Tags = new HashSet<Tag>()
                     {
-                        new Tag("benchmarking"), new Tag("ARM"), new Tag("SoC"), new Tag("fabric"), new Tag("SSD"),
-                        new Tag("computational storage")
+                        tag_benchmarking, tag_ARM, tag_SOC, tag_fabric, tag_SSD,
+                        tag_computational_storage
                     }
                 };
                 context.Posts.Add(generatedPost21);
@@ -334,7 +373,7 @@ namespace ProjectBank.Server.Model
                     DateAdded = DateTime.Now,
                     User = generatedUser5,
                     Tags = new HashSet<Tag>()
-                        {new Tag("edge"), new Tag("NVIDIA Jetson"), new Tag("Raspberry Pi"), new Tag("Odroid")}
+                        {tag_edge, tag_NVIDIA_JETSON, tag_Raspberry_Pi, tag_Odroid}
                 };
                 context.Posts.Add(generatedPost22);
                 var generatedPost23 = new Post
@@ -346,8 +385,8 @@ namespace ProjectBank.Server.Model
                     User = generatedUser5,
                     Tags = new HashSet<Tag>()
                     {
-                        new Tag("benchmarking"), new Tag("hardware resource consumption"),
-                        new Tag("deep learning frameworks")
+                        tag_benchmarking, tag_hardware_resource_consumption,
+                        tag_deep_learning_frameworks
                     }
                 };
                 context.Posts.Add(generatedPost23);
