@@ -30,10 +30,10 @@ namespace ProjectBank.Server.Controllers
             => (await _repository.CreateAsync(notification)).ToActionResult();
 
         [AllowAnonymous]
-        [HttpGet("{userId}")]
+        [HttpGet("{userId}",  Name = "GetByNotificationId")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<IReadOnlyCollection<NotificationDetailsDto>> Get(int userId)
+        public async Task<IReadOnlyCollection<NotificationDetailsDto>> GetByNotificationId(int userId)
             => await _repository.GetNotificationsAsync(userId);
 
         [Authorize]

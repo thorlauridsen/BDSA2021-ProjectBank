@@ -29,10 +29,10 @@ namespace ProjectBank.Server.Controllers
             => await _repository.ReadAsync();
 
         [AllowAnonymous]
-        [HttpGet("{commentId}")]
+        [HttpGet("{commentId}", Name = "GetByCommentId")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<CommentDetailsDto>> Get(int commentId)
+        public async Task<ActionResult<CommentDetailsDto>> GetByCommentId(int commentId)
             => (await _repository.ReadAsync(commentId)).ToActionResult();
 
         [Authorize]
@@ -41,7 +41,7 @@ namespace ProjectBank.Server.Controllers
         public async Task<IActionResult> Post(CommentCreateDto comment)
         {
             var created = await _repository.CreateAsync(comment);
-            return CreatedAtRoute(nameof(Get), new { created.Id }, created);
+            return CreatedAtRoute(nameof(GetByCommentId), new { commentId = created.Id }, created);
         }
 
         [Authorize]

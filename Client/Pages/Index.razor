@@ -1,4 +1,8 @@
 ﻿@page "/"
+@using ProjectBank.Core
+@using System.Net
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@inject HttpClient Http
 
 <PageTitle>Project Bank</PageTitle>
 <Content>
@@ -6,19 +10,17 @@
         <AuthorizeView>
             <Authorized>
                 <h1>Hello, @context.User.Identity?.Name!</h1>
-                <FetchPostData/>
                 <AddPost/>
                 <p>Showing all posts</p>
-                <PostContainer Title="Biology Project 101" Author="Jesper Bengtson"
-                               Description="This is the projects description, describing the projects theme" Tags="@Tags">
-                </PostContainer>
-                <PostContainer Title="Biology Project 202" Author="Morten Sficer"
-                               Description="This is the projects description, describing the projects theme" Tags="@Tags">
-                </PostContainer>
-                <PostContainer Title="Biology Project 303" Author="Jannick Henderson"
-                               Description="This is the projects description, describing the projects theme" Tags="@Tags">
-                </PostContainer>
-            </Authorized>
+                @if (@Posts != null)
+                {
+                    @foreach (var post in Posts)
+                    {
+                        <PostContainer Title="@post.Title" Content="@post.Content" SupervisorId="@post.SupervisorId" Tags="@post.Tags" DateAdded="@post.DateAdded" PostID="@post.Id">
+                        </PostContainer>
+                    }
+                }
+                </Authorized>
             <NotAuthorized>
                 <h1>Welcome to project bank, log in <a href="authentication/login">here</a></h1>
             </NotAuthorized>
@@ -28,5 +30,20 @@
 
 @code
 {
-    public List<String>? Tags = new List<string>() {"Biology", "Chemistry"};
+    public List<String>? Tags = new List<string>() {"Biology", "Chemistry"}; //test
+    
+    private List<PostDto>? Posts;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            Posts = await Http.GetFromJsonAsync<List<PostDto>>("Post");
+
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+    }
 }
