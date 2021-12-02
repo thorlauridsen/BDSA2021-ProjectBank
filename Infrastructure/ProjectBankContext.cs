@@ -13,6 +13,10 @@ namespace ProjectBank.Infrastructure
 
         public ProjectBankContext(DbContextOptions<ProjectBankContext> options) : base(options) { }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder) { }
+        protected override void OnModelCreating(ModelBuilder modelBuilder) { 
+            modelBuilder
+            .Entity<Tag>()
+            .HasIndex(e => e.Name)
+            .IsUnique();}
     }
 }
