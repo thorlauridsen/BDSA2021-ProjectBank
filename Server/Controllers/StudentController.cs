@@ -41,7 +41,7 @@ namespace ProjectBank.Server.Controllers
         public async Task<IActionResult> Post(StudentCreateDto student)
         {
             var created = await _repository.CreateAsync(student);
-            return CreatedAtRoute(nameof(GetByStudentId), new { created.Id }, created);
+            return CreatedAtRoute(nameof(GetByStudentId), new { userId = created.Id }, created);
         }
 
         [Authorize]
