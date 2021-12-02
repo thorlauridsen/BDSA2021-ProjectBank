@@ -22,7 +22,7 @@ namespace ProjectBank.Core
 
     public record PostCreateDto
     {
-        [StringLength(50)]
+        [StringLength(255)]
         public string Title { get; init; }
         public string Content { get; init; }
         public int SupervisorId { get; init; }
