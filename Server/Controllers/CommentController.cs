@@ -23,12 +23,12 @@ namespace ProjectBank.Server.Controllers
             _repository = repository;
         }
 
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet]
         public async Task<IReadOnlyCollection<CommentDto>> Get()
             => await _repository.ReadAsync();
 
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet("{commentId}", Name = "GetByCommentId")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]

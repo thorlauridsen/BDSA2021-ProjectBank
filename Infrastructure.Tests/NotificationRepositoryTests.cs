@@ -48,26 +48,17 @@ namespace Infrastructure.Tests
             var notification = new NotificationCreateDto
             {
                 Title = "Important",
-                Content = "We gotta go! now!",
+                Content = "We gotta go now!",
                 UserId = 1,
                 Link = "https://google.com"
             };
-            var res = await _repository.CreateAsync(notification);
-            Assert.Equal(Created, res);
-        }
-
-        [Fact]
-        public async Task CreateAsync_given_empty_content_returns_BadRequest()
-        {
-            var notification = new NotificationCreateDto
-            {
-                Title = "Prank",
-                Content = "",
-                UserId = 1,
-                Link = "https://youtube.com"
-            };
-            var res = await _repository.CreateAsync(notification);
-            Assert.Equal(BadRequest, res);
+            var created = await _repository.CreateAsync(notification);
+            Assert.Equal(2, created.Id);
+            Assert.Equal("Important", created.Title);
+            Assert.Equal("We gotta go now!", created.Content);
+            Assert.Equal(1, created.UserId);
+            Assert.Equal("https://google.com", created.Link);
+            Assert.Equal(false, created.Seen);
         }
 
         [Fact]

@@ -23,29 +23,29 @@ namespace ProjectBank.Server.Controllers
             _repository = repository;
         }
 
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet]
         public async Task<IReadOnlyCollection<PostDto>> Get()
             => await _repository.ReadAsync();
 
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet("{id:int}", Name = "GetByPostId")]
         [ProducesResponseType(typeof(PostDetailsDto), 200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<PostDetailsDto>> GetByPostId(int id)
             => (await _repository.ReadAsync(id)).ToActionResult();
 
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet("tag/{tag}")]
         public async Task<IReadOnlyCollection<PostDto>> GetByTag(string tag)
             => await _repository.ReadAsyncByTag(tag);
 
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet("supervisor/{userId}")]
         public async Task<IReadOnlyCollection<PostDto>> GetBySupervisor(int userId)
             => await _repository.ReadAsyncBySupervisor(userId);
 
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet("{postId}/comments")]
         public async Task<IReadOnlyCollection<CommentDto>> GetComments(int postId)
             => await _repository.ReadAsyncComments(postId);

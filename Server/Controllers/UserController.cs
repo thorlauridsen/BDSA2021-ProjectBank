@@ -23,12 +23,12 @@ namespace ProjectBank.Server.Controllers
             _repository = repository;
         }
 
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet]
         public async Task<IReadOnlyCollection<UserDto>> Get()
             => await _repository.ReadAsync();
 
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet("{userId}", Name = "GetByUserId")]
         [ProducesResponseType(typeof(UserDetailsDto), 200)]
         [ProducesResponseType(404)]

@@ -11,14 +11,8 @@ namespace ProjectBank.Infrastructure
             _context = context;
         }
 
-        public async Task<Status> CreateAsync(NotificationCreateDto notification)
+        public async Task<NotificationDetailsDto> CreateAsync(NotificationCreateDto notification)
         {
-            if (notification.Title.Trim().Equals("")
-             || notification.Content.Trim().Equals(""))
-            {
-                return BadRequest;
-            }
-
             var entity = new Notification
             {
                 Title = notification.Title,
@@ -31,7 +25,16 @@ namespace ProjectBank.Infrastructure
             _context.Notifications.Add(entity);
             await _context.SaveChangesAsync();
 
-            return Created;
+            return new NotificationDetailsDto
+            {
+                Id = entity.Id,
+                Title = entity.Title,
+                Content = entity.Content,
+                UserId = entity.User.Id,
+                Timestamp = entity.Timestamp,
+                Link = entity.Link,
+                Seen = entity.Seen
+            };
         }
 
         public async Task<IReadOnlyCollection<NotificationDetailsDto>> GetNotificationsAsync(int userId) =>

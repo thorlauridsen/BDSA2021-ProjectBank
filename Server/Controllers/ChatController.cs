@@ -23,14 +23,14 @@ namespace ProjectBank.Server.Controllers
             _repository = repository;
         }
 
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet("{userId}", Name = "GetByChatId")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<IReadOnlyCollection<ChatDetailsDto>> GetByChatId(int userId)
             => await _repository.ReadAllChatsAsync(userId);
 
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet("{userId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]

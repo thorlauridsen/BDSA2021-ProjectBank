@@ -25,15 +25,18 @@ namespace ProjectBank.Server.Controllers
 
         [Authorize]
         [HttpPost]
-        [ProducesResponseType(typeof(Status), 201)]
+        [ProducesResponseType(typeof(NotificationDetailsDto), 201)]
         public async Task<IActionResult> Post(NotificationCreateDto notification)
-            => (await _repository.CreateAsync(notification)).ToActionResult();
+        {
+            var created = await _repository.CreateAsync(notification);
+            return CreatedAtRoute(nameof(GetNotificationByUserId), new { userId = created.Id }, created);
+        }
 
-        [AllowAnonymous]
-        [HttpGet("{userId}", Name = "GetByNotificationId")]
+        [Authorize]
+        [HttpGet("{userId}", Name = "GetNotificationByUserId")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<IReadOnlyCollection<NotificationDetailsDto>> GetByNotificationId(int userId)
+        public async Task<IReadOnlyCollection<NotificationDetailsDto>> GetNotificationByUserId(int userId)
             => await _repository.GetNotificationsAsync(userId);
 
         [Authorize]

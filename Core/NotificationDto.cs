@@ -19,6 +19,8 @@ namespace ProjectBank.Core
 
         public string Content { get; set; }
 
+        public int UserId { get; set; }
+
         public DateTime Timestamp { get; set; }
 
         public string Link { get; set; }

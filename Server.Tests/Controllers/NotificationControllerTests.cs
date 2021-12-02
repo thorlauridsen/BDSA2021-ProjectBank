@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using ProjectBank.Core;
@@ -21,7 +22,7 @@ namespace ProjectBank.Server.Tests.Controllers
             var controller = new NotificationController(logger.Object, repository.Object);
 
             // Act
-            var actual = await controller.GetByNotificationId(1);
+            var actual = await controller.GetNotificationByUserId(1);
 
             // Assert
             Assert.Equal(expected, actual);
@@ -31,6 +32,27 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task CreateAsync_creates_Notification()
         {
             //TODO: Implement CreateAsync unit test
+            // Arrange
+            var toCreate = new NotificationCreateDto();
+            var created = new NotificationDetailsDto
+            {
+                Id = 1,
+                Title = "Important Notification!",
+                Content = "Hello remember to follow",
+                Timestamp = DateTime.Now,
+                Link = "https://google.com"
+            };
+            var repository = new Mock<INotificationRepository>();
+            repository.Setup(m => m.CreateAsync(toCreate)).ReturnsAsync(created);
+            var controller = new NotificationController(logger.Object, repository.Object);
+
+            // Act
+            var result = await controller.Post(toCreate) as CreatedAtRouteResult;
+
+            // Assert
+            Assert.Equal(created, result?.Value);
+            Assert.Equal("GetNotificationByUserId", result?.RouteName);
+            Assert.Equal(KeyValuePair.Create("userId", (object?)1), result?.RouteValues?.Single());
         }
 
         [Fact]
