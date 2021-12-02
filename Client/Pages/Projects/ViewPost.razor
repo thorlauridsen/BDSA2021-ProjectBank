@@ -66,8 +66,8 @@
     {
         try
         {
-            Post = await _http.GetFromJsonAsync<PostDto>("Post/" + Id);
-            Creator = await _http.GetFromJsonAsync<UserDto>("User/" + Post?.SupervisorId);
+            Post = await _http.GetFromJsonAsync<PostDto>("api/Post/" + Id);
+            Creator = await _http.GetFromJsonAsync<UserDto>("api/User/" + Post?.SupervisorId);
         }
         catch (AccessTokenNotAvailableException exception)
         {

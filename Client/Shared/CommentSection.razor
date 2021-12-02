@@ -18,15 +18,17 @@
             {
                 @foreach (var comment in _postComments)
                 {
-                    <Comment UserID="@comment.UserId" CommentID="@comment.Id" Published="@comment.DateAdded" Content="@comment.Content"></Comment>
+                    <Comment UserID="@comment.UserId" CommentID="@comment.Id" Published="@comment.DateAdded"
+                Content="@comment.Content"></Comment>
                 }
             }
-            <EditForm EditContext="@editContext"  OnValidSubmit="@HandleValidSubmit">
-                <DataAnnotationsValidator/>
-                <ValidationSummary/>
+            <EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
                 <div class="d-flex my-4">
                     <div class="col-9">
-                        <InputText @bind-Value="commentModel.comment" type="text" id="comment-input" class="form-control" placeholder="Message"/>
+                        <InputText @bind-Value="commentModel.comment" type="text" id="comment-input"
+                            class="form-control" placeholder="Message" />
                     </div>
                     <div class="col-3 d-flex">
                         <button type="submit" class="btn btn-primary col-12" disabled="@formInvalid">Comment</button>
@@ -38,48 +40,49 @@
 </div>
 
 @code {
-    [Parameter] 
+    [Parameter]
     public PostDto Post { get; set; }
 
     private IList<CommentDto>? _postComments { get; set; }
     CommentModel commentModel = new CommentModel();
-    
+
     private EditContext? editContext;
     private bool formInvalid = true;
-    
+
     protected override void OnInitialized()
     {
         editContext = new EditContext(commentModel);
         editContext.OnFieldChanged += HandleFieldChanged;
     }
-    
+
     private void HandleFieldChanged(object? sender, FieldChangedEventArgs e)
     {
         if (editContext is null) return;
         formInvalid = !editContext.Validate();
         StateHasChanged();
     }
-    
+
     private async void HandleValidSubmit()
     {
         Logger.LogInformation("HandleValidSubmit called");
-        Logger.LogInformation(commentModel.comment); 
+        Logger.LogInformation(commentModel.comment);
         var comment = new CommentCreateDto
         {
             Content = commentModel.comment,
             UserId = 1, // TODO: Get correct userId from database.
             PostId = Post.Id
         };
-        var response = await _http.PostAsJsonAsync("Comment", comment);
+        var response = await _http.PostAsJsonAsync("api/Comment", comment);
         if (response.IsSuccessStatusCode)
         {
             uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true); // TODO: Add a legitimate error handling. (below)
-        } else
+        }
+        else
         {
             Logger.LogCritical("Critical status code: " + response.StatusCode);
         }
 
-    // Process the valid form
+        // Process the valid form
     }
 
     public void Dispose()
@@ -89,7 +92,7 @@
             editContext.OnFieldChanged -= HandleFieldChanged;
         }
     }
-    
+
     class CommentModel
     {
         public string comment { get; set; }
@@ -98,7 +101,7 @@
     {
         try
         {
-            _postComments = await _http.GetFromJsonAsync<List<CommentDto>>("Post/" + Post.Id + "/comments");
+            _postComments = await _http.GetFromJsonAsync<List<CommentDto>>("api/Post/" + Post.Id + "/comments");
         }
         catch (AccessTokenNotAvailableException exception)
         {

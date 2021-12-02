@@ -59,7 +59,7 @@
             SupervisorId = 1, // TODO: Get correct SupervisorId from database. Be aware of friday 3. 
             Tags = postFormModel.Tags.Split(",").Select(t => t.Trim()).ToHashSet()
         };
-        var response = await _http.PostAsJsonAsync("Post", post);
+        var response = await _http.PostAsJsonAsync("api/Post", post);
         if (response.IsSuccessStatusCode)
         {
             var postId = await response.Content.ReadFromJsonAsync<PostDetailsDto>();

@@ -8,7 +8,7 @@ namespace ProjectBank.Server.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
     public class ChatController : ControllerBase
     {
@@ -47,13 +47,11 @@ namespace ProjectBank.Server.Controllers
             return CreatedAtRoute(nameof(GetByChatId), new { created }, created);
         }
 
-        
         [Authorize]
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> Post(ChatMessageCreateDto chat)
             => (await _repository.CreateNewChatMessageAsync(chat)).ToActionResult();
-            
     }
 }

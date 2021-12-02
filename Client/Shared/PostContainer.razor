@@ -2,31 +2,31 @@
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @inject HttpClient Http
 <a href="/Projects/@PostID" class="post-container-link">
-<div class="post-container container border rounded p-3 my-4 bg-ligt bg-gradient">
-    <div class="d-flex justify-content-between">
-        <h2 class="bold">
-            @Title
-        </h2>
-        <h2>
-            @Name
-        </h2>
+    <div class="post-container container border rounded p-3 my-4 bg-ligt bg-gradient">
+        <div class="d-flex justify-content-between">
+            <h2 class="bold">
+                @Title
+            </h2>
+            <h2>
+                @Name
+            </h2>
+        </div>
+        <div>
+            @Content
+        </div>
+        <div class="d-flex justify-content-start">
+            @foreach (var tag in @Tags)
+            {
+                <Tag Name="@tag"></Tag>
+            }
+        </div>
     </div>
-    <div>
-        @Content
-    </div>
-    <div class="d-flex justify-content-start">
-        @foreach (var tag in @Tags)
-        {
-        <Tag Name="@tag"></Tag>
-        }
-    </div>
-</div>
 </a>
 @code {
     // Title of the project
     [Parameter]
     public int PostID { get; set; }
-    
+
     // Title of the project
     [Parameter]
     public string Title { get; set; }
@@ -42,17 +42,17 @@
     // The project's description, before named description
     [Parameter]
     public string Content { get; set; }
-    
+
     [Parameter]
     public DateTime DateAdded { get; set; }
-    
+
     private string Name { get; set; }
-    
+
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            var User = await Http.GetFromJsonAsync<UserDetailsDto>("User/" + SupervisorId);
+            var User = await Http.GetFromJsonAsync<UserDetailsDto>("api/User/" + SupervisorId);
             Name = User.Name;
         }
         catch (AccessTokenNotAvailableException exception)

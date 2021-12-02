@@ -6,12 +6,7 @@
 @inject NavigationManager uriHelper;
 
 <div class="d-flex flex-start my-4">
-    <img
-        class="rounded-circle shadow me-3"
-        src="@ImgSrc"
-        alt="avatar"
-        width="40"
-        height="40"/>
+    <img class="rounded-circle shadow me-3" src="@ImgSrc" alt="avatar" width="40" height="40" />
     <div class="flex-grow-1 flex-shrink-1 border rounded py-1 px-2">
         <div class="d-flex justify-content-between align-items-center">
             <p class="mb-1">
@@ -28,13 +23,13 @@
 @code {
     [Parameter]
     public int CommentID { get; set; }
-    
+
     [Parameter]
     public int UserID { get; set; }
-    
+
     private string ImgSrc { get; set; }
 
-    
+
     private string Name { get; set; }
 
     [Parameter]
@@ -48,7 +43,7 @@
         try
         {
             ImgSrc = "https://eu.ui-avatars.com/api/?name=Philip+Cronval&background=random";
-            var _user = await _http.GetFromJsonAsync<UserDetailsDto>("User/" + UserID);
+            var _user = await _http.GetFromJsonAsync<UserDetailsDto>("api/User/" + UserID);
             Name = _user.Name;
         }
         catch (AccessTokenNotAvailableException exception)
@@ -56,15 +51,16 @@
             exception.Redirect();
         }
     }
-    
+
     private async Task DeleteComment(MouseEventArgs mouseEventArgs)
     {
         bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?"); // Confirm
-        if(confirmed)
+        if (confirmed)
         {
-            var _response = await _http.DeleteAsync($"Comment/{CommentID}");
-            if(_response.IsSuccessStatusCode){
-            reloadPage();
+            var _response = await _http.DeleteAsync($"api/Comment/{CommentID}");
+            if (_response.IsSuccessStatusCode)
+            {
+                reloadPage();
             }
             else
             {

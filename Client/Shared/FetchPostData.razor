@@ -40,11 +40,11 @@
     {
         try
         {
-            Posts = await Http.GetFromJsonAsync<List<PostDto>>("Post");
+            Posts = await Http.GetFromJsonAsync<List<PostDto>>("api/Post");
 
             foreach (var post in Posts)
             {
-                PostComments.Add(post.Id, await Http.GetFromJsonAsync<List<CommentDto>>("Post/" + post.Id + "/comments"));
+                PostComments.Add(post.Id, await Http.GetFromJsonAsync<List<CommentDto>>("api/Post/" + post.Id + "/comments"));
             }
         }
         catch (AccessTokenNotAvailableException exception)
@@ -55,7 +55,7 @@
 
     public async Task<List<CommentDto>> GetComments(int postId)
     {
-        return await Http.GetFromJsonAsync<List<CommentDto>>("Post/" + postId + "/comments");
+        return await Http.GetFromJsonAsync<List<CommentDto>>("api/Post/" + postId + "/comments");
     }
-    
+
 }

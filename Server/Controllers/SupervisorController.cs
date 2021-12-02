@@ -8,7 +8,7 @@ namespace ProjectBank.Server.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
     public class SupervisorController : ControllerBase
     {
@@ -41,7 +41,7 @@ namespace ProjectBank.Server.Controllers
         public async Task<IActionResult> Post(SupervisorCreateDto supervisor)
         {
             var created = await _repository.CreateAsync(supervisor);
-            return CreatedAtRoute(nameof(GetBySupervisorId), new {userId = created.Id }, created);
+            return CreatedAtRoute(nameof(GetBySupervisorId), new { userId = created.Id }, created);
         }
 
         [Authorize]

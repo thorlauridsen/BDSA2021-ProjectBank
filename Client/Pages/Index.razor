@@ -10,17 +10,18 @@
         <AuthorizeView>
             <Authorized>
                 <h1>Hello, @context.User.Identity?.Name!</h1>
-                <AddPost/>
+                <AddPost />
                 <p>Showing all posts</p>
                 @if (@Posts != null)
                 {
                     @foreach (var post in Posts)
                     {
-                        <PostContainer Title="@post.Title" Content="@post.Content" SupervisorId="@post.SupervisorId" Tags="@post.Tags" DateAdded="@post.DateAdded" PostID="@post.Id">
+                        <PostContainer Title="@post.Title" Content="@post.Content" SupervisorId="@post.SupervisorId"
+                    Tags="@post.Tags" DateAdded="@post.DateAdded" PostID="@post.Id">
                         </PostContainer>
                     }
                 }
-                </Authorized>
+            </Authorized>
             <NotAuthorized>
                 <h1>Welcome to project bank, log in <a href="authentication/login">here</a></h1>
             </NotAuthorized>
@@ -30,15 +31,15 @@
 
 @code
 {
-    public List<String>? Tags = new List<string>() {"Biology", "Chemistry"}; //test
-    
+    public List<String>? Tags = new List<string>() { "Biology", "Chemistry" }; //test
+
     private List<PostDto>? Posts;
-    
+
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            Posts = await Http.GetFromJsonAsync<List<PostDto>>("Post");
+            Posts = await Http.GetFromJsonAsync<List<PostDto>>("api/Post");
 
         }
         catch (AccessTokenNotAvailableException exception)

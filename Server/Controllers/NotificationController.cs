@@ -8,7 +8,7 @@ namespace ProjectBank.Server.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
     public class NotificationController : ControllerBase
     {
@@ -30,7 +30,7 @@ namespace ProjectBank.Server.Controllers
             => (await _repository.CreateAsync(notification)).ToActionResult();
 
         [AllowAnonymous]
-        [HttpGet("{userId}",  Name = "GetByNotificationId")]
+        [HttpGet("{userId}", Name = "GetByNotificationId")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<IReadOnlyCollection<NotificationDetailsDto>> GetByNotificationId(int userId)
