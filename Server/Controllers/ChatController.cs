@@ -24,10 +24,10 @@ namespace ProjectBank.Server.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("{userId}")]
+        [HttpGet("{userId}", Name = "GetByChatId")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<IReadOnlyCollection<ChatDetailsDto>> Get(int userId)
+        public async Task<IReadOnlyCollection<ChatDetailsDto>> GetByChatId(int userId)
             => await _repository.ReadAllChatsAsync(userId);
 
         [AllowAnonymous]
@@ -43,15 +43,17 @@ namespace ProjectBank.Server.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> Post(ChatCreateDto chat)
         {
-            var created = await _repository.CreateNewChatAsync(chat);
-            return CreatedAtRoute(nameof(Get), new { created }, created);
+            var created = await _repository.CreateNewChatAsync(chat); //Inconsistent with other CreateNewRepositories, since CreateNewChatAsync(), returns an int. 
+            return CreatedAtRoute(nameof(GetByChatId), new { created }, created);
         }
 
+        
         [Authorize]
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> Post(ChatMessageCreateDto chat)
             => (await _repository.CreateNewChatMessageAsync(chat)).ToActionResult();
+            
     }
 }
