@@ -41,7 +41,7 @@ namespace ProjectBank.Server.Controllers
         public async Task<IActionResult> Post(CommentCreateDto comment)
         {
             var created = await _repository.CreateAsync(comment);
-            return CreatedAtRoute(nameof(GetByCommentId), new { created.Id }, created);
+            return CreatedAtRoute(nameof(GetByCommentId), new { commentId = created.Id }, created);
         }
 
         [Authorize]
