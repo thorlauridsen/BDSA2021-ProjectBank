@@ -1,0 +1,22 @@
+﻿.tab-label{
+    cursor: text;
+}
+.tab-label::after {
+    content: ' ';
+    display: none;
+    height: 20px;
+    width: 1px;
+    vertical-align: middle;
+    background: black;
+    animation-name: blink;
+    animation-duration: .5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+input:focus + .tab-label::after{
+    display: inline-block;
+}
+@keyframes blink {
+    from {opacity: 0}
+    to {opacity: 1}
+}
