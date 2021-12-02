@@ -82,12 +82,17 @@ input.form-control{
     /* color: white; */
     box-shadow: 0px 2px 2px 0px grey;
     transition: .5s;
+    color: #212529;
 }
 
 /* The one above and below should probably be implemented into the PostContainer class - Each menu has a css file aswell - Remove the top right HELLO @NAME*/
 .post-container:hover {
     box-shadow: 0px 3px 3px 0px grey;
     cursor: pointer;
+}
+
+.post-container-link{
+    text-decoration: none;
 }
 
 .list-group-item.unread::after {

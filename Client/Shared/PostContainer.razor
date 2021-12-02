@@ -1,44 +1,64 @@
-﻿<div class="post-container container border rounded p-3 my-4 bg-ligt bg-gradient">
+﻿@using ProjectBank.Core
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@inject HttpClient Http
+<a href="/Projects/@PostID" class="post-container-link">
+<div class="post-container container border rounded p-3 my-4 bg-ligt bg-gradient">
     <div class="d-flex justify-content-between">
         <h2 class="bold">
             @Title
         </h2>
         <h2>
-            @Author
+            @Name
         </h2>
     </div>
     <div>
-        @Description
+        @Content
     </div>
     <div class="d-flex justify-content-start">
-        @for (int i = 0; i < @Tags.Count; i++)
+        @foreach (var tag in @Tags)
         {
-            <p>
-                @Tags[@i]
-                @if (@i != @Tags.Count - 1)
-                {
-                    <span>,</span>
-                }
-            </p>
+        <Tag Name="@tag"></Tag>
         }
     </div>
 </div>
-
+</a>
 @code {
+    // Title of the project
+    [Parameter]
+    public int PostID { get; set; }
+    
     // Title of the project
     [Parameter]
     public string Title { get; set; }
 
-    // Name of the project's author
+    // Name of the project's author, before named author
     [Parameter]
-    public string Author { get; set; }
+    public int SupervisorId { get; set; }
 
     // List of tags applied to a project. [optional]
     [Parameter]
-    public List<String>? Tags { get; set; }
+    public HashSet<string>? Tags { get; set; }
 
-    // The project's description
+    // The project's description, before named description
     [Parameter]
-    public string Description { get; set; }
+    public string Content { get; set; }
+    
+    [Parameter]
+    public DateTime DateAdded { get; set; }
+    
+    private string Name { get; set; }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var User = await Http.GetFromJsonAsync<UserDetailsDto>("User/" + SupervisorId);
+            Name = User.Name;
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+    }
 
 }
