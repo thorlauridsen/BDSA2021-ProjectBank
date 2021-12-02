@@ -23,18 +23,17 @@
 
     [Parameter]
     public string Link { get; set; }
-    
+
     [Parameter]
     public bool Read { get; set; }
     private string _extraCSS { get; set; }
-    
+
     protected override void OnInitialized()
     {
         //Calculate time
         _DateString = Date.GetTimeSince();
 
         _extraCSS = Read ? "read" : "";
-        
-    }
 
+    }
 }

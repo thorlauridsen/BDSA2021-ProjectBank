@@ -3,7 +3,8 @@
 
 <div class="form-control-wrapper">
     <p>Post tags:</p>
-    <input class="form-control @CssClass visually-hidden" id="@Id" @bind-value:event="oninput" @bind-value="TagsString"/>
+    <input class="form-control @CssClass visually-hidden" id="@Id" @bind-value:event="oninput"
+        @bind-value="TagsString" />
     <label class="tab-label form-control-label flex p-3 col-12 border rounded" for="@Id">
         @foreach (var tag in Tags)
         {
@@ -30,11 +31,11 @@
             CurrentValue = value;
         }
     }
-    
+
     public IEnumerable<string> Tags = new List<string>();
 
     protected override bool TryParseValueFromString(string value, out string result,
-        out string validationErrorMessage)
+    out string validationErrorMessage)
     {
         if (value.Trim().Equals(""))
         {

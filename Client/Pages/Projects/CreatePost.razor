@@ -12,15 +12,17 @@
 <PageTitle>Create post</PageTitle>
 
 <h1>Create post</h1>
-<EditForm EditContext="@editContext"  OnValidSubmit="@HandleValidSubmit">
-    <DataAnnotationsValidator/>
-    <ValidationSummary/>
+<EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
     <div class="form-floating my-3">
-        <InputText id="title" class="form-control" placeholder="Title of the project" @bind-Value="postFormModel.Title"/>
+        <InputText id="title" class="form-control" placeholder="Title of the project"
+            @bind-Value="postFormModel.Title" />
         <label for="title">Title</label>
     </div>
     <div class="form-floating my-3">
-        <InputTextArea id="content" class="form-control" placeholder="Content of the project" style="height: 100px" @bind-Value="postFormModel.Content"></InputTextArea>
+        <InputTextArea id="content" class="form-control" placeholder="Content of the project" style="height: 100px"
+            @bind-Value="postFormModel.Content"></InputTextArea>
         <label for="content">Content</label>
     </div>
     <InputTag Id="tags" Label="test" @bind-Value="postFormModel.Tags"></InputTag>
@@ -32,7 +34,7 @@
 
 @code {
     private PostFormModel postFormModel = new();
-    
+
     private bool formInvalid = true;
     private EditContext? editContext;
 
@@ -56,23 +58,23 @@
         {
             Title = postFormModel.Title,
             Content = postFormModel.Content,
-            SupervisorId = 1, // TODO: Get correct SupervisorId from database. Be aware of friday 3. 
+            SupervisorId = 1, // TODO: Get correct SupervisorId from database. Be aware of friday 3.
             Tags = postFormModel.Tags.Split(",").Select(t => t.Trim()).ToHashSet()
         };
         var response = await _http.PostAsJsonAsync("api/Post", post);
         if (response.IsSuccessStatusCode)
         {
             var postId = await response.Content.ReadFromJsonAsync<PostDetailsDto>();
-            uriHelper.NavigateTo("/Projects/" + postId.Id, forceLoad: true); // TODO: Is supposed to navigate to the post's personal uri. Currently returns a crit code. 
+            uriHelper.NavigateTo("/Projects/" + postId.Id, forceLoad: true);
+            // TODO: Is supposed to navigate to the post's personal uri. Currently returns a crit code.
         }
         else
         {
             Logger.LogCritical("Critical status code: " + response.StatusCode);
         }
-    // Process the valid form
+        // Process the valid form
     }
-    
-    
+
     public void Dispose()
     {
         if (editContext is not null)
@@ -80,5 +82,4 @@
             editContext.OnFieldChanged -= HandleFieldChanged;
         }
     }
-
 }
