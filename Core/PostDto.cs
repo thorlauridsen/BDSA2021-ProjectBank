@@ -25,7 +25,6 @@ namespace ProjectBank.Core
         [StringLength(50)]
         public string Title { get; init; }
         public string Content { get; init; }
-        public DateTime DateAdded { get; init; }
         public int SupervisorId { get; init; }
         public HashSet<string> Tags { get; init; }
     }

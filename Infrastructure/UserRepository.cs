@@ -25,17 +25,13 @@ namespace ProjectBank.Infrastructure
                              );
         }
 
-        public async Task<Option<UserDetailsDto>> ReadAsync(int userId)
-        {
-            var users = from u in _context.Users
-                        where u.Id == userId
-                        select new UserDetailsDto(
-                              u.Id,
-                              u.Name
-                        );
-
-            return await users.FirstOrDefaultAsync();
-        }
+        public async Task<Option<UserDetailsDto>> ReadAsync(int userId) =>
+            await _context.Users.Where(u => u.Id == userId)
+                                .Select(u => new UserDetailsDto(
+                                    u.Id,
+                                    u.Name
+                                ))
+                                .FirstOrDefaultAsync();
 
         public async Task<IReadOnlyCollection<UserDto>> ReadAsync() =>
             (await _context.Users
@@ -46,7 +42,7 @@ namespace ProjectBank.Infrastructure
                            .ToListAsync())
                            .AsReadOnly();
 
-        public async Task<Status> UpdateAsync(int id, UserUpdateDto user)
+        public async Task<Status> UpdateAsync(int userId, UserUpdateDto user)
         {
             var entity = await _context.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
 

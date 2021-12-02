@@ -3,9 +3,9 @@ namespace ProjectBank.Core
     public interface IStudentRepository
     {
         Task<StudentDetailsDto> CreateAsync(StudentCreateDto student);
-        Task<Option<StudentDetailsDto>> ReadAsync(int studentId);
+        Task<Option<StudentDetailsDto>> ReadAsync(int userId);
         Task<IReadOnlyCollection<StudentDto>> ReadAsync();
-        Task<Status> UpdateAsync(int id, StudentUpdateDto student);
-        Task<Status> DeleteAsync(int studentId);
+        Task<Status> UpdateAsync(int userId, StudentUpdateDto student);
+        Task<Status> DeleteAsync(int userId);
     }
 }

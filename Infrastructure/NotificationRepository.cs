@@ -13,11 +13,17 @@ namespace ProjectBank.Infrastructure
 
         public async Task<Status> CreateAsync(NotificationCreateDto notification)
         {
+            if (notification.Title.Trim().Equals("")
+             || notification.Content.Trim().Equals(""))
+            {
+                return BadRequest;
+            }
+
             var entity = new Notification
             {
                 Title = notification.Title,
                 Content = notification.Content,
-                Timestamp = notification.Timestamp,
+                Timestamp = DateTime.Now,
                 User = await GetUserAsync(notification.UserId),
                 Link = notification.Link,
                 Seen = false
@@ -28,10 +34,11 @@ namespace ProjectBank.Infrastructure
             return Created;
         }
 
-        public async Task<IReadOnlyCollection<NotificationReadDto>> GetNotificationsAsync(int userId) =>
+        public async Task<IReadOnlyCollection<NotificationDetailsDto>> GetNotificationsAsync(int userId) =>
             (await _context.Notifications.Where(n => n.User.Id == userId)
-                                         .Select(n => new NotificationReadDto
+                                         .Select(n => new NotificationDetailsDto
                                          {
+                                             Id = n.Id,
                                              Title = n.Title,
                                              Content = n.Content,
                                              Timestamp = n.Timestamp,
@@ -40,7 +47,7 @@ namespace ProjectBank.Infrastructure
 
                                          }).ToListAsync()).AsReadOnly();
 
-        public async Task<Status> ReadNotificationAsync(int notificationId)
+        public async Task<Status> SeenNotificationAsync(int notificationId)
         {
             var entity = await _context.Notifications.FirstOrDefaultAsync(n => n.Id == notificationId);
 

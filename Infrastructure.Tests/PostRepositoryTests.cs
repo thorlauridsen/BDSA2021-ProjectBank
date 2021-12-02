@@ -45,12 +45,10 @@ namespace Infrastructure.Tests
         [Fact]
         public async Task CreateAsync_creates_new_post_with_generated_id()
         {
-            var today = DateTime.Now;
             var post = new PostCreateDto
             {
                 Title = "Biology Project",
                 Content = "Bla bla bla bla",
-                DateAdded = today,
                 SupervisorId = 1,
                 Tags = new HashSet<string> { "bio", "dna", "cells" }
             };
@@ -60,7 +58,6 @@ namespace Infrastructure.Tests
             Assert.Equal(2, created.Id);
             Assert.Equal("Biology Project", created.Title);
             Assert.Equal("Bla bla bla bla", created.Content);
-            Assert.Equal(today, created.DateAdded);
             Assert.Equal(1, created.SupervisorId);
             Assert.True(created.Tags.SetEquals(new[] { "bio", "dna", "cells" }));
         }

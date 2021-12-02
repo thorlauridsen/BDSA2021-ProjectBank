@@ -29,16 +29,26 @@ namespace ProjectBank.Server.Controllers
             => await _repository.ReadAsync();
 
         [AllowAnonymous]
-        [ProducesResponseType(404)]
+        [HttpGet("{postId}")]
         [ProducesResponseType(typeof(PostDetailsDto), 200)]
-        [HttpGet("{id}")]
-        public async Task<ActionResult<PostDetailsDto>> Get(int id)
-            => (await _repository.ReadAsync(id)).ToActionResult();
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<PostDetailsDto>> Get(int postId)
+            => (await _repository.ReadAsync(postId)).ToActionResult();
 
         [AllowAnonymous]
-        [HttpGet("{id}/comments")]
-        public async Task<IReadOnlyCollection<CommentDto>> GetComments(int id)
-            => await _repository.ReadAsyncComments(id);
+        [HttpGet("tag/{tag}")]
+        public async Task<IReadOnlyCollection<PostDto>> GetByTag(string tag)
+            => await _repository.ReadAsyncByTag(tag);
+
+        [AllowAnonymous]
+        [HttpGet("supervisor/{userId}")]
+        public async Task<IReadOnlyCollection<PostDto>> GetBySupervisor(int userId)
+            => await _repository.ReadAsyncBySupervisor(userId);
+
+        [AllowAnonymous]
+        [HttpGet("{postId}/comments")]
+        public async Task<IReadOnlyCollection<CommentDto>> GetComments(int postId)
+            => await _repository.ReadAsyncComments(postId);
 
         [Authorize]
         [HttpPost]
@@ -46,22 +56,21 @@ namespace ProjectBank.Server.Controllers
         public async Task<IActionResult> Post(PostCreateDto post)
         {
             var created = await _repository.CreateAsync(post);
-
             return CreatedAtRoute(nameof(Get), new { created.Id }, created);
         }
 
         [Authorize]
-        [HttpPut("{id}")]
+        [HttpPut("{postId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> Put(int id, [FromBody] PostUpdateDto post)
-               => (await _repository.UpdateAsync(id, post)).ToActionResult();
+        public async Task<IActionResult> Put(int postId, [FromBody] PostUpdateDto post)
+            => (await _repository.UpdateAsync(postId, post)).ToActionResult();
 
         [Authorize]
-        [HttpDelete("{id}")]
+        [HttpDelete("{postId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> Delete(int id)
-              => (await _repository.DeleteAsync(id)).ToActionResult();
+        public async Task<IActionResult> Delete(int postId)
+            => (await _repository.DeleteAsync(postId)).ToActionResult();
     }
 }

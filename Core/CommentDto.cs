@@ -19,7 +19,6 @@
     public record CommentCreateDto
     {
         public string Content { get; init; }
-        public DateTime DateAdded { get; init; }
         public int UserId { get; init; }
         public int PostId { get; init; }
     }

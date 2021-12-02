@@ -17,7 +17,7 @@ namespace ProjectBank.Infrastructure
             {
                 Content = comment.Content,
                 UserId = comment.UserId,
-                DateAdded = comment.DateAdded,
+                DateAdded = DateTime.Now,
                 PostId = comment.PostId
             };
 
@@ -34,20 +34,16 @@ namespace ProjectBank.Infrastructure
                              );
         }
 
-        public async Task<Option<CommentDetailsDto>> ReadAsync(int commentId)
-        {
-            var comments = from c in _context.Comments
-                           where c.Id == commentId
-                           select new CommentDetailsDto(
-                               c.Id,
-                               c.Content,
-                               c.DateAdded,
-                               c.UserId,
-                               c.PostId
-                           );
-
-            return await comments.FirstOrDefaultAsync();
-        }
+        public async Task<Option<CommentDetailsDto>> ReadAsync(int commentId) =>
+            await _context.Comments.Where(c => c.Id == commentId)
+                        .Select(c => new CommentDetailsDto(
+                            c.Id,
+                            c.Content,
+                            c.DateAdded,
+                            c.UserId,
+                            c.PostId
+                        ))
+                        .FirstOrDefaultAsync();
 
         public async Task<IReadOnlyCollection<CommentDto>> ReadAsync() =>
             (await _context.Comments
@@ -69,10 +65,7 @@ namespace ProjectBank.Infrastructure
             {
                 return NotFound;
             }
-
             entity.Content = comment.Content;
-            entity.DateAdded = comment.DateAdded;
-
             await _context.SaveChangesAsync();
 
             return Updated;
