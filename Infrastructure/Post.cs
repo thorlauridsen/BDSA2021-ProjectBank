@@ -4,7 +4,7 @@ namespace ProjectBank.Infrastructure
     {
         public int Id { get; set; }
 
-        [StringLength(50)]
+        [StringLength(255)]
         public string Title { get; set; }
 
         public string Content { get; set; }
