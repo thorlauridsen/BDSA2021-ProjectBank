@@ -6,5 +6,7 @@ namespace ProjectBank.Infrastructure
 
         [StringLength(50)]
         public string Name { get; set; }
+
+        public bool IsSupervisor { get; set; }
     }
 }

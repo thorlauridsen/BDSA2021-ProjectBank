@@ -38,8 +38,7 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddDbContext<ProjectBankContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ProjectBank"), options => options.EnableRetryOnFailure()));
 builder.Services.AddScoped<IProjectBankContext, ProjectBankContext>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
-builder.Services.AddScoped<IStudentRepository, StudentRepository>();
-builder.Services.AddScoped<ISupervisorRepository, SupervisorRepository>();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 

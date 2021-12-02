@@ -3,8 +3,6 @@ namespace ProjectBank.Infrastructure
     public class ProjectBankContext : DbContext, IProjectBankContext
     {
         public DbSet<User> Users => Set<User>();
-        public DbSet<Student> Students => Set<Student>();
-        public DbSet<Supervisor> Supervisors => Set<Supervisor>();
         public DbSet<Post> Posts => Set<Post>();
         public DbSet<Tag> Tags => Set<Tag>();
         public DbSet<Comment> Comments => Set<Comment>();

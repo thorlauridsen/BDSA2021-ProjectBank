@@ -21,7 +21,8 @@ namespace ProjectBank.Infrastructure
 
             return new UserDetailsDto(
                                  entity.Id,
-                                 entity.Name
+                                 entity.Name,
+                                 entity.IsSupervisor
                              );
         }
 
@@ -29,7 +30,8 @@ namespace ProjectBank.Infrastructure
             await _context.Users.Where(u => u.Id == userId)
                                 .Select(u => new UserDetailsDto(
                                     u.Id,
-                                    u.Name
+                                    u.Name,
+                                    u.IsSupervisor
                                 ))
                                 .FirstOrDefaultAsync();
 
@@ -37,7 +39,8 @@ namespace ProjectBank.Infrastructure
             (await _context.Users
                            .Select(u => new UserDto(
                                 u.Id,
-                                u.Name
+                                u.Name,
+                                u.IsSupervisor
                             ))
                            .ToListAsync())
                            .AsReadOnly();

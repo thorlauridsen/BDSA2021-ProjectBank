@@ -138,9 +138,6 @@ namespace ProjectBank.Core
             return Deleted;
         }
 
-        private async Task<Supervisor> GetSupervisorAsync(int userId) =>
-            await _context.Supervisors.FirstAsync(c => c.Id == userId);
-
         private async IAsyncEnumerable<Tag> GetTagsAsync(IEnumerable<string> tags)
         {
             var existing = await _context.Tags.Where(t => tags.Contains(t.Name))
