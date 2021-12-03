@@ -11,8 +11,12 @@ namespace ProjectBank.Infrastructure
         public DbSet<ChatMessage> ChatMessages => Set<ChatMessage>();
         public DbSet<Notification> Notifications => Set<Notification>();
 
-        public ProjectBankContext(DbContextOptions<ProjectBankContext> options) : base(options) { }
+        public ProjectBankContext(DbContextOptions<ProjectBankContext> options) : base(options)
+        {
+        }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder) { }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+        }
     }
 }

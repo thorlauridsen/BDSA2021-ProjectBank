@@ -1,0 +1,117 @@
+﻿@page "/projects/edit/{id:int}"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using ProjectBank.Core
+@using ProjectBank.Shared.forms
+@using System.Linq
+@attribute [Authorize]
+@implements IDisposable
+@inject ILogger<CreatePost> Logger
+@inject NavigationManager uriHelper;
+@inject HttpClient _http
+
+<PageTitle>Edit post</PageTitle>
+
+@if (_post == null)
+{
+    <h1>Loading...</h1>
+}
+else
+{
+    <h1>Edit post</h1>
+    <EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator/>
+        <ValidationSummary/>
+        <div class="form-floating my-3">
+            <InputText id="title" class="form-control" placeholder="Title of the project"
+                       @bind-Value="postFormModel.Title"/>
+            <label for="title">Title</label>
+        </div>
+        <div class="form-floating my-3">
+            <InputTextArea id="content"  class="form-control" placeholder="Content of the project" style="height: 100px"
+                           @bind-Value="postFormModel.Content">
+            </InputTextArea>
+            <label for="content">Content</label>
+        </div>
+        <InputTag Id="tags" Label="test" DefaultTags="@tags" @bind-Value="postFormModel.Tags"></InputTag>
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button type="submit" class="btn btn-outline-primary btn-lg" disabled="@formInvalid">Submit</button>
+        </div>
+    </EditForm>
+}
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    private PostDto? _post;
+    private string tags { get; set; }
+    private PostFormModel postFormModel = new();
+
+    private bool formInvalid = false;
+    private EditContext? editContext;
+
+    protected override void OnInitialized()
+    {
+        tags = "";
+        editContext = new EditContext(postFormModel);
+        editContext.OnFieldChanged += HandleFieldChanged;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _post = await _http.GetFromJsonAsync<PostDto>("api/Post/" + Id);
+            postFormModel.Title = _post.Title;
+            postFormModel.Content = _post.Content;
+            postFormModel.Tags = string.Join(", ", _post.Tags);
+            Logger.LogInformation(postFormModel.Tags);
+            tags = postFormModel.Tags;
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+    }
+
+    private void HandleFieldChanged(object? sender, FieldChangedEventArgs e)
+    {
+        if (editContext is null) return;
+        formInvalid = !editContext.Validate();
+        StateHasChanged();
+    }
+
+    private async void HandleValidSubmit()
+    {
+        Logger.LogInformation("EditPost called");
+        var postUpdateDto = new PostUpdateDto()
+        {
+            Id = _post.Id,
+            Title = postFormModel.Title,
+            Content = postFormModel.Content,
+            SupervisorId = _post.SupervisorId, // TODO: Get correct SupervisorId from database. Be aware of friday 3.
+            Tags = postFormModel.Tags.Split(",").Select(t => t.Trim()).ToHashSet()
+        };
+        var response = await _http.PutAsJsonAsync("api/Post/" + _post.Id, postUpdateDto);
+        if (response.IsSuccessStatusCode)
+        {
+            uriHelper.NavigateTo("/Projects/" + _post.Id);
+        }
+        else
+        {
+            Logger.LogCritical("Critical status code: " + response.StatusCode);
+        }
+    }
+
+    public void Dispose()
+    {
+        if (editContext is not null)
+        {
+            editContext.OnFieldChanged -= HandleFieldChanged;
+        }
+    }
+
+}

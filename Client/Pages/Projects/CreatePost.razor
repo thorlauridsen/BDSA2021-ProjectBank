@@ -65,14 +65,12 @@
         if (response.IsSuccessStatusCode)
         {
             var postId = await response.Content.ReadFromJsonAsync<PostDetailsDto>();
-            uriHelper.NavigateTo("/Projects/" + postId.Id, forceLoad: true);
-            // TODO: Is supposed to navigate to the post's personal uri. Currently returns a crit code.
+            uriHelper.NavigateTo("/Projects/" + postId.Id);
         }
         else
         {
             Logger.LogCritical("Critical status code: " + response.StatusCode);
         }
-        // Process the valid form
     }
 
     public void Dispose()

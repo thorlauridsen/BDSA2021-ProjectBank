@@ -7,8 +7,6 @@ namespace ProjectBank.Infrastructure
         [StringLength(50)]
         public string Name { get; set; }
 
-        public ICollection<Post> Post { get; set; } = null!;
-
         public Tag(string name)
         {
             Name = name;
