@@ -50,7 +50,7 @@ else
     private string tags { get; set; }
     private PostFormModel postFormModel = new();
 
-    private bool formInvalid = true;
+    private bool formInvalid = false;
     private EditContext? editContext;
 
     protected override void OnInitialized()

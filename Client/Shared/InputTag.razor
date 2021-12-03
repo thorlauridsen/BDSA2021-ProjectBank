@@ -3,7 +3,7 @@
 
 <div class="form-control-wrapper">
     <p>Post tags:</p>
-    <input class="form-control @CssClass visually-hidden" id="@Id" @bind-value:event="oninput"
+    <input class="form-control @CssClass visually-hidden" @onkeyup="KeyPressEventHandler" id="@Id" @bind-value:event="oninput"
            @bind-value="TagsString"/>
     <label class="tab-label form-control-label flex p-3 col-12 border rounded" for="@Id">
         @foreach (var tag in Tags)
@@ -24,15 +24,15 @@
 
     [Parameter]
     public string DefaultTags { get; set; }
-    
+
     public string TagsString
     {
         get => _TagsString;
         set
         {
-                _TagsString = value;
-                UpdateTags();
-                CurrentValue = value;
+            _TagsString = value;
+            UpdateTags();
+            CurrentValue = value;
         }
     }
 
@@ -42,7 +42,7 @@
     {
         TagsString = DefaultTags;
     }
-    
+
     protected override bool TryParseValueFromString(string value, out string result,
         out string validationErrorMessage)
     {
@@ -57,6 +57,15 @@
             validationErrorMessage = null;
         }
         return true;
+    }
+
+    private void KeyPressEventHandler(KeyboardEventArgs args)
+    {
+        var code = args.Code;
+        if (code is "Enter" or "NumpadEnter" && !args.ShiftKey)
+        {
+            if (!TagsString.Trim().Equals("") && !TagsString.TrimEnd().EndsWith(",")) TagsString += ", ";
+        }
     }
 
     private void UpdateTags()

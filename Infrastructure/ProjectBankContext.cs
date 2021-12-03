@@ -11,12 +11,12 @@ namespace ProjectBank.Infrastructure
         public DbSet<ChatMessage> ChatMessages => Set<ChatMessage>();
         public DbSet<Notification> Notifications => Set<Notification>();
 
-        public ProjectBankContext(DbContextOptions<ProjectBankContext> options) : base(options) { }
+        public ProjectBankContext(DbContextOptions<ProjectBankContext> options) : base(options)
+        {
+        }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder) { 
-            modelBuilder
-            .Entity<Tag>()
-            .HasIndex(e => e.Name)
-            .IsUnique();}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+        }
     }
 }
