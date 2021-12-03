@@ -6,11 +6,8 @@ using Xunit;
 
 namespace ProjectBank.Server.Tests.Controllers
 {
-    public class ChatControllerTests
+    public class ChatControllerTests : TestBaseController<ChatController>
     {
-        private Mock<ILogger<ChatController>> logger
-            = new Mock<ILogger<ChatController>>();
-
         [Fact]
         public async Task Get_given_chatId_returns_ChatMessages_from_repo()
         {

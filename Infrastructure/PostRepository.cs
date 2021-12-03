@@ -11,8 +11,13 @@ namespace ProjectBank.Core
             _context = context;
         }
 
-        public async Task<PostDetailsDto> CreateAsync(PostCreateDto post)
+        public async Task<(Status, PostDetailsDto?)> CreateAsync(PostCreateDto post)
         {
+            if (post.Title.Trim().Equals("") ||
+                post.Content.Trim().Equals(""))
+            {
+                return (BadRequest, null);
+            }
             var entity = new Post
             {
                 Title = post.Title,
@@ -21,19 +26,17 @@ namespace ProjectBank.Core
                 User = await GetUserAsync(post.SupervisorId),
                 Tags = await GetTagsAsync(post.Tags).ToListAsync()
             };
-
             _context.Posts.Add(entity);
-
             await _context.SaveChangesAsync();
 
-            return new PostDetailsDto(
+            return (Created, new PostDetailsDto(
                 entity.Id,
                 entity.Title,
                 entity.Content,
                 entity.DateAdded,
                 entity.User.Id,
                 entity.Tags.Select(t => t.Name).ToHashSet()
-            );
+            ));
         }
 
         public async Task<Option<PostDetailsDto>> ReadAsync(int postId) =>

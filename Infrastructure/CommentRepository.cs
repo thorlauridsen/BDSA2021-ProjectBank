@@ -11,8 +11,12 @@ namespace ProjectBank.Infrastructure
             _context = context;
         }
 
-        public async Task<CommentDetailsDto> CreateAsync(CommentCreateDto comment)
+        public async Task<(Status, CommentDetailsDto?)> CreateAsync(CommentCreateDto comment)
         {
+            if (comment.Content.Trim().Equals(""))
+            {
+                return (BadRequest, null);
+            }
             var entity = new Comment
             {
                 Content = comment.Content,
@@ -20,18 +24,16 @@ namespace ProjectBank.Infrastructure
                 DateAdded = DateTime.Now,
                 PostId = comment.PostId
             };
-
             _context.Comments.Add(entity);
-
             await _context.SaveChangesAsync();
 
-            return new CommentDetailsDto(
+            return (Created, new CommentDetailsDto(
                                  entity.Id,
                                  entity.Content,
                                  entity.DateAdded,
                                  entity.UserId,
                                  entity.PostId
-                             );
+                             ));
         }
 
         public async Task<Option<CommentDetailsDto>> ReadAsync(int commentId) =>

@@ -52,8 +52,8 @@ namespace Infrastructure.Tests
                 UserId = 1,
                 Link = "https://google.com"
             };
-            var created = await _repository.CreateAsync(notification);
-            Assert.Equal(2, created.Id);
+            var (status, created) = await _repository.CreateAsync(notification);
+            Assert.Equal(2, created?.Id);
             Assert.Equal("Important", created.Title);
             Assert.Equal("We gotta go now!", created.Content);
             Assert.Equal(1, created.UserId);

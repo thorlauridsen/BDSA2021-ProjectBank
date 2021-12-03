@@ -40,7 +40,6 @@
         try
         {
             Posts = await Http.GetFromJsonAsync<List<PostDto>>("api/Post");
-
         }
         catch (AccessTokenNotAvailableException exception)
         {

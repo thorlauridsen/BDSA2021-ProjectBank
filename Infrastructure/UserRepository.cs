@@ -11,19 +11,18 @@ namespace ProjectBank.Infrastructure
             _context = context;
         }
 
-        public async Task<UserDetailsDto> CreateAsync(UserCreateDto user)
+        public async Task<(Status, UserDetailsDto?)> CreateAsync(UserCreateDto user)
         {
             var entity = new User { Name = user.Name };
 
             _context.Users.Add(entity);
-
             await _context.SaveChangesAsync();
 
-            return new UserDetailsDto(
+            return (Created, new UserDetailsDto(
                                  entity.Id,
                                  entity.Name,
                                  entity.IsSupervisor
-                             );
+                             ));
         }
 
         public async Task<Option<UserDetailsDto>> ReadAsync(int userId) =>

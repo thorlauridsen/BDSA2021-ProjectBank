@@ -4,14 +4,12 @@ using Moq;
 using ProjectBank.Core;
 using ProjectBank.Server.Controllers;
 using Xunit;
+using static ProjectBank.Core.Status;
 
 namespace ProjectBank.Server.Tests.Controllers
 {
-    public class NotificationControllerTests
+    public class NotificationControllerTests : TestBaseController<NotificationController>
     {
-        private Mock<ILogger<NotificationController>> logger
-            = new Mock<ILogger<NotificationController>>();
-
         [Fact]
         public async Task Get_returns_Notifications_from_repo()
         {
@@ -34,7 +32,7 @@ namespace ProjectBank.Server.Tests.Controllers
             //TODO: Implement CreateAsync unit test
             // Arrange
             var toCreate = new NotificationCreateDto();
-            var created = new NotificationDetailsDto
+            var notification = new NotificationDetailsDto
             {
                 Id = 1,
                 Title = "Important Notification!",
@@ -43,16 +41,16 @@ namespace ProjectBank.Server.Tests.Controllers
                 Link = "https://google.com"
             };
             var repository = new Mock<INotificationRepository>();
-            repository.Setup(m => m.CreateAsync(toCreate)).ReturnsAsync(created);
+            repository.Setup(m => m.CreateAsync(toCreate)).ReturnsAsync((Created, notification));
             var controller = new NotificationController(logger.Object, repository.Object);
 
             // Act
-            var result = await controller.Post(toCreate) as CreatedAtRouteResult;
+            var result = await controller.Post(toCreate);
 
             // Assert
-            Assert.Equal(created, result?.Value);
-            Assert.Equal("GetNotificationByUserId", result?.RouteName);
-            Assert.Equal(KeyValuePair.Create("userId", (object?)1), result?.RouteValues?.Single());
+            Assert.IsType<CreatedAtRouteResult>(result.Result);
+            var resultObject = GetResultContent<NotificationDetailsDto>(result);
+            Assert.Equal(notification, resultObject);
         }
 
         [Fact]

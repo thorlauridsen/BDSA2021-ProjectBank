@@ -53,10 +53,14 @@ namespace ProjectBank.Server.Controllers
         [Authorize]
         [HttpPost]
         [ProducesResponseType(typeof(PostDetailsDto), 201)]
-        public async Task<IActionResult> Post(PostCreateDto post)
+        public async Task<ActionResult<PostDetailsDto>> Post(PostCreateDto post)
         {
-            var created = await _repository.CreateAsync(post);
-            return CreatedAtRoute(nameof(GetByPostId), new { postId = created.Id }, created);
+            var (status, created) = await _repository.CreateAsync(post);
+            if (status != Status.BadRequest)
+            {
+                return CreatedAtRoute(nameof(GetByPostId), new { postId = created?.Id }, created);
+            }
+            return BadRequest();
         }
 
         [Authorize]

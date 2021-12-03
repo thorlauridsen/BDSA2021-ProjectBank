@@ -22,8 +22,10 @@ namespace ProjectBank.Core
 
     public record PostCreateDto
     {
+        [RegularExpression(@"[a-zA-Z0-9 \-\/]+")]
         [StringLength(255)]
         public string Title { get; init; }
+
         public string Content { get; init; }
         public int SupervisorId { get; init; }
         public HashSet<string> Tags { get; init; }

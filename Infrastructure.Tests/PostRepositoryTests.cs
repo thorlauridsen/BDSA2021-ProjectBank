@@ -55,11 +55,12 @@ namespace Infrastructure.Tests
 
             var created = await _repository.CreateAsync(post);
 
-            Assert.Equal(2, created.Id);
-            Assert.Equal("Biology Project", created.Title);
-            Assert.Equal("Bla bla bla bla", created.Content);
-            Assert.Equal(1, created.SupervisorId);
-            Assert.True(created.Tags.SetEquals(new[] { "bio", "dna", "cells" }));
+            Assert.Equal(Created, created.Item1);
+            Assert.Equal(2, created.Item2.Id);
+            Assert.Equal("Biology Project", created.Item2.Title);
+            Assert.Equal("Bla bla bla bla", created.Item2.Content);
+            Assert.Equal(1, created.Item2.SupervisorId);
+            Assert.True(created.Item2.Tags.SetEquals(new[] { "bio", "dna", "cells" }));
         }
 
         [Fact]

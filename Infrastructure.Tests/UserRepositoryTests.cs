@@ -34,7 +34,7 @@ namespace Infrastructure.Tests
         {
             var user = new UserCreateDto { Name = "Karsten", IsSupervisor = false };
 
-            var created = await _repository.CreateAsync(user);
+            var (status, created) = await _repository.CreateAsync(user);
 
             Assert.Equal(2, created.Id);
             Assert.Equal(user.Name, created.Name);

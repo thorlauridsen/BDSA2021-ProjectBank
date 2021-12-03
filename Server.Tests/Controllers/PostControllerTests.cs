@@ -2,17 +2,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using ProjectBank.Core;
+using ProjectBank.Server;
 using ProjectBank.Server.Controllers;
 using Xunit;
 using static ProjectBank.Core.Status;
 
 namespace ProjectBank.Server.Tests.Controllers
 {
-    public class PostControllerTests
+    public class PostControllerTests : TestBaseController<PostController>
     {
-        private Mock<ILogger<PostController>> logger
-            = new Mock<ILogger<PostController>>();
-
         [Fact]
         public async Task Create_creates_Post()
         {
@@ -28,16 +26,16 @@ namespace ProjectBank.Server.Tests.Controllers
                 new HashSet<string>() { "Biology" }
             );
             var repository = new Mock<IPostRepository>();
-            repository.Setup(m => m.CreateAsync(toCreate)).ReturnsAsync(created);
+            repository.Setup(m => m.CreateAsync(toCreate)).ReturnsAsync((Created, created));
             var controller = new PostController(logger.Object, repository.Object);
 
             // Act
-            var result = await controller.Post(toCreate) as CreatedAtRouteResult;
+            var result = await controller.Post(toCreate);
 
             // Assert
-            Assert.Equal(created, result?.Value);
-            Assert.Equal("GetByPostId", result?.RouteName);
-            Assert.Equal(KeyValuePair.Create("Id", (object?)1), result?.RouteValues?.Single());
+            Assert.IsType<CreatedAtRouteResult>(result.Result);
+            var resultObject = GetResultContent<PostDetailsDto>(result);
+            Assert.Equal(created, resultObject);
         }
 
         [Fact]

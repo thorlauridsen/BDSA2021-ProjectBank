@@ -231,9 +231,8 @@ namespace ProjectBank.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("IsSupervisor")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -243,22 +242,6 @@ namespace ProjectBank.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("User");
-                });
-
-            modelBuilder.Entity("ProjectBank.Infrastructure.Student", b =>
-                {
-                    b.HasBaseType("ProjectBank.Infrastructure.User");
-
-                    b.HasDiscriminator().HasValue("Student");
-                });
-
-            modelBuilder.Entity("ProjectBank.Infrastructure.Supervisor", b =>
-                {
-                    b.HasBaseType("ProjectBank.Infrastructure.User");
-
-                    b.HasDiscriminator().HasValue("Supervisor");
                 });
 
             modelBuilder.Entity("PostTag", b =>

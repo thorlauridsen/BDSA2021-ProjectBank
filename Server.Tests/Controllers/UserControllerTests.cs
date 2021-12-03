@@ -8,28 +8,25 @@ using static ProjectBank.Core.Status;
 
 namespace ProjectBank.Server.Tests.Controllers
 {
-    public class UserControllerTests
+    public class UserControllerTests : TestBaseController<UserController>
     {
-        private Mock<ILogger<UserController>> logger
-            = new Mock<ILogger<UserController>>();
-
         [Fact]
         public async Task Create_creates_User()
         {
             // Arrange
             var toCreate = new UserCreateDto();
-            var created = new UserDetailsDto(1, "John", true);
+            var user = new UserDetailsDto(1, "John", true);
             var repository = new Mock<IUserRepository>();
-            repository.Setup(m => m.CreateAsync(toCreate)).ReturnsAsync(created);
+            repository.Setup(m => m.CreateAsync(toCreate)).ReturnsAsync((Created, user));
             var controller = new UserController(logger.Object, repository.Object);
 
             // Act
-            var result = await controller.Post(toCreate) as CreatedAtRouteResult;
+            var result = await controller.Post(toCreate);
 
             // Assert
-            Assert.Equal(created, result?.Value);
-            Assert.Equal("GetByUserId", result?.RouteName);
-            Assert.Equal(KeyValuePair.Create("userId", (object?)1), result?.RouteValues?.Single());
+            Assert.IsType<CreatedAtRouteResult>(result.Result);
+            var resultObject = GetResultContent<UserDetailsDto>(result);
+            Assert.Equal(user, resultObject);
         }
 
         [Fact]

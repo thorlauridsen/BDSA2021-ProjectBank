@@ -8,28 +8,26 @@ using static ProjectBank.Core.Status;
 
 namespace ProjectBank.Server.Tests.Controllers
 {
-    public class CommentControllerTests
+    public class CommentControllerTests : TestBaseController<CommentController>
     {
-        private Mock<ILogger<CommentController>> logger
-            = new Mock<ILogger<CommentController>>();
 
         [Fact]
         public async Task Create_creates_Comment()
         {
             // Arrange
             var toCreate = new CommentCreateDto();
-            var created = new CommentDetailsDto(1, "Hello there", DateTime.Now, 1, 1);
+            var comment = new CommentDetailsDto(1, "Hello there", DateTime.Now, 1, 1);
             var repository = new Mock<ICommentRepository>();
-            repository.Setup(m => m.CreateAsync(toCreate)).ReturnsAsync(created);
+            repository.Setup(m => m.CreateAsync(toCreate)).ReturnsAsync((Created, comment));
             var controller = new CommentController(logger.Object, repository.Object);
 
             // Act
-            var result = await controller.Post(toCreate) as CreatedAtRouteResult;
+            var result = await controller.Post(toCreate);
 
             // Assert
-            Assert.Equal(created, result?.Value);
-            Assert.Equal("GetByCommentId", result?.RouteName);
-            Assert.Equal(KeyValuePair.Create("commentId", (object?)1), result?.RouteValues?.Single());
+            Assert.IsType<CreatedAtRouteResult>(result.Result);
+            var resultObject = GetResultContent<CommentDetailsDto>(result);
+            Assert.Equal(comment, resultObject);
         }
 
         [Fact]
