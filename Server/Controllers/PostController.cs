@@ -29,11 +29,11 @@ namespace ProjectBank.Server.Controllers
             => await _repository.ReadAsync();
 
         [Authorize]
-        [HttpGet("{id:int}", Name = "GetByPostId")]
+        [HttpGet("{postId:int}", Name = "GetByPostId")]
         [ProducesResponseType(typeof(PostDetailsDto), 200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<PostDetailsDto>> GetByPostId(int id)
-            => (await _repository.ReadAsync(id)).ToActionResult();
+        public async Task<ActionResult<PostDetailsDto>> GetByPostId(int postId)
+            => (await _repository.ReadAsync(postId)).ToActionResult();
 
         [Authorize]
         [HttpGet("tag/{tag}")]
@@ -56,7 +56,7 @@ namespace ProjectBank.Server.Controllers
         public async Task<IActionResult> Post(PostCreateDto post)
         {
             var created = await _repository.CreateAsync(post);
-            return CreatedAtRoute(nameof(GetByPostId), new { created.Id }, created);
+            return CreatedAtRoute(nameof(GetByPostId), new { postId = created.Id }, created);
         }
 
         [Authorize]
