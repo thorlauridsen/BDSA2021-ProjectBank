@@ -12,7 +12,7 @@
     dotnet run --project .\Server\
 
 
-    CODE COVERAGE
+CODE COVERAGE
 
     dotnet add package coverlet.collector
     dotnet add package coverlet.msbuild
