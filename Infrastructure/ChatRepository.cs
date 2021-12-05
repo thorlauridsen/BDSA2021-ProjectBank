@@ -11,7 +11,7 @@ namespace ProjectBank.Infrastructure
             _context = context;
         }
 
-        public async Task<int> CreateNewChatAsync(ChatCreateDto chat)
+        public async Task<(Status, ChatDto?)> CreateNewChatAsync(ChatCreateDto chat)
         {
             HashSet<ChatUser> chatUsers = new HashSet<ChatUser>();
             foreach (var userId in chat.ChatUserIds)
@@ -32,7 +32,12 @@ namespace ProjectBank.Infrastructure
             _context.Chats.Add(entityChat);
             await _context.SaveChangesAsync();
 
-            return entityChat.Id;
+            return (Created, new ChatDto
+            {
+                ChatId = entityChat.Id,
+                ProjectId = entityChat.Post.Id,
+                ChatUserIds = entityChat.ChatUsers.Select(cu => cu.Id).ToHashSet()
+            });
         }
 
         public async Task<Status> CreateNewChatMessageAsync(ChatMessageCreateDto chatMessage)

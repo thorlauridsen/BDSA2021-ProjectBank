@@ -39,12 +39,12 @@ namespace ProjectBank.Server.Controllers
 
         [Authorize]
         [HttpPost]
-        [ProducesResponseType(typeof(int), 201)]
+        [ProducesResponseType(typeof(ChatDto), 201)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> Post(ChatCreateDto chat)
+        public async Task<ActionResult<ChatDto>> Post(ChatCreateDto chat)
         {
-            var created = await _repository.CreateNewChatAsync(chat); //Inconsistent with other CreateNewRepositories, since CreateNewChatAsync(), returns an int. 
-            return CreatedAtRoute(nameof(GetByChatId), new { created }, created);
+            var (status, created) = await _repository.CreateNewChatAsync(chat);
+            return CreatedAtRoute(nameof(GetByChatId), new { chatId = created?.ChatId }, created);
         }
 
         [Authorize]
