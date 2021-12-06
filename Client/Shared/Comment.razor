@@ -42,9 +42,9 @@
     {
         try
         {
-            ImgSrc = "https://eu.ui-avatars.com/api/?name=Philip+Cronval&background=random";
             var _user = await _http.GetFromJsonAsync<UserDetailsDto>("api/User/" + UserID);
             Name = _user.Name;
+            ImgSrc = _user.image;
         }
         catch (AccessTokenNotAvailableException exception)
         {
