@@ -63,6 +63,8 @@ namespace ProjectBank.Core
                             ))
                            .ToListAsync())
                            .AsReadOnly();
+                           
+        //FIXME this method fails when compairing supervisors id
         public async Task<IReadOnlyCollection<PostDto>> ReadAsyncBySupervisor(string userId) =>
             (await _context.Posts
                            .Select(p => new PostDto(
