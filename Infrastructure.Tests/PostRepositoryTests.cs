@@ -124,24 +124,24 @@ namespace Infrastructure.Tests
         [Fact]
         public async Task ReadAsyncBySupervisor_given_existing_supervisor_returns_posts()
         {
-            // var actual = await _repository.ReadAsyncBySupervisor("1");
+            var actual = await _repository.ReadAsyncBySupervisor("1");
 
-            // var actual1 = actual.ElementAt(0);
-            // var actual2 = actual.ElementAt(1);
+            var actual1 = actual.ElementAt(0);
+            var actual2 = actual.ElementAt(1);
 
-            // Assert.Equal(1,actual1.Id);
-            // Assert.Equal("Math Project", actual1.Title);
-            // Assert.Equal("Bla bla bla bla", actual1.Content);
-            // Assert.Equal(today, actual1.DateAdded); 
-            // Assert.Equal("1", actual1.SupervisorOid);
-            // Assert.Equal(1, actual1.Tags.Count);
+            Assert.Equal(1,actual1.Id);
+            Assert.Equal("Math Project", actual1.Title);
+            Assert.Equal("Bla bla bla bla", actual1.Content);
+            Assert.Equal(today, actual1.DateAdded); 
+            Assert.Equal("1", actual1.SupervisorOid);
+            Assert.Equal(1, actual1.Tags.Count);
 
-            // Assert.Equal(2,actual2.Id);
-            // Assert.Equal("Physics Project", actual2.Title);
-            // Assert.Equal("Something about physics and stuff", actual2.Content);
-            // Assert.Equal(today, actual2.DateAdded); 
-            // Assert.Equal("1", actual2.SupervisorOid);
-            // Assert.Equal(2, actual2.Tags.Count);
+            Assert.Equal(2,actual2.Id);
+            Assert.Equal("Physics Project", actual2.Title);
+            Assert.Equal("Something about physics and stuff", actual2.Content);
+            Assert.Equal(today, actual2.DateAdded); 
+            Assert.Equal("1", actual2.SupervisorOid);
+            Assert.Equal(2, actual2.Tags.Count);
 
         }
 
@@ -150,14 +150,13 @@ namespace Infrastructure.Tests
         public async Task ReadAsyncBySupervisor_given_non_existing_supervisor_returns_none()
         {
             //var actual = await _repository.ReadAsyncBySupervisor("6");
-    
         }
 
         //TODO
         [Fact]
         public async Task ReadAsyncByTag_given_tag_math_returns_post()
         {
-            //var actual = await _repository.ReadAsyncByTag("Math");
+            var actual = await _repository.ReadAsyncByTag("Math");
     
         }
         
