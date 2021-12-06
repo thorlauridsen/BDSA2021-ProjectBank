@@ -94,9 +94,9 @@ namespace ProjectBank.Server.Integration.Tests
             var comment = new Comment
             {
                 Content = "Nice post",
-                UserId = "2",
+                User = user2,
                 DateAdded = DateTime.Now,
-                PostId = 1
+                Post = post
             };
             if (!context.Comments.Any())
             {
