@@ -1,0 +1,6178 @@
+{
+  "ProjectBank.Client.dll": {
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Client\\Program.cs": {
+      "Program/<<Main>$>d__0": {
+        "System.Void Program/<<Main>$>d__0::MoveNext()": {
+          "Lines": {
+            "6": 0,
+            "7": 0,
+            "8": 0,
+            "10": 0,
+            "11": 0,
+            "14": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "20": 0,
+            "22": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Client\\App.razor": {
+      "ProjectBank.Client.App/<>c__DisplayClass0_1": {
+        "System.Void ProjectBank.Client.App/<>c__DisplayClass0_1::<BuildRenderTree>b__5(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder)": {
+          "Lines": {
+            "6": 0,
+            "7": 0,
+            "9": 0,
+            "11": 0,
+            "13": 0
+          },
+          "Branches": [
+            {
+              "Line": 6,
+              "Offset": 18,
+              "EndOffset": 20,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 6,
+              "Offset": 18,
+              "EndOffset": 24,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 6,
+              "Offset": 34,
+              "EndOffset": 36,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 6,
+              "Offset": 34,
+              "EndOffset": 56,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Client\\Shared\\AddPost.razor": {
+      "ProjectBank.Client.Shared.AddPost/<AddTestPost>d__1": {
+        "System.Void ProjectBank.Client.Shared.AddPost/<AddTestPost>d__1::MoveNext()": {
+          "Lines": {
+            "14": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Client\\Shared\\Comment.razor": {
+      "ProjectBank.Client.Shared.Comment": {
+        "System.Void ProjectBank.Client.Shared.Comment::BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder)": {
+          "Lines": {
+            "13": 0,
+            "18": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 ProjectBank.Client.Shared.Comment::get_CommentID()": {
+          "Lines": {
+            "25": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Client.Shared.Comment::get_UserID()": {
+          "Lines": {
+            "28": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Client.Shared.Comment::get_ImgSrc()": {
+          "Lines": {
+            "30": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Client.Shared.Comment::get_Name()": {
+          "Lines": {
+            "33": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Client.Shared.Comment::get_Content()": {
+          "Lines": {
+            "36": 0
+          },
+          "Branches": []
+        },
+        "System.DateTime ProjectBank.Client.Shared.Comment::get_Published()": {
+          "Lines": {
+            "39": 0
+          },
+          "Branches": []
+        },
+        "System.Void ProjectBank.Client.Shared.Comment::reloadPage()": {
+          "Lines": {
+            "73": 0,
+            "74": 0,
+            "75": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Client.Shared.Comment/<DeleteComment>d__26": {
+        "System.Void ProjectBank.Client.Shared.Comment/<DeleteComment>d__26::MoveNext()": {
+          "Lines": {
+            "56": 0,
+            "57": 0,
+            "58": 0,
+            "59": 0,
+            "60": 0,
+            "61": 0,
+            "62": 0,
+            "63": 0,
+            "64": 0,
+            "66": 0,
+            "67": 0,
+            "68": 0,
+            "69": 0,
+            "70": 0
+          },
+          "Branches": [
+            {
+              "Line": 58,
+              "Offset": 195,
+              "EndOffset": 200,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 61,
+              "Offset": 398,
+              "EndOffset": 400,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 61,
+              "Offset": 398,
+              "EndOffset": 419,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 58,
+              "Offset": 195,
+              "EndOffset": 557,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "ProjectBank.Client.Shared.Comment/<OnInitializedAsync>d__25": {
+        "System.Void ProjectBank.Client.Shared.Comment/<OnInitializedAsync>d__25::MoveNext()": {
+          "Lines": {
+            "42": 0,
+            "44": 0,
+            "45": 0,
+            "46": 0,
+            "47": 0,
+            "48": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0,
+            "53": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Client\\Shared\\CommentSection.razor": {
+      "ProjectBank.Client.Shared.CommentSection": {
+        "System.Void ProjectBank.Client.Shared.CommentSection::BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder)": {
+          "Lines": {
+            "13": 0,
+            "14": 0,
+            "16": 0,
+            "18": 0,
+            "19": 0,
+            "20": 0,
+            "23": 0,
+            "24": 0
+          },
+          "Branches": [
+            {
+              "Line": 13,
+              "Offset": 105,
+              "EndOffset": 107,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 13,
+              "Offset": 105,
+              "EndOffset": 127,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 19,
+              "Offset": 285,
+              "EndOffset": 146,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 19,
+              "Offset": 285,
+              "EndOffset": 290,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            }
+          ]
+        },
+        "ProjectBank.Core.PostDto ProjectBank.Client.Shared.CommentSection::get_Post()": {
+          "Lines": {
+            "44": 0
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.IList`1<ProjectBank.Core.CommentDto> ProjectBank.Client.Shared.CommentSection::get__postComments()": {
+          "Lines": {
+            "46": 0
+          },
+          "Branches": []
+        },
+        "System.Void ProjectBank.Client.Shared.CommentSection::OnInitialized()": {
+          "Lines": {
+            "53": 0,
+            "54": 0,
+            "55": 0,
+            "56": 0
+          },
+          "Branches": []
+        },
+        "System.Void ProjectBank.Client.Shared.CommentSection::HandleFieldChanged(System.Object,Microsoft.AspNetCore.Components.Forms.FieldChangedEventArgs)": {
+          "Lines": {
+            "59": 0,
+            "60": 0,
+            "61": 0,
+            "62": 0,
+            "63": 0
+          },
+          "Branches": [
+            {
+              "Line": 60,
+              "Offset": 12,
+              "EndOffset": 16,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 60,
+              "Offset": 12,
+              "EndOffset": 43,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void ProjectBank.Client.Shared.CommentSection::Dispose()": {
+          "Lines": {
+            "89": 0,
+            "90": 0,
+            "91": 0,
+            "92": 0,
+            "93": 0,
+            "94": 0
+          },
+          "Branches": [
+            {
+              "Line": 90,
+              "Offset": 15,
+              "EndOffset": 17,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 90,
+              "Offset": 15,
+              "EndOffset": 43,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void ProjectBank.Client.Shared.CommentSection::.ctor()": {
+          "Lines": {
+            "47": 0,
+            "50": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Client.Shared.CommentSection/CommentModel": {
+        "System.String ProjectBank.Client.Shared.CommentSection/CommentModel::get_comment()": {
+          "Lines": {
+            "98": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Client.Shared.CommentSection/<HandleValidSubmit>d__14": {
+        "System.Void ProjectBank.Client.Shared.CommentSection/<HandleValidSubmit>d__14::MoveNext()": {
+          "Lines": {
+            "66": 0,
+            "67": 0,
+            "68": 0,
+            "69": 0,
+            "70": 0,
+            "71": 0,
+            "72": 0,
+            "73": 0,
+            "74": 0,
+            "75": 0,
+            "76": 0,
+            "77": 0,
+            "78": 0,
+            "79": 0,
+            "81": 0,
+            "82": 0,
+            "83": 0,
+            "86": 0
+          },
+          "Branches": [
+            {
+              "Line": 76,
+              "Offset": 318,
+              "EndOffset": 320,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 76,
+              "Offset": 318,
+              "EndOffset": 358,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "ProjectBank.Client.Shared.CommentSection/<OnInitializedAsync>d__17": {
+        "System.Void ProjectBank.Client.Shared.CommentSection/<OnInitializedAsync>d__17::MoveNext()": {
+          "Lines": {
+            "101": 0,
+            "103": 0,
+            "104": 0,
+            "105": 0,
+            "106": 0,
+            "107": 0,
+            "108": 0,
+            "109": 0,
+            "110": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Client\\Shared\\Content.razor": {
+      "ProjectBank.Client.Shared.Content": {
+        "System.Void ProjectBank.Client.Shared.Content::BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder)": {
+          "Lines": {
+            "2": 0
+          },
+          "Branches": []
+        },
+        "Microsoft.AspNetCore.Components.RenderFragment ProjectBank.Client.Shared.Content::get_ChildContent()": {
+          "Lines": {
+            "7": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Client\\Shared\\FetchPostData.razor": {
+      "ProjectBank.Client.Shared.FetchPostData": {
+        "System.Void ProjectBank.Client.Shared.FetchPostData::BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder)": {
+          "Lines": {
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "18": 0,
+            "19": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "27": 0,
+            "29": 0,
+            "30": 0,
+            "32": 0,
+            "33": 0
+          },
+          "Branches": [
+            {
+              "Line": 8,
+              "Offset": 25,
+              "EndOffset": 30,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 10,
+              "Offset": 377,
+              "EndOffset": 38,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 18,
+              "Offset": 217,
+              "EndOffset": 219,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 18,
+              "Offset": 217,
+              "EndOffset": 235,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 22,
+              "Offset": 249,
+              "EndOffset": 251,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 24,
+              "Offset": 344,
+              "EndOffset": 257,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 24,
+              "Offset": 344,
+              "EndOffset": 346,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 22,
+              "Offset": 249,
+              "EndOffset": 347,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 10,
+              "Offset": 377,
+              "EndOffset": 382,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 8,
+              "Offset": 25,
+              "EndOffset": 383,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void ProjectBank.Client.Shared.FetchPostData::.ctor()": {
+          "Lines": {
+            "37": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Client.Shared.FetchPostData/<GetComments>d__4": {
+        "System.Void ProjectBank.Client.Shared.FetchPostData/<GetComments>d__4::MoveNext()": {
+          "Lines": {
+            "57": 0,
+            "58": 0,
+            "59": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Client.Shared.FetchPostData/<OnInitializedAsync>d__3": {
+        "System.Void ProjectBank.Client.Shared.FetchPostData/<OnInitializedAsync>d__3::MoveNext()": {
+          "Lines": {
+            "40": 0,
+            "42": 0,
+            "43": 0,
+            "45": 0,
+            "46": 0,
+            "47": 0,
+            "48": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0,
+            "53": 0,
+            "54": 0
+          },
+          "Branches": [
+            {
+              "Line": 45,
+              "Offset": 492,
+              "EndOffset": 225,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 45,
+              "Offset": 492,
+              "EndOffset": 497,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Client\\Shared\\LoginDisplay.razor": {
+      "ProjectBank.Client.Shared.LoginDisplay/<>c__DisplayClass0_0": {
+        "System.Void ProjectBank.Client.Shared.LoginDisplay/<>c__DisplayClass0_0::<BuildRenderTree>b__2(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder)": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": [
+            {
+              "Line": 9,
+              "Offset": 33,
+              "EndOffset": 35,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 9,
+              "Offset": 33,
+              "EndOffset": 39,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "ProjectBank.Client.Shared.LoginDisplay/<BeginLogout>d__1": {
+        "System.Void ProjectBank.Client.Shared.LoginDisplay/<BeginLogout>d__1::MoveNext()": {
+          "Lines": {
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Client\\Shared\\MessageItem.razor": {
+      "ProjectBank.Client.Shared.MessageItem": {
+        "System.Void ProjectBank.Client.Shared.MessageItem::BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder)": {
+          "Lines": {
+            "5": 0,
+            "6": 0,
+            "8": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Client.Shared.MessageItem::get_Recipient()": {
+          "Lines": {
+            "14": 0
+          },
+          "Branches": []
+        },
+        "System.DateTime ProjectBank.Client.Shared.MessageItem::get_LastMessageDate()": {
+          "Lines": {
+            "17": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Client.Shared.MessageItem::get__lastMessageDateString()": {
+          "Lines": {
+            "19": 0
+          },
+          "Branches": []
+        },
+        "ProjectBank.Core.PostDetailsDto ProjectBank.Client.Shared.MessageItem::get_RelatedPost()": {
+          "Lines": {
+            "22": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Client.Shared.MessageItem::get__relatedPostString()": {
+          "Lines": {
+            "24": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean ProjectBank.Client.Shared.MessageItem::get_Read()": {
+          "Lines": {
+            "27": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Client.Shared.MessageItem::get__extraCSS()": {
+          "Lines": {
+            "28": 0
+          },
+          "Branches": []
+        },
+        "System.Void ProjectBank.Client.Shared.MessageItem::OnInitialized()": {
+          "Lines": {
+            "31": 0,
+            "33": 0,
+            "35": 0,
+            "37": 0,
+            "39": 0
+          },
+          "Branches": [
+            {
+              "Line": 37,
+              "Offset": 44,
+              "EndOffset": 46,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 37,
+              "Offset": 44,
+              "EndOffset": 53,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Client\\Shared\\PostContainer.razor": {
+      "ProjectBank.Client.Shared.PostContainer": {
+        "System.Void ProjectBank.Client.Shared.PostContainer::BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder)": {
+          "Lines": {
+            "8": 0,
+            "11": 0,
+            "15": 0,
+            "18": 0,
+            "19": 0,
+            "21": 0
+          },
+          "Branches": [
+            {
+              "Line": 18,
+              "Offset": 406,
+              "EndOffset": 353,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 18,
+              "Offset": 406,
+              "EndOffset": 408,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Int32 ProjectBank.Client.Shared.PostContainer::get_PostID()": {
+          "Lines": {
+            "28": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Client.Shared.PostContainer::get_Title()": {
+          "Lines": {
+            "32": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Client.Shared.PostContainer::get_SupervisorId()": {
+          "Lines": {
+            "36": 0
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.HashSet`1<System.String> ProjectBank.Client.Shared.PostContainer::get_Tags()": {
+          "Lines": {
+            "40": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Client.Shared.PostContainer::get_Content()": {
+          "Lines": {
+            "44": 0
+          },
+          "Branches": []
+        },
+        "System.DateTime ProjectBank.Client.Shared.PostContainer::get_DateAdded()": {
+          "Lines": {
+            "47": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Client.Shared.PostContainer::get_Name()": {
+          "Lines": {
+            "49": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Client.Shared.PostContainer/<OnInitializedAsync>d__29": {
+        "System.Void ProjectBank.Client.Shared.PostContainer/<OnInitializedAsync>d__29::MoveNext()": {
+          "Lines": {
+            "52": 0,
+            "54": 0,
+            "55": 0,
+            "56": 0,
+            "57": 0,
+            "58": 0,
+            "59": 0,
+            "60": 0,
+            "61": 0,
+            "62": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Client\\Shared\\RedirectToLogin.razor": {
+      "ProjectBank.Client.Shared.RedirectToLogin": {
+        "System.Void ProjectBank.Client.Shared.RedirectToLogin::OnInitialized()": {
+          "Lines": {
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Client\\Shared\\SurveyPrompt.razor": {
+      "ProjectBank.Client.Shared.SurveyPrompt": {
+        "System.Void ProjectBank.Client.Shared.SurveyPrompt::BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder)": {
+          "Lines": {
+            "3": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Client.Shared.SurveyPrompt::get_Title()": {
+          "Lines": {
+            "16": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Client\\Shared\\Tag.razor": {
+      "ProjectBank.Client.Shared.Tag": {
+        "System.Void ProjectBank.Client.Shared.Tag::BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder)": {
+          "Lines": {
+            "1": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Client.Shared.Tag::get_Name()": {
+          "Lines": {
+            "6": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Client\\Shared\\InputTag.razor": {
+      "ProjectBank.Client.Shared.InputTag": {
+        "System.Void ProjectBank.Client.Shared.InputTag::BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder)": {
+          "Lines": {
+            "9": 0,
+            "10": 0,
+            "12": 0
+          },
+          "Branches": [
+            {
+              "Line": 9,
+              "Offset": 409,
+              "EndOffset": 358,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 9,
+              "Offset": 409,
+              "EndOffset": 411,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.String ProjectBank.Client.Shared.InputTag::get_Id()": {
+          "Lines": {
+            "21": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Client.Shared.InputTag::get_DefaultTags()": {
+          "Lines": {
+            "26": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Client.Shared.InputTag::get_TagsString()": {
+          "Lines": {
+            "30": 0
+          },
+          "Branches": []
+        },
+        "System.Void ProjectBank.Client.Shared.InputTag::set_TagsString(System.String)": {
+          "Lines": {
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0
+          },
+          "Branches": []
+        },
+        "System.Void ProjectBank.Client.Shared.InputTag::OnInitialized()": {
+          "Lines": {
+            "42": 0,
+            "43": 0,
+            "44": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean ProjectBank.Client.Shared.InputTag::TryParseValueFromString(System.String,System.String&,System.String&)": {
+          "Lines": {
+            "48": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0,
+            "53": 0,
+            "55": 0,
+            "56": 0,
+            "57": 0,
+            "58": 0,
+            "59": 0,
+            "60": 0
+          },
+          "Branches": [
+            {
+              "Line": 49,
+              "Offset": 19,
+              "EndOffset": 21,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 49,
+              "Offset": 19,
+              "EndOffset": 35,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void ProjectBank.Client.Shared.InputTag::KeyPressEventHandler(Microsoft.AspNetCore.Components.Web.KeyboardEventArgs)": {
+          "Lines": {
+            "63": 0,
+            "64": 0,
+            "65": 0,
+            "66": 0,
+            "67": 0,
+            "68": 0,
+            "69": 0
+          },
+          "Branches": [
+            {
+              "Line": 65,
+              "Offset": 19,
+              "EndOffset": 21,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 65,
+              "Offset": 19,
+              "EndOffset": 34,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 65,
+              "Offset": 32,
+              "EndOffset": 34,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 65,
+              "Offset": 32,
+              "EndOffset": 45,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 65,
+              "Offset": 48,
+              "EndOffset": 50,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 67,
+              "Offset": 72,
+              "EndOffset": 74,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 67,
+              "Offset": 72,
+              "EndOffset": 100,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 67,
+              "Offset": 103,
+              "EndOffset": 105,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 67,
+              "Offset": 103,
+              "EndOffset": 128,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 65,
+              "Offset": 48,
+              "EndOffset": 129,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void ProjectBank.Client.Shared.InputTag::UpdateTags()": {
+          "Lines": {
+            "72": 0,
+            "73": 0,
+            "74": 0,
+            "75": 0,
+            "76": 0,
+            "78": 0,
+            "79": 0
+          },
+          "Branches": [
+            {
+              "Line": 73,
+              "Offset": 7,
+              "EndOffset": 9,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 73,
+              "Offset": 7,
+              "EndOffset": 32,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 73,
+              "Offset": 35,
+              "EndOffset": 37,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 73,
+              "Offset": 35,
+              "EndOffset": 51,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void ProjectBank.Client.Shared.InputTag::.ctor()": {
+          "Lines": {
+            "39": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Client\\Shared\\MainLayout.razor": {
+      "ProjectBank.Client.Shared.MainLayout": {
+        "System.Void ProjectBank.Client.Shared.MainLayout::BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder)": {
+          "Lines": {
+            "15": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Client\\Shared\\MessageComponent.razor": {
+      "ProjectBank.Client.Shared.MessageComponent": {
+        "System.Void ProjectBank.Client.Shared.MessageComponent::BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder)": {
+          "Lines": {
+            "3": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Client.Shared.MessageComponent::get_Text()": {
+          "Lines": {
+            "10": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean ProjectBank.Client.Shared.MessageComponent::get_Received()": {
+          "Lines": {
+            "13": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Client.Shared.MessageComponent::get__cssClasses()": {
+          "Lines": {
+            "15": 0
+          },
+          "Branches": []
+        },
+        "System.Void ProjectBank.Client.Shared.MessageComponent::OnInitialized()": {
+          "Lines": {
+            "18": 0,
+            "20": 0,
+            "21": 0
+          },
+          "Branches": [
+            {
+              "Line": 20,
+              "Offset": 8,
+              "EndOffset": 10,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 20,
+              "Offset": 8,
+              "EndOffset": 17,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Client\\Shared\\NavMenu.razor": {
+      "ProjectBank.Client.Shared.NavMenu": {
+        "System.String ProjectBank.Client.Shared.NavMenu::get_NavMenuCssClass()": {
+          "Lines": {
+            "46": 0
+          },
+          "Branches": [
+            {
+              "Line": 46,
+              "Offset": 6,
+              "EndOffset": 8,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 46,
+              "Offset": 6,
+              "EndOffset": 11,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void ProjectBank.Client.Shared.NavMenu::ToggleNavMenu()": {
+          "Lines": {
+            "49": 0,
+            "50": 0,
+            "51": 0
+          },
+          "Branches": []
+        },
+        "System.Void ProjectBank.Client.Shared.NavMenu::.ctor()": {
+          "Lines": {
+            "44": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Client\\Shared\\NotificationItem.razor": {
+      "ProjectBank.Client.Shared.NotificationItem": {
+        "System.Void ProjectBank.Client.Shared.NotificationItem::BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder)": {
+          "Lines": {
+            "5": 0,
+            "6": 0,
+            "8": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Client.Shared.NotificationItem::get_Title()": {
+          "Lines": {
+            "14": 0
+          },
+          "Branches": []
+        },
+        "System.DateTime ProjectBank.Client.Shared.NotificationItem::get_Date()": {
+          "Lines": {
+            "17": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Client.Shared.NotificationItem::get__DateString()": {
+          "Lines": {
+            "19": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Client.Shared.NotificationItem::get_Description()": {
+          "Lines": {
+            "22": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Client.Shared.NotificationItem::get_Link()": {
+          "Lines": {
+            "25": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean ProjectBank.Client.Shared.NotificationItem::get_Read()": {
+          "Lines": {
+            "28": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Client.Shared.NotificationItem::get__extraCSS()": {
+          "Lines": {
+            "29": 0
+          },
+          "Branches": []
+        },
+        "System.Void ProjectBank.Client.Shared.NotificationItem::OnInitialized()": {
+          "Lines": {
+            "32": 0,
+            "34": 0,
+            "36": 0,
+            "38": 0
+          },
+          "Branches": [
+            {
+              "Line": 36,
+              "Offset": 26,
+              "EndOffset": 28,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 36,
+              "Offset": 26,
+              "EndOffset": 35,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Client\\Pages\\Authentication.razor": {
+      "ProjectBank.Client.Pages.Authentication": {
+        "System.String ProjectBank.Client.Pages.Authentication::get_Action()": {
+          "Lines": {
+            "15": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Client.Pages.Authentication::_getClaim(System.String)": {
+          "Lines": {
+            "32": 0,
+            "33": 0,
+            "34": 0
+          },
+          "Branches": [
+            {
+              "Line": 33,
+              "Offset": 38,
+              "EndOffset": 40,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 33,
+              "Offset": 38,
+              "EndOffset": 44,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void ProjectBank.Client.Pages.Authentication::.ctor()": {
+          "Lines": {
+            "17": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Client.Pages.Authentication/<OnLoginSuccess>d__6": {
+        "System.Void ProjectBank.Client.Pages.Authentication/<OnLoginSuccess>d__6::MoveNext()": {
+          "Lines": {
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0
+          },
+          "Branches": [
+            {
+              "Line": 24,
+              "Offset": 177,
+              "EndOffset": 179,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 24,
+              "Offset": 177,
+              "EndOffset": 188,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 24,
+              "Offset": 194,
+              "EndOffset": 196,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 24,
+              "Offset": 194,
+              "EndOffset": 201,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Client\\Pages\\Counter.razor": {
+      "ProjectBank.Client.Pages.Counter": {
+        "System.Void ProjectBank.Client.Pages.Counter::BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder)": {
+          "Lines": {
+            "7": 0
+          },
+          "Branches": []
+        },
+        "System.Void ProjectBank.Client.Pages.Counter::IncrementCount()": {
+          "Lines": {
+            "15": 0,
+            "16": 0,
+            "17": 0
+          },
+          "Branches": []
+        },
+        "System.Void ProjectBank.Client.Pages.Counter::.ctor()": {
+          "Lines": {
+            "12": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Client\\Pages\\Index.razor": {
+      "ProjectBank.Client.Pages.Index": {
+        "System.Void ProjectBank.Client.Pages.Index::.ctor()": {
+          "Lines": {
+            "34": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Client.Pages.Index/<>c__DisplayClass0_0": {
+        "System.Void ProjectBank.Client.Pages.Index/<>c__DisplayClass0_0::<BuildRenderTree>b__4(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder)": {
+          "Lines": {
+            "12": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "22": 0,
+            "23": 0
+          },
+          "Branches": [
+            {
+              "Line": 12,
+              "Offset": 48,
+              "EndOffset": 50,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 12,
+              "Offset": 48,
+              "EndOffset": 54,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 15,
+              "Offset": 160,
+              "EndOffset": 165,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 17,
+              "Offset": 382,
+              "EndOffset": 189,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 17,
+              "Offset": 382,
+              "EndOffset": 387,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 15,
+              "Offset": 160,
+              "EndOffset": 405,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "ProjectBank.Client.Pages.Index/<OnInitializedAsync>d__3": {
+        "System.Void ProjectBank.Client.Pages.Index/<OnInitializedAsync>d__3::MoveNext()": {
+          "Lines": {
+            "39": 0,
+            "41": 0,
+            "42": 0,
+            "43": 0,
+            "44": 0,
+            "45": 0,
+            "46": 0,
+            "47": 0,
+            "48": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Client\\Pages\\Notifications.razor": {
+      "ProjectBank.Client.Pages.Notifications": {
+        "System.Void ProjectBank.Client.Pages.Notifications::BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder)": {
+          "Lines": {
+            "9": 0,
+            "10": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "20": 0
+          },
+          "Branches": [
+            {
+              "Line": 9,
+              "Offset": 243,
+              "EndOffset": 111,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 9,
+              "Offset": 243,
+              "EndOffset": 248,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 15,
+              "Offset": 389,
+              "EndOffset": 255,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 15,
+              "Offset": 389,
+              "EndOffset": 394,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Client\\Pages\\Messages.razor": {
+      "ProjectBank.Client.Pages.Messages": {
+        "System.Void ProjectBank.Client.Pages.Messages::BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder)": {
+          "Lines": {
+            "30": 0,
+            "31": 0,
+            "34": 0
+          },
+          "Branches": [
+            {
+              "Line": 30,
+              "Offset": 1056,
+              "EndOffset": 934,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 30,
+              "Offset": 1056,
+              "EndOffset": 1058,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void ProjectBank.Client.Pages.Messages::<BuildRenderTree>b__0_5(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder)": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        },
+        "System.Void ProjectBank.Client.Pages.Messages::.ctor()": {
+          "Lines": {
+            "67": 0,
+            "70": 0,
+            "77": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Client.Pages.Messages/PostSelectorModel": {
+        "System.String ProjectBank.Client.Pages.Messages/PostSelectorModel::get_projectTitle()": {
+          "Lines": {
+            "74": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Client.Pages.Messages/MessageModel": {
+        "System.String ProjectBank.Client.Pages.Messages/MessageModel::get_Message()": {
+          "Lines": {
+            "81": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Client\\Pages\\Projects\\CreatePost.razor": {
+      "ProjectBank.Client.Pages.Projects.CreatePost": {
+        "System.Void ProjectBank.Client.Pages.Projects.CreatePost::OnInitialized()": {
+          "Lines": {
+            "42": 0,
+            "43": 0,
+            "44": 0,
+            "45": 0
+          },
+          "Branches": []
+        },
+        "System.Void ProjectBank.Client.Pages.Projects.CreatePost::HandleFieldChanged(System.Object,Microsoft.AspNetCore.Components.Forms.FieldChangedEventArgs)": {
+          "Lines": {
+            "48": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0
+          },
+          "Branches": [
+            {
+              "Line": 49,
+              "Offset": 12,
+              "EndOffset": 16,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 49,
+              "Offset": 12,
+              "EndOffset": 43,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void ProjectBank.Client.Pages.Projects.CreatePost::Dispose()": {
+          "Lines": {
+            "77": 0,
+            "78": 0,
+            "79": 0,
+            "80": 0,
+            "81": 0,
+            "82": 0
+          },
+          "Branches": [
+            {
+              "Line": 78,
+              "Offset": 15,
+              "EndOffset": 17,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 78,
+              "Offset": 15,
+              "EndOffset": 43,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void ProjectBank.Client.Pages.Projects.CreatePost::.ctor()": {
+          "Lines": {
+            "36": 0,
+            "38": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Client.Pages.Projects.CreatePost/<>c": {
+        "System.String ProjectBank.Client.Pages.Projects.CreatePost/<>c::<HandleValidSubmit>b__6_0(System.String)": {
+          "Lines": {
+            "62": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Client.Pages.Projects.CreatePost/<HandleValidSubmit>d__6": {
+        "System.Void ProjectBank.Client.Pages.Projects.CreatePost/<HandleValidSubmit>d__6::MoveNext()": {
+          "Lines": {
+            "55": 0,
+            "56": 0,
+            "57": 0,
+            "58": 0,
+            "59": 0,
+            "60": 0,
+            "61": 0,
+            "63": 0,
+            "64": 0,
+            "65": 0,
+            "66": 0,
+            "67": 0,
+            "68": 0,
+            "69": 0,
+            "71": 0,
+            "72": 0,
+            "73": 0,
+            "74": 0
+          },
+          "Branches": [
+            {
+              "Line": 65,
+              "Offset": 366,
+              "EndOffset": 371,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 65,
+              "Offset": 366,
+              "EndOffset": 574,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Client\\Pages\\Projects\\EditPost.razor": {
+      "ProjectBank.Client.Pages.Projects.EditPost": {
+        "System.Void ProjectBank.Client.Pages.Projects.EditPost::BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder)": {
+          "Lines": {
+            "16": 0,
+            "17": 0,
+            "19": 0,
+            "21": 0,
+            "42": 0
+          },
+          "Branches": [
+            {
+              "Line": 16,
+              "Offset": 74,
+              "EndOffset": 76,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 16,
+              "Offset": 74,
+              "EndOffset": 93,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Int32 ProjectBank.Client.Pages.Projects.EditPost::get_Id()": {
+          "Lines": {
+            "47": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Client.Pages.Projects.EditPost::get_tags()": {
+          "Lines": {
+            "50": 0
+          },
+          "Branches": []
+        },
+        "System.Void ProjectBank.Client.Pages.Projects.EditPost::OnInitialized()": {
+          "Lines": {
+            "57": 0,
+            "58": 0,
+            "59": 0,
+            "60": 0,
+            "61": 0
+          },
+          "Branches": []
+        },
+        "System.Void ProjectBank.Client.Pages.Projects.EditPost::HandleFieldChanged(System.Object,Microsoft.AspNetCore.Components.Forms.FieldChangedEventArgs)": {
+          "Lines": {
+            "81": 0,
+            "82": 0,
+            "83": 0,
+            "84": 0,
+            "85": 0
+          },
+          "Branches": [
+            {
+              "Line": 82,
+              "Offset": 12,
+              "EndOffset": 16,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 82,
+              "Offset": 12,
+              "EndOffset": 43,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void ProjectBank.Client.Pages.Projects.EditPost::Dispose()": {
+          "Lines": {
+            "110": 0,
+            "111": 0,
+            "112": 0,
+            "113": 0,
+            "114": 0,
+            "115": 0
+          },
+          "Branches": [
+            {
+              "Line": 111,
+              "Offset": 15,
+              "EndOffset": 17,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 111,
+              "Offset": 15,
+              "EndOffset": 43,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void ProjectBank.Client.Pages.Projects.EditPost::.ctor()": {
+          "Lines": {
+            "51": 0,
+            "53": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Client.Pages.Projects.EditPost/<>c": {
+        "System.String ProjectBank.Client.Pages.Projects.EditPost/<>c::<HandleValidSubmit>b__16_0(System.String)": {
+          "Lines": {
+            "96": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Client.Pages.Projects.EditPost/<HandleValidSubmit>d__16": {
+        "System.Void ProjectBank.Client.Pages.Projects.EditPost/<HandleValidSubmit>d__16::MoveNext()": {
+          "Lines": {
+            "88": 0,
+            "89": 0,
+            "90": 0,
+            "91": 0,
+            "92": 0,
+            "93": 0,
+            "94": 0,
+            "95": 0,
+            "97": 0,
+            "98": 0,
+            "99": 0,
+            "100": 0,
+            "101": 0,
+            "102": 0,
+            "104": 0,
+            "105": 0,
+            "106": 0,
+            "107": 0
+          },
+          "Branches": [
+            {
+              "Line": 99,
+              "Offset": 419,
+              "EndOffset": 421,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 99,
+              "Offset": 419,
+              "EndOffset": 478,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "ProjectBank.Client.Pages.Projects.EditPost/<OnInitializedAsync>d__14": {
+        "System.Void ProjectBank.Client.Pages.Projects.EditPost/<OnInitializedAsync>d__14::MoveNext()": {
+          "Lines": {
+            "64": 0,
+            "66": 0,
+            "67": 0,
+            "68": 0,
+            "69": 0,
+            "70": 0,
+            "71": 0,
+            "72": 0,
+            "73": 0,
+            "74": 0,
+            "75": 0,
+            "76": 0,
+            "77": 0,
+            "78": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Client\\Pages\\Projects\\ViewPost.razor": {
+      "ProjectBank.Client.Pages.Projects.ViewPost": {
+        "System.Int32 ProjectBank.Client.Pages.Projects.ViewPost::get_Id()": {
+          "Lines": {
+            "61": 0
+          },
+          "Branches": []
+        },
+        "ProjectBank.Core.PostDto ProjectBank.Client.Pages.Projects.ViewPost::get_Post()": {
+          "Lines": {
+            "63": 0
+          },
+          "Branches": []
+        },
+        "ProjectBank.Core.UserDto ProjectBank.Client.Pages.Projects.ViewPost::get_Creator()": {
+          "Lines": {
+            "64": 0
+          },
+          "Branches": []
+        },
+        "System.Void ProjectBank.Client.Pages.Projects.ViewPost::<BuildRenderTree>b__0_0(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder)": {
+          "Lines": {
+            "7": 0,
+            "8": 0,
+            "10": 0,
+            "12": 0,
+            "16": 0,
+            "18": 0,
+            "19": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "26": 0,
+            "27": 0,
+            "37": 0,
+            "54": 0
+          },
+          "Branches": [
+            {
+              "Line": 7,
+              "Offset": 15,
+              "EndOffset": 17,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 7,
+              "Offset": 15,
+              "EndOffset": 37,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 18,
+              "Offset": 313,
+              "EndOffset": 315,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 18,
+              "Offset": 313,
+              "EndOffset": 319,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 19,
+              "Offset": 397,
+              "EndOffset": 399,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 19,
+              "Offset": 397,
+              "EndOffset": 403,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 21,
+              "Offset": 494,
+              "EndOffset": 496,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 21,
+              "Offset": 503,
+              "EndOffset": 505,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 21,
+              "Offset": 503,
+              "EndOffset": 509,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 21,
+              "Offset": 494,
+              "EndOffset": 519,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 21,
+              "Offset": 522,
+              "EndOffset": 524,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 0
+            },
+            {
+              "Line": 23,
+              "Offset": 600,
+              "EndOffset": 545,
+              "Path": 1,
+              "Ordinal": 13,
+              "Hits": 0
+            },
+            {
+              "Line": 23,
+              "Offset": 600,
+              "EndOffset": 602,
+              "Path": 0,
+              "Ordinal": 12,
+              "Hits": 0
+            },
+            {
+              "Line": 21,
+              "Offset": 522,
+              "EndOffset": 620,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 0
+            },
+            {
+              "Line": 27,
+              "Offset": 871,
+              "EndOffset": 873,
+              "Path": 0,
+              "Ordinal": 14,
+              "Hits": 0
+            },
+            {
+              "Line": 27,
+              "Offset": 871,
+              "EndOffset": 877,
+              "Path": 1,
+              "Ordinal": 15,
+              "Hits": 0
+            },
+            {
+              "Line": 37,
+              "Offset": 980,
+              "EndOffset": 982,
+              "Path": 0,
+              "Ordinal": 16,
+              "Hits": 0
+            },
+            {
+              "Line": 37,
+              "Offset": 980,
+              "EndOffset": 986,
+              "Path": 1,
+              "Ordinal": 17,
+              "Hits": 0
+            },
+            {
+              "Line": 37,
+              "Offset": 1108,
+              "EndOffset": 1110,
+              "Path": 0,
+              "Ordinal": 18,
+              "Hits": 0
+            },
+            {
+              "Line": 37,
+              "Offset": 1108,
+              "EndOffset": 1114,
+              "Path": 1,
+              "Ordinal": 19,
+              "Hits": 0
+            },
+            {
+              "Line": 37,
+              "Offset": 1274,
+              "EndOffset": 1276,
+              "Path": 0,
+              "Ordinal": 20,
+              "Hits": 0
+            },
+            {
+              "Line": 37,
+              "Offset": 1274,
+              "EndOffset": 1280,
+              "Path": 1,
+              "Ordinal": 21,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "ProjectBank.Client.Pages.Projects.ViewPost/<OnInitializedAsync>d__13": {
+        "System.Void ProjectBank.Client.Pages.Projects.ViewPost/<OnInitializedAsync>d__13::MoveNext()": {
+          "Lines": {
+            "67": 0,
+            "69": 0,
+            "70": 0,
+            "71": 0,
+            "72": 0,
+            "73": 0,
+            "74": 0,
+            "75": 0,
+            "76": 0,
+            "77": 0
+          },
+          "Branches": [
+            {
+              "Line": 71,
+              "Offset": 239,
+              "EndOffset": 241,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 71,
+              "Offset": 239,
+              "EndOffset": 245,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Client\\Extensions\\DateUtil.cs": {
+      "ProjectBank.Client.Extensions.DateExtensions": {
+        "System.String ProjectBank.Client.Extensions.DateExtensions::GetTimeSince(System.DateTime)": {
+          "Lines": {
+            "6": 0,
+            "7": 0,
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "35": 0,
+            "36": 0,
+            "38": 0
+          },
+          "Branches": [
+            {
+              "Line": 9,
+              "Offset": 37,
+              "EndOffset": 39,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 12,
+              "Offset": 100,
+              "EndOffset": 102,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 12,
+              "Offset": 100,
+              "EndOffset": 109,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 9,
+              "Offset": 37,
+              "EndOffset": 147,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 14,
+              "Offset": 171,
+              "EndOffset": 173,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 17,
+              "Offset": 237,
+              "EndOffset": 239,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 17,
+              "Offset": 237,
+              "EndOffset": 246,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 14,
+              "Offset": 171,
+              "EndOffset": 284,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 19,
+              "Offset": 308,
+              "EndOffset": 310,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 22,
+              "Offset": 357,
+              "EndOffset": 359,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 0
+            },
+            {
+              "Line": 22,
+              "Offset": 357,
+              "EndOffset": 366,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 0
+            },
+            {
+              "Line": 19,
+              "Offset": 308,
+              "EndOffset": 404,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 24,
+              "Offset": 428,
+              "EndOffset": 430,
+              "Path": 0,
+              "Ordinal": 12,
+              "Hits": 0
+            },
+            {
+              "Line": 27,
+              "Offset": 477,
+              "EndOffset": 479,
+              "Path": 0,
+              "Ordinal": 14,
+              "Hits": 0
+            },
+            {
+              "Line": 27,
+              "Offset": 477,
+              "EndOffset": 486,
+              "Path": 1,
+              "Ordinal": 15,
+              "Hits": 0
+            },
+            {
+              "Line": 24,
+              "Offset": 428,
+              "EndOffset": 521,
+              "Path": 1,
+              "Ordinal": 13,
+              "Hits": 0
+            },
+            {
+              "Line": 29,
+              "Offset": 545,
+              "EndOffset": 547,
+              "Path": 0,
+              "Ordinal": 16,
+              "Hits": 0
+            },
+            {
+              "Line": 32,
+              "Offset": 594,
+              "EndOffset": 596,
+              "Path": 0,
+              "Ordinal": 18,
+              "Hits": 0
+            },
+            {
+              "Line": 32,
+              "Offset": 594,
+              "EndOffset": 603,
+              "Path": 1,
+              "Ordinal": 19,
+              "Hits": 0
+            },
+            {
+              "Line": 29,
+              "Offset": 545,
+              "EndOffset": 638,
+              "Path": 1,
+              "Ordinal": 17,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    }
+  },
+  "ProjectBank.Core.dll": {
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Core\\ChatDto.cs": {
+      "ProjectBank.Core.ChatCreateDto": {
+        "System.Int32 ProjectBank.Core.ChatCreateDto::get_ProjectId()": {
+          "Lines": {
+            "5": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Core.ChatCreateDto::get_FromUserId()": {
+          "Lines": {
+            "6": 0
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.HashSet`1<System.String> ProjectBank.Core.ChatCreateDto::get_ChatUserIds()": {
+          "Lines": {
+            "7": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Core.ChatMessageCreateDto": {
+        "System.String ProjectBank.Core.ChatMessageCreateDto::get_FromUserId()": {
+          "Lines": {
+            "12": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 ProjectBank.Core.ChatMessageCreateDto::get_ChatId()": {
+          "Lines": {
+            "13": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Core.ChatMessageCreateDto::get_Content()": {
+          "Lines": {
+            "14": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Core.ChatMessageDto": {
+        "System.String ProjectBank.Core.ChatMessageDto::get_FromUserId()": {
+          "Lines": {
+            "19": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Core.ChatMessageDto::get_Content()": {
+          "Lines": {
+            "21": 0
+          },
+          "Branches": []
+        },
+        "System.DateTime ProjectBank.Core.ChatMessageDto::get_Timestamp()": {
+          "Lines": {
+            "23": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Core.ChatDto": {
+        "System.Int32 ProjectBank.Core.ChatDto::get_ChatId()": {
+          "Lines": {
+            "28": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 ProjectBank.Core.ChatDto::get_ProjectId()": {
+          "Lines": {
+            "29": 0
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.HashSet`1<System.Int32> ProjectBank.Core.ChatDto::get_ChatUserIds()": {
+          "Lines": {
+            "30": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Core.ChatDetailsDto": {
+        "System.Int32 ProjectBank.Core.ChatDetailsDto::get_ChatId()": {
+          "Lines": {
+            "35": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Core.ChatDetailsDto::get_TargetUserId()": {
+          "Lines": {
+            "37": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Core.ChatDetailsDto::get_LatestMessageUserId()": {
+          "Lines": {
+            "39": 0
+          },
+          "Branches": []
+        },
+        "System.DateTime ProjectBank.Core.ChatDetailsDto::get_LatestMessageTime()": {
+          "Lines": {
+            "41": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Core.ChatDetailsDto::get_LatestMessage()": {
+          "Lines": {
+            "43": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean ProjectBank.Core.ChatDetailsDto::get_SeenLatestMessage()": {
+          "Lines": {
+            "45": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Core\\CommentDto.cs": {
+      "ProjectBank.Core.CommentDto": {
+        "System.Int32 ProjectBank.Core.CommentDto::get_Id()": {
+          "Lines": {
+            "4": 3
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Core.CommentDto::get_Content()": {
+          "Lines": {
+            "5": 2
+          },
+          "Branches": []
+        },
+        "System.DateTime ProjectBank.Core.CommentDto::get_DateAdded()": {
+          "Lines": {
+            "6": 2
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Core.CommentDto::get_UserId()": {
+          "Lines": {
+            "7": 2
+          },
+          "Branches": []
+        },
+        "System.Int32 ProjectBank.Core.CommentDto::get_PostId()": {
+          "Lines": {
+            "8": 2
+          },
+          "Branches": []
+        },
+        "System.Void ProjectBank.Core.CommentDto::.ctor(System.Int32,System.String,System.DateTime,System.String,System.Int32)": {
+          "Lines": {
+            "3": 2,
+            "9": 2
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Core.CommentDetailsDto": {
+        "System.Void ProjectBank.Core.CommentDetailsDto::.ctor(System.Int32,System.String,System.DateTime,System.String,System.Int32)": {
+          "Lines": {
+            "17": 2
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Core.CommentCreateDto": {
+        "System.String ProjectBank.Core.CommentCreateDto::get_Content()": {
+          "Lines": {
+            "21": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Core.CommentCreateDto::get_UserId()": {
+          "Lines": {
+            "22": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 ProjectBank.Core.CommentCreateDto::get_PostId()": {
+          "Lines": {
+            "23": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Core.CommentUpdateDto": {
+        "System.Int32 ProjectBank.Core.CommentUpdateDto::get_Id()": {
+          "Lines": {
+            "28": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Core\\Extensions.cs": {
+      "ProjectBank.Core.Extensions/<ToListAsync>d__0`1": {
+        "System.Void ProjectBank.Core.Extensions/<ToListAsync>d__0`1::MoveNext()": {
+          "Lines": {
+            "7": 0,
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0
+          },
+          "Branches": [
+            {
+              "Line": 9,
+              "Offset": 266,
+              "EndOffset": 102,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 9,
+              "Offset": 266,
+              "EndOffset": 271,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 9,
+              "Offset": 404,
+              "EndOffset": 406,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 9,
+              "Offset": 404,
+              "EndOffset": 435,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Core\\NotificationDto.cs": {
+      "ProjectBank.Core.NotificationCreateDto": {
+        "System.String ProjectBank.Core.NotificationCreateDto::get_Title()": {
+          "Lines": {
+            "5": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Core.NotificationCreateDto::get_Content()": {
+          "Lines": {
+            "7": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Core.NotificationCreateDto::get_UserOid()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Core.NotificationCreateDto::get_Link()": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Core.NotificationDetailsDto": {
+        "System.Int32 ProjectBank.Core.NotificationDetailsDto::get_Id()": {
+          "Lines": {
+            "16": 1
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Core.NotificationDetailsDto::get_Title()": {
+          "Lines": {
+            "18": 1
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Core.NotificationDetailsDto::get_Content()": {
+          "Lines": {
+            "20": 1
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Core.NotificationDetailsDto::get_UserOid()": {
+          "Lines": {
+            "22": 1
+          },
+          "Branches": []
+        },
+        "System.DateTime ProjectBank.Core.NotificationDetailsDto::get_Timestamp()": {
+          "Lines": {
+            "24": 1
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Core.NotificationDetailsDto::get_Link()": {
+          "Lines": {
+            "26": 1
+          },
+          "Branches": []
+        },
+        "System.Boolean ProjectBank.Core.NotificationDetailsDto::get_Seen()": {
+          "Lines": {
+            "28": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Core\\Option.cs": {
+      "ProjectBank.Core.Option`1": {
+        "T ProjectBank.Core.Option`1::get_Value()": {
+          "Lines": {
+            "7": 3
+          },
+          "Branches": [
+            {
+              "Line": 7,
+              "Offset": 12,
+              "EndOffset": 14,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 7,
+              "Offset": 12,
+              "EndOffset": 21,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 3
+            }
+          ]
+        },
+        "System.Boolean ProjectBank.Core.Option`1::get_IsNone()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean ProjectBank.Core.Option`1::get_IsSome()": {
+          "Lines": {
+            "11": 6
+          },
+          "Branches": []
+        },
+        "T ProjectBank.Core.Option`1::op_Implicit(ProjectBank.Core.Option`1<T>)": {
+          "Lines": {
+            "18": 0
+          },
+          "Branches": []
+        },
+        "ProjectBank.Core.Option`1<T> ProjectBank.Core.Option`1::op_Implicit(T)": {
+          "Lines": {
+            "20": 6
+          },
+          "Branches": []
+        },
+        "System.Void ProjectBank.Core.Option`1::.ctor(T)": {
+          "Lines": {
+            "14": 6,
+            "15": 6,
+            "16": 6
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Core\\PostDto.cs": {
+      "ProjectBank.Core.PostDto": {
+        "System.Int32 ProjectBank.Core.PostDto::get_Id()": {
+          "Lines": {
+            "6": 3
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Core.PostDto::get_Title()": {
+          "Lines": {
+            "7": 2
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Core.PostDto::get_Content()": {
+          "Lines": {
+            "8": 2
+          },
+          "Branches": []
+        },
+        "System.DateTime ProjectBank.Core.PostDto::get_DateAdded()": {
+          "Lines": {
+            "9": 2
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Core.PostDto::get_SupervisorOid()": {
+          "Lines": {
+            "10": 2
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.HashSet`1<System.String> ProjectBank.Core.PostDto::get_Tags()": {
+          "Lines": {
+            "11": 2
+          },
+          "Branches": []
+        },
+        "System.Void ProjectBank.Core.PostDto::.ctor(System.Int32,System.String,System.String,System.DateTime,System.String,System.Collections.Generic.HashSet`1<System.String>)": {
+          "Lines": {
+            "5": 2,
+            "12": 2
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Core.PostDetailsDto": {
+        "System.Void ProjectBank.Core.PostDetailsDto::.ctor(System.Int32,System.String,System.String,System.DateTime,System.String,System.Collections.Generic.HashSet`1<System.String>)": {
+          "Lines": {
+            "21": 2
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Core.PostCreateDto": {
+        "System.String ProjectBank.Core.PostCreateDto::get_Title()": {
+          "Lines": {
+            "27": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Core.PostCreateDto::get_Content()": {
+          "Lines": {
+            "29": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Core.PostCreateDto::get_SupervisorOid()": {
+          "Lines": {
+            "30": 0
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.HashSet`1<System.String> ProjectBank.Core.PostCreateDto::get_Tags()": {
+          "Lines": {
+            "31": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Core.PostUpdateDto": {
+        "System.Int32 ProjectBank.Core.PostUpdateDto::get_Id()": {
+          "Lines": {
+            "36": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Core\\UserDto.cs": {
+      "ProjectBank.Core.UserDto": {
+        "System.String ProjectBank.Core.UserDto::get_oid()": {
+          "Lines": {
+            "5": 9
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Core.UserDetailsDto": {
+        "System.Void ProjectBank.Core.UserDetailsDto::.ctor(System.String,System.String,System.Boolean)": {
+          "Lines": {
+            "7": 2
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Core.UserCreateDto": {
+        "System.String ProjectBank.Core.UserCreateDto::get_oid()": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Core.UserCreateDto::get_Name()": {
+          "Lines": {
+            "14": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean ProjectBank.Core.UserCreateDto::get_IsSupervisor()": {
+          "Lines": {
+            "16": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Core.UserUpdateDto": {
+        "System.String ProjectBank.Core.UserUpdateDto::get_oid()": {
+          "Lines": {
+            "21": 0
+          },
+          "Branches": []
+        }
+      }
+    }
+  },
+  "ProjectBank.Infrastructure.dll": {
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Infrastructure\\PostRepository.cs": {
+      "ProjectBank.Core.PostRepository": {
+        "System.Void ProjectBank.Core.PostRepository::.ctor(ProjectBank.Infrastructure.IProjectBankContext)": {
+          "Lines": {
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Core.PostRepository/<>c": {
+        "System.String ProjectBank.Core.PostRepository/<>c::<CreateAsync>b__2_0(ProjectBank.Infrastructure.Tag)": {
+          "Lines": {
+            "38": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Core.PostRepository/<>c::<GetTagsAsync>b__10_1(ProjectBank.Infrastructure.Tag)": {
+          "Lines": {
+            "147": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Core.PostRepository/<CreateAsync>d__2": {
+        "System.Void ProjectBank.Core.PostRepository/<CreateAsync>d__2::MoveNext()": {
+          "Lines": {
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0,
+            "39": 0,
+            "40": 0
+          },
+          "Branches": [
+            {
+              "Line": 16,
+              "Offset": 69,
+              "EndOffset": 71,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 16,
+              "Offset": 69,
+              "EndOffset": 99,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 16,
+              "Offset": 102,
+              "EndOffset": 104,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 16,
+              "Offset": 102,
+              "EndOffset": 118,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "ProjectBank.Core.PostRepository/<DeleteAsync>d__9": {
+        "System.Void ProjectBank.Core.PostRepository/<DeleteAsync>d__9::MoveNext()": {
+          "Lines": {
+            "130": 0,
+            "131": 0,
+            "133": 0,
+            "134": 0,
+            "135": 0,
+            "138": 0,
+            "139": 0,
+            "141": 0,
+            "142": 0
+          },
+          "Branches": [
+            {
+              "Line": 133,
+              "Offset": 198,
+              "EndOffset": 200,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 133,
+              "Offset": 198,
+              "EndOffset": 208,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "ProjectBank.Core.PostRepository/<GetTagsAsync>d__10": {
+        "System.Void ProjectBank.Core.PostRepository/<GetTagsAsync>d__10::MoveNext()": {
+          "Lines": {
+            "145": 0,
+            "146": 0,
+            "149": 0,
+            "150": 0,
+            "151": 0,
+            "152": 0,
+            "153": 0
+          },
+          "Branches": [
+            {
+              "Line": 149,
+              "Offset": 571,
+              "EndOffset": 443,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 151,
+              "Offset": 485,
+              "EndOffset": 487,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 151,
+              "Offset": 485,
+              "EndOffset": 500,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 149,
+              "Offset": 571,
+              "EndOffset": 576,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "ProjectBank.Core.PostRepository/<GetUserAsync>d__11": {
+        "System.Void ProjectBank.Core.PostRepository/<GetUserAsync>d__11::MoveNext()": {
+          "Lines": {
+            "156": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Core.PostRepository/<ReadAsync>d__3": {
+        "System.Void ProjectBank.Core.PostRepository/<ReadAsync>d__3::MoveNext()": {
+          "Lines": {
+            "43": 0,
+            "44": 0,
+            "45": 0,
+            "46": 0,
+            "47": 0,
+            "48": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Core.PostRepository/<ReadAsync>d__4": {
+        "System.Void ProjectBank.Core.PostRepository/<ReadAsync>d__4::MoveNext()": {
+          "Lines": {
+            "55": 0,
+            "56": 0,
+            "57": 0,
+            "58": 0,
+            "59": 0,
+            "60": 0,
+            "61": 0,
+            "62": 0,
+            "63": 0,
+            "64": 0,
+            "65": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Core.PostRepository/<ReadAsyncBySupervisor>d__5": {
+        "System.Void ProjectBank.Core.PostRepository/<ReadAsyncBySupervisor>d__5::MoveNext()": {
+          "Lines": {
+            "67": 0,
+            "68": 0,
+            "69": 0,
+            "70": 0,
+            "71": 0,
+            "72": 0,
+            "73": 0,
+            "74": 0,
+            "75": 0,
+            "76": 0,
+            "77": 0,
+            "78": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Core.PostRepository/<ReadAsyncByTag>d__6": {
+        "System.Void ProjectBank.Core.PostRepository/<ReadAsyncByTag>d__6::MoveNext()": {
+          "Lines": {
+            "81": 0,
+            "82": 0,
+            "83": 0,
+            "84": 0,
+            "85": 0,
+            "86": 0,
+            "87": 0,
+            "88": 0,
+            "89": 0,
+            "90": 0,
+            "91": 0,
+            "92": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Core.PostRepository/<ReadAsyncComments>d__7": {
+        "System.Void ProjectBank.Core.PostRepository/<ReadAsyncComments>d__7::MoveNext()": {
+          "Lines": {
+            "95": 0,
+            "96": 0,
+            "98": 0,
+            "99": 0,
+            "100": 0,
+            "101": 0,
+            "102": 0,
+            "103": 0,
+            "104": 0,
+            "105": 0,
+            "106": 0,
+            "107": 0,
+            "108": 0,
+            "109": 0,
+            "110": 0
+          },
+          "Branches": [
+            {
+              "Line": 99,
+              "Offset": 435,
+              "EndOffset": 326,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 99,
+              "Offset": 435,
+              "EndOffset": 437,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "ProjectBank.Core.PostRepository/<UpdateAsync>d__8": {
+        "System.Void ProjectBank.Core.PostRepository/<UpdateAsync>d__8::MoveNext()": {
+          "Lines": {
+            "113": 0,
+            "114": 0,
+            "116": 0,
+            "117": 0,
+            "118": 0,
+            "120": 0,
+            "121": 0,
+            "122": 0,
+            "124": 0,
+            "126": 0,
+            "127": 0
+          },
+          "Branches": [
+            {
+              "Line": 116,
+              "Offset": 348,
+              "EndOffset": 350,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 116,
+              "Offset": 348,
+              "EndOffset": 358,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Infrastructure\\Chat.cs": {
+      "ProjectBank.Infrastructure.Chat": {
+        "System.Int32 ProjectBank.Infrastructure.Chat::get_Id()": {
+          "Lines": {
+            "5": 0
+          },
+          "Branches": []
+        },
+        "ProjectBank.Infrastructure.Post ProjectBank.Infrastructure.Chat::get_Post()": {
+          "Lines": {
+            "7": 0
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.ICollection`1<ProjectBank.Infrastructure.ChatUser> ProjectBank.Infrastructure.Chat::get_ChatUsers()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Infrastructure\\ChatMessage.cs": {
+      "ProjectBank.Infrastructure.ChatMessage": {
+        "System.Int32 ProjectBank.Infrastructure.ChatMessage::get_Id()": {
+          "Lines": {
+            "5": 0
+          },
+          "Branches": []
+        },
+        "ProjectBank.Infrastructure.Chat ProjectBank.Infrastructure.ChatMessage::get_Chat()": {
+          "Lines": {
+            "7": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Infrastructure.ChatMessage::get_Content()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "System.DateTime ProjectBank.Infrastructure.ChatMessage::get_Timestamp()": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        },
+        "ProjectBank.Infrastructure.User ProjectBank.Infrastructure.ChatMessage::get_FromUser()": {
+          "Lines": {
+            "13": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Infrastructure\\ChatRepository.cs": {
+      "ProjectBank.Infrastructure.ChatRepository": {
+        "System.Void ProjectBank.Infrastructure.ChatRepository::.ctor(ProjectBank.Infrastructure.IProjectBankContext)": {
+          "Lines": {
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Infrastructure.ChatRepository/<>c": {
+        "System.Int32 ProjectBank.Infrastructure.ChatRepository/<>c::<CreateNewChatAsync>b__2_0(ProjectBank.Infrastructure.ChatUser)": {
+          "Lines": {
+            "39": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean ProjectBank.Infrastructure.ChatRepository/<>c::<CreateNewChatMessageAsync>b__3_1(ProjectBank.Infrastructure.ChatUser)": {
+          "Lines": {
+            "58": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Infrastructure.ChatRepository/<>c__DisplayClass3_0": {
+        "System.Boolean ProjectBank.Infrastructure.ChatRepository/<>c__DisplayClass3_0::<CreateNewChatMessageAsync>b__0(ProjectBank.Infrastructure.ChatUser)": {
+          "Lines": {
+            "57": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Infrastructure.ChatRepository/<CreateNewChatAsync>d__2": {
+        "System.Void ProjectBank.Infrastructure.ChatRepository/<CreateNewChatAsync>d__2::MoveNext()": {
+          "Lines": {
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0,
+            "38": 0,
+            "40": 0,
+            "41": 0
+          },
+          "Branches": [
+            {
+              "Line": 17,
+              "Offset": 403,
+              "EndOffset": 87,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 19,
+              "Offset": 286,
+              "EndOffset": 288,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 19,
+              "Offset": 286,
+              "EndOffset": 291,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 17,
+              "Offset": 403,
+              "EndOffset": 408,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "ProjectBank.Infrastructure.ChatRepository/<CreateNewChatMessageAsync>d__3": {
+        "System.Void ProjectBank.Infrastructure.ChatRepository/<CreateNewChatMessageAsync>d__3::MoveNext()": {
+          "Lines": {
+            "44": 0,
+            "45": 0,
+            "46": 0,
+            "47": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0,
+            "53": 0,
+            "54": 0,
+            "55": 0,
+            "68": 0,
+            "69": 0,
+            "71": 0,
+            "72": 0
+          },
+          "Branches": [
+            {
+              "Line": 45,
+              "Offset": 104,
+              "EndOffset": 106,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 45,
+              "Offset": 104,
+              "EndOffset": 114,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "ProjectBank.Infrastructure.ChatRepository/<GetChatAsync>d__6": {
+        "System.Void ProjectBank.Infrastructure.ChatRepository/<GetChatAsync>d__6::MoveNext()": {
+          "Lines": {
+            "104": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Infrastructure.ChatRepository/<GetPostAsync>d__8": {
+        "System.Void ProjectBank.Infrastructure.ChatRepository/<GetPostAsync>d__8::MoveNext()": {
+          "Lines": {
+            "110": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Infrastructure.ChatRepository/<GetUserAsync>d__7": {
+        "System.Void ProjectBank.Infrastructure.ChatRepository/<GetUserAsync>d__7::MoveNext()": {
+          "Lines": {
+            "107": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Infrastructure.ChatRepository/<ReadAllChatsAsync>d__4": {
+        "System.Void ProjectBank.Infrastructure.ChatRepository/<ReadAllChatsAsync>d__4::MoveNext()": {
+          "Lines": {
+            "75": 0,
+            "76": 0,
+            "77": 0,
+            "78": 0,
+            "79": 0,
+            "80": 0,
+            "81": 0,
+            "82": 0,
+            "83": 0,
+            "84": 0,
+            "85": 0,
+            "86": 0,
+            "87": 0,
+            "88": 0,
+            "89": 0,
+            "90": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Infrastructure.ChatRepository/<ReadSpecificChatAsync>d__5": {
+        "System.Void ProjectBank.Infrastructure.ChatRepository/<ReadSpecificChatAsync>d__5::MoveNext()": {
+          "Lines": {
+            "93": 0,
+            "94": 0,
+            "95": 0,
+            "96": 0,
+            "97": 0,
+            "98": 0,
+            "99": 0,
+            "100": 0,
+            "101": 0,
+            "102": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Infrastructure\\ChatUser.cs": {
+      "ProjectBank.Infrastructure.ChatUser": {
+        "System.Int32 ProjectBank.Infrastructure.ChatUser::get_Id()": {
+          "Lines": {
+            "5": 0
+          },
+          "Branches": []
+        },
+        "ProjectBank.Infrastructure.User ProjectBank.Infrastructure.ChatUser::get_User()": {
+          "Lines": {
+            "7": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean ProjectBank.Infrastructure.ChatUser::get_SeenLatestMessage()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Infrastructure\\Comment.cs": {
+      "ProjectBank.Infrastructure.Comment": {
+        "System.Int32 ProjectBank.Infrastructure.Comment::get_Id()": {
+          "Lines": {
+            "5": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Infrastructure.Comment::get_Content()": {
+          "Lines": {
+            "8": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Infrastructure.Comment::get_UserId()": {
+          "Lines": {
+            "10": 0
+          },
+          "Branches": []
+        },
+        "System.DateTime ProjectBank.Infrastructure.Comment::get_DateAdded()": {
+          "Lines": {
+            "12": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 ProjectBank.Infrastructure.Comment::get_PostId()": {
+          "Lines": {
+            "14": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Infrastructure\\CommentRepository.cs": {
+      "ProjectBank.Infrastructure.CommentRepository": {
+        "System.Void ProjectBank.Infrastructure.CommentRepository::.ctor(ProjectBank.Infrastructure.IProjectBankContext)": {
+          "Lines": {
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Infrastructure.CommentRepository/<CreateAsync>d__2": {
+        "System.Void ProjectBank.Infrastructure.CommentRepository/<CreateAsync>d__2::MoveNext()": {
+          "Lines": {
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0
+          },
+          "Branches": [
+            {
+              "Line": 16,
+              "Offset": 46,
+              "EndOffset": 48,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 16,
+              "Offset": 46,
+              "EndOffset": 62,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "ProjectBank.Infrastructure.CommentRepository/<DeleteAsync>d__6": {
+        "System.Void ProjectBank.Infrastructure.CommentRepository/<DeleteAsync>d__6::MoveNext()": {
+          "Lines": {
+            "77": 0,
+            "78": 0,
+            "80": 0,
+            "81": 0,
+            "82": 0,
+            "85": 0,
+            "86": 0,
+            "88": 0,
+            "89": 0
+          },
+          "Branches": [
+            {
+              "Line": 80,
+              "Offset": 198,
+              "EndOffset": 200,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 80,
+              "Offset": 198,
+              "EndOffset": 208,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "ProjectBank.Infrastructure.CommentRepository/<GetPostAsync>d__7": {
+        "System.Void ProjectBank.Infrastructure.CommentRepository/<GetPostAsync>d__7::MoveNext()": {
+          "Lines": {
+            "92": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Infrastructure.CommentRepository/<GetUserAsync>d__8": {
+        "System.Void ProjectBank.Infrastructure.CommentRepository/<GetUserAsync>d__8::MoveNext()": {
+          "Lines": {
+            "95": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Infrastructure.CommentRepository/<ReadAsync>d__3": {
+        "System.Void ProjectBank.Infrastructure.CommentRepository/<ReadAsync>d__3::MoveNext()": {
+          "Lines": {
+            "40": 0,
+            "41": 0,
+            "42": 0,
+            "43": 0,
+            "44": 0,
+            "45": 0,
+            "46": 0,
+            "47": 0,
+            "48": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Infrastructure.CommentRepository/<ReadAsync>d__4": {
+        "System.Void ProjectBank.Infrastructure.CommentRepository/<ReadAsync>d__4::MoveNext()": {
+          "Lines": {
+            "51": 0,
+            "52": 0,
+            "53": 0,
+            "54": 0,
+            "55": 0,
+            "56": 0,
+            "57": 0,
+            "58": 0,
+            "59": 0,
+            "60": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Infrastructure.CommentRepository/<UpdateAsync>d__5": {
+        "System.Void ProjectBank.Infrastructure.CommentRepository/<UpdateAsync>d__5::MoveNext()": {
+          "Lines": {
+            "63": 0,
+            "64": 0,
+            "66": 0,
+            "67": 0,
+            "68": 0,
+            "70": 0,
+            "71": 0,
+            "73": 0,
+            "74": 0
+          },
+          "Branches": [
+            {
+              "Line": 66,
+              "Offset": 334,
+              "EndOffset": 336,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 66,
+              "Offset": 334,
+              "EndOffset": 344,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Infrastructure\\Notification.cs": {
+      "ProjectBank.Infrastructure.Notification": {
+        "System.Int32 ProjectBank.Infrastructure.Notification::get_Id()": {
+          "Lines": {
+            "5": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Infrastructure.Notification::get_Title()": {
+          "Lines": {
+            "8": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Infrastructure.Notification::get_Content()": {
+          "Lines": {
+            "10": 0
+          },
+          "Branches": []
+        },
+        "System.DateTime ProjectBank.Infrastructure.Notification::get_Timestamp()": {
+          "Lines": {
+            "12": 0
+          },
+          "Branches": []
+        },
+        "ProjectBank.Infrastructure.User ProjectBank.Infrastructure.Notification::get_User()": {
+          "Lines": {
+            "14": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Infrastructure.Notification::get_Link()": {
+          "Lines": {
+            "16": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean ProjectBank.Infrastructure.Notification::get_Seen()": {
+          "Lines": {
+            "18": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Infrastructure\\NotificationRepository.cs": {
+      "ProjectBank.Infrastructure.NotificationRepository": {
+        "System.Void ProjectBank.Infrastructure.NotificationRepository::.ctor(ProjectBank.Infrastructure.IProjectBankContext)": {
+          "Lines": {
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Infrastructure.NotificationRepository/<CreateAsync>d__2": {
+        "System.Void ProjectBank.Infrastructure.NotificationRepository/<CreateAsync>d__2::MoveNext()": {
+          "Lines": {
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0,
+            "41": 0,
+            "42": 0
+          },
+          "Branches": [
+            {
+              "Line": 16,
+              "Offset": 57,
+              "EndOffset": 59,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 16,
+              "Offset": 57,
+              "EndOffset": 73,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "ProjectBank.Infrastructure.NotificationRepository/<GetNotificationsAsync>d__3": {
+        "System.Void ProjectBank.Infrastructure.NotificationRepository/<GetNotificationsAsync>d__3::MoveNext()": {
+          "Lines": {
+            "45": 0,
+            "46": 0,
+            "47": 0,
+            "48": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0,
+            "53": 0,
+            "54": 0,
+            "55": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Infrastructure.NotificationRepository/<GetUserAsync>d__5": {
+        "System.Void ProjectBank.Infrastructure.NotificationRepository/<GetUserAsync>d__5::MoveNext()": {
+          "Lines": {
+            "72": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Infrastructure.NotificationRepository/<SeenNotificationAsync>d__4": {
+        "System.Void ProjectBank.Infrastructure.NotificationRepository/<SeenNotificationAsync>d__4::MoveNext()": {
+          "Lines": {
+            "58": 0,
+            "59": 0,
+            "61": 0,
+            "62": 0,
+            "63": 0,
+            "65": 0,
+            "66": 0,
+            "68": 0,
+            "69": 0
+          },
+          "Branches": [
+            {
+              "Line": 61,
+              "Offset": 314,
+              "EndOffset": 316,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 61,
+              "Offset": 314,
+              "EndOffset": 324,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Infrastructure\\Post.cs": {
+      "ProjectBank.Infrastructure.Post": {
+        "System.Int32 ProjectBank.Infrastructure.Post::get_Id()": {
+          "Lines": {
+            "5": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Infrastructure.Post::get_Title()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Infrastructure.Post::get_Content()": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        },
+        "System.DateTime ProjectBank.Infrastructure.Post::get_DateAdded()": {
+          "Lines": {
+            "13": 0
+          },
+          "Branches": []
+        },
+        "ProjectBank.Infrastructure.User ProjectBank.Infrastructure.Post::get_User()": {
+          "Lines": {
+            "15": 0
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.ICollection`1<ProjectBank.Infrastructure.Tag> ProjectBank.Infrastructure.Post::get_Tags()": {
+          "Lines": {
+            "17": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Infrastructure\\ProjectBankContext.cs": {
+      "ProjectBank.Infrastructure.ProjectBankContext": {
+        "Microsoft.EntityFrameworkCore.DbSet`1<ProjectBank.Infrastructure.User> ProjectBank.Infrastructure.ProjectBankContext::get_Users()": {
+          "Lines": {
+            "5": 0
+          },
+          "Branches": []
+        },
+        "Microsoft.EntityFrameworkCore.DbSet`1<ProjectBank.Infrastructure.Post> ProjectBank.Infrastructure.ProjectBankContext::get_Posts()": {
+          "Lines": {
+            "6": 0
+          },
+          "Branches": []
+        },
+        "Microsoft.EntityFrameworkCore.DbSet`1<ProjectBank.Infrastructure.Tag> ProjectBank.Infrastructure.ProjectBankContext::get_Tags()": {
+          "Lines": {
+            "7": 0
+          },
+          "Branches": []
+        },
+        "Microsoft.EntityFrameworkCore.DbSet`1<ProjectBank.Infrastructure.Comment> ProjectBank.Infrastructure.ProjectBankContext::get_Comments()": {
+          "Lines": {
+            "8": 0
+          },
+          "Branches": []
+        },
+        "Microsoft.EntityFrameworkCore.DbSet`1<ProjectBank.Infrastructure.Chat> ProjectBank.Infrastructure.ProjectBankContext::get_Chats()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "Microsoft.EntityFrameworkCore.DbSet`1<ProjectBank.Infrastructure.ChatUser> ProjectBank.Infrastructure.ProjectBankContext::get_ChatUsers()": {
+          "Lines": {
+            "10": 0
+          },
+          "Branches": []
+        },
+        "Microsoft.EntityFrameworkCore.DbSet`1<ProjectBank.Infrastructure.ChatMessage> ProjectBank.Infrastructure.ProjectBankContext::get_ChatMessages()": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        },
+        "Microsoft.EntityFrameworkCore.DbSet`1<ProjectBank.Infrastructure.Notification> ProjectBank.Infrastructure.ProjectBankContext::get_Notifications()": {
+          "Lines": {
+            "12": 0
+          },
+          "Branches": []
+        },
+        "System.Void ProjectBank.Infrastructure.ProjectBankContext::OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)": {
+          "Lines": {
+            "19": 0,
+            "20": 0
+          },
+          "Branches": []
+        },
+        "System.Void ProjectBank.Infrastructure.ProjectBankContext::.ctor(Microsoft.EntityFrameworkCore.DbContextOptions`1<ProjectBank.Infrastructure.ProjectBankContext>)": {
+          "Lines": {
+            "14": 0,
+            "15": 0,
+            "16": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Infrastructure\\Tag.cs": {
+      "ProjectBank.Infrastructure.Tag": {
+        "System.Int32 ProjectBank.Infrastructure.Tag::get_Id()": {
+          "Lines": {
+            "5": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Infrastructure.Tag::get_Name()": {
+          "Lines": {
+            "8": 0
+          },
+          "Branches": []
+        },
+        "System.Void ProjectBank.Infrastructure.Tag::.ctor(System.String)": {
+          "Lines": {
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Infrastructure\\User.cs": {
+      "ProjectBank.Infrastructure.User": {
+        "System.String ProjectBank.Infrastructure.User::get_oid()": {
+          "Lines": {
+            "6": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Infrastructure.User::get_Name()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean ProjectBank.Infrastructure.User::get_IsSupervisor()": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Infrastructure\\UserRepository.cs": {
+      "ProjectBank.Infrastructure.UserRepository": {
+        "System.Void ProjectBank.Infrastructure.UserRepository::.ctor(ProjectBank.Infrastructure.IProjectBankContext)": {
+          "Lines": {
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Infrastructure.UserRepository/<CreateAsync>d__2": {
+        "System.Void ProjectBank.Infrastructure.UserRepository/<CreateAsync>d__2::MoveNext()": {
+          "Lines": {
+            "15": 0,
+            "16": 0,
+            "18": 0,
+            "19": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Infrastructure.UserRepository/<DeleteAsync>d__6": {
+        "System.Void ProjectBank.Infrastructure.UserRepository/<DeleteAsync>d__6::MoveNext()": {
+          "Lines": {
+            "62": 0,
+            "63": 0,
+            "65": 0,
+            "66": 0,
+            "67": 0,
+            "69": 0,
+            "70": 0,
+            "72": 0,
+            "73": 0
+          },
+          "Branches": [
+            {
+              "Line": 65,
+              "Offset": 193,
+              "EndOffset": 195,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 65,
+              "Offset": 193,
+              "EndOffset": 203,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "ProjectBank.Infrastructure.UserRepository/<ReadAsync>d__3": {
+        "System.Void ProjectBank.Infrastructure.UserRepository/<ReadAsync>d__3::MoveNext()": {
+          "Lines": {
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Infrastructure.UserRepository/<ReadAsync>d__4": {
+        "System.Void ProjectBank.Infrastructure.UserRepository/<ReadAsync>d__4::MoveNext()": {
+          "Lines": {
+            "38": 0,
+            "39": 0,
+            "40": 0,
+            "41": 0,
+            "42": 0,
+            "43": 0,
+            "44": 0,
+            "45": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Infrastructure.UserRepository/<UpdateAsync>d__5": {
+        "System.Void ProjectBank.Infrastructure.UserRepository/<UpdateAsync>d__5::MoveNext()": {
+          "Lines": {
+            "48": 0,
+            "49": 0,
+            "51": 0,
+            "52": 0,
+            "53": 0,
+            "55": 0,
+            "56": 0,
+            "58": 0,
+            "59": 0
+          },
+          "Branches": [
+            {
+              "Line": 51,
+              "Offset": 334,
+              "EndOffset": 336,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 51,
+              "Offset": 334,
+              "EndOffset": 344,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Infrastructure\\Migrations\\20211206103808_InitialMigration.cs": {
+      "ProjectBank.Infrastructure.Migrations.InitialMigration": {
+        "System.Void ProjectBank.Infrastructure.Migrations.InitialMigration::Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)": {
+          "Lines": {
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "41": 0,
+            "42": 0,
+            "43": 0,
+            "44": 0,
+            "45": 0,
+            "46": 0,
+            "47": 0,
+            "48": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0,
+            "53": 0,
+            "54": 0,
+            "55": 0,
+            "56": 0,
+            "57": 0,
+            "58": 0,
+            "59": 0,
+            "60": 0,
+            "61": 0,
+            "62": 0,
+            "63": 0,
+            "65": 0,
+            "66": 0,
+            "67": 0,
+            "68": 0,
+            "69": 0,
+            "70": 0,
+            "71": 0,
+            "72": 0,
+            "73": 0,
+            "74": 0,
+            "75": 0,
+            "76": 0,
+            "77": 0,
+            "78": 0,
+            "79": 0,
+            "80": 0,
+            "81": 0,
+            "82": 0,
+            "83": 0,
+            "84": 0,
+            "85": 0,
+            "87": 0,
+            "88": 0,
+            "89": 0,
+            "90": 0,
+            "91": 0,
+            "92": 0,
+            "93": 0,
+            "94": 0,
+            "95": 0,
+            "96": 0,
+            "97": 0,
+            "98": 0,
+            "99": 0,
+            "100": 0,
+            "101": 0,
+            "102": 0,
+            "103": 0,
+            "105": 0,
+            "106": 0,
+            "107": 0,
+            "108": 0,
+            "109": 0,
+            "110": 0,
+            "111": 0,
+            "112": 0,
+            "113": 0,
+            "114": 0,
+            "115": 0,
+            "116": 0,
+            "117": 0,
+            "118": 0,
+            "119": 0,
+            "120": 0,
+            "121": 0,
+            "122": 0,
+            "124": 0,
+            "125": 0,
+            "126": 0,
+            "127": 0,
+            "128": 0,
+            "129": 0,
+            "130": 0,
+            "131": 0,
+            "132": 0,
+            "133": 0,
+            "134": 0,
+            "135": 0,
+            "136": 0,
+            "137": 0,
+            "138": 0,
+            "139": 0,
+            "140": 0,
+            "141": 0,
+            "142": 0,
+            "143": 0,
+            "144": 0,
+            "145": 0,
+            "146": 0,
+            "147": 0,
+            "148": 0,
+            "149": 0,
+            "150": 0,
+            "152": 0,
+            "153": 0,
+            "154": 0,
+            "155": 0,
+            "156": 0,
+            "157": 0,
+            "158": 0,
+            "159": 0,
+            "160": 0,
+            "161": 0,
+            "162": 0,
+            "163": 0,
+            "164": 0,
+            "165": 0,
+            "166": 0,
+            "167": 0,
+            "168": 0,
+            "169": 0,
+            "170": 0,
+            "171": 0,
+            "172": 0,
+            "173": 0,
+            "174": 0,
+            "175": 0,
+            "176": 0,
+            "178": 0,
+            "179": 0,
+            "180": 0,
+            "181": 0,
+            "183": 0,
+            "184": 0,
+            "185": 0,
+            "186": 0,
+            "188": 0,
+            "189": 0,
+            "190": 0,
+            "191": 0,
+            "193": 0,
+            "194": 0,
+            "195": 0,
+            "196": 0,
+            "198": 0,
+            "199": 0,
+            "200": 0,
+            "201": 0,
+            "203": 0,
+            "204": 0,
+            "205": 0,
+            "206": 0,
+            "208": 0,
+            "209": 0,
+            "210": 0,
+            "211": 0,
+            "213": 0,
+            "214": 0,
+            "215": 0,
+            "216": 0,
+            "217": 0
+          },
+          "Branches": []
+        },
+        "System.Void ProjectBank.Infrastructure.Migrations.InitialMigration::Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)": {
+          "Lines": {
+            "220": 0,
+            "221": 0,
+            "222": 0,
+            "224": 0,
+            "225": 0,
+            "227": 0,
+            "228": 0,
+            "230": 0,
+            "231": 0,
+            "233": 0,
+            "234": 0,
+            "236": 0,
+            "237": 0,
+            "239": 0,
+            "240": 0,
+            "242": 0,
+            "243": 0,
+            "244": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Infrastructure\\Migrations\\20211206103808_InitialMigration.Designer.cs": {
+      "ProjectBank.Infrastructure.Migrations.InitialMigration": {
+        "System.Void ProjectBank.Infrastructure.Migrations.InitialMigration::BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)": {
+          "Lines": {
+            "19": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "25": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0,
+            "41": 0,
+            "42": 0,
+            "43": 0,
+            "45": 0,
+            "46": 0,
+            "47": 0,
+            "48": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0,
+            "53": 0,
+            "54": 0,
+            "55": 0,
+            "56": 0,
+            "57": 0,
+            "58": 0,
+            "59": 0,
+            "60": 0,
+            "61": 0,
+            "62": 0,
+            "63": 0,
+            "64": 0,
+            "65": 0,
+            "66": 0,
+            "67": 0,
+            "68": 0,
+            "69": 0,
+            "70": 0,
+            "71": 0,
+            "72": 0,
+            "73": 0,
+            "74": 0,
+            "76": 0,
+            "77": 0,
+            "78": 0,
+            "79": 0,
+            "80": 0,
+            "81": 0,
+            "82": 0,
+            "83": 0,
+            "84": 0,
+            "85": 0,
+            "86": 0,
+            "87": 0,
+            "88": 0,
+            "89": 0,
+            "90": 0,
+            "91": 0,
+            "92": 0,
+            "93": 0,
+            "94": 0,
+            "95": 0,
+            "96": 0,
+            "97": 0,
+            "98": 0,
+            "99": 0,
+            "100": 0,
+            "101": 0,
+            "103": 0,
+            "104": 0,
+            "105": 0,
+            "106": 0,
+            "107": 0,
+            "108": 0,
+            "109": 0,
+            "110": 0,
+            "111": 0,
+            "112": 0,
+            "113": 0,
+            "114": 0,
+            "115": 0,
+            "116": 0,
+            "117": 0,
+            "118": 0,
+            "119": 0,
+            "120": 0,
+            "121": 0,
+            "122": 0,
+            "123": 0,
+            "124": 0,
+            "125": 0,
+            "126": 0,
+            "127": 0,
+            "128": 0,
+            "129": 0,
+            "131": 0,
+            "132": 0,
+            "133": 0,
+            "134": 0,
+            "135": 0,
+            "136": 0,
+            "137": 0,
+            "138": 0,
+            "139": 0,
+            "140": 0,
+            "141": 0,
+            "142": 0,
+            "143": 0,
+            "144": 0,
+            "145": 0,
+            "146": 0,
+            "147": 0,
+            "148": 0,
+            "149": 0,
+            "150": 0,
+            "151": 0,
+            "152": 0,
+            "153": 0,
+            "154": 0,
+            "155": 0,
+            "156": 0,
+            "157": 0,
+            "158": 0,
+            "159": 0,
+            "160": 0,
+            "161": 0,
+            "162": 0,
+            "163": 0,
+            "164": 0,
+            "165": 0,
+            "166": 0,
+            "167": 0,
+            "169": 0,
+            "170": 0,
+            "171": 0,
+            "172": 0,
+            "173": 0,
+            "174": 0,
+            "175": 0,
+            "176": 0,
+            "177": 0,
+            "178": 0,
+            "179": 0,
+            "180": 0,
+            "181": 0,
+            "182": 0,
+            "183": 0,
+            "184": 0,
+            "185": 0,
+            "186": 0,
+            "187": 0,
+            "188": 0,
+            "189": 0,
+            "190": 0,
+            "191": 0,
+            "192": 0,
+            "193": 0,
+            "194": 0,
+            "195": 0,
+            "196": 0,
+            "197": 0,
+            "198": 0,
+            "200": 0,
+            "201": 0,
+            "202": 0,
+            "203": 0,
+            "204": 0,
+            "205": 0,
+            "206": 0,
+            "207": 0,
+            "208": 0,
+            "209": 0,
+            "210": 0,
+            "211": 0,
+            "212": 0,
+            "213": 0,
+            "214": 0,
+            "215": 0,
+            "216": 0,
+            "217": 0,
+            "218": 0,
+            "219": 0,
+            "220": 0,
+            "221": 0,
+            "223": 0,
+            "224": 0,
+            "225": 0,
+            "226": 0,
+            "227": 0,
+            "228": 0,
+            "229": 0,
+            "230": 0,
+            "231": 0,
+            "232": 0,
+            "233": 0,
+            "234": 0,
+            "235": 0,
+            "236": 0,
+            "237": 0,
+            "238": 0,
+            "239": 0,
+            "241": 0,
+            "242": 0,
+            "243": 0,
+            "244": 0,
+            "245": 0,
+            "246": 0,
+            "247": 0,
+            "248": 0,
+            "250": 0,
+            "251": 0,
+            "252": 0,
+            "253": 0,
+            "254": 0,
+            "255": 0,
+            "256": 0,
+            "257": 0,
+            "258": 0,
+            "259": 0,
+            "260": 0,
+            "261": 0,
+            "262": 0,
+            "263": 0,
+            "264": 0,
+            "265": 0,
+            "266": 0,
+            "267": 0,
+            "269": 0,
+            "270": 0,
+            "271": 0,
+            "272": 0,
+            "273": 0,
+            "274": 0,
+            "275": 0,
+            "276": 0,
+            "277": 0,
+            "278": 0,
+            "279": 0,
+            "280": 0,
+            "281": 0,
+            "282": 0,
+            "284": 0,
+            "285": 0,
+            "286": 0,
+            "287": 0,
+            "288": 0,
+            "289": 0,
+            "290": 0,
+            "291": 0,
+            "292": 0,
+            "293": 0,
+            "295": 0,
+            "296": 0,
+            "297": 0,
+            "298": 0,
+            "299": 0,
+            "300": 0,
+            "301": 0,
+            "302": 0,
+            "303": 0,
+            "304": 0,
+            "306": 0,
+            "307": 0,
+            "308": 0,
+            "309": 0,
+            "310": 0,
+            "311": 0,
+            "313": 0,
+            "314": 0,
+            "315": 0,
+            "316": 0,
+            "318": 0,
+            "319": 0,
+            "320": 0,
+            "321": 0,
+            "323": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Infrastructure\\Migrations\\ProjectBankContextModelSnapshot.cs": {
+      "ProjectBank.Infrastructure.Migrations.ProjectBankContextModelSnapshot": {
+        "System.Void ProjectBank.Infrastructure.Migrations.ProjectBankContextModelSnapshot::BuildModel(Microsoft.EntityFrameworkCore.ModelBuilder)": {
+          "Lines": {
+            "17": 0,
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "23": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0,
+            "41": 0,
+            "43": 0,
+            "44": 0,
+            "45": 0,
+            "46": 0,
+            "47": 0,
+            "48": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0,
+            "53": 0,
+            "54": 0,
+            "55": 0,
+            "56": 0,
+            "57": 0,
+            "58": 0,
+            "59": 0,
+            "60": 0,
+            "61": 0,
+            "62": 0,
+            "63": 0,
+            "64": 0,
+            "65": 0,
+            "66": 0,
+            "67": 0,
+            "68": 0,
+            "69": 0,
+            "70": 0,
+            "71": 0,
+            "72": 0,
+            "74": 0,
+            "75": 0,
+            "76": 0,
+            "77": 0,
+            "78": 0,
+            "79": 0,
+            "80": 0,
+            "81": 0,
+            "82": 0,
+            "83": 0,
+            "84": 0,
+            "85": 0,
+            "86": 0,
+            "87": 0,
+            "88": 0,
+            "89": 0,
+            "90": 0,
+            "91": 0,
+            "92": 0,
+            "93": 0,
+            "94": 0,
+            "95": 0,
+            "96": 0,
+            "97": 0,
+            "98": 0,
+            "99": 0,
+            "101": 0,
+            "102": 0,
+            "103": 0,
+            "104": 0,
+            "105": 0,
+            "106": 0,
+            "107": 0,
+            "108": 0,
+            "109": 0,
+            "110": 0,
+            "111": 0,
+            "112": 0,
+            "113": 0,
+            "114": 0,
+            "115": 0,
+            "116": 0,
+            "117": 0,
+            "118": 0,
+            "119": 0,
+            "120": 0,
+            "121": 0,
+            "122": 0,
+            "123": 0,
+            "124": 0,
+            "125": 0,
+            "126": 0,
+            "127": 0,
+            "129": 0,
+            "130": 0,
+            "131": 0,
+            "132": 0,
+            "133": 0,
+            "134": 0,
+            "135": 0,
+            "136": 0,
+            "137": 0,
+            "138": 0,
+            "139": 0,
+            "140": 0,
+            "141": 0,
+            "142": 0,
+            "143": 0,
+            "144": 0,
+            "145": 0,
+            "146": 0,
+            "147": 0,
+            "148": 0,
+            "149": 0,
+            "150": 0,
+            "151": 0,
+            "152": 0,
+            "153": 0,
+            "154": 0,
+            "155": 0,
+            "156": 0,
+            "157": 0,
+            "158": 0,
+            "159": 0,
+            "160": 0,
+            "161": 0,
+            "162": 0,
+            "163": 0,
+            "164": 0,
+            "165": 0,
+            "167": 0,
+            "168": 0,
+            "169": 0,
+            "170": 0,
+            "171": 0,
+            "172": 0,
+            "173": 0,
+            "174": 0,
+            "175": 0,
+            "176": 0,
+            "177": 0,
+            "178": 0,
+            "179": 0,
+            "180": 0,
+            "181": 0,
+            "182": 0,
+            "183": 0,
+            "184": 0,
+            "185": 0,
+            "186": 0,
+            "187": 0,
+            "188": 0,
+            "189": 0,
+            "190": 0,
+            "191": 0,
+            "192": 0,
+            "193": 0,
+            "194": 0,
+            "195": 0,
+            "196": 0,
+            "198": 0,
+            "199": 0,
+            "200": 0,
+            "201": 0,
+            "202": 0,
+            "203": 0,
+            "204": 0,
+            "205": 0,
+            "206": 0,
+            "207": 0,
+            "208": 0,
+            "209": 0,
+            "210": 0,
+            "211": 0,
+            "212": 0,
+            "213": 0,
+            "214": 0,
+            "215": 0,
+            "216": 0,
+            "217": 0,
+            "218": 0,
+            "219": 0,
+            "221": 0,
+            "222": 0,
+            "223": 0,
+            "224": 0,
+            "225": 0,
+            "226": 0,
+            "227": 0,
+            "228": 0,
+            "229": 0,
+            "230": 0,
+            "231": 0,
+            "232": 0,
+            "233": 0,
+            "234": 0,
+            "235": 0,
+            "236": 0,
+            "237": 0,
+            "239": 0,
+            "240": 0,
+            "241": 0,
+            "242": 0,
+            "243": 0,
+            "244": 0,
+            "245": 0,
+            "246": 0,
+            "248": 0,
+            "249": 0,
+            "250": 0,
+            "251": 0,
+            "252": 0,
+            "253": 0,
+            "254": 0,
+            "255": 0,
+            "256": 0,
+            "257": 0,
+            "258": 0,
+            "259": 0,
+            "260": 0,
+            "261": 0,
+            "262": 0,
+            "263": 0,
+            "264": 0,
+            "265": 0,
+            "267": 0,
+            "268": 0,
+            "269": 0,
+            "270": 0,
+            "271": 0,
+            "272": 0,
+            "273": 0,
+            "274": 0,
+            "275": 0,
+            "276": 0,
+            "277": 0,
+            "278": 0,
+            "279": 0,
+            "280": 0,
+            "282": 0,
+            "283": 0,
+            "284": 0,
+            "285": 0,
+            "286": 0,
+            "287": 0,
+            "288": 0,
+            "289": 0,
+            "290": 0,
+            "291": 0,
+            "293": 0,
+            "294": 0,
+            "295": 0,
+            "296": 0,
+            "297": 0,
+            "298": 0,
+            "299": 0,
+            "300": 0,
+            "301": 0,
+            "302": 0,
+            "304": 0,
+            "305": 0,
+            "306": 0,
+            "307": 0,
+            "308": 0,
+            "309": 0,
+            "311": 0,
+            "312": 0,
+            "313": 0,
+            "314": 0,
+            "316": 0,
+            "317": 0,
+            "318": 0,
+            "319": 0,
+            "321": 0
+          },
+          "Branches": []
+        }
+      }
+    }
+  },
+  "ProjectBank.Server.dll": {
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Server\\Program.cs": {
+      "Program/<<Main>$>d__0": {
+        "System.Void Program/<<Main>$>d__0::MoveNext()": {
+          "Lines": {
+            "10": 0,
+            "12": 0,
+            "15": 0,
+            "16": 0,
+            "18": 0,
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0,
+            "41": 0,
+            "42": 0,
+            "43": 0,
+            "45": 0,
+            "48": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0,
+            "53": 0,
+            "54": 0,
+            "56": 0,
+            "57": 0,
+            "59": 0,
+            "60": 0,
+            "62": 0,
+            "64": 0,
+            "65": 0,
+            "67": 0,
+            "69": 0,
+            "70": 0,
+            "72": 0,
+            "73": 0,
+            "74": 0,
+            "76": 0,
+            "77": 0,
+            "78": 0,
+            "79": 0,
+            "80": 0
+          },
+          "Branches": [
+            {
+              "Line": 48,
+              "Offset": 546,
+              "EndOffset": 548,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 48,
+              "Offset": 546,
+              "EndOffset": 602,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 76,
+              "Offset": 772,
+              "EndOffset": 774,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 76,
+              "Offset": 772,
+              "EndOffset": 875,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Server\\Pages\\Error.cshtml": {
+      "AspNetCoreGeneratedDocument.Pages_Error/<<ExecuteAsync>b__13_1>d": {
+        "System.Void AspNetCoreGeneratedDocument.Pages_Error/<<ExecuteAsync>b__13_1>d::MoveNext()": {
+          "Lines": {
+            "21": 0,
+            "22": 0,
+            "24": 0,
+            "26": 0
+          },
+          "Branches": [
+            {
+              "Line": 21,
+              "Offset": 43,
+              "EndOffset": 45,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 21,
+              "Offset": 43,
+              "EndOffset": 109,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Server\\Pages\\Error.cshtml.cs": {
+      "ProjectBank.Server.Pages.ErrorModel": {
+        "System.String ProjectBank.Server.Pages.ErrorModel::get_RequestId()": {
+          "Lines": {
+            "12": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean ProjectBank.Server.Pages.ErrorModel::get_ShowRequestId()": {
+          "Lines": {
+            "14": 0
+          },
+          "Branches": []
+        },
+        "System.Void ProjectBank.Server.Pages.ErrorModel::OnGet()": {
+          "Lines": {
+            "24": 0,
+            "25": 0,
+            "26": 0
+          },
+          "Branches": [
+            {
+              "Line": 25,
+              "Offset": 8,
+              "EndOffset": 10,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 25,
+              "Offset": 8,
+              "EndOffset": 14,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 25,
+              "Offset": 20,
+              "EndOffset": 22,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 25,
+              "Offset": 20,
+              "EndOffset": 34,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void ProjectBank.Server.Pages.ErrorModel::.ctor(Microsoft.Extensions.Logging.ILogger`1<ProjectBank.Server.Pages.ErrorModel>)": {
+          "Lines": {
+            "18": 0,
+            "19": 0,
+            "20": 0,
+            "21": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Server\\Model\\Extensions.cs": {
+      "ProjectBank.Server.Model.Extensions": {
+        "T ProjectBank.Server.Model.Extensions::GetResultContent(Microsoft.AspNetCore.Mvc.ActionResult`1<T>)": {
+          "Lines": {
+            "10": 0
+          },
+          "Branches": []
+        },
+        "Microsoft.AspNetCore.Mvc.IActionResult ProjectBank.Server.Model.Extensions::ToActionResult(ProjectBank.Core.Status)": {
+          "Lines": {
+            "12": 12,
+            "13": 12,
+            "14": 3,
+            "15": 3,
+            "16": 6,
+            "17": 0,
+            "18": 0,
+            "19": 12
+          },
+          "Branches": [
+            {
+              "Line": 12,
+              "Offset": 7,
+              "EndOffset": 34,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 3
+            },
+            {
+              "Line": 12,
+              "Offset": 7,
+              "EndOffset": 42,
+              "Path": 2,
+              "Ordinal": 2,
+              "Hits": 3
+            },
+            {
+              "Line": 12,
+              "Offset": 7,
+              "EndOffset": 50,
+              "Path": 3,
+              "Ordinal": 3,
+              "Hits": 6
+            },
+            {
+              "Line": 12,
+              "Offset": 7,
+              "EndOffset": 58,
+              "Path": 5,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 12,
+              "Offset": 7,
+              "EndOffset": 66,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 12,
+              "Offset": 7,
+              "EndOffset": 66,
+              "Path": 4,
+              "Ordinal": 4,
+              "Hits": 0
+            }
+          ]
+        },
+        "Microsoft.AspNetCore.Mvc.ActionResult`1<T> ProjectBank.Server.Model.Extensions::ToActionResult(ProjectBank.Core.Option`1<T>)": {
+          "Lines": {
+            "22": 6
+          },
+          "Branches": [
+            {
+              "Line": 22,
+              "Offset": 7,
+              "EndOffset": 9,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            },
+            {
+              "Line": 22,
+              "Offset": 7,
+              "EndOffset": 21,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 3
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Server\\Model\\SeedExtensions.cs": {
+      "ProjectBank.Server.Model.SeedExtensions/<SeedAsync>d__0": {
+        "System.Void ProjectBank.Server.Model.SeedExtensions/<SeedAsync>d__0::MoveNext()": {
+          "Lines": {
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Server.Model.SeedExtensions/<SeedData>d__1": {
+        "System.Void ProjectBank.Server.Model.SeedExtensions/<SeedData>d__1::MoveNext()": {
+          "Lines": {
+            "19": 0,
+            "20": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0,
+            "41": 0,
+            "43": 0,
+            "44": 0,
+            "45": 0,
+            "46": 0,
+            "47": 0,
+            "48": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0,
+            "53": 0,
+            "54": 0,
+            "55": 0,
+            "56": 0,
+            "57": 0,
+            "58": 0,
+            "59": 0,
+            "60": 0,
+            "61": 0,
+            "62": 0,
+            "63": 0,
+            "64": 0,
+            "65": 0,
+            "66": 0,
+            "67": 0,
+            "68": 0,
+            "69": 0,
+            "70": 0,
+            "71": 0,
+            "72": 0,
+            "73": 0,
+            "74": 0,
+            "75": 0,
+            "76": 0,
+            "77": 0,
+            "78": 0,
+            "79": 0,
+            "80": 0,
+            "81": 0,
+            "82": 0,
+            "83": 0,
+            "84": 0,
+            "85": 0,
+            "86": 0,
+            "87": 0,
+            "88": 0,
+            "89": 0,
+            "90": 0,
+            "91": 0,
+            "92": 0,
+            "93": 0,
+            "94": 0,
+            "95": 0,
+            "96": 0,
+            "97": 0,
+            "98": 0,
+            "99": 0,
+            "100": 0,
+            "101": 0,
+            "102": 0,
+            "103": 0,
+            "104": 0,
+            "105": 0,
+            "106": 0,
+            "107": 0,
+            "108": 0,
+            "109": 0,
+            "110": 0,
+            "111": 0,
+            "112": 0,
+            "113": 0,
+            "114": 0,
+            "115": 0,
+            "116": 0,
+            "117": 0,
+            "118": 0,
+            "119": 0,
+            "120": 0,
+            "121": 0,
+            "122": 0,
+            "123": 0,
+            "124": 0,
+            "125": 0,
+            "126": 0,
+            "127": 0,
+            "128": 0,
+            "129": 0,
+            "130": 0,
+            "131": 0,
+            "132": 0,
+            "133": 0,
+            "134": 0,
+            "135": 0,
+            "136": 0,
+            "137": 0,
+            "138": 0,
+            "139": 0,
+            "140": 0,
+            "141": 0,
+            "142": 0,
+            "143": 0,
+            "144": 0,
+            "145": 0,
+            "146": 0,
+            "147": 0,
+            "148": 0,
+            "149": 0,
+            "150": 0,
+            "151": 0,
+            "152": 0,
+            "153": 0,
+            "154": 0,
+            "155": 0,
+            "156": 0,
+            "157": 0,
+            "158": 0,
+            "159": 0,
+            "160": 0,
+            "161": 0,
+            "162": 0,
+            "163": 0,
+            "164": 0,
+            "165": 0,
+            "166": 0,
+            "167": 0,
+            "168": 0,
+            "169": 0,
+            "170": 0,
+            "171": 0,
+            "172": 0,
+            "173": 0,
+            "174": 0,
+            "175": 0,
+            "176": 0,
+            "177": 0,
+            "178": 0,
+            "179": 0,
+            "180": 0,
+            "181": 0,
+            "182": 0,
+            "183": 0,
+            "184": 0,
+            "185": 0,
+            "186": 0,
+            "187": 0,
+            "188": 0,
+            "189": 0,
+            "190": 0,
+            "191": 0,
+            "192": 0,
+            "193": 0,
+            "194": 0,
+            "195": 0,
+            "196": 0,
+            "197": 0,
+            "198": 0,
+            "199": 0,
+            "200": 0,
+            "201": 0,
+            "202": 0,
+            "203": 0,
+            "204": 0,
+            "205": 0,
+            "206": 0,
+            "207": 0,
+            "208": 0,
+            "209": 0,
+            "210": 0,
+            "211": 0,
+            "212": 0,
+            "213": 0,
+            "214": 0,
+            "215": 0,
+            "216": 0,
+            "217": 0,
+            "218": 0,
+            "219": 0,
+            "220": 0,
+            "221": 0,
+            "222": 0,
+            "223": 0,
+            "224": 0,
+            "225": 0,
+            "226": 0,
+            "227": 0,
+            "228": 0,
+            "229": 0,
+            "230": 0,
+            "231": 0,
+            "232": 0,
+            "233": 0,
+            "234": 0,
+            "235": 0,
+            "236": 0,
+            "237": 0,
+            "238": 0,
+            "239": 0,
+            "240": 0,
+            "241": 0,
+            "242": 0,
+            "243": 0,
+            "244": 0,
+            "245": 0,
+            "246": 0,
+            "247": 0,
+            "248": 0,
+            "249": 0,
+            "250": 0,
+            "251": 0,
+            "252": 0,
+            "253": 0,
+            "254": 0,
+            "255": 0,
+            "256": 0,
+            "257": 0,
+            "258": 0,
+            "259": 0,
+            "260": 0,
+            "261": 0,
+            "262": 0,
+            "263": 0,
+            "264": 0,
+            "265": 0,
+            "266": 0,
+            "267": 0,
+            "268": 0,
+            "269": 0,
+            "270": 0,
+            "271": 0,
+            "272": 0,
+            "273": 0,
+            "274": 0,
+            "275": 0,
+            "276": 0,
+            "277": 0,
+            "278": 0,
+            "279": 0,
+            "280": 0,
+            "281": 0,
+            "282": 0,
+            "283": 0,
+            "284": 0,
+            "285": 0,
+            "286": 0,
+            "287": 0,
+            "288": 0,
+            "289": 0,
+            "290": 0,
+            "291": 0,
+            "292": 0,
+            "293": 0,
+            "294": 0,
+            "295": 0,
+            "296": 0,
+            "297": 0,
+            "298": 0,
+            "299": 0,
+            "300": 0,
+            "301": 0,
+            "302": 0,
+            "303": 0,
+            "304": 0,
+            "305": 0,
+            "306": 0,
+            "307": 0,
+            "308": 0,
+            "309": 0,
+            "310": 0,
+            "311": 0,
+            "312": 0,
+            "313": 0,
+            "314": 0,
+            "315": 0,
+            "316": 0,
+            "317": 0,
+            "318": 0,
+            "319": 0,
+            "320": 0,
+            "321": 0,
+            "322": 0,
+            "323": 0,
+            "324": 0,
+            "325": 0,
+            "326": 0,
+            "327": 0,
+            "328": 0,
+            "329": 0,
+            "330": 0,
+            "331": 0,
+            "332": 0,
+            "333": 0,
+            "334": 0,
+            "335": 0,
+            "336": 0,
+            "337": 0,
+            "338": 0,
+            "339": 0,
+            "340": 0,
+            "341": 0,
+            "342": 0,
+            "344": 0,
+            "345": 0,
+            "346": 0,
+            "347": 0,
+            "348": 0,
+            "349": 0,
+            "350": 0,
+            "351": 0,
+            "352": 0,
+            "353": 0,
+            "354": 0,
+            "355": 0,
+            "356": 0,
+            "357": 0,
+            "358": 0,
+            "359": 0,
+            "360": 0,
+            "361": 0,
+            "362": 0,
+            "363": 0,
+            "364": 0,
+            "365": 0,
+            "366": 0,
+            "367": 0,
+            "368": 0,
+            "369": 0,
+            "370": 0,
+            "371": 0,
+            "372": 0,
+            "373": 0,
+            "374": 0,
+            "375": 0,
+            "376": 0,
+            "377": 0,
+            "378": 0,
+            "379": 0,
+            "380": 0,
+            "381": 0,
+            "382": 0,
+            "383": 0,
+            "384": 0,
+            "385": 0,
+            "386": 0,
+            "387": 0,
+            "388": 0,
+            "389": 0,
+            "390": 0,
+            "391": 0,
+            "392": 0,
+            "395": 0,
+            "396": 0,
+            "398": 0,
+            "399": 0,
+            "400": 0,
+            "401": 0,
+            "402": 0,
+            "403": 0,
+            "404": 0,
+            "405": 0,
+            "406": 0,
+            "407": 0,
+            "408": 0,
+            "410": 0,
+            "411": 0
+          },
+          "Branches": [
+            {
+              "Line": 31,
+              "Offset": 589,
+              "EndOffset": 594,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 31,
+              "Offset": 589,
+              "EndOffset": 780,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 99,
+              "Offset": 1769,
+              "EndOffset": 1774,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 99,
+              "Offset": 1769,
+              "EndOffset": 5367,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 405,
+              "Offset": 5574,
+              "EndOffset": 5576,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 405,
+              "Offset": 5574,
+              "EndOffset": 5601,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Server\\Controllers\\ChatController.cs": {
+      "ProjectBank.Server.Controllers.ChatController": {
+        "System.Void ProjectBank.Server.Controllers.ChatController::.ctor(Microsoft.Extensions.Logging.ILogger`1<ProjectBank.Server.Controllers.ChatController>,ProjectBank.Core.IChatRepository)": {
+          "Lines": {
+            "18": 2,
+            "19": 2,
+            "20": 2,
+            "21": 2,
+            "22": 2,
+            "23": 2,
+            "24": 2
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Server.Controllers.ChatController/<GetByChatId>d__3": {
+        "System.Void ProjectBank.Server.Controllers.ChatController/<GetByChatId>d__3::MoveNext()": {
+          "Lines": {
+            "31": 1
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Server.Controllers.ChatController/<GetChatMessages>d__4": {
+        "System.Void ProjectBank.Server.Controllers.ChatController/<GetChatMessages>d__4::MoveNext()": {
+          "Lines": {
+            "38": 1
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Server.Controllers.ChatController/<Post>d__5": {
+        "System.Void ProjectBank.Server.Controllers.ChatController/<Post>d__5::MoveNext()": {
+          "Lines": {
+            "45": 0,
+            "46": 0,
+            "47": 0,
+            "48": 0
+          },
+          "Branches": [
+            {
+              "Line": 47,
+              "Offset": 220,
+              "EndOffset": 222,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 47,
+              "Offset": 220,
+              "EndOffset": 235,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "ProjectBank.Server.Controllers.ChatController/<Post>d__6": {
+        "System.Void ProjectBank.Server.Controllers.ChatController/<Post>d__6::MoveNext()": {
+          "Lines": {
+            "55": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Server\\Controllers\\CommentController.cs": {
+      "ProjectBank.Server.Controllers.CommentController": {
+        "System.Void ProjectBank.Server.Controllers.CommentController::.ctor(Microsoft.Extensions.Logging.ILogger`1<ProjectBank.Server.Controllers.CommentController>,ProjectBank.Core.ICommentRepository)": {
+          "Lines": {
+            "18": 8,
+            "19": 8,
+            "20": 8,
+            "21": 8,
+            "22": 8,
+            "23": 8,
+            "24": 8
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Server.Controllers.CommentController/<Delete>d__7": {
+        "System.Void ProjectBank.Server.Controllers.CommentController/<Delete>d__7::MoveNext()": {
+          "Lines": {
+            "63": 2
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Server.Controllers.CommentController/<Get>d__3": {
+        "System.Void ProjectBank.Server.Controllers.CommentController/<Get>d__3::MoveNext()": {
+          "Lines": {
+            "29": 1
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Server.Controllers.CommentController/<GetByCommentId>d__4": {
+        "System.Void ProjectBank.Server.Controllers.CommentController/<GetByCommentId>d__4::MoveNext()": {
+          "Lines": {
+            "36": 2
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Server.Controllers.CommentController/<Post>d__5": {
+        "System.Void ProjectBank.Server.Controllers.CommentController/<Post>d__5::MoveNext()": {
+          "Lines": {
+            "42": 1,
+            "43": 1,
+            "44": 1,
+            "45": 1,
+            "46": 1,
+            "48": 0,
+            "49": 1
+          },
+          "Branches": [
+            {
+              "Line": 44,
+              "Offset": 218,
+              "EndOffset": 220,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 46,
+              "Offset": 239,
+              "EndOffset": 241,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 46,
+              "Offset": 239,
+              "EndOffset": 254,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            },
+            {
+              "Line": 44,
+              "Offset": 218,
+              "EndOffset": 288,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "ProjectBank.Server.Controllers.CommentController/<Put>d__6": {
+        "System.Void ProjectBank.Server.Controllers.CommentController/<Put>d__6::MoveNext()": {
+          "Lines": {
+            "56": 2
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Server\\Controllers\\NotificationController.cs": {
+      "ProjectBank.Server.Controllers.NotificationController": {
+        "System.Void ProjectBank.Server.Controllers.NotificationController::.ctor(Microsoft.Extensions.Logging.ILogger`1<ProjectBank.Server.Controllers.NotificationController>,ProjectBank.Core.INotificationRepository)": {
+          "Lines": {
+            "18": 2,
+            "19": 2,
+            "20": 2,
+            "21": 2,
+            "22": 2,
+            "23": 2,
+            "24": 2
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Server.Controllers.NotificationController/<GetNotificationByUserId>d__4": {
+        "System.Void ProjectBank.Server.Controllers.NotificationController/<GetNotificationByUserId>d__4::MoveNext()": {
+          "Lines": {
+            "44": 1
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Server.Controllers.NotificationController/<Post>d__3": {
+        "System.Void ProjectBank.Server.Controllers.NotificationController/<Post>d__3::MoveNext()": {
+          "Lines": {
+            "30": 1,
+            "31": 1,
+            "32": 1,
+            "33": 1,
+            "34": 1,
+            "36": 0,
+            "37": 1
+          },
+          "Branches": [
+            {
+              "Line": 32,
+              "Offset": 218,
+              "EndOffset": 220,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 34,
+              "Offset": 239,
+              "EndOffset": 241,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 34,
+              "Offset": 239,
+              "EndOffset": 245,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            },
+            {
+              "Line": 32,
+              "Offset": 218,
+              "EndOffset": 274,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "ProjectBank.Server.Controllers.NotificationController/<SeenNotification>d__5": {
+        "System.Void ProjectBank.Server.Controllers.NotificationController/<SeenNotification>d__5::MoveNext()": {
+          "Lines": {
+            "51": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Server\\Controllers\\PostController.cs": {
+      "ProjectBank.Server.Controllers.PostController": {
+        "System.Void ProjectBank.Server.Controllers.PostController::.ctor(Microsoft.Extensions.Logging.ILogger`1<ProjectBank.Server.Controllers.PostController>,ProjectBank.Core.IPostRepository)": {
+          "Lines": {
+            "18": 11,
+            "19": 11,
+            "20": 11,
+            "21": 11,
+            "22": 11,
+            "23": 11,
+            "24": 11
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Server.Controllers.PostController/<Delete>d__10": {
+        "System.Void ProjectBank.Server.Controllers.PostController/<Delete>d__10::MoveNext()": {
+          "Lines": {
+            "78": 2
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Server.Controllers.PostController/<Get>d__3": {
+        "System.Void ProjectBank.Server.Controllers.PostController/<Get>d__3::MoveNext()": {
+          "Lines": {
+            "29": 1
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Server.Controllers.PostController/<GetByPostId>d__4": {
+        "System.Void ProjectBank.Server.Controllers.PostController/<GetByPostId>d__4::MoveNext()": {
+          "Lines": {
+            "36": 2
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Server.Controllers.PostController/<GetBySupervisor>d__6": {
+        "System.Void ProjectBank.Server.Controllers.PostController/<GetBySupervisor>d__6::MoveNext()": {
+          "Lines": {
+            "46": 1
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Server.Controllers.PostController/<GetByTag>d__5": {
+        "System.Void ProjectBank.Server.Controllers.PostController/<GetByTag>d__5::MoveNext()": {
+          "Lines": {
+            "41": 1
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Server.Controllers.PostController/<GetComments>d__7": {
+        "System.Void ProjectBank.Server.Controllers.PostController/<GetComments>d__7::MoveNext()": {
+          "Lines": {
+            "51": 1
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Server.Controllers.PostController/<Post>d__8": {
+        "System.Void ProjectBank.Server.Controllers.PostController/<Post>d__8::MoveNext()": {
+          "Lines": {
+            "57": 1,
+            "58": 1,
+            "59": 1,
+            "60": 1,
+            "61": 1,
+            "63": 0,
+            "64": 1
+          },
+          "Branches": [
+            {
+              "Line": 59,
+              "Offset": 218,
+              "EndOffset": 220,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 61,
+              "Offset": 239,
+              "EndOffset": 241,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 61,
+              "Offset": 239,
+              "EndOffset": 254,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            },
+            {
+              "Line": 59,
+              "Offset": 218,
+              "EndOffset": 288,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "ProjectBank.Server.Controllers.PostController/<Put>d__9": {
+        "System.Void ProjectBank.Server.Controllers.PostController/<Put>d__9::MoveNext()": {
+          "Lines": {
+            "71": 2
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Server\\Controllers\\UserController.cs": {
+      "ProjectBank.Server.Controllers.UserController": {
+        "System.Void ProjectBank.Server.Controllers.UserController::.ctor(Microsoft.Extensions.Logging.ILogger`1<ProjectBank.Server.Controllers.UserController>,ProjectBank.Core.IUserRepository)": {
+          "Lines": {
+            "18": 8,
+            "19": 8,
+            "20": 8,
+            "21": 8,
+            "22": 8,
+            "23": 8,
+            "24": 8
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Server.Controllers.UserController/<Delete>d__7": {
+        "System.Void ProjectBank.Server.Controllers.UserController/<Delete>d__7::MoveNext()": {
+          "Lines": {
+            "63": 2
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Server.Controllers.UserController/<Get>d__3": {
+        "System.Void ProjectBank.Server.Controllers.UserController/<Get>d__3::MoveNext()": {
+          "Lines": {
+            "29": 1
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Server.Controllers.UserController/<GetByUserId>d__4": {
+        "System.Void ProjectBank.Server.Controllers.UserController/<GetByUserId>d__4::MoveNext()": {
+          "Lines": {
+            "36": 2
+          },
+          "Branches": []
+        }
+      },
+      "ProjectBank.Server.Controllers.UserController/<Post>d__5": {
+        "System.Void ProjectBank.Server.Controllers.UserController/<Post>d__5::MoveNext()": {
+          "Lines": {
+            "42": 1,
+            "43": 1,
+            "44": 1,
+            "45": 1,
+            "46": 1,
+            "48": 0,
+            "49": 1
+          },
+          "Branches": [
+            {
+              "Line": 44,
+              "Offset": 218,
+              "EndOffset": 220,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 46,
+              "Offset": 239,
+              "EndOffset": 241,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 46,
+              "Offset": 239,
+              "EndOffset": 245,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            },
+            {
+              "Line": 44,
+              "Offset": 218,
+              "EndOffset": 274,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "ProjectBank.Server.Controllers.UserController/<Put>d__6": {
+        "System.Void ProjectBank.Server.Controllers.UserController/<Put>d__6::MoveNext()": {
+          "Lines": {
+            "56": 2
+          },
+          "Branches": []
+        }
+      }
+    }
+  },
+  "ProjectBank.Shared.dll": {
+    "C:\\Users\\maria\\Documents\\Git\\BDSA2021-ProjectBank\\Shared\\forms\\PostFormModel.cs": {
+      "ProjectBank.Shared.forms.PostFormModel": {
+        "System.String ProjectBank.Shared.forms.PostFormModel::get_Title()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Shared.forms.PostFormModel::get_Content()": {
+          "Lines": {
+            "13": 0
+          },
+          "Branches": []
+        },
+        "System.String ProjectBank.Shared.forms.PostFormModel::get_Tags()": {
+          "Lines": {
+            "15": 0
+          },
+          "Branches": []
+        }
+      }
+    }
+  }
+}

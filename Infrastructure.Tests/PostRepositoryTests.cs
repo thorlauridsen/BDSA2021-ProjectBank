@@ -35,7 +35,19 @@ namespace Infrastructure.Tests
                 User = user,
                 Tags = new HashSet<Tag> { new Tag("Math") }
             };
+            var post1 = new Post
+            {
+                Id = 2,
+                Title = "Physics Project",
+                Content = "Something about physics and stuff",
+                DateAdded = today,
+                User = user,
+                Tags = new HashSet<Tag> { new Tag("Science"), new Tag("Physics") }
+            };
+
+
             context.Posts.Add(post);
+            context.Posts.Add(post1);
             context.SaveChanges();
 
             _context = context;
@@ -56,7 +68,7 @@ namespace Infrastructure.Tests
             var created = await _repository.CreateAsync(post);
 
             Assert.Equal(Created, created.Item1);
-            Assert.Equal(2, created.Item2.Id);
+            Assert.Equal(3, created.Item2.Id);
             Assert.Equal("Biology Project", created.Item2.Title);
             Assert.Equal("Bla bla bla bla", created.Item2.Content);
             Assert.Equal("1", created.Item2.SupervisorOid);
@@ -82,6 +94,87 @@ namespace Infrastructure.Tests
             var option = await _repository.ReadAsync(11);
 
             Assert.True(option.IsNone);
+        }
+
+        //TODO
+        [Fact]
+        public async Task ReadAsync_returns_all_posts()
+        {   
+            var actual =  await _repository.ReadAsync();
+
+            var actual1 = actual.ElementAt(0);
+            var actual2 = actual.ElementAt(1);
+
+            Assert.Equal(1,actual1.Id);
+            Assert.Equal("Math Project", actual1.Title);
+            Assert.Equal("Bla bla bla bla", actual1.Content);
+            Assert.Equal(today, actual1.DateAdded); 
+            Assert.Equal("1", actual1.SupervisorOid);
+            Assert.Equal(1, actual1.Tags.Count);
+
+            Assert.Equal(2,actual2.Id);
+            Assert.Equal("Physics Project", actual2.Title);
+            Assert.Equal("Something about physics and stuff", actual2.Content);
+            Assert.Equal(today, actual2.DateAdded); 
+            Assert.Equal("1", actual2.SupervisorOid);
+            Assert.Equal(2, actual2.Tags.Count);
+
+        }
+        //TODO
+        [Fact]
+        public async Task ReadAsyncBySupervisor_given_existing_supervisor_returns_posts()
+        {
+            // var actual = await _repository.ReadAsyncBySupervisor("1");
+
+            // var actual1 = actual.ElementAt(0);
+            // var actual2 = actual.ElementAt(1);
+
+            // Assert.Equal(1,actual1.Id);
+            // Assert.Equal("Math Project", actual1.Title);
+            // Assert.Equal("Bla bla bla bla", actual1.Content);
+            // Assert.Equal(today, actual1.DateAdded); 
+            // Assert.Equal("1", actual1.SupervisorOid);
+            // Assert.Equal(1, actual1.Tags.Count);
+
+            // Assert.Equal(2,actual2.Id);
+            // Assert.Equal("Physics Project", actual2.Title);
+            // Assert.Equal("Something about physics and stuff", actual2.Content);
+            // Assert.Equal(today, actual2.DateAdded); 
+            // Assert.Equal("1", actual2.SupervisorOid);
+            // Assert.Equal(2, actual2.Tags.Count);
+
+        }
+
+        //TODO
+        [Fact]
+        public async Task ReadAsyncBySupervisor_given_non_existing_supervisor_returns_none()
+        {
+            //var actual = await _repository.ReadAsyncBySupervisor("6");
+    
+        }
+
+        //TODO
+        [Fact]
+        public async Task ReadAsyncByTag_given_tag_math_returns_post()
+        {
+            //var actual = await _repository.ReadAsyncByTag("Math");
+    
+        }
+        
+        //TODO
+        [Fact]
+        public async Task ReadAsyncByTag_given_non_existing_tag_returns_none()
+        {
+            //var actual = await _repository.ReadAsyncByTag("Nothing");
+    
+        }
+
+        //TODO
+        [Fact]
+        public async Task ReadAsyncComments_given_postid_returns_comments()
+        {
+            //var actual = await _repository.ReadAsyncComments(1);
+    
         }
 
         [Fact]
