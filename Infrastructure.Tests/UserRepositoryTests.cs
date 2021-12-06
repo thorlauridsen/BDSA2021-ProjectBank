@@ -32,18 +32,19 @@ namespace Infrastructure.Tests
         [Fact]
         public async Task CreateAsync_creates_new_user_with_generated_id()
         {
-            var user = new UserCreateDto {oid = "2", Name = "Karsten", IsSupervisor = false };
+            var user = new UserCreateDto { oid = "2", Name = "Karsten", IsSupervisor = true };
 
             var (status, created) = await _repository.CreateAsync(user);
 
-            Assert.Equal("2", created.oid);
-            Assert.Equal(user.Name, created.Name);
+            Assert.Equal("2", created?.oid);
+            Assert.Equal(user.Name, created?.Name);
+            Assert.True(created?.IsSupervisor);
 
             var users = await _repository.ReadAsync();
 
             Assert.Collection(users,
                 s => Assert.Equal(new UserDto("1", "Claus", true), s),
-                s => Assert.Equal(new UserDto("2", "Karsten", false), s)
+                s => Assert.Equal(new UserDto("2", "Karsten", true), s)
             );
         }
 

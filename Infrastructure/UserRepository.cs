@@ -13,7 +13,7 @@ namespace ProjectBank.Infrastructure
 
         public async Task<(Status, UserDetailsDto?)> CreateAsync(UserCreateDto user)
         {
-            var entity = new User {oid = user.oid,Name = user.Name };
+            var entity = new User { oid = user.oid, Name = user.Name, IsSupervisor = user.IsSupervisor };
 
             _context.Users.Add(entity);
             await _context.SaveChangesAsync();
