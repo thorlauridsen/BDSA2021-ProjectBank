@@ -20,14 +20,14 @@ namespace ProjectBank.Server.Model
         private static void SeedCharacters(ProjectBankContext context)
         {
             context.Database.Migrate();
-            var user1 = new User {Name = "Paolo"};
-            var user2 = new User {Name = "Tue"};
-            var generatedUser4 = new User {Name = "Aaron Duane"};
-            var generatedUser5 = new User {Name = "P─▒nar T├Âz├╝n"};
-            var generatedUser0 = new User {Name = "Veronika Cheplygina"};
-            var generatedUser1 = new User {Name = "Sebastian B├╝ttrich"};
-            var generatedUser2 = new User {Name = "Maria Astefanoaei"};
-            var generatedUser3 = new User {Name = "Björn Þór Jónsson"};
+            var user1 = new User {oid = "1", Name = "Paolo"};
+            var user2 = new User {oid = "2", Name = "Tue"};
+            var generatedUser4 = new User {oid = "3", Name = "Aaron Duane"};
+            var generatedUser5 = new User {oid = "4", Name = "P─▒nar T├Âz├╝n"};
+            var generatedUser0 = new User {oid = "5", Name = "Veronika Cheplygina"};
+            var generatedUser1 = new User {oid = "6", Name = "Sebastian B├╝ttrich"};
+            var generatedUser2 = new User {oid = "7", Name = "Maria Astefanoaei"};
+            var generatedUser3 = new User {oid = "8", Name = "Björn Þór Jónsson"};
             if (!context.Users.Any())
             {
                 context.Users.Add(user1);
@@ -398,7 +398,7 @@ namespace ProjectBank.Server.Model
             var comment = new Comment
             {
                 Content = "Nice post",
-                UserId = user2.Id,
+                UserId = user2.oid,
                 DateAdded = DateTime.Now,
                 PostId = post.Id
             };

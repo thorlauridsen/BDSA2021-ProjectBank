@@ -3,9 +3,9 @@ namespace ProjectBank.Core
     public interface IUserRepository
     {
         Task<(Status, UserDetailsDto?)> CreateAsync(UserCreateDto user);
-        Task<Status> DeleteAsync(int userId);
-        Task<Option<UserDetailsDto>> ReadAsync(int userId);
+        Task<Status> DeleteAsync(string userId);
+        Task<Option<UserDetailsDto>> ReadAsync(string userId);
         Task<IReadOnlyCollection<UserDto>> ReadAsync();
-        Task<Status> UpdateAsync(int userId, UserUpdateDto user);
+        Task<Status> UpdateAsync(string userId, UserUpdateDto user);
     }
 }

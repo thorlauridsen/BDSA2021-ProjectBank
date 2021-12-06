@@ -36,12 +36,12 @@
                         src="https://eu.ui-avatars.com/api/?name=@Creator?.Name.Replace(' ', '+')&background=random">
                         <h3>@Creator?.Name</h3>
                         <p>Email: <a href="mailto:randommail@mail.com">Change@me.com</a></p>
-                        <p>All projects: <a href="/projects/supervisor/@Creator?.Id">View</a></p>
+                        <p>All projects: <a href="/projects/supervisor/@Creator?.oid">View</a></p>
                     </div>
 
                     <div class="d-grid my-4 p-4 shadow text-center">
                         <!--!-->
-                    <a href="/messages/create/supervisor/@Creator?.Id" class="btn btn-block btn-primary m-2">Contact</a>
+                    <a href="/messages/create/supervisor/@Creator?.oid" class="btn btn-block btn-primary m-2">Contact</a>
                         <a href="/messages/create/post/@Id" class="btn btn-primary m-2">Apply</a>
                     </div>
                     <div class="d-grid my-4 p-4 shadow text-center">
@@ -68,7 +68,7 @@
         try
         {
             Post = await _http.GetFromJsonAsync<PostDto>("api/Post/" + Id);
-            Creator = await _http.GetFromJsonAsync<UserDto>("api/User/" + Post?.SupervisorId);
+            Creator = await _http.GetFromJsonAsync<UserDto>("api/User/" + Post?.SupervisorOid);
         }
         catch (AccessTokenNotAvailableException exception)
         {

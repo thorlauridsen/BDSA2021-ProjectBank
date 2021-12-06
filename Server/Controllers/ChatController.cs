@@ -27,7 +27,7 @@ namespace ProjectBank.Server.Controllers
         [HttpGet("{userId}", Name = "GetByChatId")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<IReadOnlyCollection<ChatDetailsDto>> GetByChatId(int userId)
+        public async Task<IReadOnlyCollection<ChatDetailsDto>> GetByChatId(string userId)
             => await _repository.ReadAllChatsAsync(userId);
 
         [Authorize]

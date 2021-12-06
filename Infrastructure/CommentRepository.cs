@@ -91,7 +91,7 @@ namespace ProjectBank.Infrastructure
         private async Task<Post> GetPostAsync(int postId) =>
             await _context.Posts.FirstAsync(p => p.Id == postId);
 
-        private async Task<User> GetUserAsync(int userId) =>
-            await _context.Users.FirstAsync(u => u.Id == userId);
+        private async Task<User> GetUserAsync(string userId) =>
+            await _context.Users.FirstAsync(u => u.oid == userId);
     }
 }

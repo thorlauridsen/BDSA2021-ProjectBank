@@ -22,7 +22,7 @@ namespace ProjectBank.Server.Tests.Controllers
                 "Biology Project",
                 "My Cool Biology Project",
                 DateTime.Now,
-                1,
+                "1",
                 new HashSet<string>() { "Biology" }
             );
             var repository = new Mock<IPostRepository>();
@@ -80,7 +80,7 @@ namespace ProjectBank.Server.Tests.Controllers
                 "Biology Project",
                 "My Cool Biology Project",
                 DateTime.Now,
-                1,
+                "1",
                 new HashSet<string>() { "Biology" }
             );
             repository.Setup(m => m.ReadAsync(1)).ReturnsAsync(post);
@@ -99,11 +99,11 @@ namespace ProjectBank.Server.Tests.Controllers
             // Arrange
             var expected = Array.Empty<PostDto>();
             var repository = new Mock<IPostRepository>();
-            repository.Setup(m => m.ReadAsyncBySupervisor(1)).ReturnsAsync(expected);
+            repository.Setup(m => m.ReadAsyncBySupervisor("1")).ReturnsAsync(expected);
             var controller = new PostController(logger.Object, repository.Object);
 
             // Act
-            var response = await controller.GetBySupervisor(1);
+            var response = await controller.GetBySupervisor("1");
 
             // Assert
             Assert.Equal(expected, response);

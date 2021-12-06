@@ -18,7 +18,7 @@
             {
                 Title = "Math Project",
                 Content = "5 + 2 = 7",
-                SupervisorId = 1,
+                SupervisorOid = "1",
                 Tags = new HashSet<string>() { "Math" }
             };
             var response = await Http.PostAsJsonAsync("api/Post", post);
@@ -27,7 +27,7 @@
             var comment = new CommentCreateDto
             {
                 Content = "Very nice post",
-                UserId = 1,
+                UserId = "1",
                 PostId = 1
             };
             var response2 = await Http.PostAsJsonAsync("api/Comment", comment);

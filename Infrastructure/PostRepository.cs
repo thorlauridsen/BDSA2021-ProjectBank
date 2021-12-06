@@ -23,7 +23,7 @@ namespace ProjectBank.Core
                 Title = post.Title,
                 Content = post.Content,
                 DateAdded = DateTime.Now,
-                User = await GetUserAsync(post.SupervisorId),
+                User = await GetUserAsync(post.SupervisorOid),
                 Tags = await GetTagsAsync(post.Tags).ToListAsync()
             };
             _context.Posts.Add(entity);
@@ -34,7 +34,7 @@ namespace ProjectBank.Core
                 entity.Title,
                 entity.Content,
                 entity.DateAdded,
-                entity.User.Id,
+                entity.User.oid,
                 entity.Tags.Select(t => t.Name).ToHashSet()
             ));
         }
@@ -46,7 +46,7 @@ namespace ProjectBank.Core
                                     p.Title,
                                     p.Content,
                                     p.DateAdded,
-                                    p.User.Id,
+                                    p.User.oid,
                                     p.Tags.Select(t => t.Name).ToHashSet()
                                 ))
                                 .FirstOrDefaultAsync();
@@ -58,22 +58,22 @@ namespace ProjectBank.Core
                                 p.Title,
                                 p.Content,
                                 p.DateAdded,
-                                p.User.Id,
+                                p.User.oid,
                                 p.Tags.Select(t => t.Name).ToHashSet()
                             ))
                            .ToListAsync())
                            .AsReadOnly();
-        public async Task<IReadOnlyCollection<PostDto>> ReadAsyncBySupervisor(int userId) =>
+        public async Task<IReadOnlyCollection<PostDto>> ReadAsyncBySupervisor(string userId) =>
             (await _context.Posts
                            .Select(p => new PostDto(
                                 p.Id,
                                 p.Title,
                                 p.Content,
                                 p.DateAdded,
-                                p.User.Id,
+                                p.User.oid,
                                 p.Tags.Select(t => t.Name).ToHashSet()
                             ))
-                           .Where(p => p.SupervisorId == userId)
+                           .Where(p => p.SupervisorOid == userId)
                            .ToListAsync())
                            .AsReadOnly();
 
@@ -84,7 +84,7 @@ namespace ProjectBank.Core
                                 p.Title,
                                 p.Content,
                                 p.DateAdded,
-                                p.User.Id,
+                                p.User.oid,
                                 p.Tags.Select(t => t.Name).ToHashSet()
                             ))
                            .Where(p => p.Tags.Contains(tag))
@@ -152,7 +152,7 @@ namespace ProjectBank.Core
             }
         }
 
-        private async Task<User> GetUserAsync(int userId) =>
-            await _context.Users.FirstAsync(u => u.Id == userId);
+        private async Task<User> GetUserAsync(string userId) =>
+            await _context.Users.FirstAsync(u => u.oid == userId);
     }
 }

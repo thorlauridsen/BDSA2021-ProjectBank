@@ -30,11 +30,11 @@ namespace ProjectBank.Server.Tests.Controllers
             // Arrange
             var expected = Array.Empty<ChatDetailsDto>();
             var repository = new Mock<IChatRepository>();
-            repository.Setup(m => m.ReadAllChatsAsync(1)).ReturnsAsync(expected);
+            repository.Setup(m => m.ReadAllChatsAsync("1")).ReturnsAsync(expected);
             var controller = new ChatController(logger.Object, repository.Object);
 
             // Act
-            var actual = await controller.GetByChatId(1);
+            var actual = await controller.GetByChatId("1");
 
             // Assert
             Assert.Equal(expected, actual);

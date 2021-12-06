@@ -20,8 +20,8 @@ namespace Infrastructure.Tests
             var context = new ProjectBankContext(builder.Options);
             context.Database.EnsureCreated();
 
-            Comment comment1 = new Comment { Id = 1, Content = "Hey" };
-            Comment comment2 = new Comment { Id = 2, Content = "Die in a hole" };
+            Comment comment1 = new Comment { Id = 1,UserId = "1",DateAdded = DateTime.Now, Content = "Hey",PostId = 0 };
+            Comment comment2 = new Comment { Id = 2,UserId = "1",DateAdded = DateTime.Now, Content = "Die in a hole", PostId = 0};
 
             context.Comments.Add(comment1);
             context.Comments.Add(comment2);

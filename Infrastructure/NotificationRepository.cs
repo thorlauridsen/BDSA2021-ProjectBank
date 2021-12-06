@@ -22,7 +22,7 @@ namespace ProjectBank.Infrastructure
                 Title = notification.Title,
                 Content = notification.Content,
                 Timestamp = DateTime.Now,
-                User = await GetUserAsync(notification.UserId),
+                User = await GetUserAsync(notification.UserOid),
                 Link = notification.Link,
                 Seen = false
             };
@@ -34,15 +34,15 @@ namespace ProjectBank.Infrastructure
                 Id = entity.Id,
                 Title = entity.Title,
                 Content = entity.Content,
-                UserId = entity.User.Id,
+                UserOid = entity.User.oid,
                 Timestamp = entity.Timestamp,
                 Link = entity.Link,
                 Seen = entity.Seen
             });
         }
 
-        public async Task<IReadOnlyCollection<NotificationDetailsDto>> GetNotificationsAsync(int userId) =>
-            (await _context.Notifications.Where(n => n.User.Id == userId)
+        public async Task<IReadOnlyCollection<NotificationDetailsDto>> GetNotificationsAsync(string userId) =>
+            (await _context.Notifications.Where(n => n.User.oid == userId)
                                          .Select(n => new NotificationDetailsDto
                                          {
                                              Id = n.Id,
@@ -68,7 +68,7 @@ namespace ProjectBank.Infrastructure
             return Updated;
         }
 
-        private async Task<User> GetUserAsync(int userId) =>
-            await _context.Users.FirstAsync(u => u.Id == userId);
+        private async Task<User> GetUserAsync(string userId) =>
+            await _context.Users.FirstAsync(u => u.oid == userId);
     }
 }

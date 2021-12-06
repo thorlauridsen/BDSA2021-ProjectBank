@@ -15,7 +15,7 @@ namespace ProjectBank.Server.Tests.Controllers
         {
             // Arrange
             var toCreate = new UserCreateDto();
-            var user = new UserDetailsDto(1, "John", true);
+            var user = new UserDetailsDto("1", "John", true);
             var repository = new Mock<IUserRepository>();
             repository.Setup(m => m.CreateAsync(toCreate)).ReturnsAsync((Created, user));
             var controller = new UserController(logger.Object, repository.Object);
@@ -50,11 +50,11 @@ namespace ProjectBank.Server.Tests.Controllers
         {
             // Arrange
             var repository = new Mock<IUserRepository>();
-            repository.Setup(m => m.ReadAsync(11)).ReturnsAsync(default(UserDetailsDto));
+            repository.Setup(m => m.ReadAsync("11")).ReturnsAsync(default(UserDetailsDto));
             var controller = new UserController(logger.Object, repository.Object);
 
             // Act
-            var response = await controller.GetByUserId(11);
+            var response = await controller.GetByUserId("11");
 
             // Assert
             Assert.IsType<NotFoundResult>(response.Result);
@@ -65,12 +65,12 @@ namespace ProjectBank.Server.Tests.Controllers
         {
             // Arrange
             var repository = new Mock<IUserRepository>();
-            var character = new UserDetailsDto(1, "Jack", true);
-            repository.Setup(m => m.ReadAsync(1)).ReturnsAsync(character);
+            var character = new UserDetailsDto("1", "Jack", true);
+            repository.Setup(m => m.ReadAsync("1")).ReturnsAsync(character);
             var controller = new UserController(logger.Object, repository.Object);
 
             // Act
-            var response = await controller.GetByUserId(1);
+            var response = await controller.GetByUserId("1");
 
             // Assert
             Assert.Equal(character, response.Value);
@@ -82,11 +82,11 @@ namespace ProjectBank.Server.Tests.Controllers
             // Arrange
             var character = new UserUpdateDto();
             var repository = new Mock<IUserRepository>();
-            repository.Setup(m => m.UpdateAsync(1, character)).ReturnsAsync(Updated);
+            repository.Setup(m => m.UpdateAsync("1", character)).ReturnsAsync(Updated);
             var controller = new UserController(logger.Object, repository.Object);
 
             // Act
-            var response = await controller.Put(1, character);
+            var response = await controller.Put("1", character);
 
             // Assert
             Assert.IsType<NoContentResult>(response);
@@ -98,11 +98,11 @@ namespace ProjectBank.Server.Tests.Controllers
             // Arrange
             var character = new UserUpdateDto();
             var repository = new Mock<IUserRepository>();
-            repository.Setup(m => m.UpdateAsync(1, character)).ReturnsAsync(NotFound);
+            repository.Setup(m => m.UpdateAsync("1", character)).ReturnsAsync(NotFound);
             var controller = new UserController(logger.Object, repository.Object);
 
             // Act
-            var response = await controller.Put(1, character);
+            var response = await controller.Put("1", character);
 
             // Assert
             Assert.IsType<NotFoundResult>(response);
@@ -113,11 +113,11 @@ namespace ProjectBank.Server.Tests.Controllers
         {
             // Arrange
             var repository = new Mock<IUserRepository>();
-            repository.Setup(m => m.DeleteAsync(11)).ReturnsAsync(Status.NotFound);
+            repository.Setup(m => m.DeleteAsync("11")).ReturnsAsync(Status.NotFound);
             var controller = new UserController(logger.Object, repository.Object);
 
             // Act
-            var response = await controller.Delete(11);
+            var response = await controller.Delete("11");
 
             // Assert
             Assert.IsType<NotFoundResult>(response);
@@ -128,11 +128,11 @@ namespace ProjectBank.Server.Tests.Controllers
         {
             // Arrange
             var repository = new Mock<IUserRepository>();
-            repository.Setup(m => m.DeleteAsync(1)).ReturnsAsync(Status.Deleted);
+            repository.Setup(m => m.DeleteAsync("1")).ReturnsAsync(Status.Deleted);
             var controller = new UserController(logger.Object, repository.Object);
 
             // Act
-            var response = await controller.Delete(1);
+            var response = await controller.Delete("1");
 
             // Assert
             Assert.IsType<NoContentResult>(response);

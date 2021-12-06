@@ -69,7 +69,7 @@
         var comment = new CommentCreateDto
         {
             Content = commentModel.comment,
-            UserId = 1, // TODO: Get correct userId from database.
+            UserId = "1", // TODO: Get correct userId from database.
             PostId = Post.Id
         };
         var response = await _http.PostAsJsonAsync("api/Comment", comment);

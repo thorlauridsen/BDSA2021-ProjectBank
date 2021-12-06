@@ -22,7 +22,7 @@ namespace Infrastructure.Tests
             var context = new ProjectBankContext(builder.Options);
             context.Database.EnsureCreated();
 
-            var user = new User { Id = 1, Name = "Claus" };
+            var user = new User { oid = "1", Name = "Claus" };
             context.Users.Add(user);
 
             var notification = new Notification
@@ -49,14 +49,14 @@ namespace Infrastructure.Tests
             {
                 Title = "Important",
                 Content = "We gotta go now!",
-                UserId = 1,
+                UserOid = "1",
                 Link = "https://google.com"
             };
             var (status, created) = await _repository.CreateAsync(notification);
             Assert.Equal(2, created?.Id);
             Assert.Equal("Important", created.Title);
             Assert.Equal("We gotta go now!", created.Content);
-            Assert.Equal(1, created.UserId);
+            Assert.Equal("1", created.UserOid);
             Assert.Equal("https://google.com", created.Link);
             Assert.Equal(false, created.Seen);
         }
@@ -64,7 +64,7 @@ namespace Infrastructure.Tests
         [Fact]
         public async Task GetNotificationsAsync()
         {
-            var notifications = await _repository.GetNotificationsAsync(1);
+            var notifications = await _repository.GetNotificationsAsync("1");
 
             var notification = new NotificationDetailsDto
             {

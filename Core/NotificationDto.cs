@@ -6,7 +6,7 @@ namespace ProjectBank.Core
 
         public string Content { get; set; }
 
-        public int UserId { get; set; }
+        public string UserOid { get; set; }
 
         public string Link { get; set; }
     }
@@ -19,7 +19,7 @@ namespace ProjectBank.Core
 
         public string Content { get; set; }
 
-        public int UserId { get; set; }
+        public string UserOid { get; set; }
 
         public DateTime Timestamp { get; set; }
 

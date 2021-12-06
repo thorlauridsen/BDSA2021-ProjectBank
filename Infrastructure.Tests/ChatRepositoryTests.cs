@@ -21,9 +21,9 @@ namespace Infrastructure.Tests
             var context = new ProjectBankContext(builder.Options);
             context.Database.EnsureCreated();
 
-            User per = new User { Id = 1, Name = "per" };
-            User bo = new User { Id = 2, Name = "bo" };
-            User alice = new User { Id = 3, Name = "alice" };
+            User per = new User { oid = "1", Name = "per" };
+            User bo = new User { oid = "2", Name = "bo" };
+            User alice = new User { oid = "3", Name = "alice" };
 
             ChatUser chatPer1 = new ChatUser { Id = 1, User = per };
             ChatUser chatPer2 = new ChatUser { Id = 2, User = per };
@@ -48,10 +48,10 @@ namespace Infrastructure.Tests
         [Fact]
         public async Task ReadAllAsync_given_user_id()
         {
-            var actual = await _repository.ReadAllChatsAsync(1);
+            var actual = await _repository.ReadAllChatsAsync("1");
 
-            var expected1 = new ChatDetailsDto { ChatId = 1, TargetUserId = 2, LatestMessageUserId = 1, LatestMessage = "to Bo", SeenLatestMessage = false };
-            var expected2 = new ChatDetailsDto { ChatId = 2, TargetUserId = 3, LatestMessageUserId = 3, LatestMessage = "to Per", SeenLatestMessage = false };
+            var expected1 = new ChatDetailsDto { ChatId = 1, TargetUserId = "2", LatestMessageUserId = "1", LatestMessage = "to Bo", SeenLatestMessage = false };
+            var expected2 = new ChatDetailsDto { ChatId = 2, TargetUserId = "3", LatestMessageUserId = "3", LatestMessage = "to Per", SeenLatestMessage = false };
 
             var actual1 = actual.ElementAt(0);
             var actual2 = actual.ElementAt(1);
@@ -74,7 +74,7 @@ namespace Infrastructure.Tests
         {
             var chatMessage = new ChatMessageCreateDto
             {
-                FromUserId = 1,
+                FromUserId = "1",
                 ChatId = 1,
                 Content = "Hello"
             };
@@ -87,7 +87,7 @@ namespace Infrastructure.Tests
         {
             var chatMessage = new ChatMessageCreateDto
             {
-                FromUserId = 1,
+                FromUserId = "1",
                 ChatId = 1,
                 Content = ""
             };

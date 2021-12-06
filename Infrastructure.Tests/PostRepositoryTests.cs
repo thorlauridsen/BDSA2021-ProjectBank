@@ -23,7 +23,7 @@ namespace Infrastructure.Tests
             var context = new ProjectBankContext(builder.Options);
             context.Database.EnsureCreated();
 
-            var user = new User { Name = "Bob" };
+            var user = new User {oid = "1", Name = "Bob" };
             context.Users.Add(user);
 
             var post = new Post
@@ -49,7 +49,7 @@ namespace Infrastructure.Tests
             {
                 Title = "Biology Project",
                 Content = "Bla bla bla bla",
-                SupervisorId = 1,
+                SupervisorOid = "1",
                 Tags = new HashSet<string> { "bio", "dna", "cells" }
             };
 
@@ -59,7 +59,7 @@ namespace Infrastructure.Tests
             Assert.Equal(2, created.Item2.Id);
             Assert.Equal("Biology Project", created.Item2.Title);
             Assert.Equal("Bla bla bla bla", created.Item2.Content);
-            Assert.Equal(1, created.Item2.SupervisorId);
+            Assert.Equal("1", created.Item2.SupervisorOid);
             Assert.True(created.Item2.Tags.SetEquals(new[] { "bio", "dna", "cells" }));
         }
 
@@ -72,7 +72,7 @@ namespace Infrastructure.Tests
             Assert.Equal("Math Project", option.Value.Title);
             Assert.Equal("Bla bla bla bla", option.Value.Content);
             Assert.Equal(today, option.Value.DateAdded);
-            Assert.Equal(1, option.Value.SupervisorId);
+            Assert.Equal("1", option.Value.SupervisorOid);
             Assert.Equal(1, option.Value.Tags.Count);
         }
 

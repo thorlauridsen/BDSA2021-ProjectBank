@@ -7,7 +7,7 @@ namespace ProjectBank.Core
         string Title,
         string Content,
         DateTime DateAdded,
-        int SupervisorId,
+        string SupervisorOid,
         HashSet<string> Tags
     );
 
@@ -16,9 +16,9 @@ namespace ProjectBank.Core
         string Title,
         string Content,
         DateTime DateAdded,
-        int SupervisorId,
+        string SupervisorOid,
         HashSet<string> Tags
-    ) : PostDto(Id, Title, Content, DateAdded, SupervisorId, Tags);
+    ) : PostDto(Id, Title, Content, DateAdded, SupervisorOid, Tags);
 
     public record PostCreateDto
     {
@@ -27,7 +27,7 @@ namespace ProjectBank.Core
         public string Title { get; init; }
 
         public string Content { get; init; }
-        public int SupervisorId { get; init; }
+        public string SupervisorOid { get; init; }
         public HashSet<string> Tags { get; init; }
     }
 

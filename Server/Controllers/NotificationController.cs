@@ -31,7 +31,7 @@ namespace ProjectBank.Server.Controllers
             var (status, created) = await _repository.CreateAsync(notification);
             if (status != Status.BadRequest)
             {
-                return CreatedAtRoute(nameof(GetNotificationByUserId), new { userId = created?.UserId }, created);
+                return CreatedAtRoute(nameof(GetNotificationByUserId), new { userId = created?.UserOid }, created);
             }
             return BadRequest();
         }
@@ -40,7 +40,7 @@ namespace ProjectBank.Server.Controllers
         [HttpGet("{userId}", Name = "GetNotificationByUserId")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<IReadOnlyCollection<NotificationDetailsDto>> GetNotificationByUserId(int userId)
+        public async Task<IReadOnlyCollection<NotificationDetailsDto>> GetNotificationByUserId(string userId)
             => await _repository.GetNotificationsAsync(userId);
 
         [Authorize]

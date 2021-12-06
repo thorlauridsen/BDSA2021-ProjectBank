@@ -21,7 +21,7 @@ namespace Infrastructure.Tests
             var context = new ProjectBankContext(builder.Options);
             context.Database.EnsureCreated();
 
-            var user = new User { Id = 1, Name = "Claus", IsSupervisor = true };
+            var user = new User { oid = "1", Name = "Claus", IsSupervisor = true };
             context.Users.Add(user);
             context.SaveChanges();
 
@@ -32,18 +32,18 @@ namespace Infrastructure.Tests
         [Fact]
         public async Task CreateAsync_creates_new_user_with_generated_id()
         {
-            var user = new UserCreateDto { Name = "Karsten", IsSupervisor = false };
+            var user = new UserCreateDto {oid = "2", Name = "Karsten", IsSupervisor = false };
 
             var (status, created) = await _repository.CreateAsync(user);
 
-            Assert.Equal(2, created.Id);
+            Assert.Equal("2", created.oid);
             Assert.Equal(user.Name, created.Name);
 
             var users = await _repository.ReadAsync();
 
             Assert.Collection(users,
-                s => Assert.Equal(new UserDto(1, "Claus", true), s),
-                s => Assert.Equal(new UserDto(2, "Karsten", false), s)
+                s => Assert.Equal(new UserDto("1", "Claus", true), s),
+                s => Assert.Equal(new UserDto("2", "Karsten", false), s)
             );
         }
 
@@ -53,14 +53,14 @@ namespace Infrastructure.Tests
             var users = await _repository.ReadAsync();
 
             Assert.Collection(users,
-                s => Assert.Equal(new UserDto(1, "Claus", true), s)
+                s => Assert.Equal(new UserDto("1", "Claus", true), s)
             );
         }
 
         [Fact]
         public async Task ReadAsync_given_non_existing_id_returns_None()
         {
-            var option = await _repository.ReadAsync(11);
+            var option = await _repository.ReadAsync("11");
 
             Assert.True(option.IsNone);
         }
@@ -68,7 +68,7 @@ namespace Infrastructure.Tests
         [Fact]
         public async Task DeleteAsync_given_non_existing_Id_returns_NotFound()
         {
-            var response = await _repository.DeleteAsync(11);
+            var response = await _repository.DeleteAsync("11");
 
             Assert.Equal(NotFound, response);
         }

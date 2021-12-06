@@ -42,7 +42,7 @@ namespace ProjectBank.Server.Controllers
 
         [Authorize]
         [HttpGet("supervisor/{userId}")]
-        public async Task<IReadOnlyCollection<PostDto>> GetBySupervisor(int userId)
+        public async Task<IReadOnlyCollection<PostDto>> GetBySupervisor(string userId)
             => await _repository.ReadAsyncBySupervisor(userId);
 
         [Authorize]

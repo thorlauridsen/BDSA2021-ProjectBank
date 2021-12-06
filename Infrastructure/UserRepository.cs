@@ -13,22 +13,22 @@ namespace ProjectBank.Infrastructure
 
         public async Task<(Status, UserDetailsDto?)> CreateAsync(UserCreateDto user)
         {
-            var entity = new User { Name = user.Name };
+            var entity = new User {oid = user.oid,Name = user.Name };
 
             _context.Users.Add(entity);
             await _context.SaveChangesAsync();
 
             return (Created, new UserDetailsDto(
-                                 entity.Id,
+                                 entity.oid,
                                  entity.Name,
                                  entity.IsSupervisor
                              ));
         }
 
-        public async Task<Option<UserDetailsDto>> ReadAsync(int userId) =>
-            await _context.Users.Where(u => u.Id == userId)
+        public async Task<Option<UserDetailsDto>> ReadAsync(string userId) =>
+            await _context.Users.Where(u => u.oid == userId)
                                 .Select(u => new UserDetailsDto(
-                                    u.Id,
+                                    u.oid,
                                     u.Name,
                                     u.IsSupervisor
                                 ))
@@ -37,16 +37,16 @@ namespace ProjectBank.Infrastructure
         public async Task<IReadOnlyCollection<UserDto>> ReadAsync() =>
             (await _context.Users
                            .Select(u => new UserDto(
-                                u.Id,
+                                u.oid,
                                 u.Name,
                                 u.IsSupervisor
                             ))
                            .ToListAsync())
                            .AsReadOnly();
 
-        public async Task<Status> UpdateAsync(int userId, UserUpdateDto user)
+        public async Task<Status> UpdateAsync(string userId, UserUpdateDto user)
         {
-            var entity = await _context.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
+            var entity = await _context.Users.FirstOrDefaultAsync(u => u.oid == user.oid);
 
             if (entity == null)
             {
@@ -58,7 +58,7 @@ namespace ProjectBank.Infrastructure
             return Updated;
         }
 
-        public async Task<Status> DeleteAsync(int userId)
+        public async Task<Status> DeleteAsync(string userId)
         {
             var entity = await _context.Users.FindAsync(userId);
 

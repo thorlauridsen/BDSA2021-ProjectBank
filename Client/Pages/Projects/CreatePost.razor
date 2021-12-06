@@ -58,7 +58,7 @@
         {
             Title = postFormModel.Title,
             Content = postFormModel.Content,
-            SupervisorId = 1, // TODO: Get correct SupervisorId from database. Be aware of friday 3.
+            SupervisorOid = "1", // TODO: Get correct SupervisorId from database. Be aware of friday 3.
             Tags = postFormModel.Tags.Split(",").Select(t => t.Trim()).ToHashSet()
         };
         var response = await _http.PostAsJsonAsync("api/Post", post);
