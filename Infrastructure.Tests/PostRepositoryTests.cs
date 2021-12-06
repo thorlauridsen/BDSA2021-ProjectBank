@@ -145,18 +145,13 @@ namespace Infrastructure.Tests
 
         }
 
-        //TODO
-        [Fact]
-        public async Task ReadAsyncBySupervisor_given_non_existing_supervisor_returns_none()
-        {
-            //var actual = await _repository.ReadAsyncBySupervisor("6");
-        }
+        
 
         //TODO
         [Fact]
         public async Task ReadAsyncByTag_given_tag_math_returns_post()
         {
-            var actual = await _repository.ReadAsyncByTag("Math");
+            //var actual = await _repository.ReadAsyncByTag("Math");
     
         }
         
