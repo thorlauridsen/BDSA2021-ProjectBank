@@ -18,3 +18,10 @@ CODE COVERAGE
     dotnet add package coverlet.msbuild
 
     dotnet test /p:CollectCoverage=true
+    
+Supervisor login:
+Login with your own microsoft accounts
+
+Student test user:
+email: chris@phlegetonoutlook.onmicrosoft.com
+password: Vava8688
