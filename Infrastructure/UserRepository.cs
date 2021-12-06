@@ -2,18 +2,24 @@ using ProjectBank.Core;
 
 namespace ProjectBank.Infrastructure
 {
+  
+
     public class UserRepository : IUserRepository
     {
         private readonly IProjectBankContext _context;
+        private HttpClient _http;
 
         public UserRepository(IProjectBankContext context)
         {
             _context = context;
+            _http = new HttpClient();
         }
 
         public async Task<(Status, UserDetailsDto?)> CreateAsync(UserCreateDto user)
         {
-            var entity = new User { oid = user.oid, Name = user.Name, IsSupervisor = user.IsSupervisor };
+            var image = await _http.GetByteArrayAsync($"https://eu.ui-avatars.com/api/?name={user.Name.Replace(" ","+")}&background=random");
+            string base64Image = "data:image/png;base64," + Convert.ToBase64String(image);
+            var entity = new User { oid = user.oid, Image = base64Image, Name = user.Name, IsSupervisor = user.IsSupervisor };
 
             _context.Users.Add(entity);
             await _context.SaveChangesAsync();
@@ -21,6 +27,7 @@ namespace ProjectBank.Infrastructure
             return (Created, new UserDetailsDto(
                                  entity.oid,
                                  entity.Name,
+                                 entity.Image,
                                  entity.IsSupervisor
                              ));
         }
@@ -30,6 +37,7 @@ namespace ProjectBank.Infrastructure
                                 .Select(u => new UserDetailsDto(
                                     u.oid,
                                     u.Name,
+                                    u.Image,
                                     u.IsSupervisor
                                 ))
                                 .FirstOrDefaultAsync();

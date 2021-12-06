@@ -33,7 +33,7 @@
                 <div class="col-md-3 col-10">
                     <div class="shadow p-4 text-center m-2">
                         <img alt="Profile picture of supervisor" class="rounded-circle shadow supervisor-image"
-                        src="https://eu.ui-avatars.com/api/?name=@Creator?.Name.Replace(' ', '+')&background=random">
+                        src="@Creator?.image">
                         <h3>@Creator?.Name</h3>
                         <p>Email: <a href="mailto:randommail@mail.com">Change@me.com</a></p>
                         <p>All projects: <a href="/projects/supervisor/@Creator?.oid">View</a></p>
@@ -61,14 +61,14 @@
     public int Id { get; set; }
 
     private PostDto? Post { get; set; }
-    private UserDto? Creator { get; set; }
+    private UserDetailsDto? Creator { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
             Post = await _http.GetFromJsonAsync<PostDto>("api/Post/" + Id);
-            Creator = await _http.GetFromJsonAsync<UserDto>("api/User/" + Post?.SupervisorOid);
+            Creator = await _http.GetFromJsonAsync<UserDetailsDto>("api/User/" + Post?.SupervisorOid);
         }
         catch (AccessTokenNotAvailableException exception)
         {
