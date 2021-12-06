@@ -101,10 +101,7 @@ namespace ProjectBank.Infrastructure.Migrations
             modelBuilder.Entity("ProjectBank.Infrastructure.Comment", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -114,14 +111,13 @@ namespace ProjectBank.Infrastructure.Migrations
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
+                    b.Property<string>("Useroid")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Useroid");
 
                     b.ToTable("Comments");
                 });
@@ -275,6 +271,25 @@ namespace ProjectBank.Infrastructure.Migrations
                         .HasForeignKey("Useroid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ProjectBank.Infrastructure.Comment", b =>
+                {
+                    b.HasOne("ProjectBank.Infrastructure.Post", "Post")
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProjectBank.Infrastructure.User", "User")
+                        .WithMany()
+                        .HasForeignKey("Useroid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Post");
 
                     b.Navigation("User");
                 });

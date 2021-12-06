@@ -17,6 +17,11 @@ namespace ProjectBank.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Comment>()
+                        .HasOne<Post>(c => c.Post)
+                        .WithMany()
+                        .HasForeignKey(p => p.Id)
+                        .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
