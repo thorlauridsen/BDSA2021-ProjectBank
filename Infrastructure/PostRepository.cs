@@ -66,7 +66,7 @@ namespace ProjectBank.Core
                 .ToListAsync())
             .AsReadOnly();
 
-        //FIXME this method fails when compairing supervisors id
+        
         public async Task<IReadOnlyCollection<PostDto>> ReadAsyncBySupervisor(string userId) =>
             (await _context.Posts
                 .Where(p => p.User.oid == userId)
@@ -78,10 +78,13 @@ namespace ProjectBank.Core
                     p.User.oid,
                     p.Tags.Select(t => t.Name).ToHashSet()
                 ))
-                .ToListAsync());
+                .ToListAsync())
+            .AsReadOnly();
 
+        //FIXME make tags a string in post, instead of it's own type?
         public async Task<IReadOnlyCollection<PostDto>> ReadAsyncByTag(string tag) =>
             (await _context.Posts
+                .Where(p => p.Tags.Any(tag => tag.Name.Equals(tag)))
                 .Select(p => new PostDto(
                     p.Id,
                     p.Title,
@@ -90,7 +93,6 @@ namespace ProjectBank.Core
                     p.User.oid,
                     p.Tags.Select(t => t.Name).ToHashSet()
                 ))
-                .Where(p => p.Tags.Contains(tag))
                 .ToListAsync())
             .AsReadOnly();
 
