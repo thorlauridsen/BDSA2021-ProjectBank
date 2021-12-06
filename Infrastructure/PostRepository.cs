@@ -1,4 +1,6 @@
 using System.Collections.Immutable;
+using System.Collections.ObjectModel;
+using System.Linq;
 using ProjectBank.Infrastructure;
 
 namespace ProjectBank.Core
@@ -96,23 +98,26 @@ namespace ProjectBank.Core
                 .ToListAsync())
             .AsReadOnly();
 
-        public async Task<IReadOnlyCollection<CommentDto>> ReadAsyncComments(int postId)
+        public async Task<(Status, IReadOnlyCollection<CommentDto>)> ReadAsyncComments(int postId)
         {
-            var comments = await _context.Comments.Where(c => c.Post.Id == postId).ToListAsync();
+            var post = await _context.Posts.Include("Comments").Include("Users").FirstOrDefaultAsync(p => p.Id == postId);
+            if (post == null)
+            {
+                return (BadRequest, new List<CommentDto>(){new CommentDto(2854920, "HELLO BITCH IT DID NOT WORK", DateTime.Now, "1")});
+            }
 
+            var comments = post.Comments;
             var result = new List<CommentDto>();
             foreach (var comment in comments)
             {
-                result.Add(new CommentDto(
+                var commentDto = new CommentDto(
                     comment.Id,
                     comment.Content,
                     comment.DateAdded,
-                    comment.User.oid,
-                    comment.Post.Id
-                ));
+                    comment.User.oid);
+                result.Add(commentDto);
             }
-
-            return result;
+            return (Success, result);
         }
 
         public async Task<Status> UpdateAsync(int postId, PostUpdateDto post)

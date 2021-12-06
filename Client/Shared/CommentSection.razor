@@ -72,7 +72,7 @@
         {
             Content = commentModel.comment,
             UserId = (await localStore.GetItemAsync<UserDetailsDto>("user")).oid,
-            PostId = Post.Id
+            postid = Post.Id
         };
         var response = await _http.PostAsJsonAsync("api/Comment", comment);
         if (response.IsSuccessStatusCode)

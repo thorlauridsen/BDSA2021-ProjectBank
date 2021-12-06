@@ -23,17 +23,17 @@ namespace ProjectBank.Server.Controllers
             _repository = repository;
         }
 
-        [Authorize]
+        /*[Authorize]
         [HttpGet]
         public async Task<IReadOnlyCollection<CommentDto>> Get()
-            => await _repository.ReadAsync();
+            => await _repository.ReadAsync();*/
 
         [Authorize]
-        [HttpGet("{commentId}", Name = "GetByCommentId")]
+        [HttpGet("{postId}/{commentId}", Name = "GetByCommentId")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<CommentDetailsDto>> GetByCommentId(int commentId)
-            => (await _repository.ReadAsync(commentId)).ToActionResult();
+        public async Task<ActionResult<CommentDetailsDto>> GetByCommentId(int postId, int commentId)
+            => (await _repository.ReadAsync(postId, commentId)).ToActionResult();
 
         [Authorize]
         [HttpPost]
@@ -43,23 +43,23 @@ namespace ProjectBank.Server.Controllers
             var (status, created) = await _repository.CreateAsync(comment);
             if (status != Status.BadRequest)
             {
-                return CreatedAtRoute(nameof(GetByCommentId), new { commentId = created?.Id }, created);
+                return CreatedAtRoute(nameof(GetByCommentId), new { postId = comment.postid, commentId = created?.Id }, created);
             }
             return BadRequest();
         }
 
-        [Authorize]
+        /*[Authorize]
         [HttpPut("{commentId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> Put(int commentId, [FromBody] CommentUpdateDto comment)
-            => (await _repository.UpdateAsync(commentId, comment)).ToActionResult();
+            => (await _repository.UpdateAsync(commentId, comment)).ToActionResult();*/
 
         [Authorize]
-        [HttpDelete("{commentId}")]
+        [HttpDelete("{postId}/{commentId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> Delete(int commentId)
-            => (await _repository.DeleteAsync(commentId)).ToActionResult();
+        public async Task<IActionResult> Delete(int postId, int commentId)
+            => (await _repository.DeleteAsync(postId, commentId)).ToActionResult();
     }
 }

@@ -8,7 +8,7 @@ namespace ProjectBank.Core
         Task<IReadOnlyCollection<PostDto>> ReadAsync();
         Task<IReadOnlyCollection<PostDto>> ReadAsyncBySupervisor(string userId);
         Task<IReadOnlyCollection<PostDto>> ReadAsyncByTag(string tag);
-        Task<IReadOnlyCollection<CommentDto>> ReadAsyncComments(int postId);
+        Task<(Status, IReadOnlyCollection<CommentDto>)> ReadAsyncComments(int postId);
         Task<Status> UpdateAsync(int postId, PostUpdateDto post);
     }
 }

@@ -11,6 +11,5 @@ namespace ProjectBank.Infrastructure
 
         public DateTime DateAdded { get; set; }
 
-        public Post Post { get; set; }
     }
 }

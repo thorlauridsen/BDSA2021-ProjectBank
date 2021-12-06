@@ -76,6 +76,16 @@ namespace ProjectBank.Server.Integration.Tests
                 context.Users.Add(user1);
                 context.Users.Add(user2);
             }
+            var comment = new Comment
+            {
+                Content = "Nice post",
+                User = user2,
+                DateAdded = DateTime.Now
+            };
+            /*if (!context.Comments.Any())
+            {
+                context.Comments.Add(comment);
+            }*/
 
             var tag_biology = new Tag("Biology");
             var post = new Post
@@ -84,6 +94,7 @@ namespace ProjectBank.Server.Integration.Tests
                 Content = "My Cool Biology Project",
                 DateAdded = DateTime.Now,
                 User = user1,
+                Comments = new List<Comment>(){comment},
                 Tags = new HashSet<Tag>() { tag_biology }
             };
             if (!context.Posts.Any())
@@ -91,17 +102,7 @@ namespace ProjectBank.Server.Integration.Tests
                 context.Posts.Add(post);
             }
 
-            var comment = new Comment
-            {
-                Content = "Nice post",
-                User = user2,
-                DateAdded = DateTime.Now,
-                Post = post
-            };
-            if (!context.Comments.Any())
-            {
-                context.Comments.Add(comment);
-            }
+            
 
             var notification = new Notification
             {

@@ -131,7 +131,7 @@ namespace ProjectBank.Server.Tests.Controllers
             // Arrange
             var expected = Array.Empty<CommentDto>();
             var repository = new Mock<IPostRepository>();
-            repository.Setup(m => m.ReadAsyncComments(1)).ReturnsAsync(expected);
+            repository.Setup(m => m.ReadAsyncComments(1)).ReturnsAsync((Success, expected));
             var controller = new PostController(logger.Object, repository.Object);
 
             // Act

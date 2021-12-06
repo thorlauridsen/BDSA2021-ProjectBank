@@ -32,6 +32,10 @@ namespace Infrastructure.Tests
                 Title = "Math Project",
                 Content = "Bla bla bla bla",
                 DateAdded = today,
+                Comments = new List<Comment>()
+                {
+                    new() {Id =1, Content ="Hello",User= user,DateAdded = new DateTime(2021,12,6)}
+                },
                 User = user,
                 Tags = new HashSet<Tag> { new Tag("Math") }
             };
@@ -163,12 +167,18 @@ namespace Infrastructure.Tests
     
         }
 
-        //TODO
+
         [Fact]
         public async Task ReadAsyncComments_given_postid_returns_comments()
         {
-            //var actual = await _repository.ReadAsyncComments(1);
-    
+            var (status, actual) = await _repository.ReadAsyncComments(1);
+            var expected = new List<CommentDto>()
+            {
+                new(1, "Hello", new DateTime(2021,12,6),"1")
+
+            }.AsReadOnly();
+            Assert.Equal(Success, status);
+            Assert.Equal(expected, actual);
         }
 
         [Fact]

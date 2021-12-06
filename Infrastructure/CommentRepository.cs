@@ -21,40 +21,48 @@ namespace ProjectBank.Infrastructure
             {
                 Content = comment.Content,
                 User = await GetUserAsync(comment.UserId),
-                DateAdded = DateTime.Now,
-                Post = await GetPostAsync(comment.PostId)
+                DateAdded = DateTime.Now
             };
-            _context.Comments.Add(entity);
+            var postEntity = await _context.Posts.FirstOrDefaultAsync(c => c.Id == comment.postid);
+            if (postEntity == null)
+            {
+                return (BadRequest, null);
+            }
+            /*_context.Comments.Add(entity);*/
+            postEntity.Comments.Add(entity);
             await _context.SaveChangesAsync();
 
             return (Created, new CommentDetailsDto(
                                  entity.Id,
                                  entity.Content,
                                  entity.DateAdded,
-                                 entity.User.oid,
-                                 entity.Post.Id
+                                 entity.User.oid
                              ));
         }
 
-        public async Task<Option<CommentDetailsDto>> ReadAsync(int commentId) =>
-            await _context.Comments.Where(c => c.Id == commentId)
-                        .Select(c => new CommentDetailsDto(
-                            c.Id,
-                            c.Content,
-                            c.DateAdded,
-                            c.User.oid,
-                            c.Post.Id
-                        ))
-                        .FirstOrDefaultAsync();
+        public Task<Status> UpdateAsync(int commentId, CommentUpdateDto comment)
+        {
+            throw new NotImplementedException();
+        }
 
-        public async Task<IReadOnlyCollection<CommentDto>> ReadAsync() =>
+        public async Task<Option<CommentDetailsDto>> ReadAsync(int postId, int commentId){
+            var c = (await _context.Posts.FirstOrDefaultAsync(p => p.Id == postId))?.Comments.FirstOrDefault(c => c.Id == commentId);
+            if (c == null) return null;
+            return new CommentDetailsDto(
+                c.Id,
+                c.Content,
+                c.DateAdded,
+                c.User.oid
+            );
+        }
+
+        /*public async Task<IReadOnlyCollection<CommentDto>> ReadAsync() =>
             (await _context.Comments
                            .Select(c => new CommentDto(
                                c.Id,
                                c.Content,
                                c.DateAdded,
-                               c.User.oid,
-                               c.Post.Id
+                               c.User.oid
                             ))
                            .ToListAsync())
                            .AsReadOnly();
@@ -71,25 +79,23 @@ namespace ProjectBank.Infrastructure
             await _context.SaveChangesAsync();
 
             return Updated;
-        }
+        }*/
 
-        public async Task<Status> DeleteAsync(int commentId)
+        public async Task<Status> DeleteAsync(int postId, int commentId)
         {
-            var entity = await _context.Comments.FindAsync(commentId);
+            var postEntity = await _context.Posts.FindAsync(postId);
 
-            if (entity == null)
+            if (postEntity == null)
             {
-                return NotFound;
+                return BadRequest;
             }
 
-            _context.Comments.Remove(entity);
+            var entity = postEntity.Comments.First(c => c.Id == commentId);
+            postEntity.Comments.Remove(entity);
             await _context.SaveChangesAsync();
 
             return Deleted;
         }
-
-        private async Task<Post> GetPostAsync(int postId) =>
-            await _context.Posts.FirstAsync(p => p.Id == postId);
 
         private async Task<User> GetUserAsync(string userId) =>
             await _context.Users.FirstAsync(u => u.oid == userId);

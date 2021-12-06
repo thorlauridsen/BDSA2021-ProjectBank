@@ -7,6 +7,7 @@ namespace ProjectBank.Core
         Deleted,
         NotFound,
         BadRequest,
-        Conflict
+        Conflict,
+        Success
     }
 }

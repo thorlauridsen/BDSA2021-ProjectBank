@@ -48,7 +48,10 @@ namespace ProjectBank.Server.Controllers
         [Authorize]
         [HttpGet("{postId}/comments")]
         public async Task<IReadOnlyCollection<CommentDto>> GetComments(int postId)
-            => await _repository.ReadAsyncComments(postId);
+        {
+            var (status, comments) = await _repository.ReadAsyncComments(postId);
+            return status.Equals(Status.Success) ? comments : null;
+        }
 
         [Authorize]
         [HttpPost]
