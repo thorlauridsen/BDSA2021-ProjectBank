@@ -100,7 +100,7 @@ namespace ProjectBank.Core
 
         public async Task<(Status, IReadOnlyCollection<CommentDto>)> ReadAsyncComments(int postId)
         {
-            var post = await _context.Posts.Include("Comments").Include("Users").FirstOrDefaultAsync(p => p.Id == postId);
+            var post = await _context.Posts.Include("Comments.User").FirstOrDefaultAsync(p => p.Id == postId);
             if (post == null)
             {
                 return (BadRequest, new List<CommentDto>(){new CommentDto(2854920, "HELLO BITCH IT DID NOT WORK", DateTime.Now, "1")});
