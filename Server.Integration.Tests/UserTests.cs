@@ -31,10 +31,11 @@ namespace ProjectBank.Server.Integration.Tests
             Assert.NotNull(users);
             Assert.True(users?.Length >= 2);
             Assert.Contains(users, u => u.Name == "Paolo");
+            Assert.Contains(users, u => u.Name == "Tue");
         }
 
         [Fact]
-        public async Task Post_returns_Created_with_location()
+        public async Task Post_returns_created_User_with_location()
         {
             var user = new UserCreateDto
             {

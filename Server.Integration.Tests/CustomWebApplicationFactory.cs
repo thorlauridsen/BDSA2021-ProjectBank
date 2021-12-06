@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -74,6 +76,49 @@ namespace ProjectBank.Server.Integration.Tests
                 context.Users.Add(user1);
                 context.Users.Add(user2);
             }
+
+            var tag_biology = new Tag("Biology");
+            var post = new Post
+            {
+                Title = "Biology Project",
+                Content = "My Cool Biology Project",
+                DateAdded = DateTime.Now,
+                User = user1,
+                Tags = new HashSet<Tag>() { tag_biology }
+            };
+            if (!context.Posts.Any())
+            {
+                context.Posts.Add(post);
+            }
+
+            var comment = new Comment
+            {
+                Content = "Nice post",
+                UserId = "2",
+                DateAdded = DateTime.Now,
+                PostId = 1
+            };
+            if (!context.Comments.Any())
+            {
+                context.Comments.Add(comment);
+            }
+
+            var notification = new Notification
+            {
+                Title = "Important Notification!",
+                Content = "Hello remember to follow",
+                Timestamp = DateTime.Now,
+                User = user1,
+                Link = "https://google.com",
+                Seen = false
+            };
+            if (!context.Notifications.Any())
+            {
+                context.Notifications.Add(notification);
+            }
+
+
+
             context.SaveChanges();
         }
     }
