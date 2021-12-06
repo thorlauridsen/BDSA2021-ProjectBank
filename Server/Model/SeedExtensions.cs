@@ -398,9 +398,9 @@ namespace ProjectBank.Server.Model
             var comment = new Comment
             {
                 Content = "Nice post",
-                UserId = user2.oid,
+                User = user2,
                 DateAdded = DateTime.Now,
-                PostId = post.Id
+                Post = post
             };
             if (!await context.Comments.AnyAsync())
             {

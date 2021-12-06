@@ -93,7 +93,7 @@ namespace ProjectBank.Core
 
         public async Task<IReadOnlyCollection<CommentDto>> ReadAsyncComments(int postId)
         {
-            var comments = await _context.Comments.Where(c => c.PostId == postId).ToListAsync();
+            var comments = await _context.Comments.Where(c => c.Post.Id == postId).ToListAsync();
 
             var result = new List<CommentDto>();
             foreach (var comment in comments)
@@ -102,8 +102,8 @@ namespace ProjectBank.Core
                     comment.Id,
                     comment.Content,
                     comment.DateAdded,
-                    comment.UserId,
-                    comment.PostId
+                    comment.User.oid,
+                    comment.Post.Id
                 ));
             }
             return result;

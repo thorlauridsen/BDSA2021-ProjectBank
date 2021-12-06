@@ -1,5 +1,6 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using ProjectBank.Core;
 using ProjectBank.Infrastructure;
 using Xunit;
 using static ProjectBank.Core.Status;
@@ -20,8 +21,13 @@ namespace Infrastructure.Tests
             var context = new ProjectBankContext(builder.Options);
             context.Database.EnsureCreated();
 
-            Comment comment1 = new Comment { Id = 1,UserId = "1",DateAdded = DateTime.Now, Content = "Hey",PostId = 0 };
-            Comment comment2 = new Comment { Id = 2,UserId = "1",DateAdded = DateTime.Now, Content = "Die in a hole", PostId = 0};
+            User supervisor = new User() { oid = "1", IsSupervisor = true, Name = "bo" };
+            User student = new User() { oid = "2", IsSupervisor = false, Name = "alice" };
+
+            Post post = new Post() { Id = 1 , Title = "test title", Content = "test", DateAdded = DateTime.Now, User = supervisor};
+
+            Comment comment1 = new Comment { Id = 1, User = student, DateAdded = DateTime.Now, Content = "Hey", Post = post };
+            Comment comment2 = new Comment { Id = 2, User = supervisor, DateAdded = DateTime.Now, Content = "hi", Post = post};
 
             context.Comments.Add(comment1);
             context.Comments.Add(comment2);
@@ -46,6 +52,18 @@ namespace Infrastructure.Tests
             var option = await _repository.ReadAsync(11);
 
             Assert.True(option.IsNone);
+        }
+
+        [Fact]
+        public async void CreateAsync_given_commentCreateDto()
+        {
+            var comment = new CommentCreateDto { UserId = "2", Content = "some question", PostId = 1 };
+
+            var (option, actual) = await _repository.CreateAsync(comment);
+            
+            Assert.Equal(Created, option);
+            Assert.Equal(3, actual.Id);
+
         }
 
         [Fact]

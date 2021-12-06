@@ -20,9 +20,9 @@ namespace ProjectBank.Infrastructure
             var entity = new Comment
             {
                 Content = comment.Content,
-                UserId = comment.UserId,
+                User = await GetUserAsync(comment.UserId),
                 DateAdded = DateTime.Now,
-                PostId = comment.PostId
+                Post = await GetPostAsync(comment.PostId)
             };
             _context.Comments.Add(entity);
             await _context.SaveChangesAsync();
@@ -31,8 +31,8 @@ namespace ProjectBank.Infrastructure
                                  entity.Id,
                                  entity.Content,
                                  entity.DateAdded,
-                                 entity.UserId,
-                                 entity.PostId
+                                 entity.User.oid,
+                                 entity.Post.Id
                              ));
         }
 
@@ -42,8 +42,8 @@ namespace ProjectBank.Infrastructure
                             c.Id,
                             c.Content,
                             c.DateAdded,
-                            c.UserId,
-                            c.PostId
+                            c.User.oid,
+                            c.Post.Id
                         ))
                         .FirstOrDefaultAsync();
 
@@ -53,8 +53,8 @@ namespace ProjectBank.Infrastructure
                                c.Id,
                                c.Content,
                                c.DateAdded,
-                               c.UserId,
-                               c.PostId
+                               c.User.oid,
+                               c.Post.Id
                             ))
                            .ToListAsync())
                            .AsReadOnly();
