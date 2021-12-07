@@ -87,22 +87,21 @@ namespace ProjectBank.Server.Integration.Tests
                 context.Comments.Add(comment);
             }*/
 
-            var tag_biology = new Tag("Biology");
             var post = new Post
             {
                 Title = "Biology Project",
                 Content = "My Cool Biology Project",
                 DateAdded = DateTime.Now,
                 User = user1,
-                Comments = new List<Comment>(){comment},
-                Tags = new HashSet<Tag>() { tag_biology }
+                Comments = new List<Comment>() { comment },
+                Tags = new HashSet<string>() { "Biology" }
             };
             if (!context.Posts.Any())
             {
                 context.Posts.Add(post);
             }
 
-            
+
 
             var notification = new Notification
             {
