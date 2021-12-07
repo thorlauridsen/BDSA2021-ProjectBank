@@ -1,31 +1,43 @@
 ﻿@page "/Messages"
 @using ProjectBank.Core
+@using ProjectBank.Client.Extensions
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+@inject NavigationManager uriHelper;
+@inject HttpClient Http
+@inject ILocalStorageService localStore
+@inject IJSRuntime jsRuntime
 <div class="d-flex flex-nowrap messageContainer col-12">
     <div class="d-flex flex-column col-3 align-items-stretch flex-shrink-0 bg-white messagesSideBar">
         <div
             class="d-flex align-items-center justify-content-between flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
             <span class="fs-5 fw-semibold">Messages</span>
-            <EditForm Model="postSelectorModel">
-                <InputSelect class="form-select" @bind-Value="postSelectorModel.projectTitle">
-                    <option selected>Sort by project</option>
-                    <option>@testPost.Title</option>
-                </InputSelect>
-            </EditForm>
+            <InputSelect class="form-select" @bind-Value="FilterSelectValue">
+                <option selected>Sort by project</option>
+                @if (Posts != null)
+                {
+                    foreach (var post in Posts)
+                    {
+                        <option>@post.Title</option>
+                    }
+                }
+            </InputSelect>
         </div>
         <div class="list-group list-group-flush border-bottom scrollarea message-list">
             <MessageItem Read="false" Recipient="Peter Nielsen" RelatedPost="@testPost" LastMessageDate="DateTime.Now">
             </MessageItem>
             <MessageItem Read="false" Recipient="Peter Nielsen" RelatedPost="@testPost"
-                LastMessageDate="new DateTime(2000, 5, 14)">
+                         LastMessageDate="new DateTime(2000, 5, 14)">
             </MessageItem>
             <MessageItem Read="true" Recipient="Peter Nielsen" RelatedPost="@testPost"
-                LastMessageDate="new DateTime(2021, 11, 23)">
+                         LastMessageDate="new DateTime(2021, 11, 23)">
             </MessageItem>
             <MessageItem Read="false" Recipient="Peter Nielsen" RelatedPost="@testPost"
-                LastMessageDate="DateTime.Now.Subtract(TimeSpan.FromMinutes(25))">
+                         LastMessageDate="DateTime.Now.Subtract(TimeSpan.FromMinutes(25))">
             </MessageItem>
             <MessageItem Read="true" Recipient="Peter Nielsen" RelatedPost="@testPost"
-                LastMessageDate="new DateTime(2021, 6, 24)">
+                         LastMessageDate="new DateTime(2021, 6, 24)">
             </MessageItem>
             @for (var i = 0; i < 10; i++)
             {
@@ -49,10 +61,10 @@
         </div>
         <div class="align-content-center chat-area-input d-flex p-2 row">
             <EditForm Model="messageModel">
-                <DataAnnotationsValidator />
-                <ValidationSummary />
+                <DataAnnotationsValidator/>
+                <ValidationSummary/>
                 <div class="col-9">
-                    <InputText @bind-Value="messageModel.Message" type="text" id="message-input" class="form-control" />
+                    <InputText @bind-Value="messageModel.Message" type="text" id="message-input" class="form-control"/>
                 </div>
                 <div class="col-3 d-flex">
                     <button type="submit" class="btn btn-primary col-12">Submit</button>
@@ -64,21 +76,91 @@
 
 @code {
 
+    private List<PostDto>? Posts;
     private PostDetailsDto testPost = new(5, "Biology project 101", "content", DateTime.Now, "1", new());
 
-    @code {
-        PostSelectorModel postSelectorModel = new PostSelectorModel();
+    private string _FilterSelectValue;
 
-        class PostSelectorModel
+    private string FilterSelectValue
+    {
+        get => _FilterSelectValue;
+        set
         {
-            public string projectTitle { get; set; }
-        }
-
-        MessageModel messageModel = new MessageModel();
-
-        class MessageModel
-        {
-            public string Message { get; set; }
+            _FilterSelectValue = value;
+            var post = GetPostByTitle(value);
+            if (post == null) filter = -1;
+            else filter = post.Id;
+            UpdateMessages();
         }
     }
+
+    private int filter = -1;
+    private int chat = -1;
+
+
+    MessageModel messageModel = new MessageModel();
+
+    class MessageModel
+    {
+        public string Message { get; set; }
+    }
+
+    protected override void OnInitialized()
+    {
+        var _filter = uriHelper.QueryString("filter");
+        if (_filter != null && _filter.Trim() != "" && _filter.Trim() != "-1") filter = Convert.ToInt32(_filter);
+        var _chat = uriHelper.QueryString("chat");
+        if (_chat != null && _chat.Trim() != "") filter = Convert.ToInt32(_chat);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var user = await localStore.GetItemAsync<UserDetailsDto>("user");
+            Posts = await Http.GetFromJsonAsync<List<PostDto>>("api/Post/supervisor/" + user.oid);
+            Posts?.Add(new PostDto(
+                1,
+                "this is a test title",
+                "Woah look at all this content",
+                DateTime.Now,
+                "11",
+                new HashSet<string>()
+                {
+                    "These", "are", "relevant", "Tags"
+                })); //TODO: remove once functional. 
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+    }
+
+    private void UpdateMessages()
+    {
+        string urlString = $"{uriHelper.BaseUri}/messages";
+        bool addedQuery = false;
+        if (filter != -1)
+        {
+            urlString += "?filter=" + filter;
+            addedQuery = true;
+        }
+        if (chat != -1)
+        {
+            if (addedQuery)
+            {
+                urlString += "&chat=" + chat;
+            }
+            else
+            {
+                urlString += "?chat=" + chat;
+                
+            }
+        }
+        jsRuntime.InvokeVoidAsync("ChangeUrl", urlString);
+    }
+    
+    private PostDto? GetPostByTitle(string title) =>
+        Posts?.FirstOrDefault(p => p.Title == title);
+
 }
