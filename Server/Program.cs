@@ -16,10 +16,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
 
 builder.Services.Configure<JwtBearerOptions>(
-    JwtBearerDefaults.AuthenticationScheme, options =>
-    {
-        options.TokenValidationParameters.NameClaimType = "name";
-    });
+    JwtBearerDefaults.AuthenticationScheme, options => { options.TokenValidationParameters.NameClaimType = "name"; });
 
 builder.Services.AddControllersWithViews().AddJsonOptions(c =>
 {
@@ -31,11 +28,15 @@ builder.Services.AddRazorPages();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "MyApp.Server", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo {Title = "MyApp.Server", Version = "v1"});
     c.UseInlineDefinitionsForEnums();
 });
 
-builder.Services.AddDbContext<ProjectBankContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ProjectBank"), options => options.EnableRetryOnFailure()));
+builder.Services.AddDbContext<ProjectBankContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ProjectBank"),
+        options => options.EnableRetryOnFailure());
+});
 builder.Services.AddScoped<IProjectBankContext, ProjectBankContext>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
@@ -49,6 +50,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
     app.UseDeveloperExceptionPage();
     app.UseWebAssemblyDebugging();
 }
@@ -77,6 +79,9 @@ if (!app.Environment.IsEnvironment("Integration"))
 {
     await app.SeedAsync();
 }
+
 app.Run();
 
-public partial class Program { }
+public partial class Program
+{
+}

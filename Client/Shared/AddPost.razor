@@ -23,15 +23,6 @@
             };
             var response = await Http.PostAsJsonAsync("api/Post", post);
             uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
-
-            var comment = new CommentCreateDto
-            {
-                Content = "Very nice post",
-                UserId = "1",
-                PostId = 1
-            };
-            var response2 = await Http.PostAsJsonAsync("api/Comment", comment);
-            uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
         }
         catch (AccessTokenNotAvailableException exception)
         {

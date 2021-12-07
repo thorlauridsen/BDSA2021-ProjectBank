@@ -5,7 +5,7 @@ namespace ProjectBank.Infrastructure
         DbSet<User> Users { get; }
         DbSet<Post> Posts { get; }
         DbSet<Tag> Tags { get; }
-        DbSet<Comment> Comments { get; }
+        //DbSet<Comment> Comments { get; }
         DbSet<Chat> Chats { get; }
         DbSet<ChatUser> ChatUsers { get; }
         DbSet<ChatMessage> ChatMessages { get; }

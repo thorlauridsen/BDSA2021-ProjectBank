@@ -14,6 +14,8 @@ namespace ProjectBank.Infrastructure
 
         public User User { get; set; } = null!;
 
+        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
+
         public ICollection<Tag> Tags { get; set; } = null!;
     }
 }

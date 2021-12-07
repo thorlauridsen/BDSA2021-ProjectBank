@@ -4,23 +4,22 @@
         int Id,
         string Content,
         DateTime DateAdded,
-        string UserId,
-        int PostId
+        string UserId
     );
 
     public record CommentDetailsDto(
         int Id,
         string Content,
         DateTime DateAdded,
-        string UserId,
-        int PostId
-    ) : CommentDto(Id, Content, DateAdded, UserId, PostId);
+        string UserId
+    ) : CommentDto(Id, Content, DateAdded, UserId);
 
     public record CommentCreateDto
     {
         public string Content { get; init; }
         public string UserId { get; init; }
-        public int PostId { get; init; }
+        
+        public int postid { get; init; }
     }
 
     public record CommentUpdateDto : CommentCreateDto

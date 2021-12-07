@@ -1,3 +1,6 @@
+using System.Collections.Immutable;
+using System.Collections.ObjectModel;
+using System.Linq;
 using ProjectBank.Infrastructure;
 
 namespace ProjectBank.Core
@@ -18,6 +21,7 @@ namespace ProjectBank.Core
             {
                 return (BadRequest, null);
             }
+
             var entity = new Post
             {
                 Title = post.Title,
@@ -41,72 +45,79 @@ namespace ProjectBank.Core
 
         public async Task<Option<PostDetailsDto>> ReadAsync(int postId) =>
             await _context.Posts.Where(p => p.Id == postId)
-                                .Select(p => new PostDetailsDto(
-                                    p.Id,
-                                    p.Title,
-                                    p.Content,
-                                    p.DateAdded,
-                                    p.User.oid,
-                                    p.Tags.Select(t => t.Name).ToHashSet()
-                                ))
-                                .FirstOrDefaultAsync();
+                .Select(p => new PostDetailsDto(
+                    p.Id,
+                    p.Title,
+                    p.Content,
+                    p.DateAdded,
+                    p.User.oid,
+                    p.Tags.Select(t => t.Name).ToHashSet()
+                ))
+                .FirstOrDefaultAsync();
 
         public async Task<IReadOnlyCollection<PostDto>> ReadAsync() =>
             (await _context.Posts
-                           .Select(p => new PostDto(
-                                p.Id,
-                                p.Title,
-                                p.Content,
-                                p.DateAdded,
-                                p.User.oid,
-                                p.Tags.Select(t => t.Name).ToHashSet()
-                            ))
-                           .ToListAsync())
-                           .AsReadOnly();
+                .Select(p => new PostDto(
+                    p.Id,
+                    p.Title,
+                    p.Content,
+                    p.DateAdded,
+                    p.User.oid,
+                    p.Tags.Select(t => t.Name).ToHashSet()
+                ))
+                .ToListAsync())
+            .AsReadOnly();
+
+        
         public async Task<IReadOnlyCollection<PostDto>> ReadAsyncBySupervisor(string userId) =>
             (await _context.Posts
-                           .Select(p => new PostDto(
-                                p.Id,
-                                p.Title,
-                                p.Content,
-                                p.DateAdded,
-                                p.User.oid,
-                                p.Tags.Select(t => t.Name).ToHashSet()
-                            ))
-                           .Where(p => p.SupervisorOid == userId)
-                           .ToListAsync())
-                           .AsReadOnly();
+                .Where(p => p.User.oid == userId)
+                .Select(p => new PostDto(
+                    p.Id,
+                    p.Title,
+                    p.Content,
+                    p.DateAdded,
+                    p.User.oid,
+                    p.Tags.Select(t => t.Name).ToHashSet()
+                ))
+                .ToListAsync())
+            .AsReadOnly();
 
+        //FIXME make tags a string in post, instead of it's own type?
         public async Task<IReadOnlyCollection<PostDto>> ReadAsyncByTag(string tag) =>
             (await _context.Posts
-                           .Select(p => new PostDto(
-                                p.Id,
-                                p.Title,
-                                p.Content,
-                                p.DateAdded,
-                                p.User.oid,
-                                p.Tags.Select(t => t.Name).ToHashSet()
-                            ))
-                           .Where(p => p.Tags.Contains(tag))
-                           .ToListAsync())
-                           .AsReadOnly();
+                .Where(p => p.Tags.Any(tag => tag.Name.Equals(tag)))
+                .Select(p => new PostDto(
+                    p.Id,
+                    p.Title,
+                    p.Content,
+                    p.DateAdded,
+                    p.User.oid,
+                    p.Tags.Select(t => t.Name).ToHashSet()
+                ))
+                .ToListAsync())
+            .AsReadOnly();
 
-        public async Task<IReadOnlyCollection<CommentDto>> ReadAsyncComments(int postId)
+        public async Task<(Status, IReadOnlyCollection<CommentDto>)> ReadAsyncComments(int postId)
         {
-            var comments = await _context.Comments.Where(c => c.Post.Id == postId).ToListAsync();
+            var post = await _context.Posts.Include("Comments.User").FirstOrDefaultAsync(p => p.Id == postId);
+            if (post == null)
+            {
+                return (BadRequest, new List<CommentDto>(){new CommentDto(2854920, "HELLO BITCH IT DID NOT WORK", DateTime.Now, "1")});
+            }
 
+            var comments = post.Comments;
             var result = new List<CommentDto>();
             foreach (var comment in comments)
             {
-                result.Add(new CommentDto(
+                var commentDto = new CommentDto(
                     comment.Id,
                     comment.Content,
                     comment.DateAdded,
-                    comment.User.oid,
-                    comment.Post.Id
-                ));
+                    comment.User.oid);
+                result.Add(commentDto);
             }
-            return result;
+            return (Success, result);
         }
 
         public async Task<Status> UpdateAsync(int postId, PostUpdateDto post)
@@ -117,6 +128,7 @@ namespace ProjectBank.Core
             {
                 return NotFound;
             }
+
             entity.Title = post.Title;
             entity.Content = post.Content;
             entity.Tags = await GetTagsAsync(post.Tags).ToListAsync();
@@ -144,7 +156,7 @@ namespace ProjectBank.Core
         private async IAsyncEnumerable<Tag> GetTagsAsync(IEnumerable<string> tags)
         {
             var existing = await _context.Tags.Where(t => tags.Contains(t.Name))
-                                              .ToDictionaryAsync(t => t.Name);
+                .ToDictionaryAsync(t => t.Name);
 
             foreach (var tag in tags)
             {
