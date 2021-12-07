@@ -16,6 +16,11 @@ namespace ProjectBank.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Post>()
+                        .Property(p => p.Tags)
+                        .HasConversion(
+                            v => string.Join(',', v),
+                            v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
         }
     }
 }

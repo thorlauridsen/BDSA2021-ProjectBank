@@ -37,7 +37,7 @@ namespace Infrastructure.Tests
                     new() {Id =1, Content ="Hello",User= user,DateAdded = new DateTime(2021,12,6)}
                 },
                 User = user,
-                Tags = new HashSet<string> { "Math" }
+                Tags = new string[] { "Math" }
             };
             var post1 = new Post
             {
@@ -46,7 +46,7 @@ namespace Infrastructure.Tests
                 Content = "Something about physics and stuff",
                 DateAdded = today,
                 User = user,
-                Tags = new HashSet<string> { "Science", "Physics" }
+                Tags = new string[] { "Science", "Physics" }
             };
 
 

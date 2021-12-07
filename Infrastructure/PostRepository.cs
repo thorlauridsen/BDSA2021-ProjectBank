@@ -28,7 +28,7 @@ namespace ProjectBank.Core
                 Content = post.Content,
                 DateAdded = DateTime.Now,
                 User = await GetUserAsync(post.SupervisorOid),
-                Tags = post.Tags
+                Tags = post.Tags.ToArray()
             };
             _context.Posts.Add(entity);
             await _context.SaveChangesAsync();
@@ -131,7 +131,7 @@ namespace ProjectBank.Core
 
             entity.Title = post.Title;
             entity.Content = post.Content;
-            entity.Tags = post.Tags;
+            entity.Tags = post.Tags.ToArray();
 
             await _context.SaveChangesAsync();
 

@@ -94,7 +94,7 @@ namespace ProjectBank.Server.Integration.Tests
                 DateAdded = DateTime.Now,
                 User = user1,
                 Comments = new List<Comment>() { comment },
-                Tags = new HashSet<string>() { "Biology" }
+                Tags = new string[] { "Biology" }
             };
             if (!context.Posts.Any())
             {
