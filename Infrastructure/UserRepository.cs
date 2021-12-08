@@ -2,7 +2,7 @@ using ProjectBank.Core;
 
 namespace ProjectBank.Infrastructure
 {
-  
+
 
     public class UserRepository : IUserRepository
     {
@@ -17,7 +17,8 @@ namespace ProjectBank.Infrastructure
 
         public async Task<(Status, UserDetailsDto?)> CreateAsync(UserCreateDto user)
         {
-            var image = await _http.GetByteArrayAsync($"https://eu.ui-avatars.com/api/?name={user.Name.Replace(" ","+")}&background=random");
+            var name = user.Name.Replace(" ", "+");
+            var image = await _http.GetByteArrayAsync($"https://eu.ui-avatars.com/api/?name={name}&background=random");
             string base64Image = "data:image/png;base64," + Convert.ToBase64String(image);
             var entity = new User { oid = user.oid, Image = base64Image, Name = user.Name, IsSupervisor = user.IsSupervisor };
 

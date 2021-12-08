@@ -1,4 +1,7 @@
 @page "/Notifications"
+@using Core
+@inject HttpClient _http
+@inject ILocalStorageService localStore
 <div class="d-flex flex-nowrap col-12">
     <div class="d-flex flex-column col-12 align-items-stretch flex-shrink-0 bg-white">
         <div
@@ -6,17 +9,18 @@
             <span class="fs-5 fw-semibold">Notifications</span>
         </div>
         <div class="list-group list-group-flush border-bottom scrollarea message-list">
-            @for (var i = 0; i < 3; i++)
+            @if (@NotificationList.Count() > 0)
             {
-                <NotificationItem Read="false" Title="New comment" Description="Peter has commented on your post" Link="/"
-                Date="DateTime.Now">
-                </NotificationItem>
+                @foreach (var notification in NotificationList)
+                {
+                    <NotificationItem Read="@notification.Seen" Title="@notification.Title" Description="@notification.Content"
+                Link="@notification.Link" Date="@notification.Timestamp">
+                    </NotificationItem>
+                }
             }
-            @for (var i = 0; i < 7; i++)
+            else
             {
-                <NotificationItem Read="true" Title="New comment" Description="Peter has commented on your post" Link="/"
-                Date="DateTime.Now">
-                </NotificationItem>
+                <p>You have no new notifications</p>
             }
         </div>
     </div>
@@ -24,6 +28,25 @@
 
 @code {
 
+    private UserDetailsDto currentUser { get; set; }
 
+    private List<NotificationDetailsDto> NotificationList = new List<NotificationDetailsDto>();
 
+    protected override async Task OnInitializedAsync()
+    {
+        currentUser = await localStore.GetItemAsync<UserDetailsDto>("user");
+
+        //Test code to actually display a notification...
+        //TODO: Remove when a user actually has notifications
+        var noti = new NotificationCreateDto
+        {
+            Title = "New notification title",
+            Content = "Some content",
+            UserOid = currentUser.oid,
+            Link = "https://google.com"
+        };
+        var response = await _http.PostAsJsonAsync("api/Notification", noti);
+
+        NotificationList = await _http.GetFromJsonAsync<List<NotificationDetailsDto>>("api/Notification/" + currentUser.oid);
+    }
 }

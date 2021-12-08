@@ -24,4 +24,4 @@ Login with your own microsoft accounts
 
 Student test user:
 email: chris@phlegetonoutlook.onmicrosoft.com
-password: Vava8688
+password: NnqaGYX4P2RmDFQcBAfAYNfECuDk7ck

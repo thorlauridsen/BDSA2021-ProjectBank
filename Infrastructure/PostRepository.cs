@@ -28,7 +28,7 @@ namespace ProjectBank.Core
                 Content = post.Content,
                 DateAdded = DateTime.Now,
                 User = await GetUserAsync(post.SupervisorOid),
-                Tags = await GetTagsAsync(post.Tags).ToListAsync()
+                Tags = post.Tags.ToArray()
             };
             _context.Posts.Add(entity);
             await _context.SaveChangesAsync();
@@ -39,7 +39,7 @@ namespace ProjectBank.Core
                 entity.Content,
                 entity.DateAdded,
                 entity.User.oid,
-                entity.Tags.Select(t => t.Name).ToHashSet()
+                entity.Tags.ToHashSet()
             ));
         }
 
@@ -51,7 +51,7 @@ namespace ProjectBank.Core
                     p.Content,
                     p.DateAdded,
                     p.User.oid,
-                    p.Tags.Select(t => t.Name).ToHashSet()
+                    p.Tags.ToHashSet()
                 ))
                 .FirstOrDefaultAsync();
 
@@ -63,7 +63,7 @@ namespace ProjectBank.Core
                     p.Content,
                     p.DateAdded,
                     p.User.oid,
-                    p.Tags.Select(t => t.Name).ToHashSet()
+                    p.Tags.ToHashSet()
                 ))
                 .ToListAsync())
             .AsReadOnly();
@@ -82,7 +82,7 @@ namespace ProjectBank.Core
                     p.Content,
                     p.DateAdded,
                     p.User.oid,
-                    p.Tags.Select(t => t.Name).ToHashSet()
+                    p.Tags.ToHashSet()
                 ))
                 .ToListAsync())
             .AsReadOnly();
@@ -96,14 +96,14 @@ namespace ProjectBank.Core
         public async Task<IReadOnlyCollection<PostDto>> ReadAsyncByTag(string tag) =>
             
             (await _context.Posts
-                .Where(p => p.Tags.Any(tag => tag.Name.Equals(tag)))
+                .Where(p => p.Tags.Any(tag => tag.Equals(tag)))
                 .Select(p => new PostDto(
                     p.Id,
                     p.Title,
                     p.Content,
                     p.DateAdded,
                     p.User.oid,
-                    p.Tags.Select(t => t.Name).ToHashSet()
+                    p.Tags.ToHashSet()
                 ))
                 .ToListAsync())
             .AsReadOnly();
@@ -141,7 +141,7 @@ namespace ProjectBank.Core
 
             entity.Title = post.Title;
             entity.Content = post.Content;
-            entity.Tags = await GetTagsAsync(post.Tags).ToListAsync();
+            entity.Tags = post.Tags.ToArray();
 
             await _context.SaveChangesAsync();
 
