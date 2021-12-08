@@ -4,6 +4,7 @@
 @using ProjectBank.Client.Extensions
 @using ProjectBank.Core
 @using System.Net
+@using System.Text.Json.Serialization
 @inject ILogger<Authentication> Logger
 @inject HttpClient _http
 @inject AuthenticationStateProvider AuthenticationStateProvider
@@ -23,10 +24,17 @@
 
     private IEnumerable<Claim> claims = Enumerable.Empty<Claim>();
 
+    public class CustomUserAccount : RemoteUserAccount
+    {
+        [JsonPropertyName("roles")]
+        public string[] Roles { get; set; } = Array.Empty<string>();
+    }
+
     private async void OnLoginSuccess()
     {
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var authUser = authState.User;
+        var account = new CustomUserAccount();
 
         if (authUser.Identity is not {IsAuthenticated: true }) return;
         claims = authUser.Claims;
@@ -34,6 +42,13 @@
         var oidClaim = enumerableClaims.GetClaim("oid");
         var emailClaim = enumerableClaims.GetClaim("email");
         var nameClaim = authUser.Identity.Name;
+        var userIdentity = (ClaimsIdentity)authUser.Identity;
+        foreach (var role in account.Roles)
+        {
+            userIdentity.AddClaim(new Claim("appRole", role));
+            Console.WriteLine("Role: " + role);
+        }
+        
 
         var getRes = await _http.GetAsync("api/User/" + oidClaim);
         if (getRes.IsSuccessStatusCode)
