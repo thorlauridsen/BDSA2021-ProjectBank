@@ -16,7 +16,10 @@ namespace ProjectBank.Core
 
         public async Task<(Status, PostDetailsDto?)> CreateAsync(PostCreateDto post)
         {
-            if (post.Title.Trim().Equals("") ||
+            var user = await GetUserAsync(post.SupervisorOid);
+
+            if (user == null ||
+                post.Title.Trim().Equals("") ||
                 post.Content.Trim().Equals(""))
             {
                 return (BadRequest, null);
@@ -27,7 +30,7 @@ namespace ProjectBank.Core
                 Title = post.Title,
                 Content = post.Content,
                 DateAdded = DateTime.Now,
-                User = await GetUserAsync(post.SupervisorOid),
+                User = user,
                 Tags = post.Tags.ToArray()
             };
             _context.Posts.Add(entity);
@@ -71,8 +74,11 @@ namespace ProjectBank.Core
 
         public async Task<(Status, IReadOnlyCollection<PostDto>)> ReadAsyncBySupervisor(string userId)
         {
-
-            if ((await GetUserAsync(userId)) == null) return (NotFound, new List<PostDto>() { });
+            var user = await GetUserAsync(userId);
+            if (user == null)
+            {
+                return (NotFound, new List<PostDto>() { });
+            }
 
             var posts = (await _context.Posts
                 .Where(p => p.User.oid == userId)

@@ -76,15 +76,15 @@ namespace Infrastructure.Tests
                 Tags = new HashSet<string> { "bio", "dna", "cells" }
             };
 
-            var (status, created) = await _repository.CreateAsync(post);
+            var (status, content) = await _repository.CreateAsync(post);
 
             Assert.Equal(Created, status);
-            Assert.NotNull(created);
-            Assert.Equal(3, created?.Id);
-            Assert.Equal("Biology Project", created?.Title);
-            Assert.Equal("Bla bla bla bla", created?.Content);
-            Assert.Equal("1", created?.SupervisorOid);
-            Assert.True(created?.Tags.SetEquals(new[] { "bio", "dna", "cells" }));
+            Assert.NotNull(content);
+            Assert.Equal(3, content?.Id);
+            Assert.Equal("Biology Project", content?.Title);
+            Assert.Equal("Bla bla bla bla", content?.Content);
+            Assert.Equal("1", content?.SupervisorOid);
+            Assert.True(content?.Tags.SetEquals(new[] { "bio", "dna", "cells" }));
 
             var response = await _repository.DeleteAsync(3);
             Assert.Equal(Deleted, response);
@@ -100,11 +100,10 @@ namespace Infrastructure.Tests
                 SupervisorOid = "1",
                 Tags = new HashSet<string> { "bio", "dna", "cells" }
             };
-
-            var (status, created) = await _repository.CreateAsync(post);
+            var (status, content) = await _repository.CreateAsync(post);
 
             Assert.Equal(BadRequest, status);
-            Assert.Null(created);
+            Assert.Null(content);
         }
 
         [Fact]
@@ -131,65 +130,69 @@ namespace Infrastructure.Tests
         [Fact]
         public async Task ReadAsync_returns_all_posts()
         {
-            var actual = await _repository.ReadAsync();
+            var posts = await _repository.ReadAsync();
 
-            var actual1 = actual.ElementAt(0);
-            var actual2 = actual.ElementAt(1);
+            Assert.NotNull(posts);
+            Assert.Equal(2, posts.Count());
 
-            Assert.Equal(1, actual1.Id);
-            Assert.Equal("Math Project", actual1.Title);
-            Assert.Equal("Bla bla bla bla", actual1.Content);
-            Assert.Equal(today, actual1.DateAdded);
-            Assert.Equal("1", actual1.SupervisorOid);
-            Assert.Equal(1, actual1.Tags.Count);
+            var post1 = posts.ElementAt(0);
+            var post2 = posts.ElementAt(1);
 
-            Assert.Equal(2, actual2.Id);
-            Assert.Equal("Physics Project", actual2.Title);
-            Assert.Equal("Something about physics and stuff", actual2.Content);
-            Assert.Equal(today, actual2.DateAdded);
-            Assert.Equal("1", actual2.SupervisorOid);
-            Assert.Equal(2, actual2.Tags.Count);
+            Assert.Equal(1, post1.Id);
+            Assert.Equal("Math Project", post1.Title);
+            Assert.Equal("Bla bla bla bla", post1.Content);
+            Assert.Equal(today, post1.DateAdded);
+            Assert.Equal("1", post1.SupervisorOid);
+            Assert.Equal(1, post1.Tags.Count);
 
+            Assert.Equal(2, post2.Id);
+            Assert.Equal("Physics Project", post2.Title);
+            Assert.Equal("Something about physics and stuff", post2.Content);
+            Assert.Equal(today, post2.DateAdded);
+            Assert.Equal("1", post2.SupervisorOid);
+            Assert.Equal(2, post2.Tags.Count);
         }
+
         //TODO
         [Fact]
         public async Task ReadAsyncBySupervisor_given_existing_supervisor_returns_posts()
         {
-            var (status, actual) = await _repository.ReadAsyncBySupervisor("1");
+            var (status, content) = await _repository.ReadAsyncBySupervisor("1");
 
-            var actual1 = actual.ElementAt(0);
-            var actual2 = actual.ElementAt(1);
+            Assert.NotNull(content);
 
-            Assert.Equal(1, actual1.Id);
-            Assert.Equal("Math Project", actual1.Title);
-            Assert.Equal("Bla bla bla bla", actual1.Content);
-            Assert.Equal(today, actual1.DateAdded);
-            Assert.Equal("1", actual1.SupervisorOid);
-            Assert.Equal(1, actual1.Tags.Count);
+            var post1 = content.ElementAt(0);
+            var post2 = content.ElementAt(1);
 
-            Assert.Equal(2, actual2.Id);
-            Assert.Equal("Physics Project", actual2.Title);
-            Assert.Equal("Something about physics and stuff", actual2.Content);
-            Assert.Equal(today, actual2.DateAdded);
-            Assert.Equal("1", actual2.SupervisorOid);
-            Assert.Equal(2, actual2.Tags.Count);
+            Assert.Equal(1, post1.Id);
+            Assert.Equal("Math Project", post1.Title);
+            Assert.Equal("Bla bla bla bla", post1.Content);
+            Assert.Equal(today, post1.DateAdded);
+            Assert.Equal("1", post1.SupervisorOid);
+            Assert.Equal(1, post1.Tags.Count);
 
+            Assert.Equal(2, post2.Id);
+            Assert.Equal("Physics Project", post2.Title);
+            Assert.Equal("Something about physics and stuff", post2.Content);
+            Assert.Equal(today, post2.DateAdded);
+            Assert.Equal("1", post2.SupervisorOid);
+            Assert.Equal(2, post2.Tags.Count);
         }
 
         [Fact]
         public async Task ReadAsyncBySupervisor_given_non_existing_id_returns_null()
         {
-            var (status, posts) = await _repository.ReadAsyncBySupervisor("11");
+            var (status, content) = await _repository.ReadAsyncBySupervisor("11");
             Assert.Equal(NotFound, status);
-            Assert.Empty(posts);
+            Assert.Empty(content);
         }
 
         [Fact]
         public async Task ReadAsyncBySupervisor_given_existing_id_but_no_posts_returns_empty()
         {
-            var (status, posts) = await _repository.ReadAsyncBySupervisor("6");
+            var (status, content) = await _repository.ReadAsyncBySupervisor("6");
             Assert.Equal(Success, status);
-            Assert.Empty(posts);
+            Assert.Empty(content);
         }
 
         //TODO
@@ -209,17 +212,17 @@ namespace Infrastructure.Tests
         [Fact]
         public async Task ReadAsyncComments_given_postId_returns_comments()
         {
-            var actual = await _repository.ReadAsyncComments(1);
+            var response = await _repository.ReadAsyncComments(1);
             var comment = new CommentDto(1, "Hello", new DateTime(2021, 12, 6), "1");
             var expected = new List<CommentDto>() { comment }.AsReadOnly();
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, response);
         }
 
         [Fact]
         public async Task ReadAsyncComments_given_non_existing_Id_returns_comments()
         {
             var actual = await _repository.ReadAsyncComments(11);
-            Assert.Equal(0, actual.Count());
+            Assert.Empty(actual);
         }
 
         [Fact]

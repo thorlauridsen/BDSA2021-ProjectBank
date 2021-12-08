@@ -34,10 +34,10 @@ namespace Infrastructure.Tests
         {
             var user = new UserCreateDto { oid = "2", Name = "Karsten" };
 
-            var (status, created) = await _repository.CreateAsync(user);
+            var (status, content) = await _repository.CreateAsync(user);
 
-            Assert.Equal("2", created?.oid);
-            Assert.Equal(user.Name, created?.Name);
+            Assert.Equal("2", content?.oid);
+            Assert.Equal(user.Name, content?.Name);
 
             var users = await _repository.ReadAsync();
 

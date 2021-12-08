@@ -15,21 +15,21 @@ namespace ProjectBank.Infrastructure
 
         public async Task<(Status, CommentDetailsDto?)> CreateAsync(CommentCreateDto comment)
         {
-            if (comment.Content.Trim().Equals(""))
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.oid == comment.UserId);
+            var postEntity = await _context.Posts.FirstOrDefaultAsync(c => c.Id == comment.postid);
+
+            if (user == null ||
+                postEntity == null ||
+                comment.Content.Trim().Equals(""))
             {
                 return (BadRequest, null);
             }
             var entity = new Comment
             {
                 Content = comment.Content,
-                User = await GetUserAsync(comment.UserId),
+                User = user,
                 DateAdded = DateTime.Now
             };
-            var postEntity = await _context.Posts.FirstOrDefaultAsync(c => c.Id == comment.postid);
-            if (postEntity == null)
-            {
-                return (BadRequest, null);
-            }
             postEntity.Comments.Add(entity);
             await _context.SaveChangesAsync();
 
@@ -39,11 +39,6 @@ namespace ProjectBank.Infrastructure
                                  entity.DateAdded,
                                  entity.User.oid
                              ));
-        }
-
-        public Task<Status> UpdateAsync(int commentId, CommentUpdateDto comment)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<Option<CommentDetailsDto>> ReadAsync(int postId, int commentId)
@@ -77,8 +72,5 @@ namespace ProjectBank.Infrastructure
 
             return Deleted;
         }
-
-        private async Task<User> GetUserAsync(string userId) =>
-            await _context.Users.FirstAsync(u => u.oid == userId);
     }
 }

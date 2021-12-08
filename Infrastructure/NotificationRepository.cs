@@ -18,6 +18,7 @@ namespace ProjectBank.Infrastructure
             var user = await GetUserAsync(notification.UserOid);
 
             if (user == null ||
+                notification.Title.Trim().Equals("") ||
                 notification.Content.Trim().Equals(""))
             {
                 return (BadRequest, null);

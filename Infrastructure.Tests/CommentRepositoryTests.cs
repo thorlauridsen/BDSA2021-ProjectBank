@@ -73,7 +73,6 @@ namespace Infrastructure.Tests
         public async Task ReadAsync_given_existing_id_returns_Comment()
         {
             var option = await _repository.ReadAsync(1, 1);
-
             Assert.True(option.IsSome);
         }
 
@@ -81,40 +80,52 @@ namespace Infrastructure.Tests
         public async Task ReadAsync_given_non_existing_id_returns_None()
         {
             var option = await _repository.ReadAsync(1, 11);
-
             Assert.True(option.IsNone);
         }
 
         [Fact]
         public async void CreateAsync_given_commentCreateDto()
         {
-            var comment = new CommentCreateDto { UserId = "2", Content = "some question", postid = 1 };
+            var comment = new CommentCreateDto
+            {
+                UserId = "2",
+                Content = "some question",
+                postid = 1
+            };
+            var (status, content) = await _repository.CreateAsync(comment);
 
-            var (option, actual) = await _repository.CreateAsync(comment);
-
-            Assert.Equal(Created, option);
-            Assert.Equal(3, actual.Id);
-
+            Assert.Equal(Created, status);
+            Assert.NotNull(content);
+            Assert.Equal(3, content?.Id);
         }
 
         [Fact]
         public async void CreateAsync_given_unknown_PostId_returns_bad_request()
         {
-            var comment = new CommentCreateDto { UserId = "2", Content = "some question", postid = 14134314 };
-
-            var (option, actual) = await _repository.CreateAsync(comment);
+            var comment = new CommentCreateDto
+            {
+                UserId = "2",
+                Content = "some question",
+                postid = 14134314
+            };
+            var (option, content) = await _repository.CreateAsync(comment);
 
             Assert.Equal(BadRequest, option);
+            Assert.Null(content);
         }
 
         [Fact]
         public async void CreateAsync_given_no_PostId_returns_bad_request()
         {
-            var comment = new CommentCreateDto { UserId = "2", Content = "some question" };
-
-            var (option, actual) = await _repository.CreateAsync(comment);
+            var comment = new CommentCreateDto
+            {
+                UserId = "2",
+                Content = "some question"
+            };
+            var (option, content) = await _repository.CreateAsync(comment);
 
             Assert.Equal(BadRequest, option);
+            Assert.Null(content);
         }
 
         [Fact]
