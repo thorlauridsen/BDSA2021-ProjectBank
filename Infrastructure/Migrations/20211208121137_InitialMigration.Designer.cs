@@ -12,7 +12,7 @@ using ProjectBank.Infrastructure;
 namespace ProjectBank.Infrastructure.Migrations
 {
     [DbContext(typeof(ProjectBankContext))]
-    [Migration("20211208092637_InitialMigration")]
+    [Migration("20211208121137_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -185,7 +185,6 @@ namespace ProjectBank.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Tags")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")

@@ -4,6 +4,7 @@
 @using ProjectBank.Client.Extensions
 @using ProjectBank.Core
 @using System.Net
+@using System.Text.Json.Serialization
 @inject ILogger<Authentication> Logger
 @inject HttpClient _http
 @inject AuthenticationStateProvider AuthenticationStateProvider
@@ -28,13 +29,17 @@
     {
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var authUser = authState.User;
+        var account = new CustomUserAccount();
 
         if (authUser.Identity is not {IsAuthenticated: true }) return;
         claims = authUser.Claims;
         var enumerableClaims = claims.ToList();
         var oidClaim = enumerableClaims.GetClaim("oid");
-        var emailClaim = enumerableClaims.GetClaim("email");
         var nameClaim = authUser.Identity.Name;
+        var emailClaim = enumerableClaims.GetClaim("email");
+        var appRoleClaim = enumerableClaims.GetClaim("appRole");
+        var isSupervisor = appRoleClaim.ToLower().Equals("supervisor") ? true : false;
+        Logger.LogInformation("User role: " + appRoleClaim);
 
         var getRes = await _http.GetAsync("api/User/" + oidClaim);
         if (getRes.IsSuccessStatusCode)
@@ -48,7 +53,7 @@
             await JsRuntime.InvokeAsync<bool>("alert", "Error detected while retrieving user data"); 
         }
         //User does not exist
-        var postRes = await _http.PostAsJsonAsync("api/User/", new UserCreateDto{oid = oidClaim, Name = nameClaim, IsSupervisor = true});
+        var postRes = await _http.PostAsJsonAsync("api/User/", new UserCreateDto{oid = oidClaim, Name = nameClaim, IsSupervisor = isSupervisor});
         if (postRes.IsSuccessStatusCode)
         {
             var user = await postRes.Content.ReadFromJsonAsync<UserDetailsDto>();

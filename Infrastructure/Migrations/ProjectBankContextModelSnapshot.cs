@@ -183,7 +183,6 @@ namespace ProjectBank.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Tags")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")

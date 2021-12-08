@@ -70,7 +70,7 @@ namespace ProjectBank.Infrastructure.Migrations
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Useroid = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Tags = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Tags = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
