@@ -21,21 +21,26 @@ namespace Infrastructure.Tests
             var context = new ProjectBankContext(builder.Options);
             context.Database.EnsureCreated();
 
-            User per = new User { oid = "1", Name = "per" };
-            User bo = new User { oid = "2", Name = "bo" };
-            User alice = new User { oid = "3", Name = "alice" };
+            
+            
+            var per = new User { oid = "1", Name = "per" };
+            var bo = new User { oid = "2", Name = "bo" };
+            var alice = new User { oid = "3", Name = "alice" };
 
-            ChatUser chatPer1 = new ChatUser { Id = 1, User = per };
-            ChatUser chatPer2 = new ChatUser { Id = 2, User = per };
-            ChatUser chatBo = new ChatUser { Id = 3, User = bo };
-            ChatUser chatAlice = new ChatUser { Id = 4, User = alice };
+            var post = new Post(){Comments = new List<Comment>(), Content = "This is a test post", Id = 1, Tags = new List<Tag>(), Title = "Test post", User = per,DateAdded = new DateTime()};
+            
+            var chatPer1 = new ChatUser { Id = 1, User = per };
+            var chatPer2 = new ChatUser { Id = 2, User = per };
+            var chatBo = new ChatUser { Id = 3, User = bo };
+            var chatAlice = new ChatUser { Id = 4, User = alice };
 
-            Chat chad = new Chat { Id = 1, ChatUsers = new HashSet<ChatUser>() { chatPer1, chatBo } };
-            Chat epicChad = new Chat { Id = 2, ChatUsers = new HashSet<ChatUser>() { chatPer2, chatAlice } };
+            var chad = new Chat { Id = 1, ChatUsers = new HashSet<ChatUser>() { chatPer1, chatBo }, Post = post};
+            var epicChad = new Chat { Id = 2, ChatUsers = new HashSet<ChatUser>() { chatPer2, chatAlice } };
 
-            ChatMessage fromPerToBo = new ChatMessage { Id = 1, Chat = chad, Content = "to Bo", FromUser = per };
-            ChatMessage fromAliceToPer = new ChatMessage { Id = 2, Chat = epicChad, Content = "to Per", FromUser = alice };
+            var fromPerToBo = new ChatMessage { Id = 1, Chat = chad, Content = "to Bo", FromUser = per };
+            var fromAliceToPer = new ChatMessage { Id = 2, Chat = epicChad, Content = "to Per", FromUser = alice };
 
+            context.Posts.Add(post);
             context.Chats.AddRange(chad, epicChad);
             context.ChatUsers.AddRange(chatPer1, chatPer2, chatBo, chatAlice);
             context.ChatMessages.AddRange(fromPerToBo, fromAliceToPer);
@@ -78,8 +83,11 @@ namespace Infrastructure.Tests
                 ChatId = 1,
                 Content = "Hello"
             };
-            var response = await _repository.CreateNewChatMessageAsync(chatMessage);
-            Assert.Equal(Created, response);
+            var (status, response) = await _repository.CreateNewChatMessageAsync(chatMessage);
+            Assert.Equal(Created, status);
+            Assert.Equal(chatMessage.FromUserId, response.FromUserId);
+            Assert.Equal(chatMessage.Content, response.Content);
+            Assert.Equal(chatMessage.ChatId, response.chatId);
         }
 
         [Fact]
@@ -91,10 +99,31 @@ namespace Infrastructure.Tests
                 ChatId = 1,
                 Content = ""
             };
-            var response = await _repository.CreateNewChatMessageAsync(chatMessage);
-            Assert.Equal(BadRequest, response);
+            var (status, response) = await _repository.CreateNewChatMessageAsync(chatMessage);
+            Assert.Equal(BadRequest, status);
+            Assert.Null(response);
         }
 
+        [Fact]
+        public async Task ReadChatAsync_given_id_returns_ChatDto()
+        {
+            var actual = await _repository.ReadChatAsync(1);
+            var expected = new ChatDto() { ChatId = 1, ChatUserIds = new HashSet<int>(){1,3}, ProjectId = 1};
+            Assert.NotNull(actual);
+            Assert.Equal(expected.ChatUserIds, actual?.ChatUserIds);
+            Assert.Equal(expected.ChatId, actual?.ChatId);
+            Assert.Equal(expected.ProjectId, actual?.ProjectId);
+            
+        }
+        
+        [Fact]
+        public async Task ReadChatAsync_given_unknown_id_returns_null()
+        {
+            var actual = await _repository.ReadChatAsync(4124);
+            ChatDto? expected = null;
+            Assert.Equal(expected,actual);
+        }
+        
         private bool disposed;
 
         protected virtual void Dispose(bool disposing)

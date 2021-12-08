@@ -23,6 +23,13 @@ namespace ProjectBank.Core
         public DateTime Timestamp { get; init; }
     }
 
+    public record ChatMessageDetailsDto : ChatMessageDto
+    {
+        public int chatId { get; init; }
+
+        public int chatMessageId { get; init; }
+    }
+
     public record ChatDto
     {
         public int ChatId { get; init; }

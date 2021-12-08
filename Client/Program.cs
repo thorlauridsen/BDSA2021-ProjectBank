@@ -1,4 +1,5 @@
 using Blazored.LocalStorage;
+using Blazored.Modal;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -21,5 +22,6 @@ builder.Services.AddMsalAuthentication(options =>
 });
 
 builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddBlazoredModal();
 
 await builder.Build().RunAsync();

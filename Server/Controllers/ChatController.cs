@@ -24,18 +24,32 @@ namespace ProjectBank.Server.Controllers
         }
 
         [Authorize]
-        [HttpGet("{userId}", Name = "GetByChatId")]
+        [HttpGet("/{chatId}", Name = "GetByChatId")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<IReadOnlyCollection<ChatDetailsDto>> GetByChatId(string userId)
+        public async Task<ChatDto?> GetByChatId(int chatId)
+            => await _repository.ReadChatAsync(chatId);
+
+        [Authorize]
+        [HttpGet("/message/{messageId}", Name = "GetByMessageId")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<ChatMessageDto?> GetByMessageId(int messageId)
+    => await _repository.ReadSpecificMessageAsync(messageId);
+
+        [Authorize]
+        [HttpGet("/user/{userId}", Name = "GetChatsByUserId")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<IReadOnlyCollection<ChatDetailsDto>> GetChatsByUserId(string userId)
             => await _repository.ReadAllChatsAsync(userId);
 
         [Authorize]
-        [HttpGet("{userId}")]
+        [HttpGet("{chatId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<IReadOnlyCollection<ChatMessageDto>> GetChatMessages(int userId)
-            => await _repository.ReadSpecificChatAsync(userId);
+        public async Task<IReadOnlyCollection<ChatMessageDto>> GetChatMessages(int chatId)
+            => await _repository.ReadSpecificChatAsync(chatId);
 
         [Authorize]
         [HttpPost]
@@ -48,10 +62,13 @@ namespace ProjectBank.Server.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpPost("message")]
         [ProducesResponseType(201)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> Post(ChatMessageCreateDto chat)
-            => (await _repository.CreateNewChatMessageAsync(chat)).ToActionResult();
+        public async Task<ActionResult<ChatMessageDetailsDto>> Post(ChatMessageCreateDto chat)
+        {
+            var (status, created) = await _repository.CreateNewChatMessageAsync(chat);
+            return CreatedAtRoute(nameof(GetByMessageId), new { chatId = created.chatId, messageId = created.chatMessageId }, created);
+        }
     }
 }

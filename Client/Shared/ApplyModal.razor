@@ -1,0 +1,102 @@
+@using ProjectBank.Core
+@using ProjectBank.Shared.forms
+@using Microsoft.AspNetCore.Components
+@implements IDisposable
+@inject ILogger<ApplyModal> Logger
+@inject HttpClient _http
+@inject NavigationManager uriHelper;
+
+<h3>Apply for project</h3>
+<p>@Post.Title</p>
+
+<EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+    <div class="form-floating my-3">
+        <InputTextArea id="content" class="form-control" placeholder="Cover letter for your application" style="height: 100px"
+                       @bind-Value="_applyFormModel.Content">
+        </InputTextArea>
+        <label for="content">Cover letter</label>
+    </div>
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <button type="submit" class="btn btn-outline-primary btn-lg" disabled="@formInvalid">Send application</button>
+    </div>
+</EditForm>
+
+@code {
+
+    [Parameter]
+    public PostDto? Post { get; set; }
+    [Parameter]
+    public UserDetailsDto CurrentUser { get; set; }
+    
+    [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
+
+    private ApplyFormModel _applyFormModel = new();
+
+    private bool formInvalid = true;
+    private EditContext? editContext;
+
+    protected override void OnInitialized()
+    {
+        editContext = new EditContext(_applyFormModel);
+        editContext.OnFieldChanged += HandleFieldChanged;
+    }
+
+    private void HandleFieldChanged(object? sender, FieldChangedEventArgs e)
+    {
+        if (editContext is null) return;
+        formInvalid = !editContext.Validate();
+        StateHasChanged();
+    }
+
+    private async void HandleValidSubmit()
+    {
+        Logger.LogInformation("CreatePost called");
+
+        var chatCreateDto = new ChatCreateDto()
+        {
+            ChatUserIds = new HashSet<string>() {CurrentUser.oid, Post.SupervisorOid},
+            FromUserId = CurrentUser.oid,
+            ProjectId = Post.Id
+        };
+        var chatResponse = await _http.PostAsJsonAsync("api/Chat", chatCreateDto);
+        
+        if (!chatResponse.IsSuccessStatusCode)
+        {
+            Logger.LogCritical("Critical status code: " + chatResponse.StatusCode);
+            return;
+        }
+        
+        var chat = await chatResponse.Content.ReadFromJsonAsync<ChatDto>();
+        if (chat == null)
+        {
+            Logger.LogCritical("Critical chat is null");
+            return;
+        }
+        var message = new ChatMessageCreateDto()
+        {
+            Content = _applyFormModel.Content,
+            FromUserId = CurrentUser.oid,
+            ChatId = chat.ChatId
+        };
+        var messageResponse = await _http.PostAsJsonAsync("api/Chat/message", message);
+        if (messageResponse.IsSuccessStatusCode)
+        {
+            uriHelper.NavigateTo("/Messages/" + chat.ChatId);
+        }
+        else
+        {
+            Logger.LogCritical("Critical status code: " + messageResponse.StatusCode);
+        }
+    }
+
+    public void Dispose()
+    {
+        if (editContext is not null)
+        {
+            editContext.OnFieldChanged -= HandleFieldChanged;
+        }
+    }
+
+}
