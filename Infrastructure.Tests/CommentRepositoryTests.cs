@@ -91,21 +91,26 @@ namespace Infrastructure.Tests
             Assert.Equal(BadRequest, option);
         }
 
-        /*[Fact]
+        [Fact]
         public async Task DeleteAsync_given_existing_Id_returns_Deleted()
         {
-            var response = await _repository.DeleteAsync(2);
-
+            var response = await _repository.DeleteAsync(1, 1);
             Assert.Equal(Deleted, response);
         }
 
         [Fact]
-        public async Task DeleteAsync_given_non_existing_Id_returns_NotFound()
+        public async Task DeleteAsync_given_non_existing_postId_returns_NotFound()
         {
-            var response = await _repository.DeleteAsync(11);
-
+            var response = await _repository.DeleteAsync(11, 11);
             Assert.Equal(NotFound, response);
-        }*/
+        }
+
+        [Fact]
+        public async Task DeleteAsync_given_non_existing_commentId_returns_NotFound()
+        {
+            var response = await _repository.DeleteAsync(1, 11);
+            Assert.Equal(NotFound, response);
+        }
 
         private bool disposed;
 

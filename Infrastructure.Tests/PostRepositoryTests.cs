@@ -23,26 +23,31 @@ namespace Infrastructure.Tests
             var context = new ProjectBankContext(builder.Options);
             context.Database.EnsureCreated();
 
-            var user = new User {oid = "1", Name = "Bob" };
-            var userNoPosts = new User{oid = "6", Name ="Carl"};
+            var user = new User { oid = "1", Name = "Bob" };
+            var userNoPosts = new User { oid = "6", Name = "Carl" };
 
             context.Users.Add(userNoPosts);
             context.Users.Add(user);
 
-            var post = new Post
+            var comment = new Comment
+            {
+                Id = 1,
+                Content = "Hello",
+                User = user,
+                DateAdded = new DateTime(2021, 12, 6)
+            };
+
+            var post1 = new Post
             {
                 Id = 1,
                 Title = "Math Project",
                 Content = "Bla bla bla bla",
                 DateAdded = today,
-                Comments = new List<Comment>()
-                {
-                    new() {Id =1, Content ="Hello",User= user,DateAdded = new DateTime(2021,12,6)}
-                },
+                Comments = new List<Comment>() { comment },
                 User = user,
                 Tags = new string[] { "Math" }
             };
-            var post1 = new Post
+            var post2 = new Post
             {
                 Id = 2,
                 Title = "Physics Project",
@@ -52,9 +57,8 @@ namespace Infrastructure.Tests
                 Tags = new string[] { "Science", "Physics" }
             };
 
-
-            context.Posts.Add(post);
             context.Posts.Add(post1);
+            context.Posts.Add(post2);
             context.SaveChanges();
 
             _context = context;
@@ -72,14 +76,15 @@ namespace Infrastructure.Tests
                 Tags = new HashSet<string> { "bio", "dna", "cells" }
             };
 
-            var created = await _repository.CreateAsync(post);
+            var (status, created) = await _repository.CreateAsync(post);
 
-            Assert.Equal(Created, created.Item1);
-            Assert.Equal(3, created.Item2.Id);
-            Assert.Equal("Biology Project", created.Item2.Title);
-            Assert.Equal("Bla bla bla bla", created.Item2.Content);
-            Assert.Equal("1", created.Item2.SupervisorOid);
-            Assert.True(created.Item2.Tags.SetEquals(new[] { "bio", "dna", "cells" }));
+            Assert.Equal(Created, status);
+            Assert.NotNull(created);
+            Assert.Equal(3, created?.Id);
+            Assert.Equal("Biology Project", created?.Title);
+            Assert.Equal("Bla bla bla bla", created?.Content);
+            Assert.Equal("1", created?.SupervisorOid);
+            Assert.True(created?.Tags.SetEquals(new[] { "bio", "dna", "cells" }));
         }
 
         [Fact]

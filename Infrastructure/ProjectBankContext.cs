@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace ProjectBank.Infrastructure
@@ -6,7 +7,6 @@ namespace ProjectBank.Infrastructure
     {
         public DbSet<User> Users => Set<User>();
         public DbSet<Post> Posts => Set<Post>();
-        public DbSet<Tag> Tags => Set<Tag>();
         public DbSet<Chat> Chats => Set<Chat>();
         public DbSet<ChatUser> ChatUsers => Set<ChatUser>();
         public DbSet<ChatMessage> ChatMessages => Set<ChatMessage>();
