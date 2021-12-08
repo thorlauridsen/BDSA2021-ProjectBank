@@ -71,7 +71,7 @@ namespace ProjectBank.Infrastructure
             return (Status.Created, new ChatMessageDetailsDto()
             {
                 Content = entityChatMessage.Content,
-                FromUserId = entityChatMessage.FromUser.oid,
+                FromUser = new UserDto(entityChatMessage.FromUser.oid,entityChatMessage.FromUser.Name, entityChatMessage.FromUser.IsSupervisor),
                 Timestamp = entityChatMessage.Timestamp,
                 chatId = entityChatMessage.Chat.Id,
                 chatMessageId = entityChatMessage.Id
@@ -85,7 +85,7 @@ namespace ProjectBank.Infrastructure
             return new ChatMessageDto()
             {
                 Content = chatMessage.Content,
-                FromUserId = chatMessage.FromUser.oid,
+                FromUser = new UserDto(chatMessage.FromUser.oid,chatMessage.FromUser.Name, chatMessage.FromUser.IsSupervisor),
                 Timestamp = chatMessage.Timestamp,
             };
         }
@@ -101,9 +101,12 @@ namespace ProjectBank.Infrastructure
                           {
                               ChatId = c.Id,
                               TargetUserId = c.ChatUsers.First(ch => ch.User.oid != userId).User.oid,
-                              LatestMessageUserId = cm.FromUser.oid,
-                              LatestMessageTime = cm.Timestamp,
-                              LatestMessage = cm.Content,
+                              LatestChatMessage = new ChatMessageDto()
+                              {
+                                  Content = cm.Content,
+                                  FromUser = new UserDto(cm.FromUser.oid, cm.FromUser.Name, cm.FromUser.IsSupervisor),
+                                  Timestamp = cm.Timestamp
+                              },
                               SeenLatestMessage = c.ChatUsers.First().SeenLatestMessage
                           }).ToListAsync();
         }
@@ -112,7 +115,7 @@ namespace ProjectBank.Infrastructure
             (await _context.ChatMessages.Where(c => c.Chat.Id == chatId)
                                         .Select(c => new ChatMessageDto
                                         {
-                                            FromUserId = c.FromUser.oid,
+                                            FromUser = new UserDto(c.FromUser.oid, c.FromUser.Name, c.FromUser.IsSupervisor),
                                             Content = c.Content,
                                             Timestamp = c.Timestamp
 

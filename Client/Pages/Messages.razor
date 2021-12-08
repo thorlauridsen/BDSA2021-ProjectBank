@@ -1,5 +1,8 @@
 ﻿@page "/Messages"
 @using ProjectBank.Core
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@inject HttpClient _http;
+@inject ILocalStorageService localStore;
 <div class="d-flex flex-nowrap messageContainer col-12">
     <div class="d-flex flex-column col-3 align-items-stretch flex-shrink-0 bg-white messagesSideBar">
         <div
@@ -13,19 +16,24 @@
             </EditForm>
         </div>
         <div class="list-group list-group-flush border-bottom scrollarea message-list">
+           @foreach (var chat in _chats)
+           {
+               <MessageItem Read="@chat.SeenLatestMessage" Chat="@chat">
+               </MessageItem>
+           } 
             <MessageItem Read="false" Recipient="Peter Nielsen" RelatedPost="@testPost" LastMessageDate="DateTime.Now">
             </MessageItem>
             <MessageItem Read="false" Recipient="Peter Nielsen" RelatedPost="@testPost"
-                LastMessageDate="new DateTime(2000, 5, 14)">
+                         LastMessageDate="new DateTime(2000, 5, 14)">
             </MessageItem>
             <MessageItem Read="true" Recipient="Peter Nielsen" RelatedPost="@testPost"
-                LastMessageDate="new DateTime(2021, 11, 23)">
+                         LastMessageDate="new DateTime(2021, 11, 23)">
             </MessageItem>
             <MessageItem Read="false" Recipient="Peter Nielsen" RelatedPost="@testPost"
-                LastMessageDate="DateTime.Now.Subtract(TimeSpan.FromMinutes(25))">
+                         LastMessageDate="DateTime.Now.Subtract(TimeSpan.FromMinutes(25))">
             </MessageItem>
             <MessageItem Read="true" Recipient="Peter Nielsen" RelatedPost="@testPost"
-                LastMessageDate="new DateTime(2021, 6, 24)">
+                         LastMessageDate="new DateTime(2021, 6, 24)">
             </MessageItem>
             @for (var i = 0; i < 10; i++)
             {
@@ -80,5 +88,22 @@
         {
             public string Message { get; set; }
         }
+
+        private IReadOnlyCollection<ChatDetailsDto>? _chats { get; set; }
+
+        protected override async Task OnInitializedAsync()
+        {
+            try
+            {
+                var user = await localStore.GetItemAsync<UserDetailsDto>("user");
+                _chats = await _http.GetFromJsonAsync<IReadOnlyCollection<ChatDetailsDto>>($"api/Chat/user/{user.oid}");
+                
+            }
+            catch (AccessTokenNotAvailableException exception)
+            {
+                exception.Redirect();
+            }
+        }
+
     }
 }

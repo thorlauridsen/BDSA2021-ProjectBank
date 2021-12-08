@@ -34,14 +34,14 @@ namespace Infrastructure.Tests
             var chatBo = new ChatUser { Id = 3, User = bo };
             var chatAlice = new ChatUser { Id = 4, User = alice };
 
-            var chad = new Chat { Id = 1, ChatUsers = new HashSet<ChatUser>() { chatPer1, chatBo }, Post = post};
-            var epicChad = new Chat { Id = 2, ChatUsers = new HashSet<ChatUser>() { chatPer2, chatAlice } };
+            var chatEntity = new Chat { Id = 1, ChatUsers = new HashSet<ChatUser>() { chatPer1, chatBo }, Post = post};
+            var epicChatEntity = new Chat { Id = 2, ChatUsers = new HashSet<ChatUser>() { chatPer2, chatAlice } };
 
-            var fromPerToBo = new ChatMessage { Id = 1, Chat = chad, Content = "to Bo", FromUser = per };
-            var fromAliceToPer = new ChatMessage { Id = 2, Chat = epicChad, Content = "to Per", FromUser = alice };
+            var fromPerToBo = new ChatMessage { Id = 1, Chat = chatEntity, Content = "to Bo", FromUser = per };
+            var fromAliceToPer = new ChatMessage { Id = 2, Chat = epicChatEntity, Content = "to Per", FromUser = alice };
 
             context.Posts.Add(post);
-            context.Chats.AddRange(chad, epicChad);
+            context.Chats.AddRange(chatEntity, epicChatEntity);
             context.ChatUsers.AddRange(chatPer1, chatPer2, chatBo, chatAlice);
             context.ChatMessages.AddRange(fromPerToBo, fromAliceToPer);
             context.SaveChanges();
@@ -55,22 +55,22 @@ namespace Infrastructure.Tests
         {
             var actual = await _repository.ReadAllChatsAsync("1");
 
-            var expected1 = new ChatDetailsDto { ChatId = 1, TargetUserId = "2", LatestMessageUserId = "1", LatestMessage = "to Bo", SeenLatestMessage = false };
-            var expected2 = new ChatDetailsDto { ChatId = 2, TargetUserId = "3", LatestMessageUserId = "3", LatestMessage = "to Per", SeenLatestMessage = false };
+            var expected1 = new ChatDetailsDto { ChatId = 1, TargetUserId = "2", LatestChatMessage = new ChatMessageDto(){Content = "to Bo", FromUser = new UserDto("1", "Per", true), Timestamp = DateTime.Now}, SeenLatestMessage = false };
+            var expected2 = new ChatDetailsDto { ChatId = 2, TargetUserId = "3", LatestChatMessage = new ChatMessageDto(){Content = "to Per", FromUser = new UserDto("3", "Alice", true), Timestamp = DateTime.Now}, SeenLatestMessage = false };
 
             var actual1 = actual.ElementAt(0);
             var actual2 = actual.ElementAt(1);
 
             Assert.Equal(expected1.ChatId, actual1.ChatId);
             Assert.Equal(expected1.TargetUserId, actual1.TargetUserId);
-            Assert.Equal(expected1.LatestMessageUserId, actual1.LatestMessageUserId);
-            Assert.Equal(expected1.LatestMessage, actual1.LatestMessage);
+            Assert.Equal(expected1.LatestChatMessage.FromUser.oid, actual1.LatestChatMessage.FromUser.oid);
+            Assert.Equal(expected1.LatestChatMessage.Content, actual1.LatestChatMessage.Content);
             Assert.False(actual1.SeenLatestMessage);
 
             Assert.Equal(expected2.ChatId, actual2.ChatId);
             Assert.Equal(expected2.TargetUserId, actual2.TargetUserId);
-            Assert.Equal(expected2.LatestMessageUserId, actual2.LatestMessageUserId);
-            Assert.Equal(expected2.LatestMessage, actual2.LatestMessage);
+            Assert.Equal(expected2.LatestChatMessage.FromUser.oid, actual2.LatestChatMessage.FromUser.oid);
+            Assert.Equal(expected2.LatestChatMessage.Content, actual2.LatestChatMessage.Content);
             Assert.False(actual2.SeenLatestMessage);
         }
 
@@ -85,7 +85,7 @@ namespace Infrastructure.Tests
             };
             var (status, response) = await _repository.CreateNewChatMessageAsync(chatMessage);
             Assert.Equal(Created, status);
-            Assert.Equal(chatMessage.FromUserId, response.FromUserId);
+            Assert.Equal(chatMessage.FromUserId, response.FromUser.oid);
             Assert.Equal(chatMessage.Content, response.Content);
             Assert.Equal(chatMessage.ChatId, response.chatId);
         }
