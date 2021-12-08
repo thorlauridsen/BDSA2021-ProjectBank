@@ -104,22 +104,32 @@ namespace ProjectBank.Core
             return (Success, posts);
         }
 
-        public async Task<IReadOnlyCollection<PostDto>> ReadAsyncByTag(string tag) =>
+        public async Task<IReadOnlyCollection<PostDto>> ReadAsyncByTag(string tag)
+        {
+            var list = new List<PostDto>();
+            foreach (var p in _context.Posts)
+            {
+                var tags = p.Tags?.ToList();
 
-            (await _context.Posts
-                .Where(p => p.Tags.Any(tag => tag.Equals(tag)))
-                .Select(p => new PostDto(
-                    p.Id,
-                    p.Title,
-                    p.Content,
-                    p.DateAdded,
-                    p.User.oid,
-                    p.Tags.ToHashSet(),
-                    p.PostState,
-                    p.ViewCount
-                ))
-                .ToListAsync())
-            .AsReadOnly();
+                if (tags != null)
+                {
+                    if (tags.Contains(tag))
+                    {
+                        list.Add(new PostDto(
+                            p.Id,
+                            p.Title,
+                            p.Content,
+                            p.DateAdded,
+                            p.User.oid,
+                            p.Tags.ToHashSet(),
+                            p.PostState,
+                            p.ViewCount
+                        ));
+                    }
+                }
+            }
+            return list;
+        }
 
         public async Task<IReadOnlyCollection<CommentDto>> ReadAsyncComments(int postId)
         {
