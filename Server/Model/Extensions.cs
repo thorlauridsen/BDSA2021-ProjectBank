@@ -6,9 +6,6 @@ namespace ProjectBank.Server.Model
 {
     public static class Extensions
     {
-        public static T GetResultContent<T>(this ActionResult<T> result)
-            => (T)(result.Result as CreatedAtRouteResult).Value;
-
         public static IActionResult ToActionResult(this Status status) => status switch
         {
             Updated => new NoContentResult(),

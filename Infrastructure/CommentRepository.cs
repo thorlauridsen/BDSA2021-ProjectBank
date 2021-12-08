@@ -1,4 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using ProjectBank.Core;
+using static ProjectBank.Core.Status;
 
 namespace ProjectBank.Infrastructure
 {
@@ -28,7 +30,6 @@ namespace ProjectBank.Infrastructure
             {
                 return (BadRequest, null);
             }
-            /*_context.Comments.Add(entity);*/
             postEntity.Comments.Add(entity);
             await _context.SaveChangesAsync();
 
@@ -45,7 +46,8 @@ namespace ProjectBank.Infrastructure
             throw new NotImplementedException();
         }
 
-        public async Task<Option<CommentDetailsDto>> ReadAsync(int postId, int commentId){
+        public async Task<Option<CommentDetailsDto>> ReadAsync(int postId, int commentId)
+        {
             var c = (await _context.Posts.FirstOrDefaultAsync(p => p.Id == postId))?.Comments.FirstOrDefault(c => c.Id == commentId);
             if (c == null) return null;
             return new CommentDetailsDto(
@@ -56,38 +58,17 @@ namespace ProjectBank.Infrastructure
             );
         }
 
-        /*public async Task<IReadOnlyCollection<CommentDto>> ReadAsync() =>
-            (await _context.Comments
-                           .Select(c => new CommentDto(
-                               c.Id,
-                               c.Content,
-                               c.DateAdded,
-                               c.User.oid
-                            ))
-                           .ToListAsync())
-                           .AsReadOnly();
-
-        public async Task<Status> UpdateAsync(int id, CommentUpdateDto comment)
-        {
-            var entity = await _context.Comments.FirstOrDefaultAsync(c => c.Id == comment.Id);
-
-            if (entity == null)
-            {
-                return NotFound;
-            }
-            entity.Content = comment.Content;
-            await _context.SaveChangesAsync();
-
-            return Updated;
-        }*/
-
         public async Task<Status> DeleteAsync(int postId, int commentId)
         {
             var postEntity = await _context.Posts.FindAsync(postId);
 
             if (postEntity == null)
             {
-                return BadRequest;
+                return NotFound;
+            }
+            if (!postEntity.Comments.Any(c => c.Id == commentId))
+            {
+                return NotFound;
             }
 
             var entity = postEntity.Comments.First(c => c.Id == commentId);

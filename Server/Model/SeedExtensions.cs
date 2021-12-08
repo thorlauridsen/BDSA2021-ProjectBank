@@ -56,7 +56,7 @@ namespace ProjectBank.Server.Model
                 Content = "My Cool Biology Project",
                 DateAdded = DateTime.Now,
                 User = user1,
-                Comments = new List<Comment>(){comment},
+                Comments = new List<Comment>() { comment },
                 Tags = new string[] { "Biology" }
             };
             if (!await context.Posts.AnyAsync())
@@ -279,7 +279,7 @@ namespace ProjectBank.Server.Model
                         "In interactive learning systems, such as Exquisitor, the system presents potentially relevant images to users who label them as either relevant or irrelevant. Currently, Exquisitor uses a cluster-based index, which allows it to return results from a collection of 100 million images in 0.3 seconds. The goal of this project is to study the application of hash-based indexing to interactive learning",
                     DateAdded = DateTime.Now,
                     User = generatedUser3,
-                    Tags = new string[] {"multimedia analytics", "diversity"}
+                    Tags = new string[] { "multimedia analytics", "diversity" }
                 };
                 context.Posts.Add(generatedPost16);
                 var generatedPost17 = new Post
@@ -300,7 +300,7 @@ namespace ProjectBank.Server.Model
                         "We are actively developing a new prototype for analysing large multimedia collections in virtual reality, based on the ObjectCube data model. There are many ways in which students can contribute to the project, including work on the user interface and the back-end, and later on running large-scale user experiments. Read more",
                     DateAdded = DateTime.Now,
                     User = generatedUser4,
-                    Tags = new string[] {"virtual reality", "multimedia analytics"}
+                    Tags = new string[] { "virtual reality", "multimedia analytics" }
                 };
                 context.Posts.Add(generatedPost18);
 
@@ -311,7 +311,7 @@ namespace ProjectBank.Server.Model
                         "NVMe SSDs are not a uniform class of devices. IO software stack is not uniform either. Understanding the performance characteristics of new-generation SSDs and the impact of the IO stack on their performance is crucial while determining how to design data-intensive systems. In this project, we would like to characterize the performance of a range of NVMe SSDs (e.g., Samsung Z-SSD, Intel Optane,",
                     DateAdded = DateTime.Now,
                     User = generatedUser5,
-                    Tags = new string[] {"SSD", "benchmarking"}
+                    Tags = new string[] { "SSD", "benchmarking" }
                 };
                 context.Posts.Add(generatedPost20);
                 var generatedPost21 = new Post

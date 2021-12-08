@@ -1,4 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using ProjectBank.Core;
+using static ProjectBank.Core.Status;
 
 namespace ProjectBank.Infrastructure
 {
@@ -13,16 +15,20 @@ namespace ProjectBank.Infrastructure
 
         public async Task<(Status, NotificationDetailsDto?)> CreateAsync(NotificationCreateDto notification)
         {
-            if (notification.Content.Trim().Equals(""))
+            var user = await GetUserAsync(notification.UserOid);
+
+            if (user == null ||
+                notification.Content.Trim().Equals(""))
             {
                 return (BadRequest, null);
             }
+
             var entity = new Notification
             {
                 Title = notification.Title,
                 Content = notification.Content,
                 Timestamp = DateTime.Now,
-                User = await GetUserAsync(notification.UserOid),
+                User = user,
                 Link = notification.Link,
                 Seen = false
             };
@@ -68,7 +74,7 @@ namespace ProjectBank.Infrastructure
             return Updated;
         }
 
-        private async Task<User> GetUserAsync(string userId) =>
-            await _context.Users.FirstAsync(u => u.oid == userId);
+        private async Task<User?> GetUserAsync(string userId) =>
+            await _context.Users.FirstOrDefaultAsync(u => u.oid == userId);
     }
 }

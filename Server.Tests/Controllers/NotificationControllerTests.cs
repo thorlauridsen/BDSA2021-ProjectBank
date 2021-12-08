@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Moq;
 using ProjectBank.Core;
 using ProjectBank.Server.Controllers;
@@ -29,7 +28,6 @@ namespace ProjectBank.Server.Tests.Controllers
         [Fact]
         public async Task CreateAsync_creates_Notification()
         {
-            //TODO: Implement CreateAsync unit test
             // Arrange
             var toCreate = new NotificationCreateDto();
             var notification = new NotificationDetailsDto

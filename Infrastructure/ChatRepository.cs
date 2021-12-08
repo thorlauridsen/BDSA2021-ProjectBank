@@ -1,5 +1,6 @@
-using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using ProjectBank.Core;
+using static ProjectBank.Core.Status;
 
 namespace ProjectBank.Infrastructure
 {
@@ -72,7 +73,7 @@ namespace ProjectBank.Infrastructure
             return (Status.Created, new ChatMessageDetailsDto()
             {
                 Content = entityChatMessage.Content,
-                FromUser = new UserDto(entityChatMessage.FromUser.oid,entityChatMessage.FromUser.Name),
+                FromUser = new UserDto(entityChatMessage.FromUser.oid, entityChatMessage.FromUser.Name),
                 Timestamp = entityChatMessage.Timestamp,
                 chatId = entityChatMessage.Chat.Id,
                 chatMessageId = entityChatMessage.Id
@@ -91,7 +92,7 @@ namespace ProjectBank.Infrastructure
             return new ChatMessageDto()
             {
                 Content = chatMessage.Content,
-                FromUser = new UserDto(chatMessage.FromUser.oid,chatMessage.FromUser.Name),
+                FromUser = new UserDto(chatMessage.FromUser.oid, chatMessage.FromUser.Name),
                 Timestamp = chatMessage.Timestamp,
             };
         }
@@ -102,7 +103,7 @@ namespace ProjectBank.Infrastructure
                           join cm in _context.ChatMessages
                           on c.Id equals cm.Chat.Id
                           where c.ChatUsers.Any(u => u.User.oid == userId)
-                          orderby cm.Timestamp ascending 
+                          orderby cm.Timestamp ascending
                           select new ChatDetailsDto
                           {
                               ChatId = c.Id,
@@ -134,7 +135,7 @@ namespace ProjectBank.Infrastructure
         {
 
             var c = await _context.Chats
-                .Join(_context.ChatMessages, c => c.Id, cm => cm.Chat.Id, (c, cm) => new {c, cm})
+                .Join(_context.ChatMessages, c => c.Id, cm => cm.Chat.Id, (c, cm) => new { c, cm })
                 .FirstOrDefaultAsync(@t => @t.c.Id == chatId);
             if (c?.c.Post != null)
                 return new ChatDetailsDto()
