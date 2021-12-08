@@ -107,6 +107,22 @@ namespace Infrastructure.Tests
         }
 
         [Fact]
+        public async Task CreateAsync_non_existing_user_returns_BadRequest()
+        {
+            var post = new PostCreateDto
+            {
+                Title = "Biology Project",
+                Content = "Bla bla bla bla",
+                SupervisorOid = "111111",
+                Tags = new HashSet<string> { "bio", "dna", "cells" }
+            };
+            var (status, content) = await _repository.CreateAsync(post);
+
+            Assert.Equal(BadRequest, status);
+            Assert.Null(content);
+        }
+
+        [Fact]
         public async Task ReadAsync_given_existing_id_returns_post()
         {
             var option = await _repository.ReadAsync(1);

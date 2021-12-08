@@ -84,7 +84,7 @@ namespace Infrastructure.Tests
         }
 
         [Fact]
-        public async void CreateAsync_given_commentCreateDto()
+        public async void CreateAsync_given_content_creates_comment()
         {
             var comment = new CommentCreateDto
             {
@@ -100,7 +100,7 @@ namespace Infrastructure.Tests
         }
 
         [Fact]
-        public async void CreateAsync_given_unknown_PostId_returns_bad_request()
+        public async void CreateAsync_given_unknown_PostId_returns_BadRequest()
         {
             var comment = new CommentCreateDto
             {
@@ -115,11 +115,25 @@ namespace Infrastructure.Tests
         }
 
         [Fact]
-        public async void CreateAsync_given_no_PostId_returns_bad_request()
+        public async void CreateAsync_given_no_PostId_returns_BadRequest()
         {
             var comment = new CommentCreateDto
             {
                 UserId = "2",
+                Content = "some question"
+            };
+            var (option, content) = await _repository.CreateAsync(comment);
+
+            Assert.Equal(BadRequest, option);
+            Assert.Null(content);
+        }
+
+        [Fact]
+        public async void CreateAsync_non_existing_user_returns_BadRequest()
+        {
+            var comment = new CommentCreateDto
+            {
+                UserId = "11111111111",
                 Content = "some question"
             };
             var (option, content) = await _repository.CreateAsync(comment);
