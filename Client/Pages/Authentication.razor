@@ -8,6 +8,7 @@
 @inject HttpClient _http
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject ILocalStorageService localStore
+@inject IJSRuntime JsRuntime
 
 
 <Content>
@@ -44,7 +45,7 @@
         }
         if (!getRes.StatusCode.Equals(HttpStatusCode.NotFound))
         {
-            //TODO: HANDLE ERRORS
+            await JsRuntime.InvokeAsync<bool>("alert", "Error detected while retrieving user data"); 
         }
         //User does not exist
         var postRes = await _http.PostAsJsonAsync("api/User/", new UserCreateDto{oid = oidClaim, Name = nameClaim, IsSupervisor = true});
@@ -56,7 +57,7 @@
         }
         else
         {
-            //TODO: MAKE ERROR HANDLING
+            await JsRuntime.InvokeAsync<bool>("alert", "Error detected while creating user");
         }
     }
 

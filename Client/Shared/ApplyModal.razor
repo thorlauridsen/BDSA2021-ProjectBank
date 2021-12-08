@@ -5,6 +5,7 @@
 @inject ILogger<ApplyModal> Logger
 @inject HttpClient _http
 @inject NavigationManager uriHelper;
+@inject ILocalStorageService localStore
 
 <h3>Apply for project</h3>
 <p>@Post.Title</p>
@@ -52,9 +53,7 @@
 
     private async void HandleValidSubmit()
     {
-        Logger.LogInformation("CreatePost called");
-
-        var chatCreateDto = new ChatCreateDto()
+       var chatCreateDto = new ChatCreateDto()
         {
             ChatUserIds = new HashSet<string>() {CurrentUser.oid, Post.SupervisorOid},
             FromUserId = CurrentUser.oid,
@@ -80,9 +79,18 @@
             FromUserId = CurrentUser.oid,
             ChatId = chat.ChatId
         };
+        var user = await localStore.GetItemAsync<UserDetailsDto>("user");
+        var notification = new NotificationCreateDto()
+        {
+            Title = "New comment",
+            Content = $"{user.Name} has commented on your post",
+            UserOid = user.oid,
+            Link = $"/Messages/ + {chat.ChatId}" //todo: Should link to the correct address
+        };
         var messageResponse = await _http.PostAsJsonAsync("api/Chat/message", message);
         if (messageResponse.IsSuccessStatusCode)
         {
+            await _http.PostAsJsonAsync("api/Notification", notification);
             uriHelper.NavigateTo("/Messages/" + chat.ChatId);
         }
         else
