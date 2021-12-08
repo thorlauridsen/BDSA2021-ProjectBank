@@ -24,6 +24,9 @@ namespace Infrastructure.Tests
             context.Database.EnsureCreated();
 
             var user = new User {oid = "1", Name = "Bob" };
+            var userNoPosts = new User{oid = "6", Name ="Carl"};
+
+            context.Users.Add(userNoPosts);
             context.Users.Add(user);
 
             var post = new Post
@@ -128,13 +131,10 @@ namespace Infrastructure.Tests
         [Fact]
         public async Task ReadAsyncBySupervisor_given_existing_supervisor_returns_posts()
         {
-            var actual = await _repository.ReadAsyncBySupervisor("1");
+            var (status, actual) = await _repository.ReadAsyncBySupervisor("1");
 
-            var actualStatus = actual.Item1;
-            var actual1 = actual.Item2.ElementAt(0);
-            var actual2 = actual.Item2.ElementAt(1);
-
-            Assert.Equal(Success,actualStatus);
+            var actual1 = actual.ElementAt(0);
+            var actual2 = actual.ElementAt(1);
 
             Assert.Equal(1,actual1.Id);
             Assert.Equal("Math Project", actual1.Title);
@@ -152,19 +152,22 @@ namespace Infrastructure.Tests
 
         }
 
-
         [Fact]
-        public async Task ReadAsyncBySupervisor_given_non_existing_id_returns_empty()
+        public async Task ReadAsyncBySupervisor_given_non_existing_id_returns_null()
         {
-            // var output = await _repository.ReadAsyncBySupervisor("11");
-            // var actualStatus = output.Item1;
-            // Assert.Equal(BadRequest,actualStatus);
-
-            var i = await _repository.testUsers();
-            Assert.Equal(null,i);
+            var (status, posts) = await _repository.ReadAsyncBySupervisor("11");
+            Assert.Equal(NotFound, status);
+            Assert.Empty(posts);
         }
 
-        
+        [Fact]
+        public async Task ReadAsyncBySupervisor_given_existing_id_but_no_posts_returns_empty()
+        {
+            var (status, posts) = await _repository.ReadAsyncBySupervisor("6");
+            Assert.Equal(Success, status);
+            Assert.Empty(posts);
+        }
+
 
         //TODO
         [Fact]
@@ -186,13 +189,12 @@ namespace Infrastructure.Tests
         [Fact]
         public async Task ReadAsyncComments_given_postid_returns_comments()
         {
-            var (status, actual) = await _repository.ReadAsyncComments(1);
+            var actual = await _repository.ReadAsyncComments(1);
             var expected = new List<CommentDto>()
             {
                 new(1, "Hello", new DateTime(2021,12,6),"1")
 
             }.AsReadOnly();
-            Assert.Equal(Success, status);
             Assert.Equal(expected, actual);
         }
 

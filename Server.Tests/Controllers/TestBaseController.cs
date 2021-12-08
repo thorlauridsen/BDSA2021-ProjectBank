@@ -12,7 +12,10 @@ namespace ProjectBank.Server.Tests.Controllers
         protected Mock<ILogger<S>> logger
             = new Mock<ILogger<S>>();
 
-        protected static T GetResultContent<T>(ActionResult<T> result)
-            => (T)(result.Result as CreatedAtRouteResult).Value;
+        protected static T? GetCreatedResultContent<T>(ActionResult<T> result)
+            => (T?)(result.Result as CreatedAtRouteResult)?.Value;
+
+        protected static T? GetOkResultContent<T>(ActionResult<T> result)
+            => (T?)(result.Result as OkObjectResult)?.Value;
     }
 }

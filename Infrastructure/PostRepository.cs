@@ -68,26 +68,12 @@ namespace ProjectBank.Core
                 .ToListAsync())
             .AsReadOnly();
 
-        
-        // public async Task<IReadOnlyCollection<PostDto>> ReadAsyncBySupervisor(string userId) =>
-        //     (await _context.Posts
-        //         .Where(p => p.User.oid == userId)
-        //         .Select(p => new PostDto(
-        //             p.Id,
-        //             p.Title,
-        //             p.Content,
-        //             p.DateAdded,
-        //             p.User.oid,
-        //             p.Tags.Select(t => t.Name).ToHashSet()
-        //         ))
-        //         .ToListAsync())
-        //     .AsReadOnly();
 
-        public async Task<(Status,IReadOnlyCollection<PostDto>)> ReadAsyncBySupervisor(string userId){
-            
-            //if (GetUserAsync(userId)==NotFound) return (BadRequest,new List<PostDto>(){});
-            
-            
+         public async Task<(Status,IReadOnlyCollection<PostDto>)> ReadAsyncBySupervisor(string userId){
+
+            if ((await GetUserAsync(userId)) == null) return (NotFound,new List<PostDto>(){});
+
+
             var posts = (await _context.Posts
                 .Where(p => p.User.oid == userId)
                 .Select(p => new PostDto(
@@ -101,16 +87,12 @@ namespace ProjectBank.Core
                 .ToListAsync())
             .AsReadOnly();
 
-            return(Success,posts);
-        }
+                return(Success, posts);
+            }
 
         public async  Task<User> testUsers() => await GetUserAsync("11");
         
 
-
-
-
-        //FIXME make tags a string in post, instead of it's own type?
         public async Task<IReadOnlyCollection<PostDto>> ReadAsyncByTag(string tag) =>
             
             (await _context.Posts
@@ -126,12 +108,12 @@ namespace ProjectBank.Core
                 .ToListAsync())
             .AsReadOnly();
 
-        public async Task<(Status, IReadOnlyCollection<CommentDto>)> ReadAsyncComments(int postId)
+        public async Task<IReadOnlyCollection<CommentDto>> ReadAsyncComments(int postId)
         {
             var post = await _context.Posts.Include("Comments.User").FirstOrDefaultAsync(p => p.Id == postId);
             if (post == null)
             {
-                return (BadRequest, new List<CommentDto>(){});
+                return new List<CommentDto>(){};
             }
 
             var comments = post.Comments;
@@ -145,7 +127,7 @@ namespace ProjectBank.Core
                     comment.User.oid);
                 result.Add(commentDto);
             }
-            return (Success, result);
+            return result;
         }
 
         public async Task<Status> UpdateAsync(int postId, PostUpdateDto post)
@@ -192,7 +174,7 @@ namespace ProjectBank.Core
             }
         }
 
-        private async Task<User> GetUserAsync(string userId) =>
-            await _context.Users.FirstAsync(u => u.oid == userId);
+        private async Task<User?> GetUserAsync(string userId) =>
+            await _context.Users.FirstOrDefaultAsync(u => u.oid == userId);
     }
 }
