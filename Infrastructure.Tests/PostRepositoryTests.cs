@@ -130,8 +130,11 @@ namespace Infrastructure.Tests
         {
             var actual = await _repository.ReadAsyncBySupervisor("1");
 
-            var actual1 = actual.ElementAt(0);
-            var actual2 = actual.ElementAt(1);
+            var actualStatus = actual.Item1;
+            var actual1 = actual.Item2.ElementAt(0);
+            var actual2 = actual.Item2.ElementAt(1);
+
+            Assert.Equal(Success,actualStatus);
 
             Assert.Equal(1,actual1.Id);
             Assert.Equal("Math Project", actual1.Title);
@@ -147,6 +150,18 @@ namespace Infrastructure.Tests
             Assert.Equal("1", actual2.SupervisorOid);
             Assert.Equal(2, actual2.Tags.Count);
 
+        }
+
+
+        [Fact]
+        public async Task ReadAsyncBySupervisor_given_non_existing_id_returns_empty()
+        {
+            // var output = await _repository.ReadAsyncBySupervisor("11");
+            // var actualStatus = output.Item1;
+            // Assert.Equal(BadRequest,actualStatus);
+
+            var i = await _repository.testUsers();
+            Assert.Equal(null,i);
         }
 
         

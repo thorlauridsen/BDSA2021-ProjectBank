@@ -69,8 +69,26 @@ namespace ProjectBank.Core
             .AsReadOnly();
 
         
-        public async Task<IReadOnlyCollection<PostDto>> ReadAsyncBySupervisor(string userId) =>
-            (await _context.Posts
+        // public async Task<IReadOnlyCollection<PostDto>> ReadAsyncBySupervisor(string userId) =>
+        //     (await _context.Posts
+        //         .Where(p => p.User.oid == userId)
+        //         .Select(p => new PostDto(
+        //             p.Id,
+        //             p.Title,
+        //             p.Content,
+        //             p.DateAdded,
+        //             p.User.oid,
+        //             p.Tags.Select(t => t.Name).ToHashSet()
+        //         ))
+        //         .ToListAsync())
+        //     .AsReadOnly();
+
+        public async Task<(Status,IReadOnlyCollection<PostDto>)> ReadAsyncBySupervisor(string userId){
+            
+            //if (GetUserAsync(userId)==NotFound) return (BadRequest,new List<PostDto>(){});
+            
+            
+            var posts = (await _context.Posts
                 .Where(p => p.User.oid == userId)
                 .Select(p => new PostDto(
                     p.Id,
@@ -83,8 +101,18 @@ namespace ProjectBank.Core
                 .ToListAsync())
             .AsReadOnly();
 
+            return(Success,posts);
+        }
+
+        public async  Task<User> testUsers() => await GetUserAsync("11");
+        
+
+
+
+
         //FIXME make tags a string in post, instead of it's own type?
         public async Task<IReadOnlyCollection<PostDto>> ReadAsyncByTag(string tag) =>
+            
             (await _context.Posts
                 .Where(p => p.Tags.Any(tag => tag.Name.Equals(tag)))
                 .Select(p => new PostDto(
