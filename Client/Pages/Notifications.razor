@@ -9,11 +9,18 @@
             <span class="fs-5 fw-semibold">Notifications</span>
         </div>
         <div class="list-group list-group-flush border-bottom scrollarea message-list">
-            @foreach (var notification in NotificationList)
+            @if (@NotificationList.Count() > 0)
             {
-                <NotificationItem Read="@notification.Seen" Title="@notification.Title" Description="@notification.Content"
+                @foreach (var notification in NotificationList)
+                {
+                    <NotificationItem Read="@notification.Seen" Title="@notification.Title" Description="@notification.Content"
                 Link="@notification.Link" Date="@notification.Timestamp">
-                </NotificationItem>
+                    </NotificationItem>
+                }
+            }
+            else
+            {
+                <p>You have no new notifications</p>
             }
         </div>
     </div>
