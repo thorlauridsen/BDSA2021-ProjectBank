@@ -1,10 +1,9 @@
-﻿@using System.Linq.Expressions
-@inherits InputBase<string>
+﻿@inherits InputBase<string>
 
 <div class="form-control-wrapper">
     <p>Post tags:</p>
-    <input class="form-control @CssClass visually-hidden" @onkeyup="KeyPressEventHandler" id="@Id" @bind-value:event="oninput"
-           @bind-value="TagsString"/>
+    <input class="form-control @CssClass visually-hidden" @onkeyup="KeyPressEventHandler" id="@Id"
+        @bind-value:event="oninput" @bind-value="TagsString" />
     <label class="tab-label form-control-label flex p-3 col-12 border rounded" for="@Id">
         @foreach (var tag in Tags)
         {
@@ -44,7 +43,7 @@
     }
 
     protected override bool TryParseValueFromString(string value, out string result,
-        out string validationErrorMessage)
+    out string validationErrorMessage)
     {
         if (value.Trim().Equals(""))
         {

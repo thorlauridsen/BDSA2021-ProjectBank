@@ -4,7 +4,6 @@
 @using ProjectBank.Client.Extensions
 @using ProjectBank.Core
 @using System.Net
-@using System.Text.Json.Serialization
 @inject ILogger<Authentication> Logger
 @inject HttpClient _http
 @inject AuthenticationStateProvider AuthenticationStateProvider
@@ -14,7 +13,8 @@
 
 <Content>
     <Padding>
-        <RemoteAuthenticatorView Action="@Action" OnLogInSucceeded="@OnLoginSuccess" OnLogOutSucceeded="@_clearLocalStorageFromUser" />
+        <RemoteAuthenticatorView Action="@Action" OnLogInSucceeded="@OnLoginSuccess"
+            OnLogOutSucceeded="@_clearLocalStorageFromUser" />
     </Padding>
 </Content>
 
@@ -25,7 +25,7 @@
 
     private IEnumerable<Claim> claims = Enumerable.Empty<Claim>();
     private bool firstLogin = true;
-    
+
     private async void OnLoginSuccess()
     {
         if (!firstLogin) return;
@@ -34,7 +34,7 @@
         var authUser = authState.User;
         var account = new CustomUserAccount();
 
-        if (authUser.Identity is not {IsAuthenticated: true }) return;
+        if (authUser.Identity is not { IsAuthenticated: true }) return;
         claims = authUser.Claims;
         var enumerableClaims = claims.ToList();
         var oidClaim = enumerableClaims.GetClaim("oid");
@@ -52,10 +52,10 @@
         }
         if (!getRes.StatusCode.Equals(HttpStatusCode.NotFound))
         {
-            await JsRuntime.InvokeAsync<bool>("alert", "Error detected while retrieving user data"); 
+            await JsRuntime.InvokeAsync<bool>("alert", "Error detected while retrieving user data");
         }
         //User does not exist
-        var postRes = await _http.PostAsJsonAsync("api/User/", new UserCreateDto{oid = oidClaim, Name = nameClaim});
+        var postRes = await _http.PostAsJsonAsync("api/User/", new UserCreateDto { oid = oidClaim, Name = nameClaim });
         if (postRes.IsSuccessStatusCode)
         {
             var user = await postRes.Content.ReadFromJsonAsync<UserDetailsDto>();
@@ -68,8 +68,6 @@
         }
     }
 
-    
-    
     private async void _setLocalStorageFromUser(UserDetailsDto user)
     {
         await localStore.SetItemAsync("user", user);

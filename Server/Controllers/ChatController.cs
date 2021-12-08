@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web.Resource;
 using ProjectBank.Core;
-using ProjectBank.Server.Model;
 
 namespace ProjectBank.Server.Controllers
 {

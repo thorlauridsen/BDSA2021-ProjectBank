@@ -1,5 +1,6 @@
 using System.Linq;
 using ProjectBank.Core;
+using static ProjectBank.Core.Status;
 
 namespace ProjectBank.Infrastructure
 {
@@ -102,19 +103,15 @@ namespace ProjectBank.Infrastructure
                           join cm in _context.ChatMessages
                           on c.Id equals cm.Chat.Id
                           where c.ChatUsers.Any(u => u.User.oid == userId)
-                          orderby cm.Timestamp ascending 
+                          orderby cm.Timestamp descending
                           select new ChatDetailsDto
                           {
                               ChatId = c.Id,
                               TargetUserId = c.ChatUsers.First(ch => ch.User.oid != userId).User.oid,
-                              LatestChatMessage = new ChatMessageDto()
-                              {
-                                  Content = cm.Content,
-                                  FromUser = new UserDto(cm.FromUser.oid, cm.FromUser.Name),
-                                  Timestamp = cm.Timestamp
-                              },
-                              SeenLatestMessage = c.ChatUsers.First().SeenLatestMessage,
-                              ProjectId = c.Post.Id
+                              LatestMessageUserId = cm.FromUser.oid,
+                              LatestMessageTime = cm.Timestamp,
+                              LatestMessage = cm.Content,
+                              SeenLatestMessage = c.ChatUsers.First().SeenLatestMessage
                           }).ToListAsync();
         }
 
@@ -122,7 +119,7 @@ namespace ProjectBank.Infrastructure
             (await _context.ChatMessages.Where(c => c.Chat.Id == chatId)
                                         .Select(c => new ChatMessageDto
                                         {
-                                            FromUser = new UserDto(c.FromUser.oid, c.FromUser.Name),
+                                            FromUserId = c.FromUser.oid,
                                             Content = c.Content,
                                             Timestamp = c.Timestamp
 
@@ -130,28 +127,16 @@ namespace ProjectBank.Infrastructure
                                         .ToListAsync())
                                         .AsReadOnly();
 
-        public async Task<ChatDetailsDto?> ReadChatAsync(int chatId, string userId)
+        public async Task<ChatDto?> ReadChatAsync(int chatId)
         {
-
-            var c = await _context.Chats
-                .Join(_context.ChatMessages, c => c.Id, cm => cm.Chat.Id, (c, cm) => new {c, cm})
-                .FirstOrDefaultAsync(@t => @t.c.Id == chatId);
-            if (c?.c.Post != null)
-                return new ChatDetailsDto()
-                {
-                    ChatId = c.c.Id,
-                    LatestChatMessage = new ChatMessageDto()
-                    {
-                        Content = c.cm.Content,
-                        FromUser = new UserDto(c.cm.FromUser.oid, c.cm.FromUser.Name),
-                        Timestamp = c.cm.Timestamp
-                    },
-                    TargetUserId = c.c.ChatUsers.First(ch => ch.User.oid != userId).User.oid,
-                    SeenLatestMessage = c.c.ChatUsers.FirstOrDefault(chatUser => chatUser.User.oid != userId)
-                        .SeenLatestMessage,
-                    ProjectId = c.c.Post.Id
-                };
-            return null;
+            var chat = await _context.Chats.Include("Post").FirstOrDefaultAsync(c => c.Id == chatId);
+            if (chat == null) return null;
+            return new ChatDto()
+            {
+                ChatId = chat.Id,
+                ChatUserIds = chat.ChatUsers.Select(cu => cu.Id).ToHashSet(),
+                ProjectId = chat.Post?.Id ?? -1
+            };
         }
 
         private async Task<Chat> GetChatAsync(int chatId) =>
