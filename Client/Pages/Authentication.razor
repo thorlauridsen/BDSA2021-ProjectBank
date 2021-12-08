@@ -14,7 +14,7 @@
 
 <Content>
     <Padding>
-        <RemoteAuthenticatorView Action="@Action" OnLogInSucceeded="@OnLoginSuccess" OnLogOutSucceeded="@_clearLocalStorageFromUser"/>
+        <RemoteAuthenticatorView Action="@Action" OnLogInSucceeded="@OnLoginSuccess" OnLogOutSucceeded="@_clearLocalStorageFromUser" />
     </Padding>
 </Content>
 
@@ -24,9 +24,12 @@
     public string? Action { get; set; }
 
     private IEnumerable<Claim> claims = Enumerable.Empty<Claim>();
-
+    private bool firstLogin = true;
+    
     private async void OnLoginSuccess()
     {
+        if (!firstLogin) return;
+        firstLogin = false;
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var authUser = authState.User;
         var account = new CustomUserAccount();
