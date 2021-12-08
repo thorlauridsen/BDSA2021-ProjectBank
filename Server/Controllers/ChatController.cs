@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web.Resource;
 using ProjectBank.Core;
+using ProjectBank.Server.Model;
 
 namespace ProjectBank.Server.Controllers
 {
@@ -23,28 +24,28 @@ namespace ProjectBank.Server.Controllers
         }
 
         [Authorize]
-        [HttpGet("/{chatId}", Name = "GetByChatId")]
+        [HttpGet("{chatId}/{userId}", Name = "GetByChatId")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ChatDto?> GetByChatId(int chatId)
-            => await _repository.ReadChatAsync(chatId);
+        public async Task<ChatDetailsDto?> GetByChatId(int chatId, string userId)
+            => await _repository.ReadChatAsync(chatId, userId);
 
         [Authorize]
-        [HttpGet("/message/{messageId}", Name = "GetByMessageId")]
+        [HttpGet("message/{messageId}", Name = "GetByMessageId")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<ChatMessageDto?> GetByMessageId(int messageId)
     => await _repository.ReadSpecificMessageAsync(messageId);
 
         [Authorize]
-        [HttpGet("/user/{userId}", Name = "GetChatsByUserId")]
+        [HttpGet("user/{userId}", Name = "GetChatsByUserId")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<IReadOnlyCollection<ChatDetailsDto>> GetChatsByUserId(string userId)
             => await _repository.ReadAllChatsAsync(userId);
 
         [Authorize]
-        [HttpGet("{chatId}")]
+        [HttpGet("{chatId}/messages")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<IReadOnlyCollection<ChatMessageDto>> GetChatMessages(int chatId)

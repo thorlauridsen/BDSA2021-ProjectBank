@@ -23,31 +23,26 @@ namespace Infrastructure.Tests
             var context = new ProjectBankContext(builder.Options);
             context.Database.EnsureCreated();
 
-            var user = new User { oid = "1", Name = "Bob" };
-            var userNoPosts = new User { oid = "6", Name = "Carl" };
+            var user = new User {oid = "1", Name = "Bob" };
+            var userNoPosts = new User{oid = "6", Name ="Carl"};
 
             context.Users.Add(userNoPosts);
             context.Users.Add(user);
 
-            var comment = new Comment
-            {
-                Id = 1,
-                Content = "Hello",
-                User = user,
-                DateAdded = new DateTime(2021, 12, 6)
-            };
-
-            var post1 = new Post
+            var post = new Post
             {
                 Id = 1,
                 Title = "Math Project",
                 Content = "Bla bla bla bla",
                 DateAdded = today,
-                Comments = new List<Comment>() { comment },
+                Comments = new List<Comment>()
+                {
+                    new() {Id =1, Content ="Hello",User= user,DateAdded = new DateTime(2021,12,6)}
+                },
                 User = user,
                 Tags = new string[] { "Math" }
             };
-            var post2 = new Post
+            var post1 = new Post
             {
                 Id = 2,
                 Title = "Physics Project",
@@ -57,8 +52,9 @@ namespace Infrastructure.Tests
                 Tags = new string[] { "Science", "Physics" }
             };
 
+
+            context.Posts.Add(post);
             context.Posts.Add(post1);
-            context.Posts.Add(post2);
             context.SaveChanges();
 
             _context = context;
@@ -66,7 +62,7 @@ namespace Infrastructure.Tests
         }
 
         [Fact]
-        public async Task CreateAsync_creates_new_post_with_generated_id_then_delete()
+        public async Task CreateAsync_creates_new_post_with_generated_id()
         {
             var post = new PostCreateDto
             {
@@ -76,35 +72,14 @@ namespace Infrastructure.Tests
                 Tags = new HashSet<string> { "bio", "dna", "cells" }
             };
 
-            var (status, created) = await _repository.CreateAsync(post);
+            var created = await _repository.CreateAsync(post);
 
-            Assert.Equal(Created, status);
-            Assert.NotNull(created);
-            Assert.Equal(3, created?.Id);
-            Assert.Equal("Biology Project", created?.Title);
-            Assert.Equal("Bla bla bla bla", created?.Content);
-            Assert.Equal("1", created?.SupervisorOid);
-            Assert.True(created?.Tags.SetEquals(new[] { "bio", "dna", "cells" }));
-
-            var response = await _repository.DeleteAsync(3);
-            Assert.Equal(Deleted, response);
-        }
-
-        [Fact]
-        public async Task CreateAsync_without_content_returns_BadRequest()
-        {
-            var post = new PostCreateDto
-            {
-                Title = "",
-                Content = "",
-                SupervisorOid = "1",
-                Tags = new HashSet<string> { "bio", "dna", "cells" }
-            };
-
-            var (status, created) = await _repository.CreateAsync(post);
-
-            Assert.Equal(BadRequest, status);
-            Assert.Null(created);
+            Assert.Equal(Created, created.Item1);
+            Assert.Equal(3, created.Item2.Id);
+            Assert.Equal("Biology Project", created.Item2.Title);
+            Assert.Equal("Bla bla bla bla", created.Item2.Content);
+            Assert.Equal("1", created.Item2.SupervisorOid);
+            Assert.True(created.Item2.Tags.SetEquals(new[] { "bio", "dna", "cells" }));
         }
 
         [Fact]
@@ -124,6 +99,7 @@ namespace Infrastructure.Tests
         public async Task ReadAsync_given_non_existing_id_returns_None()
         {
             var option = await _repository.ReadAsync(11);
+
             Assert.True(option.IsNone);
         }
 
@@ -192,11 +168,13 @@ namespace Infrastructure.Tests
             Assert.Empty(posts);
         }
 
+
         //TODO
         [Fact]
         public async Task ReadAsyncByTag_given_tag_math_returns_post()
         {
             //var actual = await _repository.ReadAsyncByTag("Math");
+
         }
 
         //TODO
@@ -204,28 +182,27 @@ namespace Infrastructure.Tests
         public async Task ReadAsyncByTag_given_non_existing_tag_returns_none()
         {
             //var actual = await _repository.ReadAsyncByTag("Nothing");
+
         }
 
+
         [Fact]
-        public async Task ReadAsyncComments_given_postId_returns_comments()
+        public async Task ReadAsyncComments_given_postid_returns_comments()
         {
             var actual = await _repository.ReadAsyncComments(1);
-            var comment = new CommentDto(1, "Hello", new DateTime(2021, 12, 6), "1");
-            var expected = new List<CommentDto>() { comment }.AsReadOnly();
-            Assert.Equal(expected, actual);
-        }
+            var expected = new List<CommentDto>()
+            {
+                new(1, "Hello", new DateTime(2021,12,6),"1")
 
-        [Fact]
-        public async Task ReadAsyncComments_given_non_existing_Id_returns_comments()
-        {
-            var actual = await _repository.ReadAsyncComments(11);
-            Assert.Equal(0, actual.Count());
+            }.AsReadOnly();
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
         public async Task DeleteAsync_given_non_existing_Id_returns_NotFound()
         {
             var response = await _repository.DeleteAsync(11);
+
             Assert.Equal(NotFound, response);
         }
 

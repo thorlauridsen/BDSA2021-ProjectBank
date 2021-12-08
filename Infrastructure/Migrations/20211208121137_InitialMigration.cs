@@ -28,7 +28,8 @@ namespace ProjectBank.Infrastructure.Migrations
                 {
                     oid = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsSupervisor = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

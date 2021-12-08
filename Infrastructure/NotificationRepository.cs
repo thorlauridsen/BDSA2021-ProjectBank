@@ -1,6 +1,4 @@
-using Microsoft.EntityFrameworkCore;
 using ProjectBank.Core;
-using static ProjectBank.Core.Status;
 
 namespace ProjectBank.Infrastructure
 {

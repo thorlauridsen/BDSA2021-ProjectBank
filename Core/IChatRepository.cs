@@ -7,7 +7,7 @@ namespace ProjectBank.Core
         Task<(Status, ChatMessageDetailsDto?)> CreateNewChatMessageAsync(ChatMessageCreateDto chatMessage);
         Task<IReadOnlyCollection<ChatDetailsDto>> ReadAllChatsAsync(string userId);
         Task<IReadOnlyCollection<ChatMessageDto>> ReadSpecificChatAsync(int chatId);
-        Task<ChatDto?> ReadChatAsync(int chatId);
+        Task<ChatDetailsDto?> ReadChatAsync(int chatId, string userId);
         Task<ChatMessageDto?> ReadSpecificMessageAsync(int chatMessageId);
     }
 }

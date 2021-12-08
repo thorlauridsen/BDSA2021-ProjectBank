@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using Moq;
 using ProjectBank.Core;
 using ProjectBank.Server.Controllers;

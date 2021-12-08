@@ -25,43 +25,18 @@ namespace Infrastructure.Tests
             var supervisor = new User() { oid = "1", Name = "bo" };
             var student = new User() { oid = "2", Name = "alice" };
 
-            var post = new Post()
-            {
-                Id = 1,
-                Title = "test title",
-                Content = "test",
-                DateAdded = DateTime.Now,
-                User = supervisor
-            };
-            var post2 = new Post()
-            {
-                Id = 2,
-                Title = "test title",
-                Content = "test",
-                DateAdded = DateTime.Now,
-                User = supervisor
-            };
-
-            var comment1 = new Comment
-            {
-                Id = 1,
-                User = student,
-                DateAdded = DateTime.Now,
-                Content = "Hey"
-            };
-            var comment2 = new Comment
-            {
-                Id = 2,
-                User = supervisor,
-                DateAdded = DateTime.Now,
-                Content = "hi"
-            };
-
-            post.Comments.Add(comment1);
-            post2.Comments.Add(comment2);
-
+            var post = new Post() { Id = 1, Title = "test title", Content = "test", DateAdded = DateTime.Now, User = supervisor };
+            var post2 = new Post() { Id = 2, Title = "test title", Content = "test", DateAdded = DateTime.Now, User = supervisor };
             context.Posts.Add(post);
             context.Posts.Add(post2);
+            var comment1 = new Comment { Id = 1, User = student, DateAdded = DateTime.Now, Content = "Hey" };
+            post.Comments.Add(comment1);
+            var comment2 = new Comment { Id = 2, User = supervisor, DateAdded = DateTime.Now, Content = "hi" };
+            post2.Comments.Add(comment2);
+
+            /*
+            context.Comments.Add(comment1);
+            context.Comments.Add(comment2);*/
 
             context.SaveChanges();
 
@@ -117,26 +92,21 @@ namespace Infrastructure.Tests
             Assert.Equal(BadRequest, option);
         }
 
-        [Fact]
+        /*[Fact]
         public async Task DeleteAsync_given_existing_Id_returns_Deleted()
         {
-            var response = await _repository.DeleteAsync(1, 1);
+            var response = await _repository.DeleteAsync(2);
+
             Assert.Equal(Deleted, response);
         }
 
         [Fact]
-        public async Task DeleteAsync_given_non_existing_postId_returns_NotFound()
+        public async Task DeleteAsync_given_non_existing_Id_returns_NotFound()
         {
-            var response = await _repository.DeleteAsync(11, 11);
-            Assert.Equal(NotFound, response);
-        }
+            var response = await _repository.DeleteAsync(11);
 
-        [Fact]
-        public async Task DeleteAsync_given_non_existing_commentId_returns_NotFound()
-        {
-            var response = await _repository.DeleteAsync(1, 11);
             Assert.Equal(NotFound, response);
-        }
+        }*/
 
         private bool disposed;
 

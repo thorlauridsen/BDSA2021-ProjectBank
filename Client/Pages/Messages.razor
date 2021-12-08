@@ -1,84 +1,234 @@
 ﻿@page "/Messages"
 @using ProjectBank.Core
+@using ProjectBank.Client.Extensions
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using Microsoft.AspNetCore.Authorization
+@using ProjectBank.Shared.forms
+@using System.ComponentModel.DataAnnotations
+@attribute [Authorize]
+@inject NavigationManager uriHelper;
+@inject HttpClient _http
+@inject ILocalStorageService localStore
+@inject IJSRuntime jsRuntime
+@implements IDisposable
 <div class="d-flex flex-nowrap messageContainer col-12">
     <div class="d-flex flex-column col-3 align-items-stretch flex-shrink-0 bg-white messagesSideBar">
         <div
             class="d-flex align-items-center justify-content-between flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
             <span class="fs-5 fw-semibold">Messages</span>
-            <EditForm Model="postSelectorModel">
-                <InputSelect class="form-select" @bind-Value="postSelectorModel.projectTitle">
+            <EditForm EditContext="@filterEditContext">
+                <InputSelect class="form-select" @bind-Value="@filterModel.title">
                     <option selected>Sort by project</option>
-                    <option>@testPost.Title</option>
+                    @if (Posts != null)
+                    {
+                        foreach (var post in Posts)
+                        {
+                            <option>@post.Title</option>
+                        }
+                    }
                 </InputSelect>
             </EditForm>
         </div>
         <div class="list-group list-group-flush border-bottom scrollarea message-list">
-            <MessageItem Read="false" Recipient="Peter Nielsen" RelatedPost="@testPost" LastMessageDate="DateTime.Now">
-            </MessageItem>
-            <MessageItem Read="false" Recipient="Peter Nielsen" RelatedPost="@testPost"
-                LastMessageDate="new DateTime(2000, 5, 14)">
-            </MessageItem>
-            <MessageItem Read="true" Recipient="Peter Nielsen" RelatedPost="@testPost"
-                LastMessageDate="new DateTime(2021, 11, 23)">
-            </MessageItem>
-            <MessageItem Read="false" Recipient="Peter Nielsen" RelatedPost="@testPost"
-                LastMessageDate="DateTime.Now.Subtract(TimeSpan.FromMinutes(25))">
-            </MessageItem>
-            <MessageItem Read="true" Recipient="Peter Nielsen" RelatedPost="@testPost"
-                LastMessageDate="new DateTime(2021, 6, 24)">
-            </MessageItem>
-            @for (var i = 0; i < 10; i++)
+            @if (_chats == null || _chats.Count == 0)
             {
-                <MessageItem Read="true" Recipient="Peter Nielsen" RelatedPost="@testPost" LastMessageDate="DateTime.Now">
-                </MessageItem>
+                <p>You have no active chats</p>
+            }
+            else
+            {
+                @foreach (var chat in _chats)
+                {
+                    <div @onclick="@(() => SelectChat(chat))">
+                        <MessageItem Read="@chat.SeenLatestMessage" Chat="@chat">
+                        </MessageItem>
+                    </div>
+                }
             }
         </div>
     </div>
     <div class="d-flex flex-column chat-area col-9">
-        <div
-            class="d-flex align-items-center justify-content-between flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
-            <span class="oi oi-chevron-left"></span>
-            <span class="fs-5 fw-semibold">Peter Nielsen</span>
-            <span class="fs-5 fw-semibold"></span>
-        </div>
-        <div class="chat-area-inner d-flex flex-row align-items-end">
-            <div class="chat-messages scrollarea">
-                <MessageComponent Text="Hello" Received="true"></MessageComponent>
-                <MessageComponent Text="Hello mate"></MessageComponent>
+        @if (chatMessages == null || chat == null)
+        {
+            <p>Select a chat</p>
+        }
+        else
+        {
+            <div
+                class="d-flex align-items-center justify-content-between flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+                <span class="fs-5 fw-semibold"></span>
+                <span class="fs-5 fw-semibold">@chatRecipient.Name</span>
+                <span class="fs-5 fw-semibold"></span>
             </div>
-        </div>
-        <div class="align-content-center chat-area-input d-flex p-2 row">
-            <EditForm Model="messageModel">
-                <DataAnnotationsValidator />
-                <ValidationSummary />
-                <div class="col-9">
-                    <InputText @bind-Value="messageModel.Message" type="text" id="message-input" class="form-control" />
+            <div class="chat-area-inner d-flex flex-row align-items-end">
+                <div class="chat-messages scrollarea">
+                    @foreach (var message in chatMessages)
+                    {
+                        <MessageComponent Text="@message.Content" Received="@(!message.FromUser.oid.Equals(currentUser.oid))"></MessageComponent>
+                    }
                 </div>
-                <div class="col-3 d-flex">
-                    <button type="submit" class="btn btn-primary col-12">Submit</button>
+            </div>
+            <EditForm Model="messageModel" OnValidSubmit="@HandleValidMessageSubmit">
+                <div class="align-content-center chat-area-input d-flex p-2 row">
+                    <DataAnnotationsValidator/>
+                    <ValidationSummary/>
+                    <div class="col-9">
+                        <InputText @bind-Value="messageModel.Message" type="text" id="message-input" class="form-control"/>
+                    </div>
+                    <div class="col-3 d-flex">
+                        <button type="submit" class="btn btn-primary col-12">Submit</button>
+                    </div>
                 </div>
             </EditForm>
-        </div>
+        }
     </div>
 </div>
 
 @code {
 
+    private List<PostDto>? Posts;
     private PostDetailsDto testPost = new(5, "Biology project 101", "content", DateTime.Now, "1", new());
 
-    @code {
-        PostSelectorModel postSelectorModel = new PostSelectorModel();
+    private string _FilterSelectValue;
 
-        class PostSelectorModel
+    private string FilterSelectValue
+    {
+        get => _FilterSelectValue;
+        set
         {
-            public string projectTitle { get; set; }
-        }
-
-        MessageModel messageModel = new MessageModel();
-
-        class MessageModel
-        {
-            public string Message { get; set; }
+            _FilterSelectValue = value;
+            var post = GetPostByTitle(value);
+            if (post == null) filter = -1;
+            else filter = post.Id;
+            UpdateQuery();
         }
     }
+
+    private int filter = -1;
+
+    private ChatDetailsDto? chat;
+    private ICollection<ChatMessageDto>? chatMessages;
+    private UserDetailsDto? chatRecipient;
+
+    private EditContext filterEditContext;
+    MessageModel messageModel = new();
+    FilterModel filterModel = new();
+
+    class MessageModel
+    {
+        [Required]
+        [MinLength(1)]
+        public string Message { get; set; }
+    }
+
+
+    protected override void OnInitialized()
+    {
+        filterEditContext = new EditContext(filterModel);
+        filterEditContext.OnFieldChanged += HandleFilterFieldChanged;
+
+        var _filter = uriHelper.QueryString("filter");
+        if (_filter != null && _filter.Trim() != "" && _filter.Trim() != "-1") filter = Convert.ToInt32(_filter);
+    }
+
+    private IReadOnlyCollection<ChatDetailsDto>? _allChats { get; set; }
+    private IReadOnlyCollection<ChatDetailsDto>? _chats { get; set; }
+    private UserDetailsDto currentUser;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            currentUser = await localStore.GetItemAsync<UserDetailsDto>("user");
+            Posts = await _http.GetFromJsonAsync<List<PostDto>>("api/Post/supervisor/" + currentUser.oid);
+            _allChats = await _http.GetFromJsonAsync<IReadOnlyCollection<ChatDetailsDto>>($"api/Chat/user/{currentUser.oid}");
+            _chats = await _http.GetFromJsonAsync<IReadOnlyCollection<ChatDetailsDto>>($"api/Chat/user/{currentUser.oid}");
+
+            var _chat = uriHelper.QueryString("chat");
+            if (_chat != null && _chat.Trim() != "")
+            {
+                var chatid = Convert.ToInt32(_chat);
+                chat = await _http.GetFromJsonAsync<ChatDetailsDto>($"api/Chat/{chatid}/{currentUser.oid}");
+                SelectChat(chat);
+            }
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+    }
+
+    private void HandleFilterFieldChanged(object? sender, FieldChangedEventArgs e)
+    {
+        if (filterEditContext is null) return;
+        FilterSelectValue = filterModel.title;
+    }
+
+    private async void HandleValidMessageSubmit()
+    {
+        var chatMessageCrateDto = new ChatMessageCreateDto()
+        {
+            ChatId = chat.ChatId,
+            Content = messageModel.Message,
+            FromUserId = currentUser.oid
+        };
+        var res = await _http.PostAsJsonAsync<ChatMessageCreateDto>("api/chat/message", chatMessageCrateDto);
+        if (!res.IsSuccessStatusCode) return;
+        chatMessages?.Add(new ChatMessageDto()
+        {
+            Content = messageModel.Message,
+            FromUser = currentUser,
+            Timestamp = DateTime.Now
+        });
+        messageModel.Message = "";
+        StateHasChanged();
+    }
+
+    private async void SelectChat(ChatDetailsDto? chatDetailsDto)
+    {
+        chat = chatDetailsDto;
+        if (chat != null)
+        {
+            chatMessages = (await _http.GetFromJsonAsync<IReadOnlyCollection<ChatMessageDto>>($"api/Chat/{chat.ChatId}/messages")).Select(m => m).ToList();
+            chatRecipient = await _http.GetFromJsonAsync<UserDetailsDto>($"api/User/{chat.TargetUserId}");
+            UpdateQuery();
+            StateHasChanged();
+        }
+    }
+
+    private void UpdateQuery()
+    {
+        string urlString = $"{uriHelper.BaseUri}/messages";
+        bool addedQuery = false;
+        if (filter != -1)
+        {
+            urlString += "?filter=" + filter;
+            addedQuery = true;
+        }
+        if (chat != null)
+        {
+            if (addedQuery)
+            {
+                urlString += "&chat=" + chat.ChatId;
+            }
+            else
+            {
+                urlString += "?chat=" + chat.ChatId;
+            }
+        }
+        jsRuntime.InvokeVoidAsync("ChangeUrl", urlString);
+        _chats = _allChats;
+        if (filter != -1) _chats = _allChats.Where(c => c.ProjectId == filter).ToList();
+    }
+
+    private PostDto? GetPostByTitle(string title) =>
+        Posts?.FirstOrDefault(p => p.Title == title);
+
+    public void Dispose()
+    {
+        if (filterEditContext is not null)
+        {
+            filterEditContext.OnFieldChanged -= HandleFilterFieldChanged;
+        }
+    }
+
 }

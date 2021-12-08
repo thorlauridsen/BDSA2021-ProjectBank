@@ -16,7 +16,7 @@ namespace ProjectBank.Core
 
     public record ChatMessageDto
     {
-        public string FromUserId { get; init; }
+        public UserDto FromUser { get; init; }
 
         public string Content { get; init; }
 
@@ -41,13 +41,10 @@ namespace ProjectBank.Core
     {
         public int ChatId { get; init; }
 
+        public int ProjectId { get; set; }
         public string TargetUserId { get; init; }
 
-        public string LatestMessageUserId { get; init; }
-
-        public DateTime LatestMessageTime { get; init; }
-
-        public string LatestMessage { get; init; }
+        public ChatMessageDto LatestChatMessage { get; init; }
 
         public bool SeenLatestMessage { get; init; }
     }

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using ProjectBank.Core;
 using ProjectBank.Server.Controllers;
@@ -14,7 +15,7 @@ namespace ProjectBank.Server.Tests.Controllers
         {
             // Arrange
             var toCreate = new UserCreateDto();
-            var user = new UserDetailsDto("1", "John", "");
+            var user = new UserDetailsDto("1", "John","");
             var repository = new Mock<IUserRepository>();
             repository.Setup(m => m.CreateAsync(toCreate)).ReturnsAsync((Created, user));
             var controller = new UserController(logger.Object, repository.Object);
@@ -64,7 +65,7 @@ namespace ProjectBank.Server.Tests.Controllers
         {
             // Arrange
             var repository = new Mock<IUserRepository>();
-            var character = new UserDetailsDto("1", "Jack", "");
+            var character = new UserDetailsDto("1", "Jack","");
             repository.Setup(m => m.ReadAsync("1")).ReturnsAsync(character);
             var controller = new UserController(logger.Object, repository.Object);
 
@@ -73,6 +74,38 @@ namespace ProjectBank.Server.Tests.Controllers
 
             // Assert
             Assert.Equal(character, response.Value);
+        }
+
+        [Fact]
+        public async Task Put_updates_User()
+        {
+            // Arrange
+            var character = new UserUpdateDto();
+            var repository = new Mock<IUserRepository>();
+            repository.Setup(m => m.UpdateAsync("1", character)).ReturnsAsync(Updated);
+            var controller = new UserController(logger.Object, repository.Object);
+
+            // Act
+            var response = await controller.Put("1", character);
+
+            // Assert
+            Assert.IsType<NoContentResult>(response);
+        }
+
+        [Fact]
+        public async Task Put_given_unknown_id_returns_NotFound()
+        {
+            // Arrange
+            var character = new UserUpdateDto();
+            var repository = new Mock<IUserRepository>();
+            repository.Setup(m => m.UpdateAsync("1", character)).ReturnsAsync(NotFound);
+            var controller = new UserController(logger.Object, repository.Object);
+
+            // Act
+            var response = await controller.Put("1", character);
+
+            // Assert
+            Assert.IsType<NotFoundResult>(response);
         }
 
         [Fact]
