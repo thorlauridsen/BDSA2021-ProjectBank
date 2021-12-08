@@ -66,7 +66,7 @@ namespace Infrastructure.Tests
         }
 
         [Fact]
-        public async Task CreateAsync_creates_new_post_with_generated_id()
+        public async Task CreateAsync_creates_new_post_with_generated_id_then_delete()
         {
             var post = new PostCreateDto
             {
@@ -85,6 +85,26 @@ namespace Infrastructure.Tests
             Assert.Equal("Bla bla bla bla", created?.Content);
             Assert.Equal("1", created?.SupervisorOid);
             Assert.True(created?.Tags.SetEquals(new[] { "bio", "dna", "cells" }));
+
+            var response = await _repository.DeleteAsync(3);
+            Assert.Equal(Deleted, response);
+        }
+
+        [Fact]
+        public async Task CreateAsync_without_content_returns_BadRequest()
+        {
+            var post = new PostCreateDto
+            {
+                Title = "",
+                Content = "",
+                SupervisorOid = "1",
+                Tags = new HashSet<string> { "bio", "dna", "cells" }
+            };
+
+            var (status, created) = await _repository.CreateAsync(post);
+
+            Assert.Equal(BadRequest, status);
+            Assert.Null(created);
         }
 
         [Fact]
@@ -104,7 +124,6 @@ namespace Infrastructure.Tests
         public async Task ReadAsync_given_non_existing_id_returns_None()
         {
             var option = await _repository.ReadAsync(11);
-
             Assert.True(option.IsNone);
         }
 
@@ -173,13 +192,11 @@ namespace Infrastructure.Tests
             Assert.Empty(posts);
         }
 
-
         //TODO
         [Fact]
         public async Task ReadAsyncByTag_given_tag_math_returns_post()
         {
             //var actual = await _repository.ReadAsyncByTag("Math");
-
         }
 
         //TODO
@@ -187,27 +204,28 @@ namespace Infrastructure.Tests
         public async Task ReadAsyncByTag_given_non_existing_tag_returns_none()
         {
             //var actual = await _repository.ReadAsyncByTag("Nothing");
-
         }
 
-
         [Fact]
-        public async Task ReadAsyncComments_given_postid_returns_comments()
+        public async Task ReadAsyncComments_given_postId_returns_comments()
         {
             var actual = await _repository.ReadAsyncComments(1);
-            var expected = new List<CommentDto>()
-            {
-                new(1, "Hello", new DateTime(2021,12,6),"1")
-
-            }.AsReadOnly();
+            var comment = new CommentDto(1, "Hello", new DateTime(2021, 12, 6), "1");
+            var expected = new List<CommentDto>() { comment }.AsReadOnly();
             Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public async Task ReadAsyncComments_given_non_existing_Id_returns_comments()
+        {
+            var actual = await _repository.ReadAsyncComments(11);
+            Assert.Equal(0, actual.Count());
         }
 
         [Fact]
         public async Task DeleteAsync_given_non_existing_Id_returns_NotFound()
         {
             var response = await _repository.DeleteAsync(11);
-
             Assert.Equal(NotFound, response);
         }
 

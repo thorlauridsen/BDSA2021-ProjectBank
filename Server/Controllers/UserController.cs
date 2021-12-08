@@ -50,13 +50,6 @@ namespace ProjectBank.Server.Controllers
         }
 
         [Authorize]
-        [HttpPut("{userId}")]
-        [ProducesResponseType(204)]
-        [ProducesResponseType(404)]
-        public async Task<IActionResult> Put(string userId, [FromBody] UserUpdateDto user)
-            => (await _repository.UpdateAsync(userId, user)).ToActionResult();
-
-        [Authorize]
         [HttpDelete("{userId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]

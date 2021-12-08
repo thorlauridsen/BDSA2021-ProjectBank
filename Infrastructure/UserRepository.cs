@@ -56,20 +56,6 @@ namespace ProjectBank.Infrastructure
                            .ToListAsync())
                            .AsReadOnly();
 
-        public async Task<Status> UpdateAsync(string userId, UserUpdateDto user)
-        {
-            var entity = await _context.Users.FirstOrDefaultAsync(u => u.oid == user.oid);
-
-            if (entity == null)
-            {
-                return NotFound;
-            }
-            entity.Name = user.Name;
-            await _context.SaveChangesAsync();
-
-            return Updated;
-        }
-
         public async Task<Status> DeleteAsync(string userId)
         {
             var entity = await _context.Users.FindAsync(userId);

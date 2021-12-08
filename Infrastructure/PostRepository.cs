@@ -160,17 +160,6 @@ namespace ProjectBank.Core
             return Deleted;
         }
 
-        // private async IAsyncEnumerable<Tag> GetTagsAsync(IEnumerable<string> tags)
-        // {
-        //     var existing = await _context.Tags.Where(t => tags.Contains(t.Name))
-        //         .ToDictionaryAsync(t => t.Name);
-
-        //     foreach (var tag in tags)
-        //     {
-        //         yield return existing.TryGetValue(tag, out var t) ? t : new Tag(tag);
-        //     }
-        // }
-
         private async Task<User?> GetUserAsync(string userId) =>
             await _context.Users.FirstOrDefaultAsync(u => u.oid == userId);
     }

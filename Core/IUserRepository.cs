@@ -6,6 +6,5 @@ namespace ProjectBank.Core
         Task<Status> DeleteAsync(string userId);
         Task<Option<UserDetailsDto>> ReadAsync(string userId);
         Task<IReadOnlyCollection<UserDto>> ReadAsync();
-        Task<Status> UpdateAsync(string userId, UserUpdateDto user);
     }
 }

@@ -76,38 +76,6 @@ namespace ProjectBank.Server.Tests.Controllers
         }
 
         [Fact]
-        public async Task Put_updates_User()
-        {
-            // Arrange
-            var character = new UserUpdateDto();
-            var repository = new Mock<IUserRepository>();
-            repository.Setup(m => m.UpdateAsync("1", character)).ReturnsAsync(Updated);
-            var controller = new UserController(logger.Object, repository.Object);
-
-            // Act
-            var response = await controller.Put("1", character);
-
-            // Assert
-            Assert.IsType<NoContentResult>(response);
-        }
-
-        [Fact]
-        public async Task Put_given_unknown_id_returns_NotFound()
-        {
-            // Arrange
-            var character = new UserUpdateDto();
-            var repository = new Mock<IUserRepository>();
-            repository.Setup(m => m.UpdateAsync("1", character)).ReturnsAsync(NotFound);
-            var controller = new UserController(logger.Object, repository.Object);
-
-            // Act
-            var response = await controller.Put("1", character);
-
-            // Assert
-            Assert.IsType<NotFoundResult>(response);
-        }
-
-        [Fact]
         public async Task Delete_given_non_existing_returns_NotFound()
         {
             // Arrange

@@ -25,11 +25,37 @@ namespace Infrastructure.Tests
             var supervisor = new User() { oid = "1", Name = "bo" };
             var student = new User() { oid = "2", Name = "alice" };
 
-            var post = new Post() { Id = 1, Title = "test title", Content = "test", DateAdded = DateTime.Now, User = supervisor };
-            var post2 = new Post() { Id = 2, Title = "test title", Content = "test", DateAdded = DateTime.Now, User = supervisor };
+            var post = new Post()
+            {
+                Id = 1,
+                Title = "test title",
+                Content = "test",
+                DateAdded = DateTime.Now,
+                User = supervisor
+            };
+            var post2 = new Post()
+            {
+                Id = 2,
+                Title = "test title",
+                Content = "test",
+                DateAdded = DateTime.Now,
+                User = supervisor
+            };
 
-            var comment1 = new Comment { Id = 1, User = student, DateAdded = DateTime.Now, Content = "Hey" };
-            var comment2 = new Comment { Id = 2, User = supervisor, DateAdded = DateTime.Now, Content = "hi" };
+            var comment1 = new Comment
+            {
+                Id = 1,
+                User = student,
+                DateAdded = DateTime.Now,
+                Content = "Hey"
+            };
+            var comment2 = new Comment
+            {
+                Id = 2,
+                User = supervisor,
+                DateAdded = DateTime.Now,
+                Content = "hi"
+            };
 
             post.Comments.Add(comment1);
             post2.Comments.Add(comment2);
