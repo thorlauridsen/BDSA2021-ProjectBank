@@ -24,7 +24,7 @@ namespace ProjectBank.Server.Integration.Tests
             {
                 new Claim(ClaimTypes.Name, "Test user"),
                 new Claim(ClaimTypes.NameIdentifier, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.Role, "supervisor")
+                new Claim(ClaimTypes.Role, "Supervisor")
             };
 
             var identity = new ClaimsIdentity(claims, "Test");
