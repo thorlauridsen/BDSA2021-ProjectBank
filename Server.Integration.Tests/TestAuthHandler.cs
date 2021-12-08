@@ -22,9 +22,10 @@ namespace ProjectBank.Server.Integration.Tests
         {
             var claims = new[]
             {
-            new Claim(ClaimTypes.Name, "Test user"),
-            new Claim(ClaimTypes.NameIdentifier, Guid.NewGuid().ToString()),
-        };
+                new Claim(ClaimTypes.Name, "Test user"),
+                new Claim(ClaimTypes.NameIdentifier, Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.Role, "supervisor")
+            };
 
             var identity = new ClaimsIdentity(claims, "Test");
             var principal = new ClaimsPrincipal(identity);

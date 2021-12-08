@@ -42,18 +42,22 @@ namespace ProjectBank.Server.Controllers
 
         [Authorize]
         [HttpGet("supervisor/{userId}")]
-        public async Task<IReadOnlyCollection<PostDto>> GetBySupervisor(string userId)
-            => await _repository.ReadAsyncBySupervisor(userId);
+        public async Task<ActionResult<IReadOnlyCollection<PostDto>>> GetBySupervisor(string userId){
+            var (status,posts) = await _repository.ReadAsyncBySupervisor(userId);
+            if(status == Status.NotFound) return NotFound();
+            return Ok(posts);
+        }
+            
 
         [Authorize]
         [HttpGet("{postId}/comments")]
         public async Task<IReadOnlyCollection<CommentDto>> GetComments(int postId)
         {
-            var (status, comments) = await _repository.ReadAsyncComments(postId);
-            return status.Equals(Status.Success) ? comments : null;
+            var comments = await _repository.ReadAsyncComments(postId);
+            return comments;
         }
 
-        [Authorize]
+        [Authorize(Roles = "supervisor")]
         [HttpPost]
         [ProducesResponseType(typeof(PostDetailsDto), 201)]
         public async Task<ActionResult<PostDetailsDto>> Post(PostCreateDto post)
@@ -66,14 +70,14 @@ namespace ProjectBank.Server.Controllers
             return BadRequest();
         }
 
-        [Authorize]
+        [Authorize(Roles = "supervisor")]
         [HttpPut("{postId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> Put(int postId, [FromBody] PostUpdateDto post)
             => (await _repository.UpdateAsync(postId, post)).ToActionResult();
 
-        [Authorize]
+        [Authorize(Roles = "supervisor")]
         [HttpDelete("{postId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]

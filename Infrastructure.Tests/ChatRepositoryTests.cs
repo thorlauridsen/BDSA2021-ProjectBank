@@ -27,7 +27,15 @@ namespace Infrastructure.Tests
             var bo = new User { oid = "2", Name = "bo" };
             var alice = new User { oid = "3", Name = "alice" };
 
-            var post = new Post(){Comments = new List<Comment>(), Content = "This is a test post", Id = 1, Tags = new List<Tag>(), Title = "Test post", User = per,DateAdded = new DateTime()};
+            var post = new Post()
+            {
+                Comments = new List<Comment>(), 
+                Content = "This is a test post", 
+                Id = 1, 
+                Title = "Test post", 
+                User = per,
+                DateAdded = new DateTime()
+            };
             
             var chatPer1 = new ChatUser { Id = 1, User = per };
             var chatPer2 = new ChatUser { Id = 2, User = per };

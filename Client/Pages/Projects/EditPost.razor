@@ -92,7 +92,7 @@ else
             Id = _post.Id,
             Title = postFormModel.Title,
             Content = postFormModel.Content,
-            SupervisorOid = _post.SupervisorOid, // TODO: Get correct SupervisorId from database. Be aware of friday 3.
+            SupervisorOid = _post.SupervisorOid, 
             Tags = postFormModel.Tags.Split(",").Select(t => t.Trim()).ToHashSet()
         };
         var response = await _http.PutAsJsonAsync("api/Post/" + _post.Id, postUpdateDto);

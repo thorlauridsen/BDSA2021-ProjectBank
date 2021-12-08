@@ -182,6 +182,9 @@ namespace ProjectBank.Infrastructure.Migrations
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Tags")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -211,12 +214,7 @@ namespace ProjectBank.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("PostId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("PostId");
 
                     b.ToTable("Tags");
                 });
@@ -321,13 +319,6 @@ namespace ProjectBank.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ProjectBank.Infrastructure.Tag", b =>
-                {
-                    b.HasOne("ProjectBank.Infrastructure.Post", null)
-                        .WithMany("Tags")
-                        .HasForeignKey("PostId");
-                });
-
             modelBuilder.Entity("ProjectBank.Infrastructure.Chat", b =>
                 {
                     b.Navigation("ChatUsers");
@@ -336,8 +327,6 @@ namespace ProjectBank.Infrastructure.Migrations
             modelBuilder.Entity("ProjectBank.Infrastructure.Post", b =>
                 {
                     b.Navigation("Comments");
-
-                    b.Navigation("Tags");
                 });
 #pragma warning restore 612, 618
         }

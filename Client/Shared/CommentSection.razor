@@ -6,8 +6,8 @@
 @implements IDisposable
 @inject ILogger<CommentSection> Logger
 @inject NavigationManager uriHelper;
-
 @inject ILocalStorageService localStore
+@inject IJSRuntime JsRuntime
 
 <div class="container my-4">
     <div class="row d-flex justify-content-center">
@@ -68,19 +68,29 @@
     {
         Logger.LogInformation("HandleValidSubmit called");
         Logger.LogInformation(commentModel.comment);
+        var user = await localStore.GetItemAsync<UserDetailsDto>("user");
         var comment = new CommentCreateDto
         {
             Content = commentModel.comment,
-            UserId = (await localStore.GetItemAsync<UserDetailsDto>("user")).oid,
+            UserId = user.oid,
             postid = Post.Id
+        };
+        var notification = new NotificationCreateDto
+        {
+            Title = "New comment",
+            Content = $"{user.Name} has commented on your post",
+            UserOid = user.oid,
+            Link = $"/projects/{Post.Id}"
         };
         var response = await _http.PostAsJsonAsync("api/Comment", comment);
         if (response.IsSuccessStatusCode)
         {
-            uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true); // TODO: Add a legitimate error handling. (below)
+            await _http.PostAsJsonAsync("api/Notification", notification);
+            uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true); 
         }
         else
         {
+            await JsRuntime.InvokeAsync<bool>("alert", "Error detected while handling creation of comment");
             Logger.LogCritical("Critical status code: " + response.StatusCode);
         }
 

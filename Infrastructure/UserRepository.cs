@@ -2,7 +2,7 @@ using ProjectBank.Core;
 
 namespace ProjectBank.Infrastructure
 {
-  
+
 
     public class UserRepository : IUserRepository
     {
@@ -17,9 +17,10 @@ namespace ProjectBank.Infrastructure
 
         public async Task<(Status, UserDetailsDto?)> CreateAsync(UserCreateDto user)
         {
-            var image = await _http.GetByteArrayAsync($"https://eu.ui-avatars.com/api/?name={user.Name.Replace(" ","+")}&background=random");
+            var name = user.Name.Replace(" ", "+");
+            var image = await _http.GetByteArrayAsync($"https://eu.ui-avatars.com/api/?name={name}&background=random");
             string base64Image = "data:image/png;base64," + Convert.ToBase64String(image);
-            var entity = new User { oid = user.oid, Image = base64Image, Name = user.Name, IsSupervisor = user.IsSupervisor };
+            var entity = new User { oid = user.oid, Image = base64Image, Name = user.Name};
 
             _context.Users.Add(entity);
             await _context.SaveChangesAsync();
@@ -27,8 +28,7 @@ namespace ProjectBank.Infrastructure
             return (Created, new UserDetailsDto(
                                  entity.oid,
                                  entity.Name,
-                                 entity.Image,
-                                 entity.IsSupervisor
+                                 entity.Image
                              ));
         }
 
@@ -37,8 +37,7 @@ namespace ProjectBank.Infrastructure
                                 .Select(u => new UserDetailsDto(
                                     u.oid,
                                     u.Name,
-                                    u.Image,
-                                    u.IsSupervisor
+                                    u.Image
                                 ))
                                 .FirstOrDefaultAsync();
 
@@ -46,8 +45,7 @@ namespace ProjectBank.Infrastructure
             (await _context.Users
                            .Select(u => new UserDto(
                                 u.oid,
-                                u.Name,
-                                u.IsSupervisor
+                                u.Name
                             ))
                            .ToListAsync())
                            .AsReadOnly();

@@ -1,0 +1,81 @@
+﻿@page "/projects"
+@using ProjectBank.Core
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using ProjectBank.Client.Extensions
+@inject HttpClient Http
+@inject ILocalStorageService localStore
+
+
+<Content>
+    <Padding>
+        <AuthorizeView>
+            <Authorized Context="Auth">
+                <div class="d-flex justify-content-between">
+                    <h3>Showing my projects</h3>
+                    <EditForm Model="postModel">
+                        <InputSelect class="form-select" @bind-Value="postModel.projectTitle">
+                            <option selected>Sort by project</option>
+                            @if (@Posts != null)
+                            {
+                                @foreach (var tag in Posts.GetTagsFromPosts())
+                                {
+                                    <option>@tag</option>
+                                }
+                            }
+                        </InputSelect>
+                    </EditForm>
+                </div>
+
+                @if (@Posts != null)
+                {
+                    @foreach (var post in Posts)
+                    {
+                        <PostContainer Title="@post.Title" Content="@post.Content" SupervisorId="@post.SupervisorOid"
+                    Tags="@post.Tags" DateAdded="@post.DateAdded" PostID="@post.Id">
+                        </PostContainer>
+                    }
+                }
+            </Authorized>
+            <NotAuthorized>
+                <h1>Welcome to project bank, log in <a href="authentication/login">here</a></h1>
+            </NotAuthorized>
+        </AuthorizeView>
+    </Padding>
+</Content>
+
+
+@code {
+
+    PostSelectorModel postModel = new PostSelectorModel();
+
+    class PostSelectorModel
+    {
+        public string projectTitle { get; set; }
+    }
+
+    private List<PostDto>? Posts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var user = await localStore.GetItemAsync<UserDetailsDto>("user");
+            Posts = await Http.GetFromJsonAsync<List<PostDto>>("api/Post/supervisor/" + user.oid);
+            Posts?.Add(new PostDto(
+            1,
+            "this is a test title",
+            "Woah look at all this content",
+            DateTime.Now,
+            "1",
+            new HashSet<string>()
+            {
+"These", "are", "relevant", "Tags"
+            }
+            )); //TODO: remove once functional.
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+    }
+}
