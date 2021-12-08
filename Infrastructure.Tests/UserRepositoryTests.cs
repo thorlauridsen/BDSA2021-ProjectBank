@@ -21,7 +21,7 @@ namespace Infrastructure.Tests
             var context = new ProjectBankContext(builder.Options);
             context.Database.EnsureCreated();
 
-            var user = new User { oid = "1", Name = "Claus" };
+            var user = new User { oid = "1", Name = "Claus"};
             context.Users.Add(user);
             context.SaveChanges();
 
@@ -30,9 +30,9 @@ namespace Infrastructure.Tests
         }
 
         [Fact]
-        public async Task CreateAsync_creates_new_user_with_generated_id_then_delete()
+        public async Task CreateAsync_creates_new_user_with_generated_id()
         {
-            var user = new UserCreateDto { oid = "2", Name = "Karsten" };
+            var user = new UserCreateDto { oid = "2", Name = "Karsten"};
 
             var (status, created) = await _repository.CreateAsync(user);
 
@@ -45,9 +45,6 @@ namespace Infrastructure.Tests
                 s => Assert.Equal(new UserDto("1", "Claus"), s),
                 s => Assert.Equal(new UserDto("2", "Karsten"), s)
             );
-
-            var response = await _repository.DeleteAsync("2");
-            Assert.Equal(Deleted, response);
         }
 
         [Fact]
@@ -61,16 +58,10 @@ namespace Infrastructure.Tests
         }
 
         [Fact]
-        public async Task ReadAsync_given_existing_id_returns_Some()
-        {
-            var option = await _repository.ReadAsync("1");
-            Assert.True(option.IsSome);
-        }
-
-        [Fact]
         public async Task ReadAsync_given_non_existing_id_returns_None()
         {
             var option = await _repository.ReadAsync("11");
+
             Assert.True(option.IsNone);
         }
 
@@ -78,6 +69,7 @@ namespace Infrastructure.Tests
         public async Task DeleteAsync_given_non_existing_Id_returns_NotFound()
         {
             var response = await _repository.DeleteAsync("11");
+
             Assert.Equal(NotFound, response);
         }
 

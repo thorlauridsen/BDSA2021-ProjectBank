@@ -25,7 +25,6 @@ namespace ProjectBank.Server.Controllers
 
         [Authorize]
         [HttpGet]
-        [ProducesResponseType(typeof(IReadOnlyCollection<UserDto>), 200)]
         public async Task<IReadOnlyCollection<UserDto>> Get()
             => await _repository.ReadAsync();
 
@@ -48,6 +47,13 @@ namespace ProjectBank.Server.Controllers
             }
             return BadRequest();
         }
+
+        [Authorize]
+        [HttpPut("{userId}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> Put(string userId, [FromBody] UserUpdateDto user)
+            => (await _repository.UpdateAsync(userId, user)).ToActionResult();
 
         [Authorize]
         [HttpDelete("{userId}")]

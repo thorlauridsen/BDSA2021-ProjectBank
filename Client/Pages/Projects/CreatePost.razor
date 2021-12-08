@@ -32,6 +32,7 @@
     </div>
 </EditForm>
 
+
 @code {
     private PostFormModel postFormModel = new();
 
@@ -58,7 +59,7 @@
         {
             Title = postFormModel.Title,
             Content = postFormModel.Content,
-            SupervisorOid = (await localStore.GetItemAsync<UserDetailsDto>("user")).oid,
+            SupervisorOid = (await localStore.GetItemAsync<UserDetailsDto>("user")).oid, 
             Tags = postFormModel.Tags.Split(",").Select(t => t.Trim()).ToHashSet()
         };
         var response = await _http.PostAsJsonAsync("api/Post", post);

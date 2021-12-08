@@ -6,6 +6,6 @@ namespace ProjectBank.Client
     public class CustomUserAccount : RemoteUserAccount
     {
         [JsonPropertyName("roles")]
-        public string[] Roles { get; set; } = new string[] { "Fail" };
+        public string[] Roles { get; set; } = new string[] {"Fail"};
     }
 }

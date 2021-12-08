@@ -1,5 +1,7 @@
 ﻿@using ProjectBank.Core
+@using System.Net
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using Microsoft.Extensions.DependencyInjection
 @inject HttpClient _http
 @implements IDisposable
 @inject ILogger<CommentSection> Logger
@@ -18,7 +20,7 @@
             {
                 @foreach (var comment in _postComments)
                 {
-                    <Comment PostID="@Post.Id" UserID="@comment.UserId" CommentID="@comment.Id" Published="@comment.DateAdded"
+                    <Comment UserID="@comment.UserId" CommentID="@comment.Id" Published="@comment.DateAdded"
                 Content="@comment.Content"></Comment>
                 }
             }
@@ -84,7 +86,7 @@
         if (response.IsSuccessStatusCode)
         {
             await _http.PostAsJsonAsync("api/Notification", notification);
-            uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
+            uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true); 
         }
         else
         {
