@@ -27,16 +27,15 @@ namespace Infrastructure.Tests
 
             var post = new Post() { Id = 1, Title = "test title", Content = "test", DateAdded = DateTime.Now, User = supervisor };
             var post2 = new Post() { Id = 2, Title = "test title", Content = "test", DateAdded = DateTime.Now, User = supervisor };
-            context.Posts.Add(post);
-            context.Posts.Add(post2);
+
             var comment1 = new Comment { Id = 1, User = student, DateAdded = DateTime.Now, Content = "Hey" };
-            post.Comments.Add(comment1);
             var comment2 = new Comment { Id = 2, User = supervisor, DateAdded = DateTime.Now, Content = "hi" };
+
+            post.Comments.Add(comment1);
             post2.Comments.Add(comment2);
 
-            /*
-            context.Comments.Add(comment1);
-            context.Comments.Add(comment2);*/
+            context.Posts.Add(post);
+            context.Posts.Add(post2);
 
             context.SaveChanges();
 

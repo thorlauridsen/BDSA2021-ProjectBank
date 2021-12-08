@@ -20,7 +20,7 @@
             {
                 @foreach (var comment in _postComments)
                 {
-                    <Comment UserID="@comment.UserId" CommentID="@comment.Id" Published="@comment.DateAdded"
+                    <Comment PostID="@Post.Id" UserID="@comment.UserId" CommentID="@comment.Id" Published="@comment.DateAdded"
                 Content="@comment.Content"></Comment>
                 }
             }
@@ -86,7 +86,7 @@
         if (response.IsSuccessStatusCode)
         {
             await _http.PostAsJsonAsync("api/Notification", notification);
-            uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true); 
+            uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
         }
         else
         {

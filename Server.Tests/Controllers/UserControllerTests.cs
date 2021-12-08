@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Moq;
 using ProjectBank.Core;
 using ProjectBank.Server.Controllers;
@@ -15,7 +14,7 @@ namespace ProjectBank.Server.Tests.Controllers
         {
             // Arrange
             var toCreate = new UserCreateDto();
-            var user = new UserDetailsDto("1", "John","");
+            var user = new UserDetailsDto("1", "John", "");
             var repository = new Mock<IUserRepository>();
             repository.Setup(m => m.CreateAsync(toCreate)).ReturnsAsync((Created, user));
             var controller = new UserController(logger.Object, repository.Object);
@@ -65,7 +64,7 @@ namespace ProjectBank.Server.Tests.Controllers
         {
             // Arrange
             var repository = new Mock<IUserRepository>();
-            var character = new UserDetailsDto("1", "Jack","");
+            var character = new UserDetailsDto("1", "Jack", "");
             repository.Setup(m => m.ReadAsync("1")).ReturnsAsync(character);
             var controller = new UserController(logger.Object, repository.Object);
 

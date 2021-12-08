@@ -1,6 +1,4 @@
 using System.Collections.Immutable;
-using System.Collections.ObjectModel;
-using System.Linq;
 using ProjectBank.Infrastructure;
 
 namespace ProjectBank.Core
@@ -69,10 +67,10 @@ namespace ProjectBank.Core
             .AsReadOnly();
 
 
-         public async Task<(Status,IReadOnlyCollection<PostDto>)> ReadAsyncBySupervisor(string userId){
+        public async Task<(Status, IReadOnlyCollection<PostDto>)> ReadAsyncBySupervisor(string userId)
+        {
 
-            if ((await GetUserAsync(userId)) == null) return (NotFound,new List<PostDto>(){});
-
+            if ((await GetUserAsync(userId)) == null) return (NotFound, new List<PostDto>() { });
 
             var posts = (await _context.Posts
                 .Where(p => p.User.oid == userId)
@@ -87,14 +85,11 @@ namespace ProjectBank.Core
                 .ToListAsync())
             .AsReadOnly();
 
-                return(Success, posts);
-            }
-
-        public async  Task<User> testUsers() => await GetUserAsync("11");
-        
+            return (Success, posts);
+        }
 
         public async Task<IReadOnlyCollection<PostDto>> ReadAsyncByTag(string tag) =>
-            
+
             (await _context.Posts
                 .Where(p => p.Tags.Any(tag => tag.Equals(tag)))
                 .Select(p => new PostDto(
@@ -113,7 +108,7 @@ namespace ProjectBank.Core
             var post = await _context.Posts.Include("Comments.User").FirstOrDefaultAsync(p => p.Id == postId);
             if (post == null)
             {
-                return new List<CommentDto>(){};
+                return new List<CommentDto>() { };
             }
 
             var comments = post.Comments;
