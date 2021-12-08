@@ -1,4 +1,4 @@
-﻿@* @page "/projects"  *@
+﻿@page "/projects"
 @using ProjectBank.Core
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using ProjectBank.Client.Extensions
@@ -25,16 +25,26 @@
                         </InputSelect>
                     </EditForm>
                 </div>
-
-                @if (@Posts != null)
-                {
-                    @foreach (var post in Posts)
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">State</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @if (@Posts != null)
                     {
-                        <PostContainer Title="@post.Title" Content="@post.Content" SupervisorId="@post.SupervisorOid"
-                                       Tags="@post.Tags" DateAdded="@post.DateAdded" PostID="@post.Id">
-                        </PostContainer>
+                        @foreach (var post in Posts)
+                        {
+                            <MyProjectsTableRowComponent Post="@post"></MyProjectsTableRowComponent>
+                        }
                     }
-                }
+                    </tbody>
+                </table>
+
             </Authorized>
             <NotAuthorized>
                 <h1>Welcome to project bank, log in <a href="authentication/login">here</a></h1>
@@ -44,7 +54,19 @@
 </Content>
 
 
-
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Date</th>
+        <th scope="col">State</th>
+        <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <MyProjectsTableRowComponent></MyProjectsTableRowComponent>
+    </tbody>
+</table>
 
 @code {
 
@@ -79,4 +101,5 @@
             exception.Redirect();
         }
     }
+
 }

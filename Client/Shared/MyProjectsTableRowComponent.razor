@@ -1,0 +1,31 @@
+﻿@using ProjectBank.Core
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using ProjectBank.Client.Extensions
+
+
+    <tr>
+        <td>@Post.Title</td>
+        <td>@Post.DateAdded.ToString()</td>
+        <td>tbd, post.state</td>
+       <td><EditForm Model="postSelectorModel">
+                            <InputSelect class="form-select" @bind-Value="postSelectorModel.projectTitle">
+                                <option selected>Actions</option>
+                                <option>Edit</option>
+                                <option>Close</option>
+                                <option>Archive</option>
+                                <option>Delete</option>
+                            </InputSelect>
+                        </EditForm></td>
+    </tr>
+
+
+@code {
+    [Parameter] 
+    public PostDetailsDto? Post { get; set; }
+    
+    PostSelectorModel postSelectorModel = new PostSelectorModel();
+    class PostSelectorModel
+    {
+        public string projectTitle { get; set; }
+    }
+}
