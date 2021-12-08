@@ -107,7 +107,8 @@ namespace ProjectBank.Infrastructure
                                   FromUser = new UserDto(cm.FromUser.oid, cm.FromUser.Name, cm.FromUser.IsSupervisor),
                                   Timestamp = cm.Timestamp
                               },
-                              SeenLatestMessage = c.ChatUsers.First().SeenLatestMessage
+                              SeenLatestMessage = c.ChatUsers.First().SeenLatestMessage,
+                              ProjectId = c.Post.Id
                           }).ToListAsync();
         }
 

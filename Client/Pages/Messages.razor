@@ -3,55 +3,49 @@
 @using ProjectBank.Client.Extensions
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using Microsoft.AspNetCore.Authorization
+@using ProjectBank.Shared.forms
 @attribute [Authorize]
 @inject NavigationManager uriHelper;
-@inject HttpClient Http
+@inject HttpClient _http
 @inject ILocalStorageService localStore
 @inject IJSRuntime jsRuntime
+@implements IDisposable
 <div class="d-flex flex-nowrap messageContainer col-12">
     <div class="d-flex flex-column col-3 align-items-stretch flex-shrink-0 bg-white messagesSideBar">
         <div
             class="d-flex align-items-center justify-content-between flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
             <span class="fs-5 fw-semibold">Messages</span>
-            <InputSelect class="form-select" @bind-Value="FilterSelectValue">
-                <option selected>Sort by project</option>
-                @if (Posts != null)
-                {
-                    foreach (var post in Posts)
+            <EditForm EditContext="@editContext">
+                <InputSelect class="form-select" @bind-Value="@filterModel.title">
+                    <option selected>Sort by project</option>
+                    @if (Posts != null)
                     {
-                        <option>@post.Title</option>
+                        foreach (var post in Posts)
+                        {
+                            <option>@post.Title</option>
+                        }
                     }
-                }
-            </InputSelect>
+                </InputSelect>
+            </EditForm>
         </div>
         <div class="list-group list-group-flush border-bottom scrollarea message-list">
-           @foreach (var chat in _chats)
-           {
-               <MessageItem Read="@chat.SeenLatestMessage" Chat="@chat">
-               </MessageItem>
-           } 
-            <MessageItem Read="false" Recipient="Peter Nielsen" RelatedPost="@testPost" LastMessageDate="DateTime.Now">
-            </MessageItem>
-            <MessageItem Read="false" Recipient="Peter Nielsen" RelatedPost="@testPost"
-                         LastMessageDate="new DateTime(2000, 5, 14)">
-            </MessageItem>
-            <MessageItem Read="true" Recipient="Peter Nielsen" RelatedPost="@testPost"
-                         LastMessageDate="new DateTime(2021, 11, 23)">
-            </MessageItem>
-            <MessageItem Read="false" Recipient="Peter Nielsen" RelatedPost="@testPost"
-                         LastMessageDate="DateTime.Now.Subtract(TimeSpan.FromMinutes(25))">
-            </MessageItem>
-            <MessageItem Read="true" Recipient="Peter Nielsen" RelatedPost="@testPost"
-                         LastMessageDate="new DateTime(2021, 6, 24)">
-            </MessageItem>
-            @for (var i = 0; i < 10; i++)
+            @if (_chats == null || _chats.Count == 0)
             {
-                <MessageItem Read="true" Recipient="Peter Nielsen" RelatedPost="@testPost" LastMessageDate="DateTime.Now">
+                <p>You have no active chats</p>
+            }else{
+            @foreach (var chat in _chats)
+            {
+                <MessageItem Read="@chat.SeenLatestMessage" Chat="@chat">
                 </MessageItem>
+            }
             }
         </div>
     </div>
     <div class="d-flex flex-column chat-area col-9">
+        @if (chat == -1)
+        {
+            <p>Select a chat</p>
+        }else{
         <div
             class="d-flex align-items-center justify-content-between flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
             <span class="oi oi-chevron-left"></span>
@@ -64,18 +58,19 @@
                 <MessageComponent Text="Hello mate"></MessageComponent>
             </div>
         </div>
-        <div class="align-content-center chat-area-input d-flex p-2 row">
-            <EditForm Model="messageModel">
-                <DataAnnotationsValidator/>
-                <ValidationSummary/>
-                <div class="col-9">
-                    <InputText @bind-Value="messageModel.Message" type="text" id="message-input" class="form-control"/>
-                </div>
-                <div class="col-3 d-flex">
-                    <button type="submit" class="btn btn-primary col-12">Submit</button>
-                </div>
-            </EditForm>
-        </div>
+            <div class="align-content-center chat-area-input d-flex p-2 row">
+                <EditForm Model="messageModel">
+                    <DataAnnotationsValidator/>
+                    <ValidationSummary/>
+                    <div class="col-9">
+                        <InputText @bind-Value="messageModel.Message" type="text" id="message-input" class="form-control"/>
+                    </div>
+                    <div class="col-3 d-flex">
+                        <button type="submit" class="btn btn-primary col-12">Submit</button>
+                    </div>
+                </EditForm>
+            </div>
+        }
     </div>
 </div>
 
@@ -102,21 +97,28 @@
     private int filter = -1;
     private int chat = -1;
 
-
-        MessageModel messageModel = new MessageModel();
+    private EditContext editContext;
+    MessageModel messageModel = new MessageModel();
+    FilterModel filterModel = new FilterModel();
 
     class MessageModel
     {
         public string Message { get; set; }
     }
+    
 
     protected override void OnInitialized()
     {
+        editContext = new EditContext(filterModel);
+        editContext.OnFieldChanged += HandleFieldChanged;
+        
         var _filter = uriHelper.QueryString("filter");
         if (_filter != null && _filter.Trim() != "" && _filter.Trim() != "-1") filter = Convert.ToInt32(_filter);
         var _chat = uriHelper.QueryString("chat");
         if (_chat != null && _chat.Trim() != "") filter = Convert.ToInt32(_chat);
     }
+    
+    private IReadOnlyCollection<ChatDetailsDto>? _allChats { get; set; }
     private IReadOnlyCollection<ChatDetailsDto>? _chats { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -124,28 +126,22 @@
         try
         {
             var user = await localStore.GetItemAsync<UserDetailsDto>("user");
-            Posts = await Http.GetFromJsonAsync<List<PostDto>>("api/Post/supervisor/" + user.oid);
-            Posts?.Add(new PostDto(
-                1,
-                "this is a test title",
-                "Woah look at all this content",
-                DateTime.Now,
-                "11",
-                new HashSet<string>()
-                {
-                    "These", "are", "relevant", "Tags"
-                })); //TODO: remove once functional. 
-            var user = await localStore.GetItemAsync<UserDetailsDto>("user");
+            Posts = await _http.GetFromJsonAsync<List<PostDto>>("api/Post/supervisor/" + user.oid);
+            _allChats = await _http.GetFromJsonAsync<IReadOnlyCollection<ChatDetailsDto>>($"api/Chat/user/{user.oid}");
             _chats = await _http.GetFromJsonAsync<IReadOnlyCollection<ChatDetailsDto>>($"api/Chat/user/{user.oid}");
-                
         }
         catch (AccessTokenNotAvailableException exception)
         {
             exception.Redirect();
         }
     }
-}
 
+    private void HandleFieldChanged(object? sender, FieldChangedEventArgs e)
+    {
+        if (editContext is null) return;
+        FilterSelectValue = filterModel.title;
+
+    }
     private void UpdateMessages()
     {
         string urlString = $"{uriHelper.BaseUri}/messages";
@@ -164,13 +160,22 @@
             else
             {
                 urlString += "?chat=" + chat;
-                
             }
         }
         jsRuntime.InvokeVoidAsync("ChangeUrl", urlString);
+        _chats = _allChats;
+        if (filter != -1) _chats = _allChats.Where(c => c.ProjectId == filter).ToList();
     }
-    
+
     private PostDto? GetPostByTitle(string title) =>
         Posts?.FirstOrDefault(p => p.Title == title);
+
+    public void Dispose()
+    {
+        if (editContext is not null)
+        {
+            editContext.OnFieldChanged -= HandleFieldChanged;
+        }
+    }
 
 }

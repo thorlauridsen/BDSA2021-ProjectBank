@@ -13,9 +13,6 @@
 
     private string? Recipient { get; set; }
 
-    [Parameter]
-    public DateTime LastMessageDate { get; set; }
-
     private string _lastMessageDateString { get; set; }
 
     [Parameter]
@@ -29,8 +26,6 @@
 
     protected override void OnInitialized()
     {
-        //Calculate time
-        _lastMessageDateString = LastMessageDate.GetTimeSince();
         //Convert related posts to string
         _extraCSS = Read ? "" : "unread";
     }
@@ -42,6 +37,8 @@
         Recipient = targetUser.Name;
         var relatedPost = await _http.GetFromJsonAsync<PostDetailsDto>($"/api/Post/{Chat.ProjectId}");
         if (relatedPost?.Title != null) _relatedPostString = relatedPost.Title;
+        
+        _lastMessageDateString = Chat.LatestChatMessage.Timestamp.GetTimeSince();
         
     }
 
