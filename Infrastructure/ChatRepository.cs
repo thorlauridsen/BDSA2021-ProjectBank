@@ -1,3 +1,4 @@
+using System.Linq;
 using ProjectBank.Core;
 
 namespace ProjectBank.Infrastructure
@@ -71,11 +72,16 @@ namespace ProjectBank.Infrastructure
             return (Status.Created, new ChatMessageDetailsDto()
             {
                 Content = entityChatMessage.Content,
-                FromUser = new UserDto(entityChatMessage.FromUser.oid,entityChatMessage.FromUser.Name, entityChatMessage.FromUser.IsSupervisor),
+                FromUser = new UserDto(entityChatMessage.FromUser.oid,entityChatMessage.FromUser.Name),
                 Timestamp = entityChatMessage.Timestamp,
                 chatId = entityChatMessage.Chat.Id,
                 chatMessageId = entityChatMessage.Id
             });
+        }
+
+        public Task<ChatDetailsDto?> ReadChatAsync(int chatId)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<ChatMessageDto?> ReadSpecificMessageAsync(int chatMessageId)
@@ -85,7 +91,7 @@ namespace ProjectBank.Infrastructure
             return new ChatMessageDto()
             {
                 Content = chatMessage.Content,
-                FromUser = new UserDto(chatMessage.FromUser.oid,chatMessage.FromUser.Name, chatMessage.FromUser.IsSupervisor),
+                FromUser = new UserDto(chatMessage.FromUser.oid,chatMessage.FromUser.Name),
                 Timestamp = chatMessage.Timestamp,
             };
         }
@@ -96,7 +102,7 @@ namespace ProjectBank.Infrastructure
                           join cm in _context.ChatMessages
                           on c.Id equals cm.Chat.Id
                           where c.ChatUsers.Any(u => u.User.oid == userId)
-                          orderby cm.Timestamp descending
+                          orderby cm.Timestamp ascending 
                           select new ChatDetailsDto
                           {
                               ChatId = c.Id,
@@ -104,7 +110,7 @@ namespace ProjectBank.Infrastructure
                               LatestChatMessage = new ChatMessageDto()
                               {
                                   Content = cm.Content,
-                                  FromUser = new UserDto(cm.FromUser.oid, cm.FromUser.Name, cm.FromUser.IsSupervisor),
+                                  FromUser = new UserDto(cm.FromUser.oid, cm.FromUser.Name),
                                   Timestamp = cm.Timestamp
                               },
                               SeenLatestMessage = c.ChatUsers.First().SeenLatestMessage,
@@ -116,7 +122,7 @@ namespace ProjectBank.Infrastructure
             (await _context.ChatMessages.Where(c => c.Chat.Id == chatId)
                                         .Select(c => new ChatMessageDto
                                         {
-                                            FromUser = new UserDto(c.FromUser.oid, c.FromUser.Name, c.FromUser.IsSupervisor),
+                                            FromUser = new UserDto(c.FromUser.oid, c.FromUser.Name),
                                             Content = c.Content,
                                             Timestamp = c.Timestamp
 
@@ -124,16 +130,28 @@ namespace ProjectBank.Infrastructure
                                         .ToListAsync())
                                         .AsReadOnly();
 
-        public async Task<ChatDto?> ReadChatAsync(int chatId)
+        public async Task<ChatDetailsDto?> ReadChatAsync(int chatId, string userId)
         {
-            var chat = await _context.Chats.Include("Post").FirstOrDefaultAsync(c => c.Id == chatId);
-            if (chat == null) return null;
-            return new ChatDto()
-            {
-                ChatId = chat.Id,
-                ChatUserIds = chat.ChatUsers.Select(cu => cu.Id).ToHashSet(),
-                ProjectId = chat.Post?.Id ?? -1
-            };
+
+            var c = await _context.Chats
+                .Join(_context.ChatMessages, c => c.Id, cm => cm.Chat.Id, (c, cm) => new {c, cm})
+                .FirstOrDefaultAsync(@t => @t.c.Id == chatId);
+            if (c?.c.Post != null)
+                return new ChatDetailsDto()
+                {
+                    ChatId = c.c.Id,
+                    LatestChatMessage = new ChatMessageDto()
+                    {
+                        Content = c.cm.Content,
+                        FromUser = new UserDto(c.cm.FromUser.oid, c.cm.FromUser.Name),
+                        Timestamp = c.cm.Timestamp
+                    },
+                    TargetUserId = c.c.ChatUsers.First(ch => ch.User.oid != userId).User.oid,
+                    SeenLatestMessage = c.c.ChatUsers.FirstOrDefault(chatUser => chatUser.User.oid != userId)
+                        .SeenLatestMessage,
+                    ProjectId = c.c.Post.Id
+                };
+            return null;
         }
 
         private async Task<Chat> GetChatAsync(int chatId) =>

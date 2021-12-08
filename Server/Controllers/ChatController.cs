@@ -24,11 +24,11 @@ namespace ProjectBank.Server.Controllers
         }
 
         [Authorize]
-        [HttpGet("{chatId}", Name = "GetByChatId")]
+        [HttpGet("{chatId}/{userId}", Name = "GetByChatId")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ChatDto?> GetByChatId(int chatId)
-            => await _repository.ReadChatAsync(chatId);
+        public async Task<ChatDetailsDto?> GetByChatId(int chatId, string userId)
+            => await _repository.ReadChatAsync(chatId, userId);
 
         [Authorize]
         [HttpGet("message/{messageId}", Name = "GetByMessageId")]
@@ -45,7 +45,7 @@ namespace ProjectBank.Server.Controllers
             => await _repository.ReadAllChatsAsync(userId);
 
         [Authorize]
-        [HttpGet("{chatId}")]
+        [HttpGet("{chatId}/messages")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<IReadOnlyCollection<ChatMessageDto>> GetChatMessages(int chatId)
