@@ -8,6 +8,7 @@
 @inject ILogger<CreatePost> Logger
 @inject NavigationManager uriHelper;
 @inject HttpClient _http
+@inject ILocalStorageService localStore
 
 <PageTitle>Create post</PageTitle>
 
@@ -58,7 +59,7 @@
         {
             Title = postFormModel.Title,
             Content = postFormModel.Content,
-            SupervisorOid = "1", // TODO: Get correct SupervisorId from database. Be aware of friday 3.
+            SupervisorOid = (await localStore.GetItemAsync<UserDetailsDto>("user")).oid, 
             Tags = postFormModel.Tags.Split(",").Select(t => t.Trim()).ToHashSet()
         };
         var response = await _http.PostAsJsonAsync("api/Post", post);
