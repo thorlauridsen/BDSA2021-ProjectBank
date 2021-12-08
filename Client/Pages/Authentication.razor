@@ -24,12 +24,6 @@
 
     private IEnumerable<Claim> claims = Enumerable.Empty<Claim>();
 
-    public class CustomUserAccount : RemoteUserAccount
-    {
-        [JsonPropertyName("roles")]
-        public string[] Roles { get; set; } = Array.Empty<string>();
-    }
-
     private async void OnLoginSuccess()
     {
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
@@ -40,16 +34,11 @@
         claims = authUser.Claims;
         var enumerableClaims = claims.ToList();
         var oidClaim = enumerableClaims.GetClaim("oid");
-        var emailClaim = enumerableClaims.GetClaim("email");
         var nameClaim = authUser.Identity.Name;
-        var userIdentity = (ClaimsIdentity)authUser.Identity;
-        foreach (var role in account.Roles)
-        {
-            userIdentity.AddClaim(new Claim("appRole", role));
-            Console.WriteLine("Role: " + role);
-        }
+        var emailClaim = enumerableClaims.GetClaim("email");
+        var appRoleClaim = enumerableClaims.GetClaim("appRole");
+        var isSupervisor = appRoleClaim.ToLower().Equals("supervisor") ? true : false;
         
-
         var getRes = await _http.GetAsync("api/User/" + oidClaim);
         if (getRes.IsSuccessStatusCode)
         {
@@ -62,7 +51,7 @@
             //TODO: HANDLE ERRORS
         }
         //User does not exist
-        var postRes = await _http.PostAsJsonAsync("api/User/", new UserCreateDto{oid = oidClaim, Name = nameClaim, IsSupervisor = true});
+        var postRes = await _http.PostAsJsonAsync("api/User/", new UserCreateDto{oid = oidClaim, Name = nameClaim, IsSupervisor = isSupervisor});
         if (postRes.IsSuccessStatusCode)
         {
             var user = await postRes.Content.ReadFromJsonAsync<UserDetailsDto>();
