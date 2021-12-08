@@ -21,7 +21,7 @@ namespace Infrastructure.Tests
             var context = new ProjectBankContext(builder.Options);
             context.Database.EnsureCreated();
 
-            var user = new User { oid = "1", Name = "Claus", IsSupervisor = true };
+            var user = new User { oid = "1", Name = "Claus"};
             context.Users.Add(user);
             context.SaveChanges();
 
@@ -32,19 +32,18 @@ namespace Infrastructure.Tests
         [Fact]
         public async Task CreateAsync_creates_new_user_with_generated_id()
         {
-            var user = new UserCreateDto { oid = "2", Name = "Karsten", IsSupervisor = true };
+            var user = new UserCreateDto { oid = "2", Name = "Karsten"};
 
             var (status, created) = await _repository.CreateAsync(user);
 
             Assert.Equal("2", created?.oid);
             Assert.Equal(user.Name, created?.Name);
-            Assert.True(created?.IsSupervisor);
 
             var users = await _repository.ReadAsync();
 
             Assert.Collection(users,
-                s => Assert.Equal(new UserDto("1", "Claus", true), s),
-                s => Assert.Equal(new UserDto("2", "Karsten", true), s)
+                s => Assert.Equal(new UserDto("1", "Claus"), s),
+                s => Assert.Equal(new UserDto("2", "Karsten"), s)
             );
         }
 
@@ -54,7 +53,7 @@ namespace Infrastructure.Tests
             var users = await _repository.ReadAsync();
 
             Assert.Collection(users,
-                s => Assert.Equal(new UserDto("1", "Claus", true), s)
+                s => Assert.Equal(new UserDto("1", "Claus"), s)
             );
         }
 
