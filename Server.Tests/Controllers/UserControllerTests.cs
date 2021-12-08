@@ -25,7 +25,7 @@ namespace ProjectBank.Server.Tests.Controllers
 
             // Assert
             Assert.IsType<CreatedAtRouteResult>(result.Result);
-            var resultObject = GetResultContent<UserDetailsDto>(result);
+            var resultObject = GetCreatedResultContent<UserDetailsDto>(result);
             Assert.Equal(user, resultObject);
         }
 

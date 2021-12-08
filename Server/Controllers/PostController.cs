@@ -42,15 +42,19 @@ namespace ProjectBank.Server.Controllers
 
         [Authorize]
         [HttpGet("supervisor/{userId}")]
-        public async Task<IReadOnlyCollection<PostDto>> GetBySupervisor(string userId)
-            => await _repository.ReadAsyncBySupervisor(userId);
+        public async Task<ActionResult<IReadOnlyCollection<PostDto>>> GetBySupervisor(string userId){
+            var (status,posts) = await _repository.ReadAsyncBySupervisor(userId);
+            if(status == Status.NotFound) return NotFound();
+            return Ok(posts);
+        }
+            
 
         [Authorize]
         [HttpGet("{postId}/comments")]
         public async Task<IReadOnlyCollection<CommentDto>> GetComments(int postId)
         {
-            var (status, comments) = await _repository.ReadAsyncComments(postId);
-            return status.Equals(Status.Success) ? comments : null;
+            var comments = await _repository.ReadAsyncComments(postId);
+            return comments;
         }
 
         [Authorize]

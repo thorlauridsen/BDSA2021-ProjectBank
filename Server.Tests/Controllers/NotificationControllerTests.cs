@@ -49,7 +49,7 @@ namespace ProjectBank.Server.Tests.Controllers
 
             // Assert
             Assert.IsType<CreatedAtRouteResult>(result.Result);
-            var resultObject = GetResultContent<NotificationDetailsDto>(result);
+            var resultObject = GetCreatedResultContent<NotificationDetailsDto>(result);
             Assert.Equal(notification, resultObject);
         }
 
