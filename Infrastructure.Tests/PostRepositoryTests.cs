@@ -23,7 +23,7 @@ namespace Infrastructure.Tests
             var context = new ProjectBankContext(builder.Options);
             context.Database.EnsureCreated();
 
-            var user = new User {oid = "1", Name = "Bob" };
+            var user = new User { oid = "1", Name = "Bob" };
             context.Users.Add(user);
 
             var post = new Post
@@ -37,7 +37,7 @@ namespace Infrastructure.Tests
                     new() {Id =1, Content ="Hello",User= user,DateAdded = new DateTime(2021,12,6)}
                 },
                 User = user,
-                Tags = new HashSet<Tag> { new Tag("Math") }
+                Tags = new string[] { "Math" }
             };
             var post1 = new Post
             {
@@ -46,7 +46,7 @@ namespace Infrastructure.Tests
                 Content = "Something about physics and stuff",
                 DateAdded = today,
                 User = user,
-                Tags = new HashSet<Tag> { new Tag("Science"), new Tag("Physics") }
+                Tags = new string[] { "Science", "Physics" }
             };
 
 
@@ -103,23 +103,23 @@ namespace Infrastructure.Tests
         //TODO
         [Fact]
         public async Task ReadAsync_returns_all_posts()
-        {   
-            var actual =  await _repository.ReadAsync();
+        {
+            var actual = await _repository.ReadAsync();
 
             var actual1 = actual.ElementAt(0);
             var actual2 = actual.ElementAt(1);
 
-            Assert.Equal(1,actual1.Id);
+            Assert.Equal(1, actual1.Id);
             Assert.Equal("Math Project", actual1.Title);
             Assert.Equal("Bla bla bla bla", actual1.Content);
-            Assert.Equal(today, actual1.DateAdded); 
+            Assert.Equal(today, actual1.DateAdded);
             Assert.Equal("1", actual1.SupervisorOid);
             Assert.Equal(1, actual1.Tags.Count);
 
-            Assert.Equal(2,actual2.Id);
+            Assert.Equal(2, actual2.Id);
             Assert.Equal("Physics Project", actual2.Title);
             Assert.Equal("Something about physics and stuff", actual2.Content);
-            Assert.Equal(today, actual2.DateAdded); 
+            Assert.Equal(today, actual2.DateAdded);
             Assert.Equal("1", actual2.SupervisorOid);
             Assert.Equal(2, actual2.Tags.Count);
 
@@ -133,38 +133,38 @@ namespace Infrastructure.Tests
             var actual1 = actual.ElementAt(0);
             var actual2 = actual.ElementAt(1);
 
-            Assert.Equal(1,actual1.Id);
+            Assert.Equal(1, actual1.Id);
             Assert.Equal("Math Project", actual1.Title);
             Assert.Equal("Bla bla bla bla", actual1.Content);
-            Assert.Equal(today, actual1.DateAdded); 
+            Assert.Equal(today, actual1.DateAdded);
             Assert.Equal("1", actual1.SupervisorOid);
             Assert.Equal(1, actual1.Tags.Count);
 
-            Assert.Equal(2,actual2.Id);
+            Assert.Equal(2, actual2.Id);
             Assert.Equal("Physics Project", actual2.Title);
             Assert.Equal("Something about physics and stuff", actual2.Content);
-            Assert.Equal(today, actual2.DateAdded); 
+            Assert.Equal(today, actual2.DateAdded);
             Assert.Equal("1", actual2.SupervisorOid);
             Assert.Equal(2, actual2.Tags.Count);
 
         }
 
-        
+
 
         //TODO
         [Fact]
         public async Task ReadAsyncByTag_given_tag_math_returns_post()
         {
             //var actual = await _repository.ReadAsyncByTag("Math");
-    
+
         }
-        
+
         //TODO
         [Fact]
         public async Task ReadAsyncByTag_given_non_existing_tag_returns_none()
         {
             //var actual = await _repository.ReadAsyncByTag("Nothing");
-    
+
         }
 
 

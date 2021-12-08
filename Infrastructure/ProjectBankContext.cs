@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+
 namespace ProjectBank.Infrastructure
 {
     public class ProjectBankContext : DbContext, IProjectBankContext
@@ -16,6 +18,16 @@ namespace ProjectBank.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Post>()
+                        .Property(p => p.Tags)
+                        .HasConversion(
+                            v => string.Join(',', v),
+                            v => v.Split(',', StringSplitOptions.RemoveEmptyEntries),
+
+                            new ValueComparer<string[]>(
+                                (c1, c2) => c1.SequenceEqual(c2),
+                                c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())))
+                            );
         }
     }
 }
