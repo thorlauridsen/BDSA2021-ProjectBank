@@ -6,7 +6,7 @@
 
 <PageTitle>Project Bank</PageTitle>
 <Content>
-    <ChildContent>
+    <Padding>
         <AuthorizeView>
             <Authorized>
                 <h1>Hello, @context.User.Identity?.Name!</h1>
@@ -26,7 +26,7 @@
                 <h1>Welcome to project bank, log in <a href="authentication/login">here</a></h1>
             </NotAuthorized>
         </AuthorizeView>
-    </ChildContent>
+    </Padding>
 </Content>
 
 @code
