@@ -19,9 +19,13 @@ CODE COVERAGE
 
     dotnet test /p:CollectCoverage=true
     
-Supervisor login:
-Login with your own microsoft accounts
+Supervisor test user:
+- Email: john@phlegetonoutlook.onmicrosoft.com
+- Password: 82ss8zhC5Hxynfp9hDLMT4kU2aswAXD
 
 Student test user:
-email: chris@phlegetonoutlook.onmicrosoft.com
-password: NnqaGYX4P2RmDFQcBAfAYNfECuDk7ck
+- Email: chris@phlegetonoutlook.onmicrosoft.com
+- Password: NnqaGYX4P2RmDFQcBAfAYNfECuDk7ck
+ 
+ITU mail login:
+- Login with your ITU mail (Only works for pate@itu.dk, rnie@itu.dk and the group)
