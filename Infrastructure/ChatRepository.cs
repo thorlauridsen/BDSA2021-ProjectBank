@@ -114,7 +114,9 @@ namespace ProjectBank.Infrastructure
                     },
                     SeenLatestMessage = c.ChatUsers.First().SeenLatestMessage,
                     ProjectId = c.Post.Id
-                }).ToListAsync();
+                }).GroupBy(dto => dto.ChatId)
+                .Select(group => group.First(dto => dto.LatestChatMessage.Timestamp == group.Max(dto => dto.LatestChatMessage.Timestamp)))
+                .ToListAsync();
         }
 
         public async Task<IReadOnlyCollection<ChatMessageDto>> ReadSpecificChatAsync(int chatId) =>
