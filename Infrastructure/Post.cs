@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using ProjectBank.Core;
 
 namespace ProjectBank.Infrastructure
 {
@@ -19,5 +20,9 @@ namespace ProjectBank.Infrastructure
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
         public string[]? Tags { get; set; } = null!;
+
+        public PostState PostState { get; set; }
+
+        public int ViewCount { get; set; }
     }
 }

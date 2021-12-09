@@ -21,7 +21,9 @@ namespace ProjectBank.Server.Tests.Controllers
                 "My Cool Biology Project",
                 DateTime.Now,
                 "1",
-                new HashSet<string>() { "Biology" }
+                new HashSet<string>() { "Biology" },
+                PostState.Active,
+                0
             );
             var repository = new Mock<IPostRepository>();
             repository.Setup(m => m.CreateAsync(toCreate)).ReturnsAsync((Created, created));
@@ -79,7 +81,9 @@ namespace ProjectBank.Server.Tests.Controllers
                 "My Cool Biology Project",
                 DateTime.Now,
                 "1",
-                new HashSet<string>() { "Biology" }
+                new HashSet<string>() { "Biology" },
+                PostState.Active,
+                0
             );
             repository.Setup(m => m.ReadAsync(1)).ReturnsAsync(post);
             var controller = new PostController(logger.Object, repository.Object);

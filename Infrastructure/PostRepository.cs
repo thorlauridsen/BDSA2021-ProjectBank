@@ -1,4 +1,3 @@
-using System.Collections.Immutable;
 using Microsoft.EntityFrameworkCore;
 using ProjectBank.Infrastructure;
 using static ProjectBank.Core.Status;
@@ -31,7 +30,8 @@ namespace ProjectBank.Core
                 Content = post.Content,
                 DateAdded = DateTime.Now,
                 User = user,
-                Tags = post.Tags.ToArray()
+                Tags = post.Tags.ToArray(),
+                PostState = PostState.Active
             };
             _context.Posts.Add(entity);
             await _context.SaveChangesAsync();
@@ -42,7 +42,9 @@ namespace ProjectBank.Core
                 entity.Content,
                 entity.DateAdded,
                 entity.User.oid,
-                entity.Tags.ToHashSet()
+                entity.Tags.ToHashSet(),
+                entity.PostState,
+                entity.ViewCount
             ));
         }
 
@@ -54,7 +56,9 @@ namespace ProjectBank.Core
                     p.Content,
                     p.DateAdded,
                     p.User.oid,
-                    p.Tags.ToHashSet()
+                    p.Tags.ToHashSet(),
+                    p.PostState,
+                    p.ViewCount
                 ))
                 .FirstOrDefaultAsync();
 
@@ -66,7 +70,9 @@ namespace ProjectBank.Core
                     p.Content,
                     p.DateAdded,
                     p.User.oid,
-                    p.Tags.ToHashSet()
+                    p.Tags.ToHashSet(),
+                    p.PostState,
+                    p.ViewCount
                 ))
                 .ToListAsync())
             .AsReadOnly();
@@ -88,7 +94,9 @@ namespace ProjectBank.Core
                     p.Content,
                     p.DateAdded,
                     p.User.oid,
-                    p.Tags.ToHashSet()
+                    p.Tags.ToHashSet(),
+                    p.PostState,
+                    p.ViewCount
                 ))
                 .ToListAsync())
             .AsReadOnly();
@@ -106,7 +114,9 @@ namespace ProjectBank.Core
                     p.Content,
                     p.DateAdded,
                     p.User.oid,
-                    p.Tags.ToHashSet()
+                    p.Tags.ToHashSet(),
+                    p.PostState,
+                    p.ViewCount
                 ))
                 .ToListAsync())
             .AsReadOnly();
@@ -145,6 +155,8 @@ namespace ProjectBank.Core
             entity.Title = post.Title;
             entity.Content = post.Content;
             entity.Tags = post.Tags.ToArray();
+            entity.PostState = post.PostState;
+            entity.ViewCount = post.ViewCount;
 
             await _context.SaveChangesAsync();
 

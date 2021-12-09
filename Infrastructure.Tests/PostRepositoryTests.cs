@@ -45,7 +45,9 @@ namespace Infrastructure.Tests
                 DateAdded = today,
                 Comments = new List<Comment>() { comment },
                 User = user,
-                Tags = new string[] { "Math" }
+                Tags = new string[] { "Math" },
+                PostState = PostState.Active,
+                ViewCount = 22
             };
             var post2 = new Post
             {
@@ -54,7 +56,9 @@ namespace Infrastructure.Tests
                 Content = "Something about physics and stuff",
                 DateAdded = today,
                 User = user,
-                Tags = new string[] { "Science", "Physics" }
+                Tags = new string[] { "Science", "Physics" },
+                PostState = PostState.Active,
+                ViewCount = 13
             };
 
             context.Posts.Add(post1);
@@ -66,7 +70,7 @@ namespace Infrastructure.Tests
         }
 
         [Fact]
-        public async Task CreateAsync_creates_new_post_with_generated_id_then_delete()
+        public async Task CreateAsync_creates_new_post_with_generated_id_then_update_then_delete()
         {
             var post = new PostCreateDto
             {
@@ -85,6 +89,29 @@ namespace Infrastructure.Tests
             Assert.Equal("Bla bla bla bla", content?.Content);
             Assert.Equal("1", content?.SupervisorOid);
             Assert.True(content?.Tags.SetEquals(new[] { "bio", "dna", "cells" }));
+            Assert.Equal(PostState.Active, content?.PostState);
+            Assert.Equal(0, content?.ViewCount);
+
+            var updatePost = new PostUpdateDto
+            {
+                Id = 3,
+                Title = "Biology Project 2",
+                Content = "New content but archived",
+                SupervisorOid = "1",
+                Tags = new HashSet<string> { "bio", "dna", "cells" },
+                PostState = PostState.Archived,
+                ViewCount = 1
+            };
+
+            var updateStatus = await _repository.UpdateAsync(3, updatePost);
+            Assert.Equal(Updated, updateStatus);
+
+            var option = await _repository.ReadAsync(3);
+
+            Assert.Equal("Biology Project 2", option.Value.Title);
+            Assert.Equal("New content but archived", option.Value.Content);
+            Assert.Equal(PostState.Archived, option.Value.PostState);
+            Assert.Equal(1, option.Value.ViewCount);
 
             var response = await _repository.DeleteAsync(3);
             Assert.Equal(Deleted, response);
@@ -133,6 +160,8 @@ namespace Infrastructure.Tests
             Assert.Equal(today, option.Value.DateAdded);
             Assert.Equal("1", option.Value.SupervisorOid);
             Assert.Equal(1, option.Value.Tags.Count);
+            Assert.Equal(PostState.Active, option.Value.PostState);
+            Assert.Equal(22, option.Value.ViewCount);
         }
 
         [Fact]
@@ -160,6 +189,8 @@ namespace Infrastructure.Tests
             Assert.Equal(today, post1.DateAdded);
             Assert.Equal("1", post1.SupervisorOid);
             Assert.Equal(1, post1.Tags.Count);
+            Assert.Equal(PostState.Active, post1.PostState);
+            Assert.Equal(22, post1.ViewCount);
 
             Assert.Equal(2, post2.Id);
             Assert.Equal("Physics Project", post2.Title);
@@ -167,6 +198,8 @@ namespace Infrastructure.Tests
             Assert.Equal(today, post2.DateAdded);
             Assert.Equal("1", post2.SupervisorOid);
             Assert.Equal(2, post2.Tags.Count);
+            Assert.Equal(PostState.Active, post2.PostState);
+            Assert.Equal(13, post2.ViewCount);
         }
 
         //TODO
@@ -186,6 +219,8 @@ namespace Infrastructure.Tests
             Assert.Equal(today, post1.DateAdded);
             Assert.Equal("1", post1.SupervisorOid);
             Assert.Equal(1, post1.Tags.Count);
+            Assert.Equal(PostState.Active, post1.PostState);
+            Assert.Equal(22, post1.ViewCount);
 
             Assert.Equal(2, post2.Id);
             Assert.Equal("Physics Project", post2.Title);
@@ -193,6 +228,8 @@ namespace Infrastructure.Tests
             Assert.Equal(today, post2.DateAdded);
             Assert.Equal("1", post2.SupervisorOid);
             Assert.Equal(2, post2.Tags.Count);
+            Assert.Equal(PostState.Active, post2.PostState);
+            Assert.Equal(13, post2.ViewCount);
         }
 
         [Fact]
