@@ -85,13 +85,13 @@
             Title = "New comment",
             Content = $"{user.Name} has commented on your post",
             UserOid = user.oid,
-            Link = $"/Messages/ + {chat.ChatId}" //todo: Should link to the correct address
+            Link = $"/Messages/?chat={chat.ChatId}"
         };
         var messageResponse = await _http.PostAsJsonAsync("api/Chat/message", message);
         if (messageResponse.IsSuccessStatusCode)
         {
             await _http.PostAsJsonAsync("api/Notification", notification);
-            uriHelper.NavigateTo("/Messages/" + chat.ChatId);
+            uriHelper.NavigateTo($"/Messages/?chat={chat.ChatId}");
         }
         else
         {

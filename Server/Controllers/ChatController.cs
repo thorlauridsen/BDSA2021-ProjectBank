@@ -58,7 +58,8 @@ namespace ProjectBank.Server.Controllers
         public async Task<ActionResult<ChatDto>> Post(ChatCreateDto chat)
         {
             var (status, created) = await _repository.CreateNewChatAsync(chat);
-            return CreatedAtRoute(nameof(GetByChatId), new { chatId = created?.ChatId }, created);
+            if (created == null) return new BadRequestResult();
+            return CreatedAtRoute(nameof(GetByChatId), new { chatId = created?.ChatId, userId = chat.FromUserId }, created);
         }
 
         [Authorize]
@@ -68,7 +69,7 @@ namespace ProjectBank.Server.Controllers
         public async Task<ActionResult<ChatMessageDetailsDto>> Post(ChatMessageCreateDto chat)
         {
             var (status, created) = await _repository.CreateNewChatMessageAsync(chat);
-            return CreatedAtRoute(nameof(GetByMessageId), new { chatId = created.chatId, messageId = created.chatMessageId }, created);
+            return CreatedAtRoute(nameof(GetByMessageId), new { messageId = created.chatMessageId }, created);
         }
     }
 }
