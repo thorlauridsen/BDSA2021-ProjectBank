@@ -79,9 +79,9 @@ namespace Infrastructure.Tests
         {
             var actual = await _repository.ReadAllChatsAsync("1");
 
-            var expected1 = new ChatDetailsDto { ChatId = 1, TargetUserId = "2", LatestChatMessage = new ChatMessageDto(){Content = "to Bo", FromUser = new UserDto("1", "Per"), Timestamp = DateTime.Now}, SeenLatestMessage = false };
-            var expected2 = new ChatDetailsDto { ChatId = 2, TargetUserId = "3", LatestChatMessage = new ChatMessageDto(){Content = "to Per", FromUser = new UserDto("3", "Alice"), Timestamp = DateTime.Now}, SeenLatestMessage = false };
-
+            var expected1 = new ChatDetailsDto { ChatId = 2, TargetUserId = "3", LatestChatMessage = new ChatMessageDto(){Content = "to Per", FromUser = new UserDto("3", "Alice"), Timestamp = DateTime.Now}, SeenLatestMessage = false };
+            var expected2 = new ChatDetailsDto { ChatId = 1, TargetUserId = "2", LatestChatMessage = new ChatMessageDto(){Content = "to Bo", FromUser = new UserDto("1", "Per"), Timestamp = DateTime.Now}, SeenLatestMessage = false };
+            
             var actual1 = actual.ElementAt(0);
             var actual2 = actual.ElementAt(1);
 

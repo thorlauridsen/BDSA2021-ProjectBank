@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using ProjectBank.Core;
 using static ProjectBank.Core.Status;
 
@@ -97,26 +98,23 @@ namespace ProjectBank.Infrastructure
 
         public async Task<IReadOnlyCollection<ChatDetailsDto>> ReadAllChatsAsync(string userId)
         {
-            return await (from c in _context.Chats
-                join cm in _context.ChatMessages
-                    on c.Id equals cm.Chat.Id
-                where c.ChatUsers.Any(u => u.User.oid == userId)
-                orderby cm.Timestamp ascending
-                select new ChatDetailsDto
+            return (await _context.Chats
+                .Join(_context.ChatMessages, c => c.Id, cm => cm.Chat.Id, (c, cm) => new {c, cm})
+                .Where(@t => @t.c.ChatUsers.Any(u => u.User.oid == userId))
+                .OrderByDescending(@t => @t.cm.Timestamp)
+                .Select(@t => new ChatDetailsDto
                 {
-                    ChatId = c.Id,
-                    TargetUserId = c.ChatUsers.First(ch => ch.User.oid != userId).User.oid,
+                    ChatId = @t.c.Id,
+                    TargetUserId = @t.c.ChatUsers.First(ch => ch.User.oid != userId).User.oid,
                     LatestChatMessage = new ChatMessageDto()
                     {
-                        Content = cm.Content,
-                        FromUser = new UserDto(cm.FromUser.oid, cm.FromUser.Name),
-                        Timestamp = cm.Timestamp
+                        Content = @t.cm.Content,
+                        FromUser = new UserDto(@t.cm.FromUser.oid, @t.cm.FromUser.Name),
+                        Timestamp = @t.cm.Timestamp
                     },
-                    SeenLatestMessage = c.ChatUsers.First().SeenLatestMessage,
-                    ProjectId = c.Post.Id
-                }).GroupBy(dto => dto.ChatId)
-                .Select(group => group.First(dto => dto.LatestChatMessage.Timestamp == group.Max(dto => dto.LatestChatMessage.Timestamp)))
-                .ToListAsync();
+                    SeenLatestMessage = @t.c.ChatUsers.First().SeenLatestMessage,
+                    ProjectId = @t.c.Post.Id
+                }).ToListAsync().WaitAsync(TimeSpan.FromMinutes(10))).DistinctBy(dto => dto.ChatId).ToList();
         }
 
         public async Task<IReadOnlyCollection<ChatMessageDto>> ReadSpecificChatAsync(int chatId) =>
