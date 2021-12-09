@@ -130,7 +130,7 @@ namespace ProjectBank.Infrastructure
 
         public async Task<ChatDetailsDto?> ReadChatAsync(int chatId, string userId)
         {
-            var result = await _context.Chats.Include("ChatUsers").Include("Post") //Få alle chats
+            var result = await _context.Chats.Include("ChatUsers").Include("ChatUsers.User").Include("Post") //Få alle chats
                 .Join(_context.ChatMessages.Include("FromUser"), //Join det med ChatMessages så vi får en tuple
                     chat => chat.Id,
                     chatMessage => chatMessage.Chat.Id,
@@ -143,7 +143,8 @@ namespace ProjectBank.Infrastructure
                 FromUser = new UserDto(result.chatMessage.FromUser.oid, result.chatMessage.FromUser.Name),
                 Timestamp = result.chatMessage.Timestamp
             };
-            var targetUserId = result.chat.ChatUsers.First(ch => ch.User.oid != userId).User.oid;
+            var targetUser = result.chat.ChatUsers.First(ch => ch.User.oid != userId);
+            var targetUserId = targetUser.User.oid;
             var seenLatestMessage = result.chat.ChatUsers.FirstOrDefault(chatUser => chatUser.User.oid != userId)
                 .SeenLatestMessage;
             return new ChatDetailsDto()
