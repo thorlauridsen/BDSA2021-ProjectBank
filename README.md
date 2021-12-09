@@ -10,9 +10,12 @@ Start database in docker:
     $connectionString = "Server=localhost;Database=$database;User Id=sa;Password=$password"
     dotnet user-secrets set "ConnectionStrings:ProjectBank" "$connectionString" --project .\Server\
     
-Run initial migration: (Only necessary if there is no existing InitialMigration folder)
+Navigate to the Infrastructure directory
     
     cd .\Infrastructure\
+    
+Run initial migration: (Only necessary if there is no existing InitialMigration folder)
+    
     dotnet ef migrations add InitialMigration -s ..\Server\
     
 Update database:
