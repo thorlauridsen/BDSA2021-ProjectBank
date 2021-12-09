@@ -91,7 +91,7 @@
         if (messageResponse.IsSuccessStatusCode)
         {
             await _http.PostAsJsonAsync("api/Notification", notification);
-            uriHelper.NavigateTo("/Messages/" + chat.ChatId);
+            uriHelper.NavigateTo($"/Messages/?chat={chat.ChatId}");
         }
         else
         {
