@@ -58,7 +58,7 @@ namespace ProjectBank.Server.Controllers
         public async Task<ActionResult<ChatDto>> Post(ChatCreateDto chat)
         {
             var (status, created) = await _repository.CreateNewChatAsync(chat);
-            return CreatedAtRoute(nameof(GetByChatId), new { chatId = created?.ChatId }, created);
+            return CreatedAtRoute(nameof(GetByChatId), new { chatId = created?.ChatId, userId = chat.FromUserId }, created);
         }
 
         [Authorize]
