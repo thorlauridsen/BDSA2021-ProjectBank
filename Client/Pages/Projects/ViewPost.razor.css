@@ -1,3 +1,17 @@
 ﻿.supervisor-image {
     margin-top: -3rem;
 }
+
+.btn-delete {
+    color: #fff;
+    background-color: #e00c0c;
+    border: none;
+    box-shadow: 0 0 5px #c11818;
+    font-weight: bold;
+}
+
+.btn-view-conversations {
+    border: none;
+    box-shadow: 0 0 5px #198754;
+    font-weight: bold;
+}
