@@ -248,11 +248,17 @@ namespace Infrastructure.Tests
             Assert.Empty(content);
         }
 
-        //TODO
         [Fact]
         public async Task ReadAsyncByTag_given_tag_math_returns_post()
         {
-            //var actual = await _repository.ReadAsyncByTag("Math");
+            var actual = (await _repository.ReadAsyncByTag("Math")).ElementAt(0);
+
+            Assert.Equal(1, actual.Id);
+            Assert.Equal("Math Project", actual.Title);
+            Assert.Equal("Bla bla bla bla", actual.Content);
+            Assert.Equal(today, actual.DateAdded);
+            Assert.Equal("1", actual.SupervisorOid);
+            Assert.Equal(1, actual.Tags.Count);
         }
 
         //TODO
