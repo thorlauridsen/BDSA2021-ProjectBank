@@ -2,7 +2,7 @@ namespace ProjectBank.Core
 {
     public record ChatCreateDto
     {
-        public int ProjectId { get; init; }
+        public int? ProjectId { get; init; }
         public string FromUserId { get; init; }
         public HashSet<string> ChatUserIds { get; init; }
     }
@@ -33,7 +33,7 @@ namespace ProjectBank.Core
     public record ChatDto
     {
         public int ChatId { get; init; }
-        public int ProjectId { get; init; }
+        public int? ProjectId { get; init; }
         public HashSet<int> ChatUserIds { get; init; }
     }
 
@@ -41,7 +41,7 @@ namespace ProjectBank.Core
     {
         public int ChatId { get; init; }
 
-        public int ProjectId { get; set; }
+        public int? ProjectId { get; set; }
         public string TargetUserId { get; init; }
 
         public ChatMessageDto LatestChatMessage { get; init; }

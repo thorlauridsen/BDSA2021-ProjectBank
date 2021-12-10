@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using ProjectBank.Core;
 using static ProjectBank.Core.Status;
 
@@ -62,14 +61,6 @@ namespace ProjectBank.Infrastructure
             entityChatMessage.Chat.ChatUsers.Where(cu => cu.User.oid != chatMessage.FromUserId)
                 .Select(cu => cu.SeenLatestMessage = false);
 
-            // foreach (var chatUser in entityChatMessage.Chat.ChatUsers)
-            // {
-            //     if (chatUser.Id != chatMessage.FromUserId)
-            //     {
-            //         chatUser.SeenLatestMessage = false;
-            //     }
-            // }
-
             _context.ChatMessages.Add(entityChatMessage);
             await _context.SaveChangesAsync();
 
@@ -99,7 +90,7 @@ namespace ProjectBank.Infrastructure
         public async Task<IReadOnlyCollection<ChatDetailsDto>> ReadAllChatsAsync(string userId)
         {
             return (await _context.Chats
-                .Join(_context.ChatMessages, c => c.Id, cm => cm.Chat.Id, (c, cm) => new {c, cm})
+                .Join(_context.ChatMessages, c => c.Id, cm => cm.Chat.Id, (c, cm) => new { c, cm })
                 .Where(@t => @t.c.ChatUsers.Any(u => u.User.oid == userId))
                 .OrderByDescending(@t => @t.cm.Timestamp)
                 .Select(@t => new ChatDetailsDto
@@ -114,6 +105,7 @@ namespace ProjectBank.Infrastructure
                     },
                     SeenLatestMessage = @t.c.ChatUsers.First().SeenLatestMessage,
                     ProjectId = @t.c.Post.Id
+
                 }).ToListAsync().WaitAsync(TimeSpan.FromMinutes(10))).DistinctBy(dto => dto.ChatId).ToList();
         }
 
@@ -134,19 +126,23 @@ namespace ProjectBank.Infrastructure
                 .Join(_context.ChatMessages.Include("FromUser"), //Join det med ChatMessages så vi får en tuple
                     chat => chat.Id,
                     chatMessage => chatMessage.Chat.Id,
-                    (c, cm) => new {chat = c, chatMessage = cm})
-                .FirstOrDefaultAsync(t => t.chat.Id == chatId);//Tag den første tuple
+                    (c, cm) => new { chat = c, chatMessage = cm })
+                .FirstOrDefaultAsync(t => t.chat.Id == chatId); //Tag den første tuple
+
             if (result?.chat.Post == null) return null;
+
             var latestChatMessage = new ChatMessageDto()
             {
                 Content = result.chatMessage.Content,
                 FromUser = new UserDto(result.chatMessage.FromUser.oid, result.chatMessage.FromUser.Name),
                 Timestamp = result.chatMessage.Timestamp
             };
+
             var targetUser = result.chat.ChatUsers.First(ch => ch.User.oid != userId);
             var targetUserId = targetUser.User.oid;
             var seenLatestMessage = result.chat.ChatUsers.FirstOrDefault(chatUser => chatUser.User.oid != userId)
                 .SeenLatestMessage;
+
             return new ChatDetailsDto()
             {
                 ChatId = result.chat.Id,
@@ -164,7 +160,7 @@ namespace ProjectBank.Infrastructure
         private async Task<User> GetUserAsync(string userId) =>
             await _context.Users.FirstAsync(u => u.oid == userId);
 
-        private async Task<Post> GetPostAsync(int postId) =>
-            await _context.Posts.FirstAsync(p => p.Id == postId);
+        private async Task<Post?> GetPostAsync(int? postId) =>
+            await _context.Posts.FirstOrDefaultAsync(p => p.Id == postId);
     }
 }
