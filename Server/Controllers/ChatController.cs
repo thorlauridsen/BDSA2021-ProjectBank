@@ -53,7 +53,7 @@ namespace ProjectBank.Server.Controllers
 
         [Authorize]
         [HttpPost]
-        [ProducesResponseType(typeof(ChatDto), 201)]
+        [ProducesResponseType(201)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<ChatDto>> Post(ChatCreateDto chat)
         {

@@ -25,7 +25,7 @@ namespace ProjectBank.Server.Controllers
 
         [Authorize]
         [HttpPost]
-        [ProducesResponseType(typeof(NotificationDetailsDto), 201)]
+        [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         public async Task<ActionResult<NotificationDetailsDto>> Post(NotificationCreateDto notification)
         {
@@ -39,7 +39,7 @@ namespace ProjectBank.Server.Controllers
 
         [Authorize]
         [HttpGet("{userId}", Name = "GetNotificationByUserId")]
-        [ProducesResponseType(typeof(IReadOnlyCollection<NotificationDetailsDto>), 200)]
+        [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<IReadOnlyCollection<NotificationDetailsDto>> GetNotificationByUserId(string userId)
             => await _repository.GetNotificationsAsync(userId);

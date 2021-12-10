@@ -64,7 +64,7 @@ namespace ProjectBank.Server.Controllers
 
         [Authorize(Roles = "Supervisor")]
         [HttpPost]
-        [ProducesResponseType(typeof(PostDetailsDto), 201)]
+        [ProducesResponseType(201)]
         [ProducesResponseType(403)]
         public async Task<ActionResult<PostDetailsDto>> Post(PostCreateDto post)
         {

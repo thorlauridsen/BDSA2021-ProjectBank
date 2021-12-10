@@ -25,20 +25,20 @@ namespace ProjectBank.Server.Controllers
 
         [Authorize]
         [HttpGet]
-        [ProducesResponseType(typeof(IReadOnlyCollection<UserDto>), 200)]
+        [ProducesResponseType(200)]
         public async Task<IReadOnlyCollection<UserDto>> Get()
             => await _repository.ReadAsync();
 
         [Authorize]
         [HttpGet("{userId}", Name = "GetByUserId")]
-        [ProducesResponseType(typeof(UserDetailsDto), 200)]
+        [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<UserDetailsDto>> GetByUserId(string userId)
             => (await _repository.ReadAsync(userId)).ToActionResult();
 
         [Authorize]
         [HttpPost]
-        [ProducesResponseType(typeof(UserDetailsDto), 201)]
+        [ProducesResponseType(201)]
         public async Task<ActionResult<UserDetailsDto>> Post(UserCreateDto user)
         {
             var (status, created) = await _repository.CreateAsync(user);
