@@ -265,7 +265,8 @@ namespace Infrastructure.Tests
         [Fact]
         public async Task ReadAsyncByTag_given_non_existing_tag_returns_none()
         {
-            //var actual = await _repository.ReadAsyncByTag("Nothing");
+            var actual = await _repository.ReadAsyncByTag("Nothing");
+            Assert.Empty(actual);
         }
 
         [Fact]
