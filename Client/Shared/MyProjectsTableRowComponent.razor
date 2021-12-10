@@ -1,31 +1,38 @@
 ﻿@using ProjectBank.Core
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using ProjectBank.Client.Extensions
-
-
+@using System.Globalization
+@if (Post != null)
+{
     <tr>
         <td>@Post.Title</td>
-        <td>@Post.DateAdded.ToString()</td>
+        <td>@Post.DateAdded.ToString(CultureInfo.CurrentCulture)</td>
         <td>tbd, post.state</td>
-       <td><EditForm Model="postSelectorModel">
-                            <InputSelect class="form-select" @bind-Value="postSelectorModel.projectTitle">
-                                <option selected>Actions</option>
-                                <option>Edit</option>
-                                <option>Close</option>
-                                <option>Archive</option>
-                                <option>Delete</option>
-                            </InputSelect>
-                        </EditForm></td>
+        <td>
+            <EditForm Model="postSelectorModel">
+                <InputSelect class="form-select" @bind-Value="postSelectorModel.projectTitle">
+                    <option selected>Actions</option>
+                    <option>Edit</option>
+                    <option>Close</option>
+                    <option>Archive</option>
+                    <option>Delete</option>
+                </InputSelect>
+            </EditForm>
+        </td>
     </tr>
+}
 
 
 @code {
-    [Parameter] 
-    public PostDetailsDto? Post { get; set; }
-    
+
+    [Parameter]
+    public PostDto? Post { get; set; }
+
     PostSelectorModel postSelectorModel = new PostSelectorModel();
+
     class PostSelectorModel
     {
         public string projectTitle { get; set; }
     }
+
 }
