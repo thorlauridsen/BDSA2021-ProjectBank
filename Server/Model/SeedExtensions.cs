@@ -19,14 +19,14 @@ namespace ProjectBank.Server.Model
         {
             await context.Database.MigrateAsync();
 
-            var user1 = new User { oid = "1", Name = "Paolo" };
-            var user2 = new User { oid = "2", Name = "Tue" };
-            var generatedUser4 = new User { oid = "3", Name = "Aaron Duane" };
-            var generatedUser5 = new User { oid = "4", Name = "P─▒nar T├Âz├╝n" };
-            var generatedUser0 = new User { oid = "5", Name = "Veronika Cheplygina" };
-            var generatedUser1 = new User { oid = "6", Name = "Sebastian B├╝ttrich" };
-            var generatedUser2 = new User { oid = "7", Name = "Maria Astefanoaei" };
-            var generatedUser3 = new User { oid = "8", Name = "Björn Þór Jónsson" };
+            var user1 = new User { oid = "1", Name = "Paolo", Email = "paolo@outlook.com" };
+            var user2 = new User { oid = "2", Name = "Tue", Email = "tue@outlook.com" };
+            var generatedUser4 = new User { oid = "3", Name = "Aaron Duane", Email = "aaron@outlook.com" };
+            var generatedUser5 = new User { oid = "4", Name = "P─▒nar T├Âz├╝n", Email = "pnar@outlook.com" };
+            var generatedUser0 = new User { oid = "5", Name = "Veronika Cheplygina", Email = "veronika@outlook.com" };
+            var generatedUser1 = new User { oid = "6", Name = "Sebastian B├╝ttrich", Email = "sebastian@outlook.com" };
+            var generatedUser2 = new User { oid = "7", Name = "Maria Astefanoaei", Email = "maria@outlook.com" };
+            var generatedUser3 = new User { oid = "8", Name = "Björn Þór Jónsson", Email = "bjorn@outlook.com" };
 
             if (!await context.Users.AnyAsync())
             {

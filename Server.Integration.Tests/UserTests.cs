@@ -40,7 +40,8 @@ namespace ProjectBank.Server.Integration.Tests
             var user = new UserCreateDto
             {
                 oid = "3",
-                Name = "Rasmus"
+                Name = "Rasmus",
+                Email = "rasmus@outlook.com"
             };
             var response = await _client.PostAsJsonAsync("/api/User", user);
 

@@ -21,7 +21,12 @@ namespace Infrastructure.Tests
             var context = new ProjectBankContext(builder.Options);
             context.Database.EnsureCreated();
 
-            var user = new User { oid = "1", Name = "Claus" };
+            var user = new User
+            {
+                oid = "1",
+                Name = "Claus",
+                Email = "claus@outlook.com"
+            };
             context.Users.Add(user);
             context.SaveChanges();
 
@@ -32,18 +37,24 @@ namespace Infrastructure.Tests
         [Fact]
         public async Task CreateAsync_creates_new_user_with_generated_id_then_delete()
         {
-            var user = new UserCreateDto { oid = "2", Name = "Karsten" };
+            var user = new UserCreateDto
+            {
+                oid = "2",
+                Name = "Karsten",
+                Email = "karsten@outlook.com"
+            };
 
             var (status, content) = await _repository.CreateAsync(user);
 
             Assert.Equal("2", content?.oid);
             Assert.Equal(user.Name, content?.Name);
+            Assert.Equal(user.Email, content?.Email);
 
             var users = await _repository.ReadAsync();
 
             Assert.Collection(users,
-                s => Assert.Equal(new UserDto("1", "Claus"), s),
-                s => Assert.Equal(new UserDto("2", "Karsten"), s)
+                s => Assert.Equal(new UserDto("1", "Claus", "claus@outlook.com"), s),
+                s => Assert.Equal(new UserDto("2", "Karsten", "karsten@outlook.com"), s)
             );
 
             var response = await _repository.DeleteAsync("2");
@@ -56,7 +67,7 @@ namespace Infrastructure.Tests
             var users = await _repository.ReadAsync();
 
             Assert.Collection(users,
-                s => Assert.Equal(new UserDto("1", "Claus"), s)
+                s => Assert.Equal(new UserDto("1", "Claus", "claus@outlook.com"), s)
             );
         }
 

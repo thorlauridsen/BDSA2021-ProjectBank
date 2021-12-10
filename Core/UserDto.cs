@@ -2,9 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ProjectBank.Core
 {
-    public record UserDto(string oid, string? Name);
+    public record UserDto(string oid, string? Name, string? Email);
 
-    public record UserDetailsDto(string oid, string? Name, string image) : UserDto(oid, Name);
+    public record UserDetailsDto(string oid, string? Name, string? Email, string image) : UserDto(oid, Name, Email);
 
     public record UserCreateDto
     {
@@ -12,5 +12,8 @@ namespace ProjectBank.Core
 
         [StringLength(50)]
         public string Name { get; init; }
+
+        [EmailAddress]
+        public string? Email { get; init; }
     }
 }

@@ -68,8 +68,8 @@ namespace ProjectBank.Server.Integration.Tests
 
         private void Seed(ProjectBankContext context)
         {
-            var user1 = new User { oid = "1", Name = "Paolo" };
-            var user2 = new User { oid = "2", Name = "Tue" };
+            var user1 = new User { oid = "1", Name = "Paolo", Email = "paolo@outlook.com" };
+            var user2 = new User { oid = "2", Name = "Tue", Email = "tue@outlook.com" };
 
             if (!context.Users.Any())
             {

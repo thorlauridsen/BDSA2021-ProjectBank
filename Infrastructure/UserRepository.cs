@@ -29,8 +29,9 @@ namespace ProjectBank.Infrastructure
             var entity = new User
             {
                 oid = user.oid,
-                Image = base64Image,
-                Name = user.Name
+                Name = user.Name,
+                Email = user.Email,
+                Image = base64Image
             };
 
             _context.Users.Add(entity);
@@ -39,6 +40,7 @@ namespace ProjectBank.Infrastructure
             return (Created, new UserDetailsDto(
                                  entity.oid,
                                  entity.Name,
+                                 entity.Email,
                                  entity.Image
                              ));
         }
@@ -48,6 +50,7 @@ namespace ProjectBank.Infrastructure
                                 .Select(u => new UserDetailsDto(
                                     u.oid,
                                     u.Name,
+                                    u.Email,
                                     u.Image
                                 ))
                                 .FirstOrDefaultAsync();
@@ -56,7 +59,8 @@ namespace ProjectBank.Infrastructure
             (await _context.Users
                            .Select(u => new UserDto(
                                 u.oid,
-                                u.Name
+                                u.Name,
+                                u.Email
                             ))
                            .ToListAsync())
                            .AsReadOnly();

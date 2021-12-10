@@ -41,7 +41,7 @@
                         <img alt="Profile picture of supervisor" class="rounded-circle shadow supervisor-image"
                         src="@Creator?.image">
                         <h3>@Creator?.Name</h3>
-                        <p>Email: <a href="mailto:randommail@mail.com">Change@me.com</a></p>
+                        <p>Email: <a href="mailto:@Creator?.Email">@Creator?.Email</a></p>
                         <p>All projects: <a href="/projects/supervisor/@Creator?.oid">View</a></p>
                     </div>
 
@@ -59,8 +59,9 @@
                     {
                         <div class="d-grid my-4 p-4 shadow text-center">
                             <!--!-->
-                            <a href="/projects/edit/@Id" class="btn btn-primary m-2">Edit</a>
-                            <a href="/messages/?filter=@Id" class="btn btn-success btn-view-conversations m-2">View related conversations</a>
+                    <a href="/projects/edit/@Id" class="btn btn-primary m-2">Edit</a>
+                            <a href="/messages/?filter=@Id" class="btn btn-success btn-view-conversations m-2">View related
+                                conversations</a>
                             <button class="btn btn-delete m-2" onclick=@DeletePost>Delete</button>
                         </div>
                     }
@@ -114,7 +115,7 @@
             }
             else
             {
-                await JS.InvokeAsync<bool>("alert", "Failed to delete post"); 
+                await JS.InvokeAsync<bool>("alert", "Failed to delete post");
             }
         }
         catch (AccessTokenNotAvailableException exception)

@@ -214,6 +214,9 @@ namespace ProjectBank.Infrastructure.Migrations
                     b.Property<string>("oid")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

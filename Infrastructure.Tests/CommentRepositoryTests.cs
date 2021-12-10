@@ -22,8 +22,8 @@ namespace Infrastructure.Tests
             var context = new ProjectBankContext(builder.Options);
             context.Database.EnsureCreated();
 
-            var supervisor = new User() { oid = "1", Name = "bo" };
-            var student = new User() { oid = "2", Name = "alice" };
+            var supervisor = new User() { oid = "1", Name = "bo", Email = "bo@outlook.com" };
+            var student = new User() { oid = "2", Name = "alice", Email = "alice@outlook.com" };
 
             var post = new Post()
             {

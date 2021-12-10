@@ -12,7 +12,7 @@ using ProjectBank.Infrastructure;
 namespace ProjectBank.Infrastructure.Migrations
 {
     [DbContext(typeof(ProjectBankContext))]
-    [Migration("20211210105339_InitialMigration")]
+    [Migration("20211210123431_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -215,6 +215,9 @@ namespace ProjectBank.Infrastructure.Migrations
                 {
                     b.Property<string>("oid")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image")
                         .IsRequired()
