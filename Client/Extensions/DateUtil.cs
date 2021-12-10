@@ -2,7 +2,7 @@
 
 public static class DateExtensions
 {
-    public static string GetTimeSince(this DateTime date)
+    public static string? GetTimeSince(this DateTime date)
     {
         var currentDate = DateTime.Now;
         var diff = currentDate - date;

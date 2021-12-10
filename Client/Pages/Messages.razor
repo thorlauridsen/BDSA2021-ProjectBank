@@ -36,10 +36,10 @@
             }
             else
             {
-                @foreach (var chat in _chats)
+                @foreach (var _chat in _chats)
                 {
-                    <div @onclick="@(() => SelectChat(chat))">
-                        <MessageItem Read="@chat.SeenLatestMessage" Chat="@chat">
+                    <div @onclick="@(() => SelectChat(_chat))">
+                        <MessageItem Read="@_chat.SeenLatestMessage" Chat="@_chat">
                         </MessageItem>
                     </div>
                 }
@@ -54,7 +54,7 @@
         else
         {
             <div
-            class="d-flex align-items-center justify-content-between flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+                class="d-flex align-items-center justify-content-between flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
                 <span class="fs-5 fw-semibold"></span>
                 <span class="fs-5 fw-semibold">@chatRecipient.Name</span>
                 <span class="fs-5 fw-semibold"></span>
@@ -70,10 +70,10 @@
             </div>
             <EditForm Model="messageModel" OnValidSubmit="@HandleValidMessageSubmit">
                 <div class="align-content-center chat-area-input d-flex p-2 row">
-                    <DataAnnotationsValidator />
-                    <ValidationSummary />
+                    <DataAnnotationsValidator/>
+                    <ValidationSummary/>
                     <div class="col-9">
-                        <InputText @bind-Value="messageModel.Message" type="text" id="message-input" class="form-control" />
+                        <InputText @bind-Value="messageModel.Message" type="text" id="message-input" class="form-control"/>
                     </div>
                     <div class="col-3 d-flex">
                         <button type="submit" class="btn btn-primary col-12">Submit</button>
@@ -87,8 +87,9 @@
 @code {
 
     private List<PostDto>? Posts;
+
     private PostDetailsDto testPost = new(5, "Biology project 101", "content", DateTime.Now, "1", new(), PostState.Active,
-    0);
+        0);
 
     private string _FilterSelectValue;
 
@@ -141,7 +142,11 @@
         try
         {
             currentUser = await localStore.GetItemAsync<UserDetailsDto>("user");
-            Posts = await _http.GetFromJsonAsync<List<PostDto>>("api/Post/supervisor/" + currentUser.oid);
+            var postsRes = await _http.GetAsync($"api/Post/supervisor/{currentUser.oid}");
+            if (postsRes.IsSuccessStatusCode)
+            {
+                Posts = await postsRes.Content.ReadFromJsonAsync<List<PostDto>>();
+            }
             _allChats = await _http.GetFromJsonAsync<IReadOnlyCollection<ChatDetailsDto>>($"api/Chat/user/{currentUser.oid}");
             _chats = new List<ChatDetailsDto>(_allChats);
             UpdateFilter();
@@ -226,10 +231,11 @@
     private void UpdateFilter()
     {
         if (filter != -1) _chats = _allChats.Where(c => c.ProjectId == filter).ToList();
+        StateHasChanged();
     }
 
     private PostDto? GetPostByTitle(string title) =>
-    Posts?.FirstOrDefault(p => p.Title == title);
+        Posts?.FirstOrDefault(p => p.Title == title);
 
     public void Dispose()
     {

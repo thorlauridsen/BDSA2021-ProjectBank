@@ -4,19 +4,28 @@
 <div class="list-group-item cursor list-group-item-action py-3 lh-tight @_extraCSS" aria-current="true">
     <div class="d-flex w-100 align-items-center justify-content-between">
         <strong class="mb-1">@Recipient</strong>
-        <small>@_lastMessageDateString</small>
+        <small>@LastMessageDateString</small>
     </div>
-    <div class="col-10 mb-1 small">@_relatedPostString.</div>
+    <div class="col-10 mb-1 small">@_relatedPostString</div>
 </div>
 
 @code {
 
     private string? Recipient { get; set; }
 
-    private string _lastMessageDateString { get; set; }
+    private string? LastMessageDateString { get; set; }
 
+    private ChatDetailsDto? _chat { get; set; }
+    
     [Parameter]
-    public ChatDetailsDto Chat { get; set; }
+    public ChatDetailsDto? Chat
+    {
+        get => _chat;
+        set { 
+            _chat = value;
+            updateAsync();
+        }
+    }
 
     private string _relatedPostString { get; set; }
 
@@ -33,15 +42,21 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var targetUser = await _http.GetFromJsonAsync<UserDetailsDto>($"/api/User/{Chat.TargetUserId}");
+        updateAsync();
+    }
+
+    private async void updateAsync()
+    {
+        var targetUser = await _http.GetFromJsonAsync<UserDetailsDto>($"/api/User/{_chat.TargetUserId}");
         if (targetUser != null)
         {
             Recipient = targetUser.Name;
         }
-        var relatedPost = await _http.GetFromJsonAsync<PostDetailsDto>($"/api/Post/{Chat.ProjectId}");
+        var relatedPost = await _http.GetFromJsonAsync<PostDetailsDto>($"/api/Post/{_chat.ProjectId}");
         if (relatedPost?.Title != null) _relatedPostString = relatedPost.Title;
 
-        _lastMessageDateString = Chat.LatestChatMessage.Timestamp.GetTimeSince();
+        LastMessageDateString = Chat.LatestChatMessage.Timestamp.GetTimeSince();
+        StateHasChanged();
     }
 
 }
