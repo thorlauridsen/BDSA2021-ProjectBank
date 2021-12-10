@@ -1,40 +1,47 @@
 ﻿@using ProjectBank.Core
 @using ProjectBank.Client.Extensions
-<a href="#" class="list-group-item list-group-item-action py-3 lh-tight @_extraCSS" aria-current="true">
+@inject HttpClient _http;
+<div class="list-group-item cursor list-group-item-action py-3 lh-tight @_extraCSS" aria-current="true">
     <div class="d-flex w-100 align-items-center justify-content-between">
         <strong class="mb-1">@Recipient</strong>
         <small>@_lastMessageDateString</small>
     </div>
     <div class="col-10 mb-1 small">@_relatedPostString.</div>
-</a>
+</div>
 
 @code {
 
-    [Parameter]
-    public string Recipient { get; set; }
-
-    [Parameter]
-    public DateTime LastMessageDate { get; set; }
+    private string? Recipient { get; set; }
 
     private string _lastMessageDateString { get; set; }
 
     [Parameter]
-    public PostDetailsDto RelatedPost { get; set; }
+    public ChatDetailsDto Chat { get; set; }
 
     private string _relatedPostString { get; set; }
 
     [Parameter]
     public bool Read { get; set; }
+
     private string _extraCSS { get; set; }
 
     protected override void OnInitialized()
     {
-        //Calculate time
-        _lastMessageDateString = LastMessageDate.GetTimeSince();
-        //Convert related posts to string
-        _relatedPostString = RelatedPost.Title;
-
+    //Convert related posts to string
         _extraCSS = Read ? "" : "unread";
-
     }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var targetUser = await _http.GetFromJsonAsync<UserDetailsDto>($"/api/User/{Chat.TargetUserId}");
+        if (targetUser != null)
+        {
+            Recipient = targetUser.Name;
+        }
+        var relatedPost = await _http.GetFromJsonAsync<PostDetailsDto>($"/api/Post/{Chat.ProjectId}");
+        if (relatedPost?.Title != null) _relatedPostString = relatedPost.Title;
+
+        _lastMessageDateString = Chat.LatestChatMessage.Timestamp.GetTimeSince();
+    }
+
 }

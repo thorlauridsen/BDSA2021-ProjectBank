@@ -1,4 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using ProjectBank.Core;
 
 namespace ProjectBank.Infrastructure
 {
@@ -6,7 +9,6 @@ namespace ProjectBank.Infrastructure
     {
         public DbSet<User> Users => Set<User>();
         public DbSet<Post> Posts => Set<Post>();
-        public DbSet<Tag> Tags => Set<Tag>();
         public DbSet<Chat> Chats => Set<Chat>();
         public DbSet<ChatUser> ChatUsers => Set<ChatUser>();
         public DbSet<ChatMessage> ChatMessages => Set<ChatMessage>();
@@ -28,6 +30,12 @@ namespace ProjectBank.Infrastructure
                                 (c1, c2) => c1.SequenceEqual(c2),
                                 c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())))
                             );
+
+            modelBuilder
+                .Entity<Post>()
+                .Property(p => p.PostState)
+                .HasMaxLength(50)
+                .HasConversion(new EnumToStringConverter<PostState>());
         }
     }
 }

@@ -31,7 +31,7 @@
                     @foreach (var post in Posts)
                     {
                         <PostContainer Title="@post.Title" Content="@post.Content" SupervisorId="@post.SupervisorOid"
-                                       Tags="@post.Tags" DateAdded="@post.DateAdded" PostID="@post.Id">
+                    Tags="@post.Tags" DateAdded="@post.DateAdded" PostID="@post.Id">
                         </PostContainer>
                     }
                 }
@@ -63,16 +63,19 @@
         {
             var user = await localStore.GetItemAsync<UserDetailsDto>("user");
             Posts = await Http.GetFromJsonAsync<List<PostDto>>("api/Post/supervisor/" + user.oid);
-            Posts.Add(new PostDto(
-                1,
-                "this is a test title",
-                "Woah look at all this content",
-                DateTime.Now,
-                "11",
-                new HashSet<string>()
-                {
-                    "These", "are", "relevant", "Tags"
-                })); //TODO: remove once functional. 
+            Posts?.Add(new PostDto(
+            1,
+            "this is a test title",
+            "Woah look at all this content",
+            DateTime.Now,
+            "1",
+            new HashSet<string>()
+            {
+"These", "are", "relevant", "Tags"
+            },
+            PostState.Active,
+            0
+            )); //TODO: remove once functional.
         }
         catch (AccessTokenNotAvailableException exception)
         {

@@ -8,7 +8,9 @@ namespace ProjectBank.Core
         string Content,
         DateTime DateAdded,
         string SupervisorOid,
-        HashSet<string> Tags
+        HashSet<string> Tags,
+        PostState PostState,
+        int ViewCount
     );
 
     public record PostDetailsDto(
@@ -17,8 +19,10 @@ namespace ProjectBank.Core
         string Content,
         DateTime DateAdded,
         string SupervisorOid,
-        HashSet<string> Tags
-    ) : PostDto(Id, Title, Content, DateAdded, SupervisorOid, Tags);
+        HashSet<string> Tags,
+        PostState PostState,
+        int ViewCount
+    ) : PostDto(Id, Title, Content, DateAdded, SupervisorOid, Tags, PostState, ViewCount);
 
     public record PostCreateDto
     {
@@ -34,5 +38,9 @@ namespace ProjectBank.Core
     public record PostUpdateDto : PostCreateDto
     {
         public int Id { get; init; }
+
+        public PostState PostState { get; init; }
+
+        public int ViewCount { get; init; }
     }
 }

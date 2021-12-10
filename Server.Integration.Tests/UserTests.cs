@@ -40,8 +40,7 @@ namespace ProjectBank.Server.Integration.Tests
             var user = new UserCreateDto
             {
                 oid = "3",
-                Name = "Rasmus",
-                IsSupervisor = true
+                Name = "Rasmus"
             };
             var response = await _client.PostAsJsonAsync("/api/User", user);
 
@@ -53,7 +52,6 @@ namespace ProjectBank.Server.Integration.Tests
             Assert.NotNull(created);
             Assert.Equal("3", created?.oid);
             Assert.Equal("Rasmus", created?.Name);
-            Assert.True(created?.IsSupervisor);
         }
     }
 }

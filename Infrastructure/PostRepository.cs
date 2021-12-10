@@ -1,7 +1,6 @@
-using System.Collections.Immutable;
-using System.Collections.ObjectModel;
-using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using ProjectBank.Infrastructure;
+using static ProjectBank.Core.Status;
 
 namespace ProjectBank.Core
 {
@@ -16,7 +15,10 @@ namespace ProjectBank.Core
 
         public async Task<(Status, PostDetailsDto?)> CreateAsync(PostCreateDto post)
         {
-            if (post.Title.Trim().Equals("") ||
+            var user = await GetUserAsync(post.SupervisorOid);
+
+            if (user == null ||
+                post.Title.Trim().Equals("") ||
                 post.Content.Trim().Equals(""))
             {
                 return (BadRequest, null);
@@ -27,8 +29,9 @@ namespace ProjectBank.Core
                 Title = post.Title,
                 Content = post.Content,
                 DateAdded = DateTime.Now,
-                User = await GetUserAsync(post.SupervisorOid),
-                Tags = post.Tags.ToArray()
+                User = user,
+                Tags = post.Tags.ToArray(),
+                PostState = PostState.Active
             };
             _context.Posts.Add(entity);
             await _context.SaveChangesAsync();
@@ -39,7 +42,9 @@ namespace ProjectBank.Core
                 entity.Content,
                 entity.DateAdded,
                 entity.User.oid,
-                entity.Tags.ToHashSet()
+                entity.Tags.ToHashSet(),
+                entity.PostState,
+                entity.ViewCount
             ));
         }
 
@@ -51,7 +56,9 @@ namespace ProjectBank.Core
                     p.Content,
                     p.DateAdded,
                     p.User.oid,
-                    p.Tags.ToHashSet()
+                    p.Tags.ToHashSet(),
+                    p.PostState,
+                    p.ViewCount
                 ))
                 .FirstOrDefaultAsync();
 
@@ -63,16 +70,21 @@ namespace ProjectBank.Core
                     p.Content,
                     p.DateAdded,
                     p.User.oid,
-                    p.Tags.ToHashSet()
+                    p.Tags.ToHashSet(),
+                    p.PostState,
+                    p.ViewCount
                 ))
                 .ToListAsync())
             .AsReadOnly();
 
 
-         public async Task<(Status,IReadOnlyCollection<PostDto>)> ReadAsyncBySupervisor(string userId){
-
-            if ((await GetUserAsync(userId)) == null) return (NotFound,new List<PostDto>(){});
-
+        public async Task<(Status, IReadOnlyCollection<PostDto>)> ReadAsyncBySupervisor(string userId)
+        {
+            var user = await GetUserAsync(userId);
+            if (user == null)
+            {
+                return (NotFound, new List<PostDto>() { });
+            }
 
             var posts = (await _context.Posts
                 .Where(p => p.User.oid == userId)
@@ -82,19 +94,18 @@ namespace ProjectBank.Core
                     p.Content,
                     p.DateAdded,
                     p.User.oid,
-                    p.Tags.ToHashSet()
+                    p.Tags.ToHashSet(),
+                    p.PostState,
+                    p.ViewCount
                 ))
                 .ToListAsync())
             .AsReadOnly();
 
-                return(Success, posts);
-            }
-
-        public async  Task<User> testUsers() => await GetUserAsync("11");
-        
+            return (Success, posts);
+        }
 
         public async Task<IReadOnlyCollection<PostDto>> ReadAsyncByTag(string tag) =>
-            
+
             (await _context.Posts
                 .Where(p => p.Tags.Any(tag => tag.Equals(tag)))
                 .Select(p => new PostDto(
@@ -103,7 +114,9 @@ namespace ProjectBank.Core
                     p.Content,
                     p.DateAdded,
                     p.User.oid,
-                    p.Tags.ToHashSet()
+                    p.Tags.ToHashSet(),
+                    p.PostState,
+                    p.ViewCount
                 ))
                 .ToListAsync())
             .AsReadOnly();
@@ -113,7 +126,7 @@ namespace ProjectBank.Core
             var post = await _context.Posts.Include("Comments.User").FirstOrDefaultAsync(p => p.Id == postId);
             if (post == null)
             {
-                return new List<CommentDto>(){};
+                return new List<CommentDto>() { };
             }
 
             var comments = post.Comments;
@@ -142,6 +155,8 @@ namespace ProjectBank.Core
             entity.Title = post.Title;
             entity.Content = post.Content;
             entity.Tags = post.Tags.ToArray();
+            entity.PostState = post.PostState;
+            entity.ViewCount = post.ViewCount;
 
             await _context.SaveChangesAsync();
 
@@ -161,17 +176,6 @@ namespace ProjectBank.Core
             await _context.SaveChangesAsync();
 
             return Deleted;
-        }
-
-        private async IAsyncEnumerable<Tag> GetTagsAsync(IEnumerable<string> tags)
-        {
-            var existing = await _context.Tags.Where(t => tags.Contains(t.Name))
-                .ToDictionaryAsync(t => t.Name);
-
-            foreach (var tag in tags)
-            {
-                yield return existing.TryGetValue(tag, out var t) ? t : new Tag(tag);
-            }
         }
 
         private async Task<User?> GetUserAsync(string userId) =>

@@ -82,10 +82,6 @@ namespace ProjectBank.Server.Integration.Tests
                 User = user2,
                 DateAdded = DateTime.Now
             };
-            /*if (!context.Comments.Any())
-            {
-                context.Comments.Add(comment);
-            }*/
 
             var post = new Post
             {
@@ -101,8 +97,6 @@ namespace ProjectBank.Server.Integration.Tests
                 context.Posts.Add(post);
             }
 
-
-
             var notification = new Notification
             {
                 Title = "Important Notification!",
@@ -116,8 +110,6 @@ namespace ProjectBank.Server.Integration.Tests
             {
                 context.Notifications.Add(notification);
             }
-
-
 
             context.SaveChanges();
         }

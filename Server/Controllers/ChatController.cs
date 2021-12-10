@@ -24,28 +24,28 @@ namespace ProjectBank.Server.Controllers
         }
 
         [Authorize]
-        [HttpGet("/{chatId}", Name = "GetByChatId")]
+        [HttpGet("{chatId}/{userId}", Name = "GetByChatId")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ChatDto?> GetByChatId(int chatId)
-            => await _repository.ReadChatAsync(chatId);
+        public async Task<ChatDetailsDto?> GetByChatId(int chatId, string userId)
+            => await _repository.ReadChatAsync(chatId, userId);
 
         [Authorize]
-        [HttpGet("/message/{messageId}", Name = "GetByMessageId")]
+        [HttpGet("message/{messageId}", Name = "GetByMessageId")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<ChatMessageDto?> GetByMessageId(int messageId)
     => await _repository.ReadSpecificMessageAsync(messageId);
 
         [Authorize]
-        [HttpGet("/user/{userId}", Name = "GetChatsByUserId")]
+        [HttpGet("user/{userId}", Name = "GetChatsByUserId")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<IReadOnlyCollection<ChatDetailsDto>> GetChatsByUserId(string userId)
             => await _repository.ReadAllChatsAsync(userId);
 
         [Authorize]
-        [HttpGet("{chatId}")]
+        [HttpGet("{chatId}/messages")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<IReadOnlyCollection<ChatMessageDto>> GetChatMessages(int chatId)
@@ -58,7 +58,8 @@ namespace ProjectBank.Server.Controllers
         public async Task<ActionResult<ChatDto>> Post(ChatCreateDto chat)
         {
             var (status, created) = await _repository.CreateNewChatAsync(chat);
-            return CreatedAtRoute(nameof(GetByChatId), new { chatId = created?.ChatId }, created);
+            if (created == null) return new BadRequestResult();
+            return CreatedAtRoute(nameof(GetByChatId), new { chatId = created?.ChatId, userId = chat.FromUserId }, created);
         }
 
         [Authorize]
@@ -68,7 +69,7 @@ namespace ProjectBank.Server.Controllers
         public async Task<ActionResult<ChatMessageDetailsDto>> Post(ChatMessageCreateDto chat)
         {
             var (status, created) = await _repository.CreateNewChatMessageAsync(chat);
-            return CreatedAtRoute(nameof(GetByMessageId), new { chatId = created.chatId, messageId = created.chatMessageId }, created);
+            return CreatedAtRoute(nameof(GetByMessageId), new { messageId = created.chatMessageId }, created);
         }
     }
 }

@@ -25,6 +25,7 @@ namespace ProjectBank.Server.Controllers
 
         [Authorize]
         [HttpGet]
+        [ProducesResponseType(typeof(IReadOnlyCollection<PostDto>), 200)]
         public async Task<IReadOnlyCollection<PostDto>> Get()
             => await _repository.ReadAsync();
 
@@ -37,29 +38,34 @@ namespace ProjectBank.Server.Controllers
 
         [Authorize]
         [HttpGet("tag/{tag}")]
+        [ProducesResponseType(typeof(IReadOnlyCollection<PostDto>), 200)]
         public async Task<IReadOnlyCollection<PostDto>> GetByTag(string tag)
             => await _repository.ReadAsyncByTag(tag);
 
         [Authorize]
         [HttpGet("supervisor/{userId}")]
-        public async Task<ActionResult<IReadOnlyCollection<PostDto>>> GetBySupervisor(string userId){
-            var (status,posts) = await _repository.ReadAsyncBySupervisor(userId);
-            if(status == Status.NotFound) return NotFound();
+        [ProducesResponseType(typeof(IReadOnlyCollection<PostDto>), 200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<IReadOnlyCollection<PostDto>>> GetBySupervisor(string userId)
+        {
+            var (status, posts) = await _repository.ReadAsyncBySupervisor(userId);
+            if (status == Status.NotFound) return NotFound();
             return Ok(posts);
         }
-            
 
         [Authorize]
         [HttpGet("{postId}/comments")]
+        [ProducesResponseType(typeof(IReadOnlyCollection<CommentDto>), 200)]
         public async Task<IReadOnlyCollection<CommentDto>> GetComments(int postId)
         {
             var comments = await _repository.ReadAsyncComments(postId);
             return comments;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Supervisor")]
         [HttpPost]
         [ProducesResponseType(typeof(PostDetailsDto), 201)]
+        [ProducesResponseType(403)]
         public async Task<ActionResult<PostDetailsDto>> Post(PostCreateDto post)
         {
             var (status, created) = await _repository.CreateAsync(post);
@@ -70,16 +76,18 @@ namespace ProjectBank.Server.Controllers
             return BadRequest();
         }
 
-        [Authorize]
+        [Authorize(Roles = "Supervisor")]
         [HttpPut("{postId}")]
         [ProducesResponseType(204)]
+        [ProducesResponseType(403)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> Put(int postId, [FromBody] PostUpdateDto post)
             => (await _repository.UpdateAsync(postId, post)).ToActionResult();
 
-        [Authorize]
+        [Authorize(Roles = "Supervisor")]
         [HttpDelete("{postId}")]
         [ProducesResponseType(204)]
+        [ProducesResponseType(403)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> Delete(int postId)
             => (await _repository.DeleteAsync(postId)).ToActionResult();

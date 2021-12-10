@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Moq;
 using ProjectBank.Core;
-using ProjectBank.Server;
 using ProjectBank.Server.Controllers;
 using Xunit;
 using static ProjectBank.Core.Status;
@@ -23,7 +21,9 @@ namespace ProjectBank.Server.Tests.Controllers
                 "My Cool Biology Project",
                 DateTime.Now,
                 "1",
-                new HashSet<string>() { "Biology" }
+                new HashSet<string>() { "Biology" },
+                PostState.Active,
+                0
             );
             var repository = new Mock<IPostRepository>();
             repository.Setup(m => m.CreateAsync(toCreate)).ReturnsAsync((Created, created));
@@ -81,7 +81,9 @@ namespace ProjectBank.Server.Tests.Controllers
                 "My Cool Biology Project",
                 DateTime.Now,
                 "1",
-                new HashSet<string>() { "Biology" }
+                new HashSet<string>() { "Biology" },
+                PostState.Active,
+                0
             );
             repository.Setup(m => m.ReadAsync(1)).ReturnsAsync(post);
             var controller = new PostController(logger.Object, repository.Object);
@@ -93,23 +95,23 @@ namespace ProjectBank.Server.Tests.Controllers
             Assert.Equal(post, response.Value);
         }
 
+        [Fact]
+        public async Task GetBySupervisor_given_existing_returns_Post()
+        {
+            // Arrange
+            var expected = Array.Empty<PostDto>();
+            var repository = new Mock<IPostRepository>();
+            repository.Setup(m => m.ReadAsyncBySupervisor("1")).ReturnsAsync((Created, expected));
+            var controller = new PostController(logger.Object, repository.Object);
 
-        // FIXME
-        //[Fact]
-        //public async Task GetBySupervisor_given_existing_returns_Post()
-        //{
-        //    // Arrange
-        //    var expected = Array.Empty<PostDto>();
-        //    var repository = new Mock<IPostRepository>();
-        //    repository.Setup(m => m.ReadAsyncBySupervisor("1")).ReturnsAsync(expected);
-        //    var controller = new PostController(logger.Object, repository.Object);
+            // Act
+            var result = await controller.GetBySupervisor("1");
 
-        //    // Act
-        //    var response = await controller.GetBySupervisor("1");
-
-        //    // Assert
-        //    Assert.Equal(expected, response);
-        //}
+            // Assert
+            Assert.IsType<OkObjectResult>(result.Result);
+            var resultObject = GetOkResultContent(result);
+            Assert.Equal(expected, resultObject);
+        }
 
         [Fact]
         public async Task GetByTag_given_existing_returns_Post()

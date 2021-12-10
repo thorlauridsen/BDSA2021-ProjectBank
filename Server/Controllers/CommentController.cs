@@ -23,14 +23,9 @@ namespace ProjectBank.Server.Controllers
             _repository = repository;
         }
 
-        /*[Authorize]
-        [HttpGet]
-        public async Task<IReadOnlyCollection<CommentDto>> Get()
-            => await _repository.ReadAsync();*/
-
         [Authorize]
         [HttpGet("{postId}/{commentId}", Name = "GetByCommentId")]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(CommentDetailsDto), 200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<CommentDetailsDto>> GetByCommentId(int postId, int commentId)
             => (await _repository.ReadAsync(postId, commentId)).ToActionResult();
@@ -38,6 +33,7 @@ namespace ProjectBank.Server.Controllers
         [Authorize]
         [HttpPost]
         [ProducesResponseType(typeof(CommentDetailsDto), 201)]
+        [ProducesResponseType(400)]
         public async Task<ActionResult<CommentDetailsDto>> Post(CommentCreateDto comment)
         {
             var (status, created) = await _repository.CreateAsync(comment);
@@ -47,13 +43,6 @@ namespace ProjectBank.Server.Controllers
             }
             return BadRequest();
         }
-
-        /*[Authorize]
-        [HttpPut("{commentId}")]
-        [ProducesResponseType(204)]
-        [ProducesResponseType(404)]
-        public async Task<IActionResult> Put(int commentId, [FromBody] CommentUpdateDto comment)
-            => (await _repository.UpdateAsync(commentId, comment)).ToActionResult();*/
 
         [Authorize]
         [HttpDelete("{postId}/{commentId}")]

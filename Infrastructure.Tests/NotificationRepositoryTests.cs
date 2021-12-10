@@ -43,7 +43,7 @@ namespace Infrastructure.Tests
         }
 
         [Fact]
-        public async Task CreateAsync_correctly_created()
+        public async Task CreateAsync_creates_notification_successfully()
         {
             var notification = new NotificationCreateDto
             {
@@ -52,17 +52,52 @@ namespace Infrastructure.Tests
                 UserOid = "1",
                 Link = "https://google.com"
             };
-            var (status, created) = await _repository.CreateAsync(notification);
-            Assert.Equal(2, created?.Id);
-            Assert.Equal("Important", created.Title);
-            Assert.Equal("We gotta go now!", created.Content);
-            Assert.Equal("1", created.UserOid);
-            Assert.Equal("https://google.com", created.Link);
-            Assert.Equal(false, created.Seen);
+            var (status, content) = await _repository.CreateAsync(notification);
+
+            Assert.Equal(Created, status);
+            Assert.NotNull(content);
+            Assert.Equal(2, content?.Id);
+            Assert.Equal("Important", content?.Title);
+            Assert.Equal("We gotta go now!", content?.Content);
+            Assert.Equal("1", content?.UserOid);
+            Assert.Equal("https://google.com", content?.Link);
+            Assert.Equal(false, content?.Seen);
         }
 
         [Fact]
-        public async Task GetNotificationsAsync()
+        public async Task CreateAsync_without_content_returns_BadRequest()
+        {
+            var notification = new NotificationCreateDto
+            {
+                Title = "",
+                Content = "",
+                UserOid = "1",
+                Link = "https://google.com"
+            };
+            var (status, content) = await _repository.CreateAsync(notification);
+
+            Assert.Equal(BadRequest, status);
+            Assert.Null(content);
+        }
+
+        [Fact]
+        public async Task CreateAsync_non_existing_user_returns_BadRequest()
+        {
+            var notification = new NotificationCreateDto
+            {
+                Title = "Important",
+                Content = "We gotta go now!",
+                UserOid = "1111",
+                Link = "https://google.com"
+            };
+            var (status, content) = await _repository.CreateAsync(notification);
+
+            Assert.Equal(BadRequest, status);
+            Assert.Null(content);
+        }
+
+        [Fact]
+        public async Task GetNotificationsAsync_with_existing_oid_returns_notifications()
         {
             var notifications = await _repository.GetNotificationsAsync("1");
 
@@ -77,6 +112,13 @@ namespace Infrastructure.Tests
 
             Assert.Equal(1, notifications.Count);
             Assert.Equal(notification, notifications.First());
+        }
+
+        [Fact]
+        public async Task GetNotificationsAsync_without_existing_oid_returns_empty_list()
+        {
+            var notifications = await _repository.GetNotificationsAsync("111");
+            Assert.Empty(notifications);
         }
 
         [Fact]
