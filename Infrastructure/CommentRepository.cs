@@ -46,6 +46,7 @@ namespace ProjectBank.Infrastructure
         {
             var c = (await _context.Posts.FirstOrDefaultAsync(p => p.Id == postId))?.Comments.FirstOrDefault(c => c.Id == commentId);
             if (c == null) return null;
+
             return new CommentDetailsDto
             {
                 Id = c.Id,

@@ -42,11 +42,11 @@ namespace ProjectBank.Server.Controllers
         public async Task<ActionResult<UserDetailsDto>> Post(UserCreateDto user)
         {
             var (status, created) = await _repository.CreateAsync(user);
-            if (status != Status.BadRequest)
+            if (status == Status.BadRequest)
             {
-                return CreatedAtRoute(nameof(GetByUserOid), new { userOid = created?.Oid }, created);
+                return BadRequest();
             }
-            return BadRequest();
+            return CreatedAtRoute(nameof(GetByUserOid), new { userOid = created?.Oid }, created);
         }
 
         [Authorize]

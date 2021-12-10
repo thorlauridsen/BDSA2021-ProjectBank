@@ -138,7 +138,8 @@ namespace ProjectBank.Core
 
         public async Task<IReadOnlyCollection<CommentDetailsDto>> ReadAsyncComments(int postId)
         {
-            var post = await _context.Posts.Include("Comments.User").FirstOrDefaultAsync(p => p.Id == postId);
+            var post = await _context.Posts.Include("Comments.User")
+                                           .FirstOrDefaultAsync(p => p.Id == postId);
             if (post == null)
             {
                 return new List<CommentDetailsDto>() { };
@@ -150,6 +151,7 @@ namespace ProjectBank.Core
                 Content = comment.Content,
                 DateAdded = comment.DateAdded,
                 UserOid = comment.User.Oid
+
             }).ToList();
         }
 
@@ -181,7 +183,6 @@ namespace ProjectBank.Core
             {
                 return NotFound;
             }
-
             _context.Posts.Remove(entity);
             await _context.SaveChangesAsync();
 

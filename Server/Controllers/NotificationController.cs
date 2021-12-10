@@ -30,11 +30,11 @@ namespace ProjectBank.Server.Controllers
         public async Task<ActionResult<NotificationDetailsDto>> Post(NotificationCreateDto notification)
         {
             var (status, created) = await _repository.CreateAsync(notification);
-            if (status != Status.BadRequest)
+            if (status == Status.BadRequest)
             {
-                return CreatedAtRoute(nameof(GetNotificationByUserOid), new { userOid = created?.UserOid }, created);
+                return BadRequest();
             }
-            return BadRequest();
+            return CreatedAtRoute(nameof(GetNotificationByUserOid), new { userOid = created?.UserOid }, created);
         }
 
         [Authorize]

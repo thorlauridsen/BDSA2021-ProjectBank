@@ -49,7 +49,10 @@ namespace ProjectBank.Server.Controllers
         public async Task<ActionResult<IReadOnlyCollection<PostDetailsDto>>> GetBySupervisor(string userOid)
         {
             var (status, posts) = await _repository.ReadAsyncBySupervisor(userOid);
-            if (status == Status.NotFound) return NotFound();
+            if (status == Status.NotFound)
+            {
+                return NotFound();
+            }
             return Ok(posts);
         }
 
@@ -69,11 +72,11 @@ namespace ProjectBank.Server.Controllers
         public async Task<ActionResult<PostDetailsDto>> Post(PostCreateDto post)
         {
             var (status, created) = await _repository.CreateAsync(post);
-            if (status != Status.BadRequest)
+            if (status == Status.BadRequest)
             {
-                return CreatedAtRoute(nameof(GetByPostId), new { postId = created?.Id }, created);
+                return BadRequest();
             }
-            return BadRequest();
+            return CreatedAtRoute(nameof(GetByPostId), new { postId = created?.Id }, created);
         }
 
         [Authorize(Roles = "Supervisor")]
@@ -97,12 +100,11 @@ namespace ProjectBank.Server.Controllers
         public async Task<ActionResult<int>> IncrimentViewCount(int postId)
         {
             var (status, count) = (await _repository.IncrementViewCountAsync(postId));
-            if (status != Status.BadRequest)
+            if (status == Status.BadRequest)
             {
-                return Ok(count);
+                return BadRequest();
             }
-            return BadRequest();
+            return Ok(count);
         }
-
     }
 }

@@ -35,7 +35,7 @@ namespace ProjectBank.Server.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<ChatMessageDto?> GetByMessageId(int messageId)
-    => await _repository.ReadSpecificMessageAsync(messageId);
+            => await _repository.ReadSpecificMessageAsync(messageId);
 
         [Authorize]
         [HttpGet("user/{userOid}", Name = "GetChatsByUserOid")]
@@ -55,9 +55,9 @@ namespace ProjectBank.Server.Controllers
         [HttpPut("{chatId}/seen/{userOid}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> PutSetSeen(int chatId,string userOid)
+        public async Task<IActionResult> PutSetSeen(int chatId, string userOid)
             => (await _repository.SetSeen(chatId, userOid)).ToActionResult();
-        
+
         [Authorize]
         [HttpPost]
         [ProducesResponseType(201)]
@@ -65,7 +65,10 @@ namespace ProjectBank.Server.Controllers
         public async Task<ActionResult<ChatDto>> Post(ChatCreateDto chat)
         {
             var (status, created) = await _repository.CreateNewChatAsync(chat);
-            if (created == null) return new BadRequestResult();
+            if (created == null)
+            {
+                return BadRequest();
+            }
             return CreatedAtRoute(nameof(GetByChatId), new { chatId = created?.ChatId, userOid = chat.FromUserOid }, created);
         }
 
@@ -76,6 +79,10 @@ namespace ProjectBank.Server.Controllers
         public async Task<ActionResult<ChatMessageDetailsDto>> Post(ChatMessageCreateDto chat)
         {
             var (status, created) = await _repository.CreateNewChatMessageAsync(chat);
+            if (created == null)
+            {
+                return BadRequest();
+            }
             return CreatedAtRoute(nameof(GetByMessageId), new { messageId = created.chatMessageId }, created);
         }
     }

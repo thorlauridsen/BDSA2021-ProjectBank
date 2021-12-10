@@ -37,11 +37,11 @@ namespace ProjectBank.Server.Controllers
         public async Task<ActionResult<CommentDetailsDto>> Post(CommentCreateDto comment)
         {
             var (status, created) = await _repository.CreateAsync(comment);
-            if (status != Status.BadRequest)
+            if (status == Status.BadRequest)
             {
-                return CreatedAtRoute(nameof(GetByCommentId), new { postId = comment.postid, commentId = created?.Id }, created);
+                return BadRequest();
             }
-            return BadRequest();
+            return CreatedAtRoute(nameof(GetByCommentId), new { postId = comment.postid, commentId = created?.Id }, created);
         }
 
         [Authorize]

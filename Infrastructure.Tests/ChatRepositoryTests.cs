@@ -24,9 +24,6 @@ namespace Infrastructure.Tests
         ChatUser chatBo;
         ChatUser chatAlice;
 
-        //ChatUser chatKarl;
-        //ChatUser chatBo2;
-
         Chat chatEntity;
         Chat epicChatEntity;
 
@@ -61,16 +58,42 @@ namespace Infrastructure.Tests
             chatPer1 = new ChatUser { Id = 1, User = per };
             chatPer2 = new ChatUser { Id = 2, User = per };
             chatBo = new ChatUser { Id = 3, User = bo };
-            chatAlice = new ChatUser { Id = 4, User = alice, SeenLatestMessage = false};
+            chatAlice = new ChatUser
+            {
+                Id = 4,
+                User = alice,
+                SeenLatestMessage = false
+            };
 
-            //chatKarl = new ChatUser { Id = 5, User = karl };
-            //chatBo2 = new ChatUser { Id = 6, User = bo };
+            chatEntity = new Chat
+            {
+                Id = 1,
+                ChatUsers = new HashSet<ChatUser>() { chatPer1, chatBo },
+                Post = post
+            };
+            epicChatEntity = new Chat
+            {
+                Id = 2,
+                ChatUsers = new HashSet<ChatUser>() { chatPer2, chatAlice },
+                Post = post
+            };
 
-            chatEntity = new Chat { Id = 1, ChatUsers = new HashSet<ChatUser>() { chatPer1, chatBo }, Post = post };
-            epicChatEntity = new Chat { Id = 2, ChatUsers = new HashSet<ChatUser>() { chatPer2, chatAlice }, Post = post };
-
-            fromPerToBo = new ChatMessage { Id = 1, Chat = chatEntity, Content = "to Bo", FromUser = per, Timestamp = new DateTime(2021, 12, 7) };
-            fromAliceToPer = new ChatMessage { Id = 2, Chat = epicChatEntity, Content = "to Per", FromUser = alice, Timestamp = new DateTime(2021, 12, 8) };
+            fromPerToBo = new ChatMessage
+            {
+                Id = 1,
+                Chat = chatEntity,
+                Content = "to Bo",
+                FromUser = per,
+                Timestamp = new DateTime(2021, 12, 7)
+            };
+            fromAliceToPer = new ChatMessage
+            {
+                Id = 2,
+                Chat = epicChatEntity,
+                Content = "to Per",
+                FromUser = alice,
+                Timestamp = new DateTime(2021, 12, 8)
+            };
 
             context.Posts.Add(post);
             context.Users.Add(karl);
@@ -89,6 +112,7 @@ namespace Infrastructure.Tests
             var actual = await _repository.SetSeen(epicChatEntity.Id, chatAlice.User.Oid);
             Assert.Equal(Status.Success, actual);
         }
+
         [Theory]
         [InlineData(1, "8943894")]
         [InlineData(1000, "3")]
@@ -97,21 +121,30 @@ namespace Infrastructure.Tests
             var actual = await _repository.SetSeen(chatId, oid);
             Assert.Equal(Status.NotFound, actual);
         }
-        
+
         [Fact]
         public async Task CreateNewChatAsync_creates_new_chat()
         {
-            var chat = new ChatCreateDto() { ProjectId = 1, FromUserOid = "4", ChatUserOids = new HashSet<string>() { karl.Oid, bo.Oid } };
+            var chat = new ChatCreateDto()
+            {
+                ProjectId = 1,
+                FromUserOid = "4",
+                ChatUserOids = new HashSet<string>() { karl.Oid, bo.Oid }
+            };
+            var (status, response) = await _repository.CreateNewChatAsync(chat);
 
-
-            var (status, actual) = await _repository.CreateNewChatAsync(chat);
-
-            var expected = new ChatDto() { ProjectId = 1, ChatId = 3, ChatUserOids = new HashSet<int>() { 5, 6 } };
+            var expected = new ChatDto()
+            {
+                ProjectId = 1,
+                ChatId = 3,
+                ChatUserOids = new HashSet<int>() { 5, 6 }
+            };
 
             Assert.Equal(Created, status);
-            Assert.Equal(expected.ProjectId, actual.ProjectId);
-            Assert.Equal(expected.ChatId, actual.ChatId);
-            Assert.Equal(expected.ChatUserOids, actual.ChatUserOids);
+            Assert.NotNull(response);
+            Assert.Equal(expected.ProjectId, response?.ProjectId);
+            Assert.Equal(expected.ChatId, response?.ChatId);
+            Assert.Equal(expected.ChatUserOids, response?.ChatUserOids);
         }
 
         [Fact]
@@ -180,10 +213,12 @@ namespace Infrastructure.Tests
                 Content = "Hello"
             };
             var (status, response) = await _repository.CreateNewChatMessageAsync(chatMessage);
+
             Assert.Equal(Created, status);
-            Assert.Equal(chatMessage.FromUserOid, response.FromUser.Oid);
-            Assert.Equal(chatMessage.Content, response.Content);
-            Assert.Equal(chatMessage.ChatId, response.chatId);
+            Assert.NotNull(response);
+            Assert.Equal(chatMessage.FromUserOid, response?.FromUser.Oid);
+            Assert.Equal(chatMessage.Content, response?.Content);
+            Assert.Equal(chatMessage.ChatId, response?.chatId);
         }
 
         [Fact]
