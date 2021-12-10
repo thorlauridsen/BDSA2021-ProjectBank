@@ -29,10 +29,7 @@ Run project:
 
 If for any reason you are having trouble running the project. Make sure that there is no active docker container, delete the InitialMigration folder and run all the above commands in the given order from the project directory.
 
-CODE COVERAGE
-
-    dotnet add package coverlet.collector
-    dotnet add package coverlet.msbuild
+Run code coverage within a specific test directory:
 
     dotnet test /p:CollectCoverage=true
     
