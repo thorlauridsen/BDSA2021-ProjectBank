@@ -44,12 +44,6 @@
 
     private string _extraCSS { get; set; }
 
-    protected override void OnInitialized()
-    {
-    //Convert related posts to string
-        _extraCSS = Read ? "" : "unread";
-    }
-
     protected override async Task OnInitializedAsync()
     {
         updateAsync();
@@ -73,6 +67,8 @@
         }
 
         LastMessageDateString = Chat.LatestChatMessage.Timestamp.GetTimeSince();
+        
+        _extraCSS = Chat.SeenLatestMessage ? "" : "unread";
         StateHasChanged();
     }
 

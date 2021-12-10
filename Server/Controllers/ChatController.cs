@@ -52,6 +52,13 @@ namespace ProjectBank.Server.Controllers
             => await _repository.ReadSpecificChatAsync(chatId);
 
         [Authorize]
+        [HttpPut("{chatId}/seen/{userOid}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> PutSetSeen(int chatId,string userOid)
+            => (await _repository.SetSeen(chatId, userOid)).ToActionResult();
+        
+        [Authorize]
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(404)]

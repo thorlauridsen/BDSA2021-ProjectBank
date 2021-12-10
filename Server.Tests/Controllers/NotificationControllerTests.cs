@@ -55,6 +55,7 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task SeenNotification()
         {
             //TODO: Implement SeenNotification unit test
+            
         }
     }
 }

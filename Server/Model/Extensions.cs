@@ -12,6 +12,7 @@ namespace ProjectBank.Server.Model
             Deleted => new NoContentResult(),
             NotFound => new NotFoundResult(),
             Conflict => new ConflictResult(),
+            Success => new OkResult(),
             _ => throw new NotSupportedException($"{status} not supported")
         };
 
