@@ -78,6 +78,7 @@
             UserId = user.oid,
             postid = Post.Id
         };
+        
         var notification = new NotificationCreateDto
         {
             Title = "New comment",
@@ -88,7 +89,9 @@
         var response = await _http.PostAsJsonAsync("api/Comment", comment);
         if (response.IsSuccessStatusCode)
         {
-            await _http.PostAsJsonAsync("api/Notification", notification);
+            if(!CurrentUser.oid.Equals(Post.SupervisorOid)){
+                await _http.PostAsJsonAsync("api/Notification", notification);
+            }
             uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true); 
         }
         else
