@@ -48,11 +48,13 @@
                         <a href="/messages/create/supervisor/@Creator?.oid" class="btn btn-block btn-primary m-2">Contact</a>
                         <button @onclick="@(() => Modal.Show<ApplyModal>("Modal Popup Example", ApplyModalParameters))" class="btn btn-primary m-2">Apply</button>
                     </div>
-                    <div class="d-grid my-4 p-4 shadow text-center">
-                        <!--!-->
-                        <a href="/projects/edit/@Id" class="btn btn-primary m-2">Edit</a>
-                        <a href="/messages/?filter=@Id" class="btn btn-success m-2">View related conversations</a>
-                    </div>
+                    @if(currentUser.oid == Post?.SupervisorOid){
+                        <div class="d-grid my-4 p-4 shadow text-center">
+                            <!--!-->
+                            <a href="/projects/edit/@Id" class="btn btn-primary m-2">Edit</a>
+                            <a href="/messages/?filter=@Id" class="btn btn-success m-2">View related conversations</a>
+                        </div>
+                    }
                 </div>
             </div>
         }

@@ -144,7 +144,7 @@
             Posts = await _http.GetFromJsonAsync<List<PostDto>>("api/Post/supervisor/" + currentUser.oid);
             _allChats = await _http.GetFromJsonAsync<IReadOnlyCollection<ChatDetailsDto>>($"api/Chat/user/{currentUser.oid}");
             _chats = new List<ChatDetailsDto>(_allChats);
-
+            UpdateFilter();
             var _chat = uriHelper.QueryString("chat");
             if (_chat != null && _chat.Trim() != "")
             {
@@ -190,9 +190,8 @@
         chat = chatDetailsDto;
         if (chat != null)
         {
-            chatMessages = (await
-            _http.GetFromJsonAsync<IReadOnlyCollection<ChatMessageDto>>($"api/Chat/{chat.ChatId}/messages")).Select(m =>
-            m).ToList();
+            chatMessages = (await _http.GetFromJsonAsync<IReadOnlyCollection<ChatMessageDto>>($"api/Chat/{chat.ChatId}/messages") ?? new List<ChatMessageDto>())
+                .Select(m => m).ToList();
             chatRecipient = await _http.GetFromJsonAsync<UserDetailsDto>($"api/User/{chat.TargetUserId}");
             UpdateQuery();
             StateHasChanged();
@@ -220,7 +219,12 @@
             }
         }
         jsRuntime.InvokeVoidAsync("ChangeUrl", urlString);
-        _chats = _allChats;
+        _chats = new List<ChatDetailsDto>(_allChats);
+        UpdateFilter();
+    }
+
+    private void UpdateFilter()
+    {
         if (filter != -1) _chats = _allChats.Where(c => c.ProjectId == filter).ToList();
     }
 
