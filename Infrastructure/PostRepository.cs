@@ -181,6 +181,14 @@ namespace ProjectBank.Core
             return Deleted;
         }
 
+        public async Task<(Status, int)> IncrementViewCountAsync(int postId)
+        {
+            var post = await _context.Posts.FirstOrDefaultAsync(p => p.Id == postId);
+            if (post == null) return (NotFound, -1);
+
+            return (Success, ++post.ViewCount);
+        }
+
         private async Task<User?> GetUserAsync(string userId) =>
             await _context.Users.FirstOrDefaultAsync(u => u.oid == userId);
     }
