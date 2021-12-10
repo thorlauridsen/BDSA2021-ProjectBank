@@ -50,16 +50,22 @@ namespace ProjectBank.Infrastructure
                 return (BadRequest, null);
             }
 
+            var chat = await GetChatAsync(chatMessage.ChatId);
             var entityChatMessage = new ChatMessage
             {
-                Chat = await GetChatAsync(chatMessage.ChatId),
+                Chat = chat,
                 Content = chatMessage.Content,
                 Timestamp = DateTime.Now,
                 FromUser = await GetUserAsync(chatMessage.FromUserOid)
             };
 
-            entityChatMessage.Chat.ChatUsers.Where(cu => cu.User.Oid != chatMessage.FromUserOid)
-                .Select(cu => cu.SeenLatestMessage = false);
+           foreach (var chatUser in chat.ChatUsers)
+           {
+               chatUser.SeenLatestMessage = chatUser.User.Oid == chatMessage.FromUserOid;
+               _context.ChatUsers.Update(chatUser);
+           }
+            entityChatMessage.Chat.ChatUsers
+                .Select(cu => cu.SeenLatestMessage = cu.User.Oid == chatMessage.FromUserOid);
 
             _context.ChatMessages.Add(entityChatMessage);
             await _context.SaveChangesAsync();
@@ -97,31 +103,43 @@ namespace ProjectBank.Infrastructure
             };
         }
 
+        public async Task<Status> SetSeen(int chatId, string userOid)
+        {
+            var chat = await _context.Chats.Include("ChatUsers.User").FirstOrDefaultAsync(c => c.Id.Equals(chatId)).ConfigureAwait(false);
+            var user = chat?.ChatUsers.FirstOrDefault(u => u.User.Oid.Equals(userOid));
+            if (user == null) return NotFound;
+            user.SeenLatestMessage = true;
+            _context.ChatUsers.Update(user);
+            await _context.SaveChangesAsync();
+            return Success;
+        }
+
         public async Task<IReadOnlyCollection<ChatDetailsDto>> ReadAllChatsAsync(string userOid)
         {
-            return (await _context.Chats
+            return (await _context.Chats.Include("ChatUsers")
                 .Join(_context.ChatMessages, c => c.Id, cm => cm.Chat.Id, (c, cm) => new { c, cm })
-                .Where(@t => @t.c.ChatUsers.Any(u => u.User.Oid == userOid))
-                .OrderByDescending(@t => @t.cm.Timestamp)
-                .Select(@t => new ChatDetailsDto
+                .Where(t => t.c.ChatUsers.Any(u => u.User.Oid == userOid))
+                .OrderByDescending(t => t.cm.Timestamp)
+                .Select(t => new ChatDetailsDto
                 {
-                    ChatId = @t.c.Id,
-                    TargetUserOid = @t.c.ChatUsers.First(ch => ch.User.Oid != userOid).User.Oid,
+                    ChatId = t.c.Id,
+                    TargetUserOid = t.c.ChatUsers.First(ch => ch.User.Oid != userOid).User.Oid,
                     LatestChatMessage = new ChatMessageDto()
                     {
-                        Content = @t.cm.Content,
+                        Content = t.cm.Content,
                         FromUser = new UserDetailsDto
                         {
-                            Oid = @t.cm.FromUser.Oid,
-                            Name = @t.cm.FromUser.Name,
-                            Email = @t.cm.FromUser.Email
+                            Oid = t.cm.FromUser.Oid,
+                            Name = t.cm.FromUser.Name,
+                            Email = t.cm.FromUser.Email
                         },
-                        Timestamp = @t.cm.Timestamp
+                        Timestamp = t.cm.Timestamp
                     },
-                    SeenLatestMessage = @t.c.ChatUsers.First().SeenLatestMessage,
-                    ProjectId = @t.c.Post.Id
+                    SeenLatestMessage = t.c.ChatUsers.FirstOrDefault(chatUser => chatUser.User.Oid == userOid)
+                        .SeenLatestMessage,
+                    ProjectId = t.c.Post.Id
 
-                }).ToListAsync().WaitAsync(TimeSpan.FromMinutes(10))).DistinctBy(dto => dto.ChatId).ToList();
+                }).ToListAsync().WaitAsync(TimeSpan.FromMinutes(10)).ConfigureAwait(false)).DistinctBy(dto => dto.ChatId).ToList();
         }
 
         public async Task<IReadOnlyCollection<ChatMessageDto>> ReadSpecificChatAsync(int chatId) =>
@@ -164,7 +182,7 @@ namespace ProjectBank.Infrastructure
 
             var targetUser = result.chat.ChatUsers.First(ch => ch.User.Oid != userOid);
             var targetUserOid = targetUser.User.Oid;
-            var seenLatestMessage = result.chat.ChatUsers.FirstOrDefault(chatUser => chatUser.User.Oid != userOid)
+            var seenLatestMessage = result.chat.ChatUsers.FirstOrDefault(chatUser => chatUser.User.Oid == userOid)?
                 .SeenLatestMessage;
 
             return new ChatDetailsDto()
@@ -172,14 +190,14 @@ namespace ProjectBank.Infrastructure
                 ChatId = result.chat.Id,
                 LatestChatMessage = latestChatMessage,
                 TargetUserOid = targetUserOid,
-                SeenLatestMessage = seenLatestMessage,
+                SeenLatestMessage = seenLatestMessage ?? true,
                 ProjectId = result.chat.Post?.Id
             };
 
         }
 
         private async Task<Chat> GetChatAsync(int chatId) =>
-            await _context.Chats.Include("ChatUsers").Include("Post").FirstAsync(c => c.Id == chatId);
+            await _context.Chats.Include("ChatUsers").Include("ChatUsers.User").Include("Post").FirstAsync(c => c.Id == chatId);
 
         private async Task<User> GetUserAsync(string userOid) =>
             await _context.Users.FirstAsync(u => u.Oid == userOid);

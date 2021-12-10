@@ -61,7 +61,7 @@ namespace Infrastructure.Tests
             chatPer1 = new ChatUser { Id = 1, User = per };
             chatPer2 = new ChatUser { Id = 2, User = per };
             chatBo = new ChatUser { Id = 3, User = bo };
-            chatAlice = new ChatUser { Id = 4, User = alice };
+            chatAlice = new ChatUser { Id = 4, User = alice, SeenLatestMessage = false};
 
             //chatKarl = new ChatUser { Id = 5, User = karl };
             //chatBo2 = new ChatUser { Id = 6, User = bo };
@@ -83,6 +83,21 @@ namespace Infrastructure.Tests
             _repository = new ChatRepository(_context);
         }
 
+        [Fact]
+        public async Task SetSeen_sets_returns_success()
+        {
+            var actual = await _repository.SetSeen(epicChatEntity.Id, chatAlice.User.Oid);
+            Assert.Equal(Status.Success, actual);
+        }
+        [Theory]
+        [InlineData(1, "8943894")]
+        [InlineData(1000, "3")]
+        public async Task SetSeen_sets_returns_not_found(int chatId, string oid)
+        {
+            var actual = await _repository.SetSeen(chatId, oid);
+            Assert.Equal(Status.NotFound, actual);
+        }
+        
         [Fact]
         public async Task CreateNewChatAsync_creates_new_chat()
         {

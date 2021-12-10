@@ -48,8 +48,7 @@
                 @foreach (var _chat in _chats)
                 {
                     <div @onclick="@(() => SelectChat(_chat))">
-                        <MessageItem Read="@_chat.SeenLatestMessage" Active="@(chat != null && chat.ChatId == _chat.ChatId)"
-                    Chat="@_chat">
+                        <MessageItem Active="@(chat != null && chat.ChatId == _chat.ChatId)" Chat="@_chat">
                         </MessageItem>
                     </div>
                 }
@@ -97,19 +96,7 @@
 @code {
 
     private List<PostDetailsDto>? Posts;
-
-    private PostDetailsDto testPost = new PostDetailsDto
-    {
-        Id = 5,
-        Title = "Biology project 101",
-        Content = "content",
-        DateAdded = DateTime.Now,
-        UserOid = "1",
-        Tags = new(),
-        PostState = PostState.Active,
-        ViewCount = 0
-    };
-
+    
     private string _FilterSelectValue;
 
     private string FilterSelectValue
@@ -218,6 +205,11 @@
             new List<ChatMessageDto>())
             .Select(m => m).ToList();
             chatRecipient = await _http.GetFromJsonAsync<UserDetailsDto>($"api/User/{chat.TargetUserOid}");
+            if (!chat.SeenLatestMessage)
+            {
+                var res = await _http.PutAsync($"api/Chat/{chat.ChatId}/seen/{currentUser.Oid}",null);
+                
+            }
             UpdateQuery();
             StateHasChanged();
         }

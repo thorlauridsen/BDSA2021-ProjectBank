@@ -9,5 +9,6 @@ namespace ProjectBank.Core
         Task<IReadOnlyCollection<ChatMessageDto>> ReadSpecificChatAsync(int chatId);
         Task<ChatDetailsDto?> ReadChatAsync(int chatId, string userOid);
         Task<ChatMessageDto?> ReadSpecificMessageAsync(int chatMessageId);
+        Task<Status> SetSeen(int chatId, string userOid);
     }
 }
