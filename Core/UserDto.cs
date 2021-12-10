@@ -13,9 +13,4 @@ namespace ProjectBank.Core
         [StringLength(50)]
         public string Name { get; init; }
     }
-
-    public record UserUpdateDto : UserCreateDto
-    {
-        public string oid { get; init; }
-    }
 }

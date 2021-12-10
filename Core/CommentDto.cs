@@ -21,9 +21,4 @@
         
         public int postid { get; init; }
     }
-
-    public record CommentUpdateDto : CommentCreateDto
-    {
-        public int Id { get; init; }
-    }
 }
