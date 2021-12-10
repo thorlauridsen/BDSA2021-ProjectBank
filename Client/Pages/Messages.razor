@@ -18,7 +18,7 @@
             <span class="fs-5 fw-semibold">Messages</span>
             <EditForm EditContext="@filterEditContext">
                 <AuthorizeView Context="Auth" Roles="Supervisor">
-                    <InputSelect class="form-select" @bind-Value="@filterModel.title">
+                    <InputSelect class="form-select" @bind-Value="@filterModel.Title">
                         <option selected>Sort by project</option>
                         @if (Posts != null)
                         {
