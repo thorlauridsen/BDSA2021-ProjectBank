@@ -5,6 +5,6 @@ namespace ProjectBank.Core
         Task<(Status, UserDetailsDto?)> CreateAsync(UserCreateDto user);
         Task<Status> DeleteAsync(string userOid);
         Task<Option<UserDetailsDto>> ReadAsync(string userOid);
-        Task<IReadOnlyCollection<UserDto>> ReadAsync();
+        Task<IReadOnlyCollection<UserDetailsDto>> ReadAsync();
     }
 }

@@ -6,13 +6,13 @@
 @inject NavigationManager uriHelper;
 
 <div class="d-flex flex-start my-4">
-    <img class="rounded-circle shadow me-3" src="@ImgSrc" alt="avatar" width="40" height="40"/>
+    <img class="rounded-circle shadow me-3" src="@ImgSrc" alt="avatar" width="40" height="40" />
     <div class="flex-grow-1 flex-shrink-1 border rounded py-1 px-2">
         <div class="d-flex justify-content-between align-items-center">
             <p class="mb-1">
                 @Name <span class="small">- @Published.GetTimeSince()</span>
             </p>
-            @if (CurrentUser.Oid.Equals(CurrentPost.SupervisorOid) || CurrentUser.Oid.Equals(UserID))
+            @if (CurrentUser.Oid.Equals(CurrentPost.UserOid) || CurrentUser.Oid.Equals(UserID))
             {
                 <a class="link-danger" onclick="@DeleteComment">Delete</a>
             }
@@ -29,7 +29,7 @@
     public UserDetailsDto CurrentUser { get; set; }
 
     [Parameter]
-    public PostDto CurrentPost { get; set; }
+    public PostDetailsDto CurrentPost { get; set; }
 
     [Parameter]
     public int CommentID { get; set; }
@@ -54,7 +54,7 @@
         {
             var _user = await _http.GetFromJsonAsync<UserDetailsDto>("api/User/" + UserID);
             Name = _user.Name;
-            ImgSrc = _user.image;
+            ImgSrc = _user.Image;
         }
         catch (AccessTokenNotAvailableException exception)
         {

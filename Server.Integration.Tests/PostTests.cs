@@ -28,7 +28,7 @@ namespace ProjectBank.Server.Integration.Tests
         [Fact]
         public async Task Get_returns_Posts()
         {
-            var posts = await _client.GetFromJsonAsync<PostDto[]>("/api/Post");
+            var posts = await _client.GetFromJsonAsync<PostDetailsDto[]>("/api/Post");
 
             Assert.NotNull(posts);
             Assert.True(posts?.Length >= 1);
@@ -47,7 +47,7 @@ namespace ProjectBank.Server.Integration.Tests
             {
                 Title = "Math Project",
                 Content = "My Cool Math Project",
-                SupervisorOid = "1",
+                UserOid = "1",
                 Tags = new HashSet<string>() { "Math" }
             };
             var response = await _client.PostAsJsonAsync("/api/Post", post);
@@ -60,7 +60,7 @@ namespace ProjectBank.Server.Integration.Tests
             Assert.Equal(2, created?.Id);
             Assert.Equal("Math Project", created?.Title);
             Assert.Equal("My Cool Math Project", created?.Content);
-            Assert.Equal("1", created?.SupervisorOid);
+            Assert.Equal("1", created?.UserOid);
             Assert.Equal("Math", created?.Tags.First());
         }
     }

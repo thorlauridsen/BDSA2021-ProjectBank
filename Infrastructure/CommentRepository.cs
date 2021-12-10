@@ -33,24 +33,26 @@ namespace ProjectBank.Infrastructure
             postEntity.Comments.Add(entity);
             await _context.SaveChangesAsync();
 
-            return (Created, new CommentDetailsDto(
-                                 entity.Id,
-                                 entity.Content,
-                                 entity.DateAdded,
-                                 entity.User.Oid
-                             ));
+            return (Created, new CommentDetailsDto
+            {
+                Id = entity.Id,
+                Content = entity.Content,
+                DateAdded = entity.DateAdded,
+                UserOid = entity.User.Oid
+            });
         }
 
         public async Task<Option<CommentDetailsDto>> ReadAsync(int postId, int commentId)
         {
             var c = (await _context.Posts.FirstOrDefaultAsync(p => p.Id == postId))?.Comments.FirstOrDefault(c => c.Id == commentId);
             if (c == null) return null;
-            return new CommentDetailsDto(
-                c.Id,
-                c.Content,
-                c.DateAdded,
-                c.User.Oid
-            );
+            return new CommentDetailsDto
+            {
+                Id = c.Id,
+                Content = c.Content,
+                DateAdded = c.DateAdded,
+                UserOid = c.User.Oid
+            };
         }
 
         public async Task<Status> DeleteAsync(int postId, int commentId)

@@ -41,7 +41,7 @@
 @code {
 
     [Parameter]
-    public PostDto? Post { get; set; }
+    public PostDetailsDto? Post { get; set; }
 
     ActionSelectorModel actionSelectorModel = new();
 
@@ -82,7 +82,7 @@
                     Id = Post.Id,
                     Title = Post.Title,
                     Content = Post.Content,
-                    SupervisorOid = Post.SupervisorOid, 
+                    UserOid = Post.UserOid, 
                     Tags = Post.Tags,
                     PostState = PostState.Closed
                 });
@@ -101,7 +101,7 @@
                     Id = Post.Id,
                     Title = Post.Title,
                     Content = Post.Content,
-                    SupervisorOid = Post.SupervisorOid, 
+                    UserOid = Post.UserOid, 
                     Tags = Post.Tags,
                     PostState = PostState.Archived
                 });
@@ -120,7 +120,7 @@
                     Id = Post.Id,
                     Title = Post.Title,
                     Content = Post.Content,
-                    SupervisorOid = Post.SupervisorOid, 
+                    UserOid = Post.UserOid, 
                     Tags = Post.Tags,
                     PostState = PostState.Active
                 });

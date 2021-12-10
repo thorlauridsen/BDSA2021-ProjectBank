@@ -15,7 +15,13 @@ namespace ProjectBank.Server.Tests.Controllers
         {
             // Arrange
             var toCreate = new CommentCreateDto();
-            var comment = new CommentDetailsDto(1, "Hello there", DateTime.Now, "1");
+            var comment = new CommentDetailsDto
+            {
+                Id = 1,
+                Content = "Hello there",
+                DateAdded = DateTime.Now,
+                UserOid = "1"
+            };
             var repository = new Mock<ICommentRepository>();
             repository.Setup(m => m.CreateAsync(toCreate)).ReturnsAsync((Created, comment));
             var controller = new CommentController(logger.Object, repository.Object);
@@ -49,7 +55,13 @@ namespace ProjectBank.Server.Tests.Controllers
         {
             // Arrange
             var repository = new Mock<ICommentRepository>();
-            var comment = new CommentDetailsDto(1, "Hello there", DateTime.Now, "1");
+            var comment = new CommentDetailsDto
+            {
+                Id = 1,
+                Content = "Hello there",
+                DateAdded = DateTime.Now,
+                UserOid = "1"
+            };
             repository.Setup(m => m.ReadAsync(1, 1)).ReturnsAsync(comment);
             var controller = new CommentController(logger.Object, repository.Object);
 

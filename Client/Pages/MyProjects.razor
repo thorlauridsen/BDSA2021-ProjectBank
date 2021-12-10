@@ -34,18 +34,18 @@
         {
             <table class="table table-striped">
                 <thead>
-                <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">State</th>
-                    <th scope="col">Actions</th>
-                </tr>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">State</th>
+                        <th scope="col">Actions</th>
+                    </tr>
                 </thead>
                 <tbody>
-                @foreach (var post in Posts)
-                {
-                    <MyProjectsTableRowComponent Post="@post"></MyProjectsTableRowComponent>
-                }
+                    @foreach (var post in Posts)
+                    {
+                        <MyProjectsTableRowComponent Post="@post"></MyProjectsTableRowComponent>
+                    }
                 </tbody>
             </table>
         }
@@ -62,8 +62,8 @@
         public string Name { get; set; }
     }
 
-    private List<PostDto>? AllPosts;
-    private List<PostDto>? Posts;
+    private List<PostDetailsDto>? AllPosts;
+    private List<PostDetailsDto>? Posts;
 
     protected override void OnInitialized()
     {
@@ -78,9 +78,9 @@
         try
         {
             var user = await _localStore.GetItemAsync<UserDetailsDto>("user");
-            AllPosts = await _http.GetFromJsonAsync<List<PostDto>>("api/Post/supervisor/" + user.Oid);
-            if (AllPosts != null) Posts = new List<PostDto>(AllPosts);
-           
+            AllPosts = await _http.GetFromJsonAsync<List<PostDetailsDto>>("api/Post/supervisor/" + user.Oid);
+            if (AllPosts != null) Posts = new List<PostDetailsDto>(AllPosts);
+
         }
         catch (AccessTokenNotAvailableException exception)
         {
@@ -91,7 +91,7 @@
     private void EditContext_HandleFieldChanged(object? sender, FieldChangedEventArgs e)
     {
         var tag = tagModel.Name;
-        if (AllPosts != null) Posts = new List<PostDto>(AllPosts);
+        if (AllPosts != null) Posts = new List<PostDetailsDto>(AllPosts);
         if (!tag.Equals("Sort by project")) Posts = Posts?.Where(p => p.Tags.Contains(tag)).ToList();
         StateHasChanged();
     }

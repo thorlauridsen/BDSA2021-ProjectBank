@@ -26,7 +26,7 @@ namespace ProjectBank.Server.Controllers
         [Authorize]
         [HttpGet]
         [ProducesResponseType(200)]
-        public async Task<IReadOnlyCollection<UserDto>> Get()
+        public async Task<IReadOnlyCollection<UserDetailsDto>> Get()
             => await _repository.ReadAsync();
 
         [Authorize]

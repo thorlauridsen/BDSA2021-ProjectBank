@@ -22,9 +22,10 @@
                     {
                         @foreach (var post in Posts)
                         {
-                            if(post.PostState.Equals(PostState.Active)){
-                                <PostContainer Title="@post.Title" Content="@post.Content" SupervisorId="@post.SupervisorOid"
-                                               Tags="@post.Tags" DateAdded="@post.DateAdded" PostID="@post.Id">
+                            if (post.PostState.Equals(PostState.Active))
+                            {
+                                <PostContainer Title="@post.Title" Content="@post.Content" SupervisorId="@post.UserOid"
+                    Tags="@post.Tags" DateAdded="@post.DateAdded" PostID="@post.Id">
                                 </PostContainer>
                             }
                         }
@@ -44,9 +45,9 @@
 
 @code
 {
-    public List<String>? Tags = new List<string>() {"Biology", "Chemistry"}; //test
+    public List<String>? Tags = new List<string>() { "Biology", "Chemistry" }; //test
 
-    private List<PostDto>? Posts;
+    private List<PostDetailsDto>? Posts;
 
     private UserDetailsDto currentUser { get; set; }
 
@@ -55,7 +56,7 @@
         currentUser = await _localStore.GetItemAsync<UserDetailsDto>("user");
         try
         {
-            Posts = await _http.GetFromJsonAsync<List<PostDto>>("api/Post");
+            Posts = await _http.GetFromJsonAsync<List<PostDetailsDto>>("api/Post");
         }
         catch (AccessTokenNotAvailableException exception)
         {

@@ -76,7 +76,7 @@ namespace Infrastructure.Tests
             {
                 Title = "Biology Project",
                 Content = "Bla bla bla bla",
-                SupervisorOid = "1",
+                UserOid = "1",
                 Tags = new HashSet<string> { "bio", "dna", "cells" }
             };
 
@@ -87,7 +87,7 @@ namespace Infrastructure.Tests
             Assert.Equal(3, content?.Id);
             Assert.Equal("Biology Project", content?.Title);
             Assert.Equal("Bla bla bla bla", content?.Content);
-            Assert.Equal("1", content?.SupervisorOid);
+            Assert.Equal("1", content?.UserOid);
             Assert.True(content?.Tags.SetEquals(new[] { "bio", "dna", "cells" }));
             Assert.Equal(PostState.Active, content?.PostState);
             Assert.Equal(0, content?.ViewCount);
@@ -97,7 +97,7 @@ namespace Infrastructure.Tests
                 Id = 3,
                 Title = "Biology Project 2",
                 Content = "New content but archived",
-                SupervisorOid = "1",
+                UserOid = "1",
                 Tags = new HashSet<string> { "bio", "dna", "cells" },
                 PostState = PostState.Archived,
                 ViewCount = 1
@@ -124,7 +124,7 @@ namespace Infrastructure.Tests
             {
                 Title = "",
                 Content = "",
-                SupervisorOid = "1",
+                UserOid = "1",
                 Tags = new HashSet<string> { "bio", "dna", "cells" }
             };
             var (status, content) = await _repository.CreateAsync(post);
@@ -140,7 +140,7 @@ namespace Infrastructure.Tests
             {
                 Title = "Biology Project",
                 Content = "Bla bla bla bla",
-                SupervisorOid = "111111",
+                UserOid = "111111",
                 Tags = new HashSet<string> { "bio", "dna", "cells" }
             };
             var (status, content) = await _repository.CreateAsync(post);
@@ -158,7 +158,7 @@ namespace Infrastructure.Tests
             Assert.Equal("Math Project", option.Value.Title);
             Assert.Equal("Bla bla bla bla", option.Value.Content);
             Assert.Equal(today, option.Value.DateAdded);
-            Assert.Equal("1", option.Value.SupervisorOid);
+            Assert.Equal("1", option.Value.UserOid);
             Assert.Equal(1, option.Value.Tags.Count);
             Assert.Equal(PostState.Active, option.Value.PostState);
             Assert.Equal(22, option.Value.ViewCount);
@@ -187,7 +187,7 @@ namespace Infrastructure.Tests
             Assert.Equal("Math Project", post1.Title);
             Assert.Equal("Bla bla bla bla", post1.Content);
             Assert.Equal(today, post1.DateAdded);
-            Assert.Equal("1", post1.SupervisorOid);
+            Assert.Equal("1", post1.UserOid);
             Assert.Equal(1, post1.Tags.Count);
             Assert.Equal(PostState.Active, post1.PostState);
             Assert.Equal(22, post1.ViewCount);
@@ -196,7 +196,7 @@ namespace Infrastructure.Tests
             Assert.Equal("Physics Project", post2.Title);
             Assert.Equal("Something about physics and stuff", post2.Content);
             Assert.Equal(today, post2.DateAdded);
-            Assert.Equal("1", post2.SupervisorOid);
+            Assert.Equal("1", post2.UserOid);
             Assert.Equal(2, post2.Tags.Count);
             Assert.Equal(PostState.Active, post2.PostState);
             Assert.Equal(13, post2.ViewCount);
@@ -217,7 +217,7 @@ namespace Infrastructure.Tests
             Assert.Equal("Math Project", post1.Title);
             Assert.Equal("Bla bla bla bla", post1.Content);
             Assert.Equal(today, post1.DateAdded);
-            Assert.Equal("1", post1.SupervisorOid);
+            Assert.Equal("1", post1.UserOid);
             Assert.Equal(1, post1.Tags.Count);
             Assert.Equal(PostState.Active, post1.PostState);
             Assert.Equal(22, post1.ViewCount);
@@ -226,7 +226,7 @@ namespace Infrastructure.Tests
             Assert.Equal("Physics Project", post2.Title);
             Assert.Equal("Something about physics and stuff", post2.Content);
             Assert.Equal(today, post2.DateAdded);
-            Assert.Equal("1", post2.SupervisorOid);
+            Assert.Equal("1", post2.UserOid);
             Assert.Equal(2, post2.Tags.Count);
             Assert.Equal(PostState.Active, post2.PostState);
             Assert.Equal(13, post2.ViewCount);
@@ -257,7 +257,7 @@ namespace Infrastructure.Tests
             Assert.Equal("Math Project", actual.Title);
             Assert.Equal("Bla bla bla bla", actual.Content);
             Assert.Equal(today, actual.DateAdded);
-            Assert.Equal("1", actual.SupervisorOid);
+            Assert.Equal("1", actual.UserOid);
             Assert.Equal(1, actual.Tags.Count);
         }
 
@@ -272,8 +272,14 @@ namespace Infrastructure.Tests
         public async Task ReadAsyncComments_given_postId_returns_comments()
         {
             var response = await _repository.ReadAsyncComments(1);
-            var comment = new CommentDto(1, "Hello", new DateTime(2021, 12, 6), "1");
-            var expected = new List<CommentDto>() { comment }.AsReadOnly();
+            var comment = new CommentDetailsDto
+            {
+                Id = 1,
+                Content = "Hello",
+                DateAdded = new DateTime(2021, 12, 6),
+                UserOid = "1"
+            };
+            var expected = new List<CommentDetailsDto>() { comment }.AsReadOnly();
             Assert.Equal(expected, response);
         }
 

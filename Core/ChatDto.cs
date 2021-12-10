@@ -16,7 +16,7 @@ namespace ProjectBank.Core
 
     public record ChatMessageDto
     {
-        public UserDto FromUser { get; init; }
+        public UserDetailsDto FromUser { get; init; }
 
         public string Content { get; init; }
 

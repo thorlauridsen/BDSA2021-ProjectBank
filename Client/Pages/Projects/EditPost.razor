@@ -49,7 +49,7 @@
     [Parameter]
     public int Id { get; set; }
 
-    private PostDto? _post;
+    private PostDetailsDto? _post;
     private string tags { get; set; }
     private PostFormModel postFormModel = new();
 
@@ -67,7 +67,7 @@
     {
         try
         {
-            _post = await _http.GetFromJsonAsync<PostDto>("api/Post/" + Id);
+            _post = await _http.GetFromJsonAsync<PostDetailsDto>("api/Post/" + Id);
             postFormModel.Title = _post.Title;
             postFormModel.Content = _post.Content;
             postFormModel.Tags = string.Join(", ", _post.Tags);
@@ -95,7 +95,7 @@
             Id = _post.Id,
             Title = postFormModel.Title,
             Content = postFormModel.Content,
-            SupervisorOid = _post.SupervisorOid,
+            UserOid = _post.UserOid,
             Tags = postFormModel.Tags.Split(",").Select(t => t.Trim()).ToHashSet()
         };
         var response = await _http.PutAsJsonAsync("api/Post/" + _post.Id, postUpdateDto);

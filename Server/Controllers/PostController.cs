@@ -26,7 +26,7 @@ namespace ProjectBank.Server.Controllers
         [Authorize]
         [HttpGet]
         [ProducesResponseType(200)]
-        public async Task<IReadOnlyCollection<PostDto>> Get()
+        public async Task<IReadOnlyCollection<PostDetailsDto>> Get()
             => await _repository.ReadAsync();
 
         [Authorize]
@@ -39,14 +39,14 @@ namespace ProjectBank.Server.Controllers
         [Authorize]
         [HttpGet("tag/{tag}")]
         [ProducesResponseType(200)]
-        public async Task<IReadOnlyCollection<PostDto>> GetByTag(string tag)
+        public async Task<IReadOnlyCollection<PostDetailsDto>> GetByTag(string tag)
             => await _repository.ReadAsyncByTag(tag);
 
         [Authorize]
         [HttpGet("supervisor/{userOid}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<IReadOnlyCollection<PostDto>>> GetBySupervisor(string userOid)
+        public async Task<ActionResult<IReadOnlyCollection<PostDetailsDto>>> GetBySupervisor(string userOid)
         {
             var (status, posts) = await _repository.ReadAsyncBySupervisor(userOid);
             if (status == Status.NotFound) return NotFound();
@@ -56,7 +56,7 @@ namespace ProjectBank.Server.Controllers
         [Authorize]
         [HttpGet("{postId}/comments")]
         [ProducesResponseType(200)]
-        public async Task<IReadOnlyCollection<CommentDto>> GetComments(int postId)
+        public async Task<IReadOnlyCollection<CommentDetailsDto>> GetComments(int postId)
         {
             var comments = await _repository.ReadAsyncComments(postId);
             return comments;

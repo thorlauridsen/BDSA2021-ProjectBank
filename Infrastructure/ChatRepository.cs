@@ -73,11 +73,12 @@ namespace ProjectBank.Infrastructure
             return (Status.Created, new ChatMessageDetailsDto()
             {
                 Content = entityChatMessage.Content,
-                FromUser = new UserDto(
-                    entityChatMessage.FromUser.Oid,
-                    entityChatMessage.FromUser.Name,
-                    entityChatMessage.FromUser.Email
-                ),
+                FromUser = new UserDetailsDto
+                {
+                    Oid = entityChatMessage.FromUser.Oid,
+                    Name = entityChatMessage.FromUser.Name,
+                    Email = entityChatMessage.FromUser.Email
+                },
                 Timestamp = entityChatMessage.Timestamp,
                 chatId = entityChatMessage.Chat.Id,
                 chatMessageId = entityChatMessage.Id
@@ -92,11 +93,12 @@ namespace ProjectBank.Infrastructure
             return new ChatMessageDto()
             {
                 Content = chatMessage.Content,
-                FromUser = new UserDto(
-                    chatMessage.FromUser.Oid,
-                    chatMessage.FromUser.Name,
-                    chatMessage.FromUser.Email
-                ),
+                FromUser = new UserDetailsDto
+                {
+                    Oid = chatMessage.FromUser.Oid,
+                    Name = chatMessage.FromUser.Name,
+                    Email = chatMessage.FromUser.Email
+                },
                 Timestamp = chatMessage.Timestamp,
             };
         }
@@ -125,11 +127,12 @@ namespace ProjectBank.Infrastructure
                     LatestChatMessage = new ChatMessageDto()
                     {
                         Content = t.cm.Content,
-                        FromUser = new UserDto(
-                            t.cm.FromUser.Oid,
-                            t.cm.FromUser.Name,
-                            t.cm.FromUser.Email
-                        ),
+                        FromUser = new UserDetailsDto
+                        {
+                            Oid = t.cm.FromUser.Oid,
+                            Name = t.cm.FromUser.Name,
+                            Email = t.cm.FromUser.Email
+                        },
                         Timestamp = t.cm.Timestamp
                     },
                     SeenLatestMessage = t.c.ChatUsers.FirstOrDefault(chatUser => chatUser.User.Oid == userOid)
@@ -143,11 +146,12 @@ namespace ProjectBank.Infrastructure
             (await _context.ChatMessages.Where(c => c.Chat.Id == chatId)
                 .Select(c => new ChatMessageDto
                 {
-                    FromUser = new UserDto(
-                        c.FromUser.Oid,
-                        c.FromUser.Name,
-                        c.FromUser.Email
-                    ),
+                    FromUser = new UserDetailsDto
+                    {
+                        Oid = c.FromUser.Oid,
+                        Name = c.FromUser.Name,
+                        Email = c.FromUser.Email
+                    },
                     Content = c.Content,
                     Timestamp = c.Timestamp
                 })
@@ -167,11 +171,12 @@ namespace ProjectBank.Infrastructure
             var latestChatMessage = new ChatMessageDto()
             {
                 Content = result.chatMessage.Content,
-                FromUser = new UserDto(
-                    result.chatMessage.FromUser.Oid,
-                    result.chatMessage.FromUser.Name,
-                    result.chatMessage.FromUser.Email
-                ),
+                FromUser = new UserDetailsDto
+                {
+                    Oid = result.chatMessage.FromUser.Oid,
+                    Name = result.chatMessage.FromUser.Name,
+                    Email = result.chatMessage.FromUser.Email
+                },
                 Timestamp = result.chatMessage.Timestamp
             };
 
