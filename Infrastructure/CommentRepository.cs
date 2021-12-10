@@ -15,7 +15,7 @@ namespace ProjectBank.Infrastructure
 
         public async Task<(Status, CommentDetailsDto?)> CreateAsync(CommentCreateDto comment)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.oid == comment.UserId);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Oid == comment.UserOid);
             var postEntity = await _context.Posts.FirstOrDefaultAsync(c => c.Id == comment.postid);
 
             if (user == null ||
@@ -37,7 +37,7 @@ namespace ProjectBank.Infrastructure
                                  entity.Id,
                                  entity.Content,
                                  entity.DateAdded,
-                                 entity.User.oid
+                                 entity.User.Oid
                              ));
         }
 
@@ -49,7 +49,7 @@ namespace ProjectBank.Infrastructure
                 c.Id,
                 c.Content,
                 c.DateAdded,
-                c.User.oid
+                c.User.Oid
             );
         }
 

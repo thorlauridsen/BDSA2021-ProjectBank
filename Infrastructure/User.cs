@@ -5,7 +5,7 @@ namespace ProjectBank.Infrastructure
     public class User
     {
         [Key]
-        public string oid { get; set; }
+        public string Oid { get; set; }
 
         [StringLength(50)]
         public string Name { get; set; }

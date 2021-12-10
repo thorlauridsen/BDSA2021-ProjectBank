@@ -25,14 +25,14 @@ namespace ProjectBank.Server.Controllers
 
         [Authorize]
         [HttpGet("{postId}/{commentId}", Name = "GetByCommentId")]
-        [ProducesResponseType(typeof(CommentDetailsDto), 200)]
+        [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<CommentDetailsDto>> GetByCommentId(int postId, int commentId)
             => (await _repository.ReadAsync(postId, commentId)).ToActionResult();
 
         [Authorize]
         [HttpPost]
-        [ProducesResponseType(typeof(CommentDetailsDto), 201)]
+        [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         public async Task<ActionResult<CommentDetailsDto>> Post(CommentCreateDto comment)
         {

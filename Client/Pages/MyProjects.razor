@@ -78,7 +78,7 @@
         try
         {
             var user = await _localStore.GetItemAsync<UserDetailsDto>("user");
-            AllPosts = await _http.GetFromJsonAsync<List<PostDto>>("api/Post/supervisor/" + user.oid);
+            AllPosts = await _http.GetFromJsonAsync<List<PostDto>>("api/Post/supervisor/" + user.Oid);
             if (AllPosts != null) Posts = new List<PostDto>(AllPosts);
            
         }

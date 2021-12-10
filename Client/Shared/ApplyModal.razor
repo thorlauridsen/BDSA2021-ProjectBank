@@ -10,11 +10,11 @@
 <p>@Post.Title</p>
 
 <EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit">
-    <DataAnnotationsValidator/>
-    <ValidationSummary/>
+    <DataAnnotationsValidator />
+    <ValidationSummary />
     <div class="form-floating my-3">
-        <InputTextArea id="content" class="form-control" placeholder="Cover letter for your application" style="height: 100px"
-                       @bind-Value="_applyFormModel.Content">
+        <InputTextArea id="content" class="form-control" placeholder="Cover letter for your application"
+            style="height: 100px" @bind-Value="_applyFormModel.Content">
         </InputTextArea>
         <label for="content">Cover letter</label>
     </div>
@@ -29,7 +29,7 @@
     public PostDto? Post { get; set; }
     [Parameter]
     public UserDetailsDto CurrentUser { get; set; }
-    
+
     [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
 
     private ApplyFormModel _applyFormModel = new();
@@ -52,20 +52,20 @@
 
     private async void HandleValidSubmit()
     {
-       var chatCreateDto = new ChatCreateDto()
+        var chatCreateDto = new ChatCreateDto()
         {
-            ChatUserIds = new HashSet<string>() {CurrentUser.oid, Post.SupervisorOid},
-            FromUserId = CurrentUser.oid,
+            ChatUserOids = new HashSet<string>() { CurrentUser.Oid, Post.SupervisorOid },
+            FromUserOid = CurrentUser.Oid,
             ProjectId = Post.Id
         };
         var chatResponse = await _http.PostAsJsonAsync("api/Chat", chatCreateDto);
-        
+
         if (!chatResponse.IsSuccessStatusCode)
         {
             Logger.LogCritical("Critical status code: " + chatResponse.StatusCode);
             return;
         }
-        
+
         var chat = await chatResponse.Content.ReadFromJsonAsync<ChatDto>();
         if (chat == null)
         {
@@ -75,7 +75,7 @@
         var message = new ChatMessageCreateDto()
         {
             Content = _applyFormModel.Content,
-            FromUserId = CurrentUser.oid,
+            FromUserOid = CurrentUser.Oid,
             ChatId = chat.ChatId
         };
         var user = await localStore.GetItemAsync<UserDetailsDto>("user");

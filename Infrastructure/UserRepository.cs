@@ -28,7 +28,7 @@ namespace ProjectBank.Infrastructure
             }
             var entity = new User
             {
-                oid = user.oid,
+                Oid = user.Oid,
                 Name = user.Name,
                 Email = user.Email,
                 Image = base64Image
@@ -38,17 +38,17 @@ namespace ProjectBank.Infrastructure
             await _context.SaveChangesAsync();
 
             return (Created, new UserDetailsDto(
-                                 entity.oid,
+                                 entity.Oid,
                                  entity.Name,
                                  entity.Email,
                                  entity.Image
                              ));
         }
 
-        public async Task<Option<UserDetailsDto>> ReadAsync(string userId) =>
-            await _context.Users.Where(u => u.oid == userId)
+        public async Task<Option<UserDetailsDto>> ReadAsync(string userOid) =>
+            await _context.Users.Where(u => u.Oid == userOid)
                                 .Select(u => new UserDetailsDto(
-                                    u.oid,
+                                    u.Oid,
                                     u.Name,
                                     u.Email,
                                     u.Image
@@ -58,16 +58,16 @@ namespace ProjectBank.Infrastructure
         public async Task<IReadOnlyCollection<UserDto>> ReadAsync() =>
             (await _context.Users
                            .Select(u => new UserDto(
-                                u.oid,
+                                u.Oid,
                                 u.Name,
                                 u.Email
                             ))
                            .ToListAsync())
                            .AsReadOnly();
 
-        public async Task<Status> DeleteAsync(string userId)
+        public async Task<Status> DeleteAsync(string userOid)
         {
-            var entity = await _context.Users.FindAsync(userId);
+            var entity = await _context.Users.FindAsync(userOid);
 
             if (entity == null)
             {

@@ -24,11 +24,11 @@ namespace ProjectBank.Server.Controllers
         }
 
         [Authorize]
-        [HttpGet("{chatId}/{userId}", Name = "GetByChatId")]
+        [HttpGet("{chatId}/{userOid}", Name = "GetByChatId")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ChatDetailsDto?> GetByChatId(int chatId, string userId)
-            => await _repository.ReadChatAsync(chatId, userId);
+        public async Task<ChatDetailsDto?> GetByChatId(int chatId, string userOid)
+            => await _repository.ReadChatAsync(chatId, userOid);
 
         [Authorize]
         [HttpGet("message/{messageId}", Name = "GetByMessageId")]
@@ -38,11 +38,11 @@ namespace ProjectBank.Server.Controllers
     => await _repository.ReadSpecificMessageAsync(messageId);
 
         [Authorize]
-        [HttpGet("user/{userId}", Name = "GetChatsByUserId")]
+        [HttpGet("user/{userOid}", Name = "GetChatsByUserOid")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<IReadOnlyCollection<ChatDetailsDto>> GetChatsByUserId(string userId)
-            => await _repository.ReadAllChatsAsync(userId);
+        public async Task<IReadOnlyCollection<ChatDetailsDto>> GetChatsByUserOid(string userOid)
+            => await _repository.ReadAllChatsAsync(userOid);
 
         [Authorize]
         [HttpGet("{chatId}/messages")]
@@ -53,13 +53,13 @@ namespace ProjectBank.Server.Controllers
 
         [Authorize]
         [HttpPost]
-        [ProducesResponseType(typeof(ChatDto), 201)]
+        [ProducesResponseType(201)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<ChatDto>> Post(ChatCreateDto chat)
         {
             var (status, created) = await _repository.CreateNewChatAsync(chat);
             if (created == null) return new BadRequestResult();
-            return CreatedAtRoute(nameof(GetByChatId), new { chatId = created?.ChatId, userId = chat.FromUserId }, created);
+            return CreatedAtRoute(nameof(GetByChatId), new { chatId = created?.ChatId, userOid = chat.FromUserOid }, created);
         }
 
         [Authorize]

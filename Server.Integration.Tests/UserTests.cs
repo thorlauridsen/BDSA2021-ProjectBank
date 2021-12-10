@@ -39,7 +39,7 @@ namespace ProjectBank.Server.Integration.Tests
         {
             var user = new UserCreateDto
             {
-                oid = "3",
+                Oid = "3",
                 Name = "Rasmus",
                 Email = "rasmus@outlook.com"
             };
@@ -51,7 +51,7 @@ namespace ProjectBank.Server.Integration.Tests
             var created = await response.Content.ReadFromJsonAsync<UserDetailsDto>();
 
             Assert.NotNull(created);
-            Assert.Equal("3", created?.oid);
+            Assert.Equal("3", created?.Oid);
             Assert.Equal("Rasmus", created?.Name);
         }
     }

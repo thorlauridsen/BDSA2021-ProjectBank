@@ -23,8 +23,8 @@ namespace Infrastructure.Tests
             var context = new ProjectBankContext(builder.Options);
             context.Database.EnsureCreated();
 
-            var user = new User { oid = "1", Name = "Bob", Email = "bob@outlook.com" };
-            var userNoPosts = new User { oid = "6", Name = "Carl", Email = "carl@outlook.com" };
+            var user = new User { Oid = "1", Name = "Bob", Email = "bob@outlook.com" };
+            var userNoPosts = new User { Oid = "6", Name = "Carl", Email = "carl@outlook.com" };
 
             context.Users.Add(userNoPosts);
             context.Users.Add(user);

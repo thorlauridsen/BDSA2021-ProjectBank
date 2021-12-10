@@ -13,14 +13,14 @@ namespace ProjectBank.Infrastructure.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    oid = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Oid = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.oid);
+                    table.PrimaryKey("PK_Users", x => x.Oid);
                 });
 
             migrationBuilder.CreateTable(
@@ -32,7 +32,7 @@ namespace ProjectBank.Infrastructure.Migrations
                     Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Useroid = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserOid = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Link = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Seen = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -40,10 +40,10 @@ namespace ProjectBank.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Notifications", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Notifications_Users_Useroid",
-                        column: x => x.Useroid,
+                        name: "FK_Notifications_Users_UserOid",
+                        column: x => x.UserOid,
                         principalTable: "Users",
-                        principalColumn: "oid",
+                        principalColumn: "Oid",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -56,7 +56,7 @@ namespace ProjectBank.Infrastructure.Migrations
                     Title = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Useroid = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserOid = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Tags = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PostState = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     ViewCount = table.Column<int>(type: "int", nullable: false)
@@ -65,10 +65,10 @@ namespace ProjectBank.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Posts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Posts_Users_Useroid",
-                        column: x => x.Useroid,
+                        name: "FK_Posts_Users_UserOid",
+                        column: x => x.UserOid,
                         principalTable: "Users",
-                        principalColumn: "oid",
+                        principalColumn: "Oid",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -97,7 +97,7 @@ namespace ProjectBank.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Content = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Useroid = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UserOid = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PostId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -110,10 +110,10 @@ namespace ProjectBank.Infrastructure.Migrations
                         principalTable: "Posts",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Comment_Users_Useroid",
-                        column: x => x.Useroid,
+                        name: "FK_Comment_Users_UserOid",
+                        column: x => x.UserOid,
                         principalTable: "Users",
-                        principalColumn: "oid");
+                        principalColumn: "Oid");
                 });
 
             migrationBuilder.CreateTable(
@@ -125,7 +125,7 @@ namespace ProjectBank.Infrastructure.Migrations
                     ChatId = table.Column<int>(type: "int", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FromUseroid = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    FromUserOid = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -137,10 +137,10 @@ namespace ProjectBank.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ChatMessages_Users_FromUseroid",
-                        column: x => x.FromUseroid,
+                        name: "FK_ChatMessages_Users_FromUserOid",
+                        column: x => x.FromUserOid,
                         principalTable: "Users",
-                        principalColumn: "oid",
+                        principalColumn: "Oid",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -150,7 +150,7 @@ namespace ProjectBank.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Useroid = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserOid = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     SeenLatestMessage = table.Column<bool>(type: "bit", nullable: false),
                     ChatId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -163,10 +163,10 @@ namespace ProjectBank.Infrastructure.Migrations
                         principalTable: "Chats",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_ChatUsers_Users_Useroid",
-                        column: x => x.Useroid,
+                        name: "FK_ChatUsers_Users_UserOid",
+                        column: x => x.UserOid,
                         principalTable: "Users",
-                        principalColumn: "oid",
+                        principalColumn: "Oid",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -176,9 +176,9 @@ namespace ProjectBank.Infrastructure.Migrations
                 column: "ChatId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ChatMessages_FromUseroid",
+                name: "IX_ChatMessages_FromUserOid",
                 table: "ChatMessages",
-                column: "FromUseroid");
+                column: "FromUserOid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Chats_PostId",
@@ -191,9 +191,9 @@ namespace ProjectBank.Infrastructure.Migrations
                 column: "ChatId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ChatUsers_Useroid",
+                name: "IX_ChatUsers_UserOid",
                 table: "ChatUsers",
-                column: "Useroid");
+                column: "UserOid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comment_PostId",
@@ -201,19 +201,19 @@ namespace ProjectBank.Infrastructure.Migrations
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comment_Useroid",
+                name: "IX_Comment_UserOid",
                 table: "Comment",
-                column: "Useroid");
+                column: "UserOid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Notifications_Useroid",
+                name: "IX_Notifications_UserOid",
                 table: "Notifications",
-                column: "Useroid");
+                column: "UserOid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Posts_Useroid",
+                name: "IX_Posts_UserOid",
                 table: "Posts",
-                column: "Useroid");
+                column: "UserOid");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

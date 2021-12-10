@@ -25,35 +25,35 @@ namespace ProjectBank.Server.Controllers
 
         [Authorize]
         [HttpGet]
-        [ProducesResponseType(typeof(IReadOnlyCollection<UserDto>), 200)]
+        [ProducesResponseType(200)]
         public async Task<IReadOnlyCollection<UserDto>> Get()
             => await _repository.ReadAsync();
 
         [Authorize]
-        [HttpGet("{userId}", Name = "GetByUserId")]
-        [ProducesResponseType(typeof(UserDetailsDto), 200)]
+        [HttpGet("{userOid}", Name = "GetByUserOid")]
+        [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<UserDetailsDto>> GetByUserId(string userId)
-            => (await _repository.ReadAsync(userId)).ToActionResult();
+        public async Task<ActionResult<UserDetailsDto>> GetByUserOid(string userOid)
+            => (await _repository.ReadAsync(userOid)).ToActionResult();
 
         [Authorize]
         [HttpPost]
-        [ProducesResponseType(typeof(UserDetailsDto), 201)]
+        [ProducesResponseType(201)]
         public async Task<ActionResult<UserDetailsDto>> Post(UserCreateDto user)
         {
             var (status, created) = await _repository.CreateAsync(user);
             if (status != Status.BadRequest)
             {
-                return CreatedAtRoute(nameof(GetByUserId), new { userId = created?.oid }, created);
+                return CreatedAtRoute(nameof(GetByUserOid), new { userOid = created?.Oid }, created);
             }
             return BadRequest();
         }
 
         [Authorize]
-        [HttpDelete("{userId}")]
+        [HttpDelete("{userOid}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> Delete(string userId)
-            => (await _repository.DeleteAsync(userId)).ToActionResult();
+        public async Task<IActionResult> Delete(string userOid)
+            => (await _repository.DeleteAsync(userOid)).ToActionResult();
     }
 }
