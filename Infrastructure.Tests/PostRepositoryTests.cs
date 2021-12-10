@@ -261,7 +261,6 @@ namespace Infrastructure.Tests
             Assert.Equal(1, actual.Tags.Count);
         }
 
-        //TODO
         [Fact]
         public async Task ReadAsyncByTag_given_non_existing_tag_returns_none()
         {
