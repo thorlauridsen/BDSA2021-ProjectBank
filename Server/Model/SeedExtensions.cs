@@ -22,9 +22,9 @@ namespace ProjectBank.Server.Model
             var user1 = new User { oid = "1", Name = "Paolo", Email = "paolo@outlook.com" };
             var user2 = new User { oid = "2", Name = "Tue", Email = "tue@outlook.com" };
             var generatedUser4 = new User { oid = "3", Name = "Aaron Duane", Email = "aaron@outlook.com" };
-            var generatedUser5 = new User { oid = "4", Name = "P─▒nar T├Âz├╝n", Email = "pnar@outlook.com" };
+            var generatedUser5 = new User { oid = "4", Name = "Pnar Tazn", Email = "pnar@outlook.com" };
             var generatedUser0 = new User { oid = "5", Name = "Veronika Cheplygina", Email = "veronika@outlook.com" };
-            var generatedUser1 = new User { oid = "6", Name = "Sebastian B├╝ttrich", Email = "sebastian@outlook.com" };
+            var generatedUser1 = new User { oid = "6", Name = "Sebastian Bastian", Email = "sebastian@outlook.com" };
             var generatedUser2 = new User { oid = "7", Name = "Maria Astefanoaei", Email = "maria@outlook.com" };
             var generatedUser3 = new User { oid = "8", Name = "Björn Þór Jónsson", Email = "bjorn@outlook.com" };
 
@@ -46,10 +46,6 @@ namespace ProjectBank.Server.Model
                 User = user2,
                 DateAdded = DateTime.Now
             };
-            /*if (!await context.Comments.AnyAsync())
-            {
-                context.Comments.Add(comment);
-            }*/
             var post = new Post
             {
                 Title = "Biology Project",
