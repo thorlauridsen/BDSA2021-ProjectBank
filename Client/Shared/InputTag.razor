@@ -3,6 +3,7 @@
 
 <div class="form-control-wrapper">
     <p>Post tags:</p>
+    <p class="italic">Split tags using a comma</p>
     <input class="form-control @CssClass visually-hidden" autocomplete="off" @onkeyup="KeyPressEventHandler" id="@Id" @bind-value:event="oninput"
            @bind-value="TagsString"/>
     <label class="tab-label form-control-label flex p-3 col-12 border rounded @extraCSS" for="@Id">
@@ -12,7 +13,6 @@
         }
 
     </label>
-    <p class="italic">Split tags using a comma</p>
 </div>
 
 @code
