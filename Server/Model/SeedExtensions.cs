@@ -28,6 +28,8 @@ namespace ProjectBank.Server.Model
             var generatedUser2 = new User { oid = "7", Name = "Maria Astefanoaei", Email = "maria@outlook.com" };
             var generatedUser3 = new User { oid = "8", Name = "Björn Þór Jónsson", Email = "bjorn@outlook.com" };
 
+            var misterWild = new User { oid = "9", Name = "Mister wild AF" };
+
             if (!await context.Users.AnyAsync())
             {
                 context.Users.Add(user1);
@@ -38,6 +40,8 @@ namespace ProjectBank.Server.Model
                 context.Users.Add(generatedUser1);
                 context.Users.Add(generatedUser2);
                 context.Users.Add(generatedUser3);
+
+                context.Users.Add(misterWild);
             }
 
             var comment = new Comment
@@ -46,6 +50,14 @@ namespace ProjectBank.Server.Model
                 User = user2,
                 DateAdded = DateTime.Now
             };
+
+            var commentWild = new Comment
+            {
+                Content = "Damn this is so wild",
+                User = user2,
+                DateAdded = DateTime.Now
+            };
+
             var post = new Post
             {
                 Title = "Biology Project",
@@ -55,6 +67,17 @@ namespace ProjectBank.Server.Model
                 Comments = new List<Comment>() { comment },
                 Tags = new string[] { "Biology" }
             };
+
+            var wildPost = new Post
+            {
+                Title= "Games in the wild",
+                Content= "Learn to make games in the wild with the coolest teacher in the world... ME \nYou will have a great time and learn so much about games in the wild. \nSo much that you probably can't imagine how wild it will be.",
+                DateAdded= DateTime.Now,
+                User= misterWild,
+                Comments = new List<Comment>() { commentWild },
+                Tags = new string[] { "wild", "wild af", "super wild", "wild games"}
+            };
+
             if (!await context.Posts.AnyAsync())
             {
                 var generatedPost0 = new Post
@@ -352,6 +375,7 @@ namespace ProjectBank.Server.Model
 
 
                 context.Posts.Add(post);
+                context.Posts.Add(wildPost);
             }
 
             await context.SaveChangesAsync();
