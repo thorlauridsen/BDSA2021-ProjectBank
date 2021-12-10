@@ -80,6 +80,7 @@
             var user = await _localStore.GetItemAsync<UserDetailsDto>("user");
             AllPosts = await _http.GetFromJsonAsync<List<PostDto>>("api/Post/supervisor/" + user.oid);
             if (AllPosts != null) Posts = new List<PostDto>(AllPosts);
+           
         }
         catch (AccessTokenNotAvailableException exception)
         {

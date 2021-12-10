@@ -5,6 +5,7 @@ namespace ProjectBank.Shared.forms
     public class PostFormModel
     {
         [Required]
+        [RegularExpression(@"[a-zA-Z0-9 -/]+", ErrorMessage = "Title should not contain special characters")]
         [StringLength(255, MinimumLength = 5, ErrorMessage = "Title length needs to be between 5-255")]
         public string Title { get; set; }
 
