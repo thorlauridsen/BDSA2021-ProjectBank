@@ -2,8 +2,8 @@
 @using ProjectBank.Core
 @using System.Net
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
-@inject HttpClient Http
-@inject ILocalStorageService localStore
+@inject HttpClient _http
+@inject ILocalStorageService _localStore
 
 <PageTitle>Project Bank</PageTitle>
 <Content>
@@ -11,20 +11,31 @@
         <AuthorizeView>
             <Authorized>
                 <h1>Hello, @context.User.Identity?.Name!</h1>
-                <AddPost />
+                <AddPost/>
                 <p>Showing all posts</p>
-                @if (@Posts != null)
+                @if (Posts != null)
                 {
-                    @foreach (var post in Posts)
+                    if (Posts?.Count == 0)
                     {
-                        <PostContainer Title="@post.Title" Content="@post.Content" SupervisorId="@post.SupervisorOid"
-                    Tags="@post.Tags" DateAdded="@post.DateAdded" PostID="@post.Id">
-                        </PostContainer>
+                        <p>No posts to show</p>
                     }
+                    else
+                    {
+                        @foreach (var post in Posts)
+                        {
+                            <PostContainer Title="@post.Title" Content="@post.Content" SupervisorId="@post.SupervisorOid"
+                                           Tags="@post.Tags" DateAdded="@post.DateAdded" PostID="@post.Id">
+                            </PostContainer>
+                        }
+                    }
+                }
+                else
+                {
+                    <p>Loading...</p>
                 }
             </Authorized>
             <NotAuthorized>
-                <h1>Welcome to project bank, log in <a href="authentication/login">here</a></h1>
+                <h1>Welcome to project bank, please log in <a href="authentication/login">here</a></h1>
             </NotAuthorized>
         </AuthorizeView>
     </Padding>
@@ -32,7 +43,7 @@
 
 @code
 {
-    public List<String>? Tags = new List<string>() { "Biology", "Chemistry" }; //test
+    public List<String>? Tags = new List<string>() {"Biology", "Chemistry"}; //test
 
     private List<PostDto>? Posts;
 
@@ -40,10 +51,10 @@
 
     protected override async Task OnInitializedAsync()
     {
-        currentUser = await localStore.GetItemAsync<UserDetailsDto>("user");
+        currentUser = await _localStore.GetItemAsync<UserDetailsDto>("user");
         try
         {
-            Posts = await Http.GetFromJsonAsync<List<PostDto>>("api/Post");
+            Posts = await _http.GetFromJsonAsync<List<PostDto>>("api/Post");
         }
         catch (AccessTokenNotAvailableException exception)
         {
