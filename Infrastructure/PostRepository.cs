@@ -129,18 +129,11 @@ namespace ProjectBank.Core
                 return new List<CommentDto>() { };
             }
 
-            var comments = post.Comments;
-            var result = new List<CommentDto>();
-            foreach (var comment in comments)
-            {
-                var commentDto = new CommentDto(
+            return post.Comments.Select(comment => new CommentDto(
                     comment.Id,
                     comment.Content,
                     comment.DateAdded,
-                    comment.User.oid);
-                result.Add(commentDto);
-            }
-            return result;
+                    comment.User.oid)).ToList();
         }
 
         public async Task<Status> UpdateAsync(int postId, PostUpdateDto post)
