@@ -144,7 +144,8 @@ namespace ProjectBank.Infrastructure
                     chatMessage => chatMessage.Chat.Id,
                     (c, cm) => new { chat = c, chatMessage = cm })
                 .FirstOrDefaultAsync(t => t.chat.Id == chatId); //Tag den første tuple
-
+            if (result == null) return null;
+            
             var latestChatMessage = new ChatMessageDto()
             {
                 Content = result.chatMessage.Content,

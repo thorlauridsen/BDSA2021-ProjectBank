@@ -57,7 +57,7 @@
                     <AuthorizeView Roles="Student">
                         <div class="d-grid my-4 p-4 shadow text-center">
                             <!--!-->
-                            <a href="/messages/create/supervisor/@Creator?.oid"
+                            <a href="/messages/create/@Creator?.oid"
                                class="btn btn-block btn-primary m-2">Contact</a>
                             @if(Post.PostState.Equals(PostState.Active)){
                                 <button @onclick="@(() => Modal.Show<ApplyModal>("Apply for project", ApplyModalParameters))"
