@@ -22,6 +22,16 @@
                         <h3>@Post.Title</h3>
 
                         <small class="italic">Published on: @Post?.DateAdded.ToLongDateString()</small>
+                        <small>Current state:
+                            @if (Post?.PostState != null)
+                            {
+                                <Span>@Post?.PostState</Span>
+                            }
+                            else
+                            {
+                                <span>Active</span>
+                            }
+                        </small>
                         <p>@Post?.Content</p>
                         <div class="flex">
                             @if (@Post != null && @Post?.Tags != null)
@@ -42,16 +52,17 @@
                         src="@Creator?.image">
                         <h3>@Creator?.Name</h3>
                         <p>Email: <a href="mailto:@Creator?.Email">@Creator?.Email</a></p>
-                        <p>All projects: <a href="/projects/supervisor/@Creator?.oid">View</a></p>
                     </div>
 
                     <AuthorizeView Roles="Student">
                         <div class="d-grid my-4 p-4 shadow text-center">
                             <!--!-->
-                        <a href="/messages/create/supervisor/@Creator?.oid"
-                            class="btn btn-block btn-primary m-2">Contact</a>
-                            <button @onclick="@(() => Modal.Show<ApplyModal>("Apply for project", ApplyModalParameters))"
-                            class="btn btn-primary m-2">Apply</button>
+                            <a href="/messages/create/supervisor/@Creator?.oid"
+                               class="btn btn-block btn-primary m-2">Contact</a>
+                            @if(Post.PostState.Equals(PostState.Active)){
+                                <button @onclick="@(() => Modal.Show<ApplyModal>("Apply for project", ApplyModalParameters))"
+                                        class="btn btn-primary m-2">Apply</button>
+                            }
                         </div>
                     </AuthorizeView>
 

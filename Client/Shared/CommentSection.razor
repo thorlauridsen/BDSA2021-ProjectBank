@@ -24,19 +24,21 @@
                 Content="@comment.Content"></Comment>
                 }
             }
-            <EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit">
-                <DataAnnotationsValidator />
-                <ValidationSummary />
-                <div class="d-flex my-4">
-                    <div class="col-9">
-                        <InputText @bind-Value="commentModel.comment" type="text" id="comment-input"
-                            class="form-control" placeholder="Message" />
+            @if(Post.PostState.Equals(PostState.Active)){
+                <EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+                    <div class="d-flex my-4">
+                        <div class="col-9">
+                            <InputText @bind-Value="commentModel.comment" type="text" id="comment-input"
+                                       class="form-control" placeholder="Message" />
+                        </div>
+                        <div class="col-3 d-flex">
+                            <button type="submit" class="btn btn-primary col-12" disabled="@formInvalid">Comment</button>
+                        </div>
                     </div>
-                    <div class="col-3 d-flex">
-                        <button type="submit" class="btn btn-primary col-12" disabled="@formInvalid">Comment</button>
-                    </div>
-                </div>
-            </EditForm>
+                </EditForm>
+            }
         </div>
     </div>
 </div>
