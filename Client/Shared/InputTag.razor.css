@@ -16,6 +16,14 @@
 input:focus + .tab-label::after{
     display: inline-block;
 }
+
+.tab-label.moveLabelHighlighterBack::after{
+    transform: translateX(-20px);
+    background: white !important;
+}
+.tab-label.moveLabelHighlighterBack.endWithSpace::after{
+    transform: translateX(-14px) !important;
+}
 @keyframes blink {
     from {opacity: 0}
     to {opacity: 1}

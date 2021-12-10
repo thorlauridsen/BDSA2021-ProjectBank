@@ -12,34 +12,37 @@
 @inject HttpClient _http
 
 <PageTitle>Edit post</PageTitle>
-
-@if (_post == null)
-{
-    <h1>Loading...</h1>
-}
-else
-{
-    <h1>Edit post</h1>
-    <EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit">
-        <DataAnnotationsValidator/>
-        <ValidationSummary/>
-        <div class="form-floating my-3">
-            <InputText id="title" class="form-control" placeholder="Title of the project"
-                       @bind-Value="postFormModel.Title"/>
-            <label for="title">Title</label>
-        </div>
-        <div class="form-floating my-3">
-            <InputTextArea id="content"  class="form-control" placeholder="Content of the project" style="height: 100px"
-                           @bind-Value="postFormModel.Content">
-            </InputTextArea>
-            <label for="content">Content</label>
-        </div>
-        <InputTag Id="tags" Label="test" DefaultTags="@tags" @bind-Value="postFormModel.Tags"></InputTag>
-        <div class="d-grid gap-2 col-6 mx-auto">
-            <button type="submit" class="btn btn-outline-primary btn-lg" disabled="@formInvalid">Submit</button>
-        </div>
-    </EditForm>
-}
+<Content>
+    <Padding>
+        @if (_post == null)
+        {
+            <h1>Loading...</h1>
+        }
+        else
+        {
+            <h1>Edit post</h1>
+            <EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit">
+                <DataAnnotationsValidator/>
+                <ValidationSummary/>
+                <div class="form-floating my-3">
+                    <InputText id="title" class="form-control" placeholder="Title of the project"
+                               @bind-Value="postFormModel.Title"/>
+                    <label for="title">Title</label>
+                </div>
+                <div class="form-floating my-3">
+                    <InputTextArea id="content" class="form-control" placeholder="Content of the project" style="height: 100px"
+                                   @bind-Value="postFormModel.Content">
+                    </InputTextArea>
+                    <label for="content">Content</label>
+                </div>
+                <InputTag Id="tags" Label="test" DefaultTags="@tags" @bind-Value="postFormModel.Tags"></InputTag>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <button type="submit" class="btn btn-outline-primary btn-lg" disabled="@formInvalid">Submit</button>
+                </div>
+            </EditForm>
+        }
+    </Padding>
+</Content>
 
 @code {
 
@@ -92,7 +95,7 @@ else
             Id = _post.Id,
             Title = postFormModel.Title,
             Content = postFormModel.Content,
-            SupervisorOid = _post.SupervisorOid, 
+            SupervisorOid = _post.SupervisorOid,
             Tags = postFormModel.Tags.Split(",").Select(t => t.Trim()).ToHashSet()
         };
         var response = await _http.PutAsJsonAsync("api/Post/" + _post.Id, postUpdateDto);

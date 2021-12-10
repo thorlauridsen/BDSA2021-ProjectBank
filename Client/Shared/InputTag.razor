@@ -3,9 +3,9 @@
 
 <div class="form-control-wrapper">
     <p>Post tags:</p>
-    <input class="form-control @CssClass visually-hidden" @onkeyup="KeyPressEventHandler" id="@Id" @bind-value:event="oninput"
+    <input class="form-control @CssClass visually-hidden" autocomplete="off" @onkeyup="KeyPressEventHandler" id="@Id" @bind-value:event="oninput"
            @bind-value="TagsString"/>
-    <label class="tab-label form-control-label flex p-3 col-12 border rounded" for="@Id">
+    <label class="tab-label form-control-label flex p-3 col-12 border rounded @extraCSS" for="@Id">
         @foreach (var tag in Tags)
         {
             <Tag Name="@tag"></Tag>
@@ -22,9 +22,11 @@
 
     private string _TagsString;
 
+    private string extraCSS;
+    
     [Parameter]
     public string DefaultTags { get; set; }
-
+    
     public string TagsString
     {
         get => _TagsString;
@@ -76,5 +78,17 @@
             return;
         }
         Tags = _TagsString.Split(",").Select(t => t.Trim());
+        if (_TagsString.TrimEnd().EndsWith(",") || _TagsString.Trim().Equals(""))
+        {
+            extraCSS = "";
+        }
+        else
+        {
+            extraCSS = "moveLabelHighlighterBack";
+            if(_TagsString.EndsWith(" "))
+            {
+                extraCSS += " endWithSpace";
+            }
+        }
     }
 }

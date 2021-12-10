@@ -12,15 +12,25 @@
             <p class="mb-1">
                 @Name <span class="small">- @Published.GetTimeSince()</span>
             </p>
-            <button class="btn btn-danger" onclick="@DeleteComment">Delete</button>
+            <a class="link-danger" onclick="@DeleteComment">Delete</a>
         </div>
-        <p class="small mb-0">
-            @Content
-        </p>
+        @if (CurrentUser.oid.Equals(CurrentPost.SupervisorOid) || CurrentUser.oid.Equals(UserID))
+        {
+            <p class="small mb-0">
+                @Content
+            </p>
+        }
     </div>
 </div>
 
 @code {
+    
+    [Parameter]
+    public UserDetailsDto CurrentUser { get; set; }
+    
+    [Parameter]
+    public PostDto CurrentPost { get; set; }
+    
     [Parameter]
     public int CommentID { get; set; }
 
