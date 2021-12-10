@@ -1,0 +1,103 @@
+﻿@page "/projects"
+@using ProjectBank.Core
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using ProjectBank.Client.Extensions
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+@inject HttpClient _http
+@inject ILocalStorageService _localStore
+@implements IDisposable
+
+
+<Content>
+    <Padding>
+        <div class="d-flex justify-content-between">
+            <h3>Showing my projects</h3>
+            <EditForm EditContext="@EditContext">
+                <InputSelect class="form-select" @bind-Value="tagModel.Name">
+                    <option selected>Sort by project</option>
+                    @if (@AllPosts != null)
+                    {
+                        @foreach (var tag in AllPosts.GetTagsFromPosts())
+                        {
+                            <option>@tag</option>
+                        }
+                    }
+                </InputSelect>
+            </EditForm>
+        </div>
+        @if (Posts == null || Posts.Count == 0)
+        {
+            <p>You have no posts to show</p>
+        }
+        else
+        {
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">State</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var post in Posts)
+                {
+                    <MyProjectsTableRowComponent Post="@post"></MyProjectsTableRowComponent>
+                }
+                </tbody>
+            </table>
+        }
+    </Padding>
+</Content>
+
+@code {
+
+    private EditContext EditContext;
+    TagSelectorModel tagModel = new();
+
+    class TagSelectorModel
+    {
+        public string Name { get; set; }
+    }
+
+    private List<PostDto>? AllPosts;
+    private List<PostDto>? Posts;
+
+    protected override void OnInitialized()
+    {
+        EditContext = new EditContext(tagModel);
+        EditContext.OnFieldChanged += EditContext_HandleFieldChanged;
+
+        base.OnInitialized();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var user = await _localStore.GetItemAsync<UserDetailsDto>("user");
+            AllPosts = await _http.GetFromJsonAsync<List<PostDto>>("api/Post/supervisor/" + user.oid);
+            if (AllPosts != null) Posts = new List<PostDto>(AllPosts);
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+    }
+
+    private void EditContext_HandleFieldChanged(object? sender, FieldChangedEventArgs e)
+    {
+        var tag = tagModel.Name;
+        if (AllPosts != null) Posts = new List<PostDto>(AllPosts);
+        if (!tag.Equals("Sort by project")) Posts = Posts?.Where(p => p.Tags.Contains(tag)).ToList();
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        EditContext.OnFieldChanged -= EditContext_HandleFieldChanged;
+    }
+
+}
