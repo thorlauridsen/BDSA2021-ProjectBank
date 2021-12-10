@@ -25,26 +25,26 @@ namespace ProjectBank.Server.Controllers
 
         [Authorize]
         [HttpGet]
-        [ProducesResponseType(typeof(IReadOnlyCollection<PostDto>), 200)]
+        [ProducesResponseType(200)]
         public async Task<IReadOnlyCollection<PostDto>> Get()
             => await _repository.ReadAsync();
 
         [Authorize]
         [HttpGet("{postId:int}", Name = "GetByPostId")]
-        [ProducesResponseType(typeof(PostDetailsDto), 200)]
+        [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<PostDetailsDto>> GetByPostId(int postId)
             => (await _repository.ReadAsync(postId)).ToActionResult();
 
         [Authorize]
         [HttpGet("tag/{tag}")]
-        [ProducesResponseType(typeof(IReadOnlyCollection<PostDto>), 200)]
+        [ProducesResponseType(200)]
         public async Task<IReadOnlyCollection<PostDto>> GetByTag(string tag)
             => await _repository.ReadAsyncByTag(tag);
 
         [Authorize]
         [HttpGet("supervisor/{userId}")]
-        [ProducesResponseType(typeof(IReadOnlyCollection<PostDto>), 200)]
+        [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<IReadOnlyCollection<PostDto>>> GetBySupervisor(string userId)
         {
@@ -55,7 +55,7 @@ namespace ProjectBank.Server.Controllers
 
         [Authorize]
         [HttpGet("{postId}/comments")]
-        [ProducesResponseType(typeof(IReadOnlyCollection<CommentDto>), 200)]
+        [ProducesResponseType(200)]
         public async Task<IReadOnlyCollection<CommentDto>> GetComments(int postId)
         {
             var comments = await _repository.ReadAsyncComments(postId);
@@ -91,5 +91,18 @@ namespace ProjectBank.Server.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> Delete(int postId)
             => (await _repository.DeleteAsync(postId)).ToActionResult();
+
+        [Authorize]
+        [HttpGet("{postId}")]
+        public async Task<ActionResult<int>> IncrimentViewCount(int postId)
+        {
+            var (status, count) = (await _repository.IncrementViewCountAsync(postId));
+            if (status != Status.BadRequest)
+            {
+                return Ok(count);
+            }
+            return BadRequest();
+        }
+
     }
 }

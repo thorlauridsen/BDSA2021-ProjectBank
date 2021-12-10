@@ -4,6 +4,7 @@ namespace ProjectBank.Core
     {
         Task<(Status, PostDetailsDto?)> CreateAsync(PostCreateDto post);
         Task<Status> DeleteAsync(int postId);
+        Task<(Status, int)> IncrementViewCountAsync(int postId);
         Task<Option<PostDetailsDto>> ReadAsync(int postId);
         Task<IReadOnlyCollection<PostDto>> ReadAsync();
         Task<(Status, IReadOnlyCollection<PostDto>)> ReadAsyncBySupervisor(string userId);

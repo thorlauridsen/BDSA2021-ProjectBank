@@ -291,6 +291,17 @@ namespace Infrastructure.Tests
             Assert.Equal(NotFound, response);
         }
 
+        [Fact]
+        public async Task IncrementViewAsync_increments_post_with_Id_1()
+        {
+            var expected = 23;
+
+            var (status, actual) = await _repository.IncrementViewCountAsync(1);
+
+            Assert.Equal(Success, status);
+            Assert.Equal(expected, actual);
+        }
+
         private bool disposed;
 
         protected virtual void Dispose(bool disposing)

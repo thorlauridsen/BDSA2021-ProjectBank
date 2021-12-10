@@ -76,9 +76,16 @@
             case "Edit":
                 uriHelper.NavigateTo($"/projects/edit/{Post.Id}");
                 break;
- // TODO: FILL IN EVERYTHING IN THE UPDATE DTO NOT JUST THE STATE 
             case "Close":
-                var closeResponse = await _http.PutAsJsonAsync($"api/Post/{Post.Id}", new PostUpdateDto {PostState = PostState.Closed});
+                var closeResponse = await _http.PutAsJsonAsync($"api/Post/{Post.Id}", new PostUpdateDto
+                {
+                    Id = Post.Id,
+                    Title = Post.Title,
+                    Content = Post.Content,
+                    SupervisorOid = Post.SupervisorOid, 
+                    Tags = Post.Tags,
+                    PostState = PostState.Closed
+                });
                 if (closeResponse.IsSuccessStatusCode)
                 {
                     ReloadPage();
@@ -90,7 +97,14 @@
                 break;
 
             case "Archive":
-                var archiveResponse = await _http.PutAsJsonAsync($"api/Post/{Post.Id}", new PostUpdateDto {PostState = PostState.Archived});
+                var archiveResponse = await _http.PutAsJsonAsync($"api/Post/{Post.Id}", new PostUpdateDto {
+                    Id = Post.Id,
+                    Title = Post.Title,
+                    Content = Post.Content,
+                    SupervisorOid = Post.SupervisorOid, 
+                    Tags = Post.Tags,
+                    PostState = PostState.Archived
+                });
                 if (archiveResponse.IsSuccessStatusCode)
                 {
                     ReloadPage();
@@ -102,7 +116,14 @@
                 break;
 
             case "Active":
-                var activeResponse = await _http.PutAsJsonAsync($"api/Post/{Post.Id}", new PostUpdateDto {PostState = PostState.Active});
+                var activeResponse = await _http.PutAsJsonAsync($"api/Post/{Post.Id}", new PostUpdateDto {
+                    Id = Post.Id,
+                    Title = Post.Title,
+                    Content = Post.Content,
+                    SupervisorOid = Post.SupervisorOid, 
+                    Tags = Post.Tags,
+                    PostState = PostState.Active
+                });
                 if (activeResponse.IsSuccessStatusCode)
                 {
                     ReloadPage();
