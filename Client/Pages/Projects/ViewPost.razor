@@ -37,21 +37,27 @@
                 <div class="col-md-3 col-10">
                     <div class="shadow p-4 text-center m-2">
                         <img alt="Profile picture of supervisor" class="rounded-circle shadow supervisor-image"
-                             src="@Creator?.image">
+                        src="@Creator?.image">
                         <h3>@Creator?.Name</h3>
                         <p>Email: <a href="mailto:randommail@mail.com">Change@me.com</a></p>
                         <p>All projects: <a href="/projects/supervisor/@Creator?.oid">View</a></p>
                     </div>
 
-                    <div class="d-grid my-4 p-4 shadow text-center">
-                        <!--!-->
-                        <a href="/messages/create/supervisor/@Creator?.oid" class="btn btn-block btn-primary m-2">Contact</a>
-                        <button @onclick="@(() => Modal.Show<ApplyModal>("Modal Popup Example", ApplyModalParameters))" class="btn btn-primary m-2">Apply</button>
-                    </div>
-                    @if(currentUser.oid == Post?.SupervisorOid){
+                    <AuthorizeView Roles="Student">
                         <div class="d-grid my-4 p-4 shadow text-center">
                             <!--!-->
-                            <a href="/projects/edit/@Id" class="btn btn-primary m-2">Edit</a>
+                        <a href="/messages/create/supervisor/@Creator?.oid"
+                            class="btn btn-block btn-primary m-2">Contact</a>
+                            <button @onclick="@(() => Modal.Show<ApplyModal>("Modal Popup Example", ApplyModalParameters))"
+                            class="btn btn-primary m-2">Apply</button>
+                        </div>
+                    </AuthorizeView>
+
+                    @if (currentUser.oid == Post?.SupervisorOid)
+                    {
+                        <div class="d-grid my-4 p-4 shadow text-center">
+                            <!--!-->
+                    <a href="/projects/edit/@Id" class="btn btn-primary m-2">Edit</a>
                             <a href="/messages/?filter=@Id" class="btn btn-success m-2">View related conversations</a>
                         </div>
                     }
@@ -67,12 +73,12 @@
     public int Id { get; set; }
 
     [CascadingParameter] public IModalService Modal { get; set; }
-    
+
     private PostDto? Post { get; set; }
     private UserDetailsDto? Creator { get; set; }
     private UserDetailsDto currentUser { get; set; }
     private ModalParameters ApplyModalParameters { get; set; }
-    
+
     protected override async Task OnInitializedAsync()
     {
         currentUser = await localStore.GetItemAsync<UserDetailsDto>("user");

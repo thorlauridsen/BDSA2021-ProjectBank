@@ -15,6 +15,7 @@ namespace Infrastructure.Tests
         User per;
         User bo;
         User alice;
+        User karl;
 
         Post post;
             
@@ -22,6 +23,9 @@ namespace Infrastructure.Tests
         ChatUser chatPer2;
         ChatUser chatBo;
         ChatUser chatAlice;
+
+        //ChatUser chatKarl;
+        //ChatUser chatBo2;
 
         Chat chatEntity;
         Chat epicChatEntity;
@@ -42,6 +46,7 @@ namespace Infrastructure.Tests
             per = new User { oid = "1", Name = "per" };
             bo = new User { oid = "2", Name = "bo" };
             alice = new User { oid = "3", Name = "alice" };
+            karl = new User { oid = "4", Name = "karl" };
 
             post = new Post()
             {
@@ -58,6 +63,9 @@ namespace Infrastructure.Tests
             chatBo = new ChatUser { Id = 3, User = bo };
             chatAlice = new ChatUser { Id = 4, User = alice };
 
+            //chatKarl = new ChatUser { Id = 5, User = karl };
+            //chatBo2 = new ChatUser { Id = 6, User = bo };
+
             chatEntity = new Chat { Id = 1, ChatUsers = new HashSet<ChatUser>() { chatPer1, chatBo }, Post = post};
             epicChatEntity = new Chat { Id = 2, ChatUsers = new HashSet<ChatUser>() { chatPer2, chatAlice }, Post = post };
 
@@ -65,6 +73,7 @@ namespace Infrastructure.Tests
             fromAliceToPer = new ChatMessage { Id = 2, Chat = epicChatEntity, Content = "to Per", FromUser = alice , Timestamp = new DateTime(2021, 12,8)};
 
             context.Posts.Add(post);
+            context.Users.Add(karl);
             context.Chats.AddRange(chatEntity, epicChatEntity);
             context.ChatUsers.AddRange(chatPer1, chatPer2, chatBo, chatAlice);
             context.ChatMessages.AddRange(fromPerToBo, fromAliceToPer);
@@ -72,6 +81,22 @@ namespace Infrastructure.Tests
 
             _context = context;
             _repository = new ChatRepository(_context);
+        }
+
+        [Fact]
+        public async Task CreateNewChatAsync_creates_new_chat()
+        {
+            var chat = new ChatCreateDto() { ProjectId = 1, FromUserId = "4", ChatUserIds = new HashSet<string>() { karl.oid, bo.oid} };
+
+
+            var (status, actual) = await _repository.CreateNewChatAsync(chat);
+
+            var expected = new ChatDto() { ProjectId = 1, ChatId = 3, ChatUserIds = new HashSet<int>() { 5, 6 } };
+
+            Assert.Equal(Created, status);
+            Assert.Equal(expected.ProjectId, actual.ProjectId);
+            Assert.Equal(expected.ChatId, actual.ChatId);
+            Assert.Equal(expected.ChatUserIds, actual.ChatUserIds);
         }
 
         [Fact]
