@@ -48,8 +48,10 @@ namespace ProjectBank.Infrastructure
             });
         }
 
-        public async Task<IReadOnlyCollection<NotificationDetailsDto>> GetNotificationsAsync(string userOid) =>
-            (await _context.Notifications.Where(n => n.User.Oid == userOid)
+        public async Task<IReadOnlyCollection<NotificationDetailsDto>> GetNotificationsAsync(string userOid)
+        {
+            var query =  _context.Notifications.Where(n => n.User.Oid == userOid);
+            var response = (await query
                 .OrderByDescending(n => n.Timestamp)
                 .Select(n => new NotificationDetailsDto
                 {
@@ -59,8 +61,16 @@ namespace ProjectBank.Infrastructure
                     Timestamp = n.Timestamp,
                     Link = n.Link,
                     Seen = n.Seen
-
                 }).ToListAsync().ConfigureAwait(false)).AsReadOnly();
+            (await query.Where(notification => !notification.Seen).ToListAsync())
+                .ForEach(notification =>
+                {
+                    notification.Seen = true;
+                    _context.Notifications.Update(notification);
+                });
+            await _context.SaveChangesAsync();
+            return response;
+        }
 
         public async Task<Status> SeenNotificationAsync(int notificationId)
         {
