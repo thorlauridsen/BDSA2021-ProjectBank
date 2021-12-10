@@ -1,0 +1,8 @@
+.active {
+    background-color: #0c143a;
+    border: none;
+}
+
+.active .text-muted {
+    color: #d1d1d1 !important;
+}

@@ -12,7 +12,7 @@
 @inject IJSRuntime jsRuntime
 @implements IDisposable
 <div class="d-flex flex-nowrap messageContainer col-12">
-    <div class="d-flex flex-column col-3 align-items-stretch flex-shrink-0 bg-white messagesSideBar">
+    <div class="d-flex flex-column col-4 align-items-stretch flex-shrink-0 bg-white messagesSideBar">
         <div
             class="d-flex align-items-center justify-content-between flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
             <span class="fs-5 fw-semibold">Messages</span>
@@ -41,14 +41,14 @@
                 @foreach (var _chat in _chats)
                 {
                     <div @onclick="@(() => SelectChat(_chat))">
-                        <MessageItem Read="@_chat.SeenLatestMessage" Chat="@_chat">
+                        <MessageItem Read="@_chat.SeenLatestMessage" Active="@(chat != null && chat.ChatId == _chat.ChatId)" Chat="@_chat">
                         </MessageItem>
                     </div>
                 }
             }
         </div>
     </div>
-    <div class="d-flex flex-column chat-area col-9">
+    <div class="d-flex flex-column chat-area col-8">
         @if (chatMessages == null || chat == null)
         {
             <p>Select a chat</p>

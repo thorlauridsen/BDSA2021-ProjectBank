@@ -114,3 +114,6 @@ a:hover{
 .scrollarea {
     overflow-y: auto;
 }
+.cursor:hover{
+    cursor: pointer;
+}

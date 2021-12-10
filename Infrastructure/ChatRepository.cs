@@ -38,7 +38,7 @@ namespace ProjectBank.Infrastructure
             return (Created, new ChatDto
             {
                 ChatId = entityChat.Id,
-                ProjectId = entityChat.Post.Id,
+                ProjectId = entityChat.Post?.Id,
                 ChatUserOids = entityChat.ChatUsers.Select(cu => cu.Id).ToHashSet()
             });
         }
@@ -144,9 +144,8 @@ namespace ProjectBank.Infrastructure
                     chatMessage => chatMessage.Chat.Id,
                     (c, cm) => new { chat = c, chatMessage = cm })
                 .FirstOrDefaultAsync(t => t.chat.Id == chatId); //Tag den første tuple
-
-            if (result?.chat.Post == null) return null;
-
+            if (result == null) return null;
+            
             var latestChatMessage = new ChatMessageDto()
             {
                 Content = result.chatMessage.Content,
@@ -169,7 +168,7 @@ namespace ProjectBank.Infrastructure
                 LatestChatMessage = latestChatMessage,
                 TargetUserOid = targetUserOid,
                 SeenLatestMessage = seenLatestMessage,
-                ProjectId = result.chat.Post.Id
+                ProjectId = result.chat.Post?.Id
             };
 
         }

@@ -1,0 +1,68 @@
+@page "/Messages/create/{supervisorOid}"
+@using ProjectBank.Core
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@inject HttpClient _http
+@inject ILocalStorageService _localStore
+@inject NavigationManager _uriHelper
+@inject ILogger<MessagesCreate> Logger
+<h3>Creating chat...</h3>
+
+@code {
+    [Parameter]
+    public string? supervisorOid { get; set; }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var currentUser = await _localStore.GetItemAsync<UserDetailsDto>("user");
+            var chatCreateDto = new ChatCreateDto()
+            {
+                ChatUserOids = new HashSet<string>() {currentUser.Oid, supervisorOid},
+                FromUserOid = currentUser.Oid,
+                ProjectId = null
+            };
+            var chatResponse = await _http.PostAsJsonAsync("api/Chat", chatCreateDto);
+        
+            if (!chatResponse.IsSuccessStatusCode)
+            {
+                Logger.LogCritical("Critical status code: " + chatResponse.StatusCode);
+                return;
+            }
+        
+            var chat = await chatResponse.Content.ReadFromJsonAsync<ChatDto>();
+            if (chat == null)
+            {
+                Logger.LogCritical("Critical chat is null");
+                return;
+            }
+            var message = new ChatMessageCreateDto()
+            {
+                Content = $"{currentUser.Name?.Split(" ")[0]} started a conversation",
+                FromUserOid = currentUser.Oid,
+                ChatId = chat.ChatId
+            };
+            var notification = new NotificationCreateDto()
+            {
+                Title = "New Conversation",
+                Content = $"{currentUser.Name?.Split(" ")[0]} started a conversation",
+                UserOid = supervisorOid,
+                Link = $"/Messages/?chat={chat.ChatId}"
+            };
+            var messageResponse = await _http.PostAsJsonAsync("api/Chat/message", message);
+            if (messageResponse.IsSuccessStatusCode)
+            {
+                await _http.PostAsJsonAsync("api/Notification", notification);
+                _uriHelper.NavigateTo($"/Messages/?chat={chat.ChatId}");
+            }
+            else
+            {
+                Logger.LogCritical("Critical status code: " + messageResponse.StatusCode);
+            }
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+    }
+}
