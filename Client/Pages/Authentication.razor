@@ -58,7 +58,7 @@
         //User does not exist
         var postRes = await _http.PostAsJsonAsync("api/User/", new UserCreateDto
         {
-            oid = oidClaim,
+            Oid = oidClaim,
             Name = nameClaim,
             Email = emailClaim
         });

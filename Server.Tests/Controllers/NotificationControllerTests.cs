@@ -19,7 +19,7 @@ namespace ProjectBank.Server.Tests.Controllers
             var controller = new NotificationController(logger.Object, repository.Object);
 
             // Act
-            var actual = await controller.GetNotificationByUserId("1");
+            var actual = await controller.GetNotificationByUserOid("1");
 
             // Assert
             Assert.Equal(expected, actual);

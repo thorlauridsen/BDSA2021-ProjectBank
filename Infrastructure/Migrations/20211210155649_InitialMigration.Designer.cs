@@ -12,7 +12,7 @@ using ProjectBank.Infrastructure;
 namespace ProjectBank.Infrastructure.Migrations
 {
     [DbContext(typeof(ProjectBankContext))]
-    [Migration("20211210123431_InitialMigration")]
+    [Migration("20211210155649_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -57,7 +57,7 @@ namespace ProjectBank.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FromUseroid")
+                    b.Property<string>("FromUserOid")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -68,7 +68,7 @@ namespace ProjectBank.Infrastructure.Migrations
 
                     b.HasIndex("ChatId");
 
-                    b.HasIndex("FromUseroid");
+                    b.HasIndex("FromUserOid");
 
                     b.ToTable("ChatMessages");
                 });
@@ -87,7 +87,7 @@ namespace ProjectBank.Infrastructure.Migrations
                     b.Property<bool>("SeenLatestMessage")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Useroid")
+                    b.Property<string>("UserOid")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -95,7 +95,7 @@ namespace ProjectBank.Infrastructure.Migrations
 
                     b.HasIndex("ChatId");
 
-                    b.HasIndex("Useroid");
+                    b.HasIndex("UserOid");
 
                     b.ToTable("ChatUsers");
                 });
@@ -119,14 +119,14 @@ namespace ProjectBank.Infrastructure.Migrations
                     b.Property<int?>("PostId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Useroid")
+                    b.Property<string>("UserOid")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PostId");
 
-                    b.HasIndex("Useroid");
+                    b.HasIndex("UserOid");
 
                     b.ToTable("Comment");
                 });
@@ -158,13 +158,13 @@ namespace ProjectBank.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Useroid")
+                    b.Property<string>("UserOid")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Useroid");
+                    b.HasIndex("UserOid");
 
                     b.ToTable("Notifications");
                 });
@@ -197,7 +197,7 @@ namespace ProjectBank.Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("Useroid")
+                    b.Property<string>("UserOid")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -206,14 +206,14 @@ namespace ProjectBank.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Useroid");
+                    b.HasIndex("UserOid");
 
                     b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("ProjectBank.Infrastructure.User", b =>
                 {
-                    b.Property<string>("oid")
+                    b.Property<string>("Oid")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
@@ -228,7 +228,7 @@ namespace ProjectBank.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("oid");
+                    b.HasKey("Oid");
 
                     b.ToTable("Users");
                 });
@@ -252,7 +252,7 @@ namespace ProjectBank.Infrastructure.Migrations
 
                     b.HasOne("ProjectBank.Infrastructure.User", "FromUser")
                         .WithMany()
-                        .HasForeignKey("FromUseroid")
+                        .HasForeignKey("FromUserOid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -269,7 +269,7 @@ namespace ProjectBank.Infrastructure.Migrations
 
                     b.HasOne("ProjectBank.Infrastructure.User", "User")
                         .WithMany()
-                        .HasForeignKey("Useroid")
+                        .HasForeignKey("UserOid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -284,7 +284,7 @@ namespace ProjectBank.Infrastructure.Migrations
 
                     b.HasOne("ProjectBank.Infrastructure.User", "User")
                         .WithMany()
-                        .HasForeignKey("Useroid");
+                        .HasForeignKey("UserOid");
 
                     b.Navigation("User");
                 });
@@ -293,7 +293,7 @@ namespace ProjectBank.Infrastructure.Migrations
                 {
                     b.HasOne("ProjectBank.Infrastructure.User", "User")
                         .WithMany()
-                        .HasForeignKey("Useroid")
+                        .HasForeignKey("UserOid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -304,7 +304,7 @@ namespace ProjectBank.Infrastructure.Migrations
                 {
                     b.HasOne("ProjectBank.Infrastructure.User", "User")
                         .WithMany()
-                        .HasForeignKey("Useroid")
+                        .HasForeignKey("UserOid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -53,7 +53,7 @@ namespace ProjectBank.Server.Tests.Controllers
             var controller = new UserController(logger.Object, repository.Object);
 
             // Act
-            var response = await controller.GetByUserId("11");
+            var response = await controller.GetByUserOid("11");
 
             // Assert
             Assert.IsType<NotFoundResult>(response.Result);
@@ -69,7 +69,7 @@ namespace ProjectBank.Server.Tests.Controllers
             var controller = new UserController(logger.Object, repository.Object);
 
             // Act
-            var response = await controller.GetByUserId("1");
+            var response = await controller.GetByUserOid("1");
 
             // Assert
             Assert.Equal(character, response.Value);

@@ -43,12 +43,12 @@ namespace ProjectBank.Server.Controllers
             => await _repository.ReadAsyncByTag(tag);
 
         [Authorize]
-        [HttpGet("supervisor/{userId}")]
+        [HttpGet("supervisor/{userOid}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<IReadOnlyCollection<PostDto>>> GetBySupervisor(string userId)
+        public async Task<ActionResult<IReadOnlyCollection<PostDto>>> GetBySupervisor(string userOid)
         {
-            var (status, posts) = await _repository.ReadAsyncBySupervisor(userId);
+            var (status, posts) = await _repository.ReadAsyncBySupervisor(userOid);
             if (status == Status.NotFound) return NotFound();
             return Ok(posts);
         }

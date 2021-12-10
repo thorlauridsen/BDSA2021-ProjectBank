@@ -19,16 +19,16 @@ namespace ProjectBank.Server.Model
         {
             await context.Database.MigrateAsync();
 
-            var user1 = new User { oid = "1", Name = "Paolo", Email = "paolo@outlook.com" };
-            var user2 = new User { oid = "2", Name = "Tue", Email = "tue@outlook.com" };
-            var generatedUser4 = new User { oid = "3", Name = "Aaron Duane", Email = "aaron@outlook.com" };
-            var generatedUser5 = new User { oid = "4", Name = "Pnar Tazn", Email = "pnar@outlook.com" };
-            var generatedUser0 = new User { oid = "5", Name = "Veronika Cheplygina", Email = "veronika@outlook.com" };
-            var generatedUser1 = new User { oid = "6", Name = "Sebastian Bastian", Email = "sebastian@outlook.com" };
-            var generatedUser2 = new User { oid = "7", Name = "Maria Astefanoaei", Email = "maria@outlook.com" };
-            var generatedUser3 = new User { oid = "8", Name = "Björn Þór Jónsson", Email = "bjorn@outlook.com" };
+            var user1 = new User { Oid = "1", Name = "Paolo", Email = "paolo@outlook.com" };
+            var user2 = new User { Oid = "2", Name = "Tue", Email = "tue@outlook.com" };
+            var generatedUser4 = new User { Oid = "3", Name = "Aaron Duane", Email = "aaron@outlook.com" };
+            var generatedUser5 = new User { Oid = "4", Name = "Pnar Tazn", Email = "pnar@outlook.com" };
+            var generatedUser0 = new User { Oid = "5", Name = "Veronika Cheplygina", Email = "veronika@outlook.com" };
+            var generatedUser1 = new User { Oid = "6", Name = "Sebastian Bastian", Email = "sebastian@outlook.com" };
+            var generatedUser2 = new User { Oid = "7", Name = "Maria Astefanoaei", Email = "maria@outlook.com" };
+            var generatedUser3 = new User { Oid = "8", Name = "Björn Þór Jónsson", Email = "bjorn@outlook.com" };
 
-            var misterWild = new User { oid = "9", Name = "Mister wild AF" };
+            var misterWild = new User { Oid = "9", Name = "Mister wild AF" };
 
             if (!await context.Users.AnyAsync())
             {
@@ -70,12 +70,12 @@ namespace ProjectBank.Server.Model
 
             var wildPost = new Post
             {
-                Title= "Games in the wild",
-                Content= "Learn to make games in the wild with the coolest teacher in the world... ME \nYou will have a great time and learn so much about games in the wild. \nSo much that you probably can't imagine how wild it will be.",
-                DateAdded= DateTime.Now,
-                User= misterWild,
+                Title = "Games in the wild",
+                Content = "Learn to make games in the wild with the coolest teacher in the world... ME \nYou will have a great time and learn so much about games in the wild. \nSo much that you probably can't imagine how wild it will be.",
+                DateAdded = DateTime.Now,
+                User = misterWild,
                 Comments = new List<Comment>() { commentWild },
-                Tags = new string[] { "wild", "wild af", "super wild", "wild games"}
+                Tags = new string[] { "wild", "wild af", "super wild", "wild games" }
             };
 
             if (!await context.Posts.AnyAsync())

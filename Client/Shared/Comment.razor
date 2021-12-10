@@ -12,7 +12,7 @@
             <p class="mb-1">
                 @Name <span class="small">- @Published.GetTimeSince()</span>
             </p>
-            @if (CurrentUser.oid.Equals(CurrentPost.SupervisorOid) || CurrentUser.oid.Equals(UserID))
+            @if (CurrentUser.Oid.Equals(CurrentPost.SupervisorOid) || CurrentUser.Oid.Equals(UserID))
             {
                 <a class="link-danger" onclick="@DeleteComment">Delete</a>
             }

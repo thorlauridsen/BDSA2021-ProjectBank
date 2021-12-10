@@ -16,12 +16,12 @@ namespace ProjectBank.Infrastructure
         public async Task<(Status, ChatDto?)> CreateNewChatAsync(ChatCreateDto chat)
         {
             HashSet<ChatUser> chatUsers = new HashSet<ChatUser>();
-            foreach (var userId in chat.ChatUserIds)
+            foreach (var userOid in chat.ChatUserOids)
             {
                 var entityChatUser = new ChatUser
                 {
-                    User = await GetUserAsync(userId),
-                    SeenLatestMessage = userId == chat.FromUserId ? true : false,
+                    User = await GetUserAsync(userOid),
+                    SeenLatestMessage = userOid == chat.FromUserOid ? true : false,
                 };
                 chatUsers.Add(entityChatUser);
                 _context.ChatUsers.Add(entityChatUser);
@@ -39,7 +39,7 @@ namespace ProjectBank.Infrastructure
             {
                 ChatId = entityChat.Id,
                 ProjectId = entityChat.Post.Id,
-                ChatUserIds = entityChat.ChatUsers.Select(cu => cu.Id).ToHashSet()
+                ChatUserOids = entityChat.ChatUsers.Select(cu => cu.Id).ToHashSet()
             });
         }
 
@@ -55,10 +55,10 @@ namespace ProjectBank.Infrastructure
                 Chat = await GetChatAsync(chatMessage.ChatId),
                 Content = chatMessage.Content,
                 Timestamp = DateTime.Now,
-                FromUser = await GetUserAsync(chatMessage.FromUserId)
+                FromUser = await GetUserAsync(chatMessage.FromUserOid)
             };
 
-            entityChatMessage.Chat.ChatUsers.Where(cu => cu.User.oid != chatMessage.FromUserId)
+            entityChatMessage.Chat.ChatUsers.Where(cu => cu.User.Oid != chatMessage.FromUserOid)
                 .Select(cu => cu.SeenLatestMessage = false);
 
             _context.ChatMessages.Add(entityChatMessage);
@@ -68,7 +68,7 @@ namespace ProjectBank.Infrastructure
             {
                 Content = entityChatMessage.Content,
                 FromUser = new UserDto(
-                    entityChatMessage.FromUser.oid,
+                    entityChatMessage.FromUser.Oid,
                     entityChatMessage.FromUser.Name,
                     entityChatMessage.FromUser.Email
                 ),
@@ -87,7 +87,7 @@ namespace ProjectBank.Infrastructure
             {
                 Content = chatMessage.Content,
                 FromUser = new UserDto(
-                    chatMessage.FromUser.oid,
+                    chatMessage.FromUser.Oid,
                     chatMessage.FromUser.Name,
                     chatMessage.FromUser.Email
                 ),
@@ -95,21 +95,21 @@ namespace ProjectBank.Infrastructure
             };
         }
 
-        public async Task<IReadOnlyCollection<ChatDetailsDto>> ReadAllChatsAsync(string userId)
+        public async Task<IReadOnlyCollection<ChatDetailsDto>> ReadAllChatsAsync(string userOid)
         {
             return (await _context.Chats
                 .Join(_context.ChatMessages, c => c.Id, cm => cm.Chat.Id, (c, cm) => new { c, cm })
-                .Where(@t => @t.c.ChatUsers.Any(u => u.User.oid == userId))
+                .Where(@t => @t.c.ChatUsers.Any(u => u.User.Oid == userOid))
                 .OrderByDescending(@t => @t.cm.Timestamp)
                 .Select(@t => new ChatDetailsDto
                 {
                     ChatId = @t.c.Id,
-                    TargetUserId = @t.c.ChatUsers.First(ch => ch.User.oid != userId).User.oid,
+                    TargetUserOid = @t.c.ChatUsers.First(ch => ch.User.Oid != userOid).User.Oid,
                     LatestChatMessage = new ChatMessageDto()
                     {
                         Content = @t.cm.Content,
                         FromUser = new UserDto(
-                            @t.cm.FromUser.oid,
+                            @t.cm.FromUser.Oid,
                             @t.cm.FromUser.Name,
                             @t.cm.FromUser.Email
                         ),
@@ -126,7 +126,7 @@ namespace ProjectBank.Infrastructure
                 .Select(c => new ChatMessageDto
                 {
                     FromUser = new UserDto(
-                        c.FromUser.oid,
+                        c.FromUser.Oid,
                         c.FromUser.Name,
                         c.FromUser.Email
                     ),
@@ -136,7 +136,7 @@ namespace ProjectBank.Infrastructure
                 .ToListAsync())
             .AsReadOnly();
 
-        public async Task<ChatDetailsDto?> ReadChatAsync(int chatId, string userId)
+        public async Task<ChatDetailsDto?> ReadChatAsync(int chatId, string userOid)
         {
             var result = await _context.Chats.Include("ChatUsers").Include("ChatUsers.User").Include("Post") //Få alle chats
                 .Join(_context.ChatMessages.Include("FromUser"), //Join det med ChatMessages så vi får en tuple
@@ -151,23 +151,23 @@ namespace ProjectBank.Infrastructure
             {
                 Content = result.chatMessage.Content,
                 FromUser = new UserDto(
-                    result.chatMessage.FromUser.oid,
+                    result.chatMessage.FromUser.Oid,
                     result.chatMessage.FromUser.Name,
                     result.chatMessage.FromUser.Email
                 ),
                 Timestamp = result.chatMessage.Timestamp
             };
 
-            var targetUser = result.chat.ChatUsers.First(ch => ch.User.oid != userId);
-            var targetUserId = targetUser.User.oid;
-            var seenLatestMessage = result.chat.ChatUsers.FirstOrDefault(chatUser => chatUser.User.oid != userId)
+            var targetUser = result.chat.ChatUsers.First(ch => ch.User.Oid != userOid);
+            var targetUserOid = targetUser.User.Oid;
+            var seenLatestMessage = result.chat.ChatUsers.FirstOrDefault(chatUser => chatUser.User.Oid != userOid)
                 .SeenLatestMessage;
 
             return new ChatDetailsDto()
             {
                 ChatId = result.chat.Id,
                 LatestChatMessage = latestChatMessage,
-                TargetUserId = targetUserId,
+                TargetUserOid = targetUserOid,
                 SeenLatestMessage = seenLatestMessage,
                 ProjectId = result.chat.Post.Id
             };
@@ -177,8 +177,8 @@ namespace ProjectBank.Infrastructure
         private async Task<Chat> GetChatAsync(int chatId) =>
             await _context.Chats.Include("ChatUsers").Include("Post").FirstAsync(c => c.Id == chatId);
 
-        private async Task<User> GetUserAsync(string userId) =>
-            await _context.Users.FirstAsync(u => u.oid == userId);
+        private async Task<User> GetUserAsync(string userOid) =>
+            await _context.Users.FirstAsync(u => u.Oid == userOid);
 
         private async Task<Post?> GetPostAsync(int? postId) =>
             await _context.Posts.FirstOrDefaultAsync(p => p.Id == postId);

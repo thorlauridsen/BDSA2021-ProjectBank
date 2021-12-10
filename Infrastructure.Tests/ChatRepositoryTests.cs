@@ -43,10 +43,10 @@ namespace Infrastructure.Tests
             context.Database.EnsureCreated();
 
 
-            per = new User { oid = "1", Name = "per", Email = "per@outlook.com" };
-            bo = new User { oid = "2", Name = "bo", Email = "bo@outlook.com" };
-            alice = new User { oid = "3", Name = "alice", Email = "alice@outlook.com" };
-            karl = new User { oid = "4", Name = "karl", Email = "karl@outlook.com" };
+            per = new User { Oid = "1", Name = "per", Email = "per@outlook.com" };
+            bo = new User { Oid = "2", Name = "bo", Email = "bo@outlook.com" };
+            alice = new User { Oid = "3", Name = "alice", Email = "alice@outlook.com" };
+            karl = new User { Oid = "4", Name = "karl", Email = "karl@outlook.com" };
 
             post = new Post()
             {
@@ -86,17 +86,17 @@ namespace Infrastructure.Tests
         [Fact]
         public async Task CreateNewChatAsync_creates_new_chat()
         {
-            var chat = new ChatCreateDto() { ProjectId = 1, FromUserId = "4", ChatUserIds = new HashSet<string>() { karl.oid, bo.oid } };
+            var chat = new ChatCreateDto() { ProjectId = 1, FromUserOid = "4", ChatUserOids = new HashSet<string>() { karl.Oid, bo.Oid } };
 
 
             var (status, actual) = await _repository.CreateNewChatAsync(chat);
 
-            var expected = new ChatDto() { ProjectId = 1, ChatId = 3, ChatUserIds = new HashSet<int>() { 5, 6 } };
+            var expected = new ChatDto() { ProjectId = 1, ChatId = 3, ChatUserOids = new HashSet<int>() { 5, 6 } };
 
             Assert.Equal(Created, status);
             Assert.Equal(expected.ProjectId, actual.ProjectId);
             Assert.Equal(expected.ChatId, actual.ChatId);
-            Assert.Equal(expected.ChatUserIds, actual.ChatUserIds);
+            Assert.Equal(expected.ChatUserOids, actual.ChatUserOids);
         }
 
         [Fact]
@@ -107,7 +107,7 @@ namespace Infrastructure.Tests
             var expected1 = new ChatDetailsDto
             {
                 ChatId = 2,
-                TargetUserId = "3",
+                TargetUserOid = "3",
                 LatestChatMessage = new ChatMessageDto()
                 {
                     Content = "to Per",
@@ -119,7 +119,7 @@ namespace Infrastructure.Tests
             var expected2 = new ChatDetailsDto
             {
                 ChatId = 1,
-                TargetUserId = "2",
+                TargetUserOid = "2",
                 LatestChatMessage = new ChatMessageDto()
                 {
                     Content = "to Bo",
@@ -133,14 +133,14 @@ namespace Infrastructure.Tests
             var actual2 = actual.ElementAt(1);
 
             Assert.Equal(expected1.ChatId, actual1.ChatId);
-            Assert.Equal(expected1.TargetUserId, actual1.TargetUserId);
-            Assert.Equal(expected1.LatestChatMessage.FromUser.oid, actual1.LatestChatMessage.FromUser.oid);
+            Assert.Equal(expected1.TargetUserOid, actual1.TargetUserOid);
+            Assert.Equal(expected1.LatestChatMessage.FromUser.Oid, actual1.LatestChatMessage.FromUser.Oid);
             Assert.Equal(expected1.LatestChatMessage.Content, actual1.LatestChatMessage.Content);
             Assert.False(actual1.SeenLatestMessage);
 
             Assert.Equal(expected2.ChatId, actual2.ChatId);
-            Assert.Equal(expected2.TargetUserId, actual2.TargetUserId);
-            Assert.Equal(expected2.LatestChatMessage.FromUser.oid, actual2.LatestChatMessage.FromUser.oid);
+            Assert.Equal(expected2.TargetUserOid, actual2.TargetUserOid);
+            Assert.Equal(expected2.LatestChatMessage.FromUser.Oid, actual2.LatestChatMessage.FromUser.Oid);
             Assert.Equal(expected2.LatestChatMessage.Content, actual2.LatestChatMessage.Content);
             Assert.False(actual2.SeenLatestMessage);
         }
@@ -150,13 +150,13 @@ namespace Infrastructure.Tests
         {
             var chatMessage = new ChatMessageCreateDto
             {
-                FromUserId = "1",
+                FromUserOid = "1",
                 ChatId = 1,
                 Content = "Hello"
             };
             var (status, response) = await _repository.CreateNewChatMessageAsync(chatMessage);
             Assert.Equal(Created, status);
-            Assert.Equal(chatMessage.FromUserId, response.FromUser.oid);
+            Assert.Equal(chatMessage.FromUserOid, response.FromUser.Oid);
             Assert.Equal(chatMessage.Content, response.Content);
             Assert.Equal(chatMessage.ChatId, response.chatId);
         }
@@ -166,7 +166,7 @@ namespace Infrastructure.Tests
         {
             var chatMessage = new ChatMessageCreateDto
             {
-                FromUserId = "1",
+                FromUserOid = "1",
                 ChatId = 1,
                 Content = ""
             };
@@ -183,7 +183,7 @@ namespace Infrastructure.Tests
             var expectedLatestChatMessage = new ChatMessageDto()
             {
                 Content = fromPerToBo.Content,
-                FromUser = new UserDto(fromPerToBo.FromUser.oid, fromPerToBo.FromUser.Name, fromPerToBo.FromUser.Email),
+                FromUser = new UserDto(fromPerToBo.FromUser.Oid, fromPerToBo.FromUser.Name, fromPerToBo.FromUser.Email),
                 Timestamp = fromPerToBo.Timestamp
             };
             var expected = new ChatDetailsDto()
@@ -192,13 +192,13 @@ namespace Infrastructure.Tests
                 ProjectId = 1,
                 LatestChatMessage = expectedLatestChatMessage,
                 SeenLatestMessage = false,
-                TargetUserId = "2"
+                TargetUserOid = "2"
             };
             Assert.NotNull(actual);
             Assert.Equal(expected.SeenLatestMessage, actual?.SeenLatestMessage);
-            Assert.Equal(expected.TargetUserId, actual?.TargetUserId);
+            Assert.Equal(expected.TargetUserOid, actual?.TargetUserOid);
             Assert.Equal(expectedLatestChatMessage.Content, actual?.LatestChatMessage.Content);
-            Assert.Equal(expectedLatestChatMessage.FromUser.oid, actual?.LatestChatMessage.FromUser.oid);
+            Assert.Equal(expectedLatestChatMessage.FromUser.Oid, actual?.LatestChatMessage.FromUser.Oid);
             Assert.Equal(expectedLatestChatMessage.Timestamp, actual?.LatestChatMessage.Timestamp);
             Assert.Equal(expected.ChatId, actual?.ChatId);
             Assert.Equal(expected.ProjectId, actual?.ProjectId);

@@ -65,7 +65,7 @@
                 <div class="chat-messages scrollarea">
                     @foreach (var message in chatMessages)
                     {
-                        <MessageComponent Text="@message.Content" Received="@(!message.FromUser.oid.Equals(currentUser.oid))">
+                        <MessageComponent Text="@message.Content" Received="@(!message.FromUser.Oid.Equals(currentUser.Oid))">
                         </MessageComponent>
                     }
                 </div>
@@ -144,19 +144,19 @@
         try
         {
             currentUser = await localStore.GetItemAsync<UserDetailsDto>("user");
-            var postsRes = await _http.GetAsync($"api/Post/supervisor/{currentUser.oid}");
+            var postsRes = await _http.GetAsync($"api/Post/supervisor/{currentUser.Oid}");
             if (postsRes.IsSuccessStatusCode)
             {
                 Posts = await postsRes.Content.ReadFromJsonAsync<List<PostDto>>();
             }
-            _allChats = await _http.GetFromJsonAsync<IReadOnlyCollection<ChatDetailsDto>>($"api/Chat/user/{currentUser.oid}");
+            _allChats = await _http.GetFromJsonAsync<IReadOnlyCollection<ChatDetailsDto>>($"api/Chat/user/{currentUser.Oid}");
             _chats = new List<ChatDetailsDto>(_allChats);
             UpdateFilter();
             var _chat = uriHelper.QueryString("chat");
             if (_chat != null && _chat.Trim() != "")
             {
                 var chatid = Convert.ToInt32(_chat);
-                chat = await _http.GetFromJsonAsync<ChatDetailsDto>($"api/Chat/{chatid}/{currentUser.oid}");
+                chat = await _http.GetFromJsonAsync<ChatDetailsDto>($"api/Chat/{chatid}/{currentUser.Oid}");
                 SelectChat(chat);
             }
         }
@@ -178,7 +178,7 @@
         {
             ChatId = chat.ChatId,
             Content = messageModel.Message,
-            FromUserId = currentUser.oid
+            FromUserOid = currentUser.Oid
         };
         var res = await _http.PostAsJsonAsync<ChatMessageCreateDto>("api/chat/message", chatMessageCrateDto);
         if (!res.IsSuccessStatusCode) return;
@@ -200,7 +200,7 @@
             chatMessages = (await _http.GetFromJsonAsync<IReadOnlyCollection<ChatMessageDto>>($"api/Chat/{chat.ChatId}/messages") ??
             new List<ChatMessageDto>())
             .Select(m => m).ToList();
-            chatRecipient = await _http.GetFromJsonAsync<UserDetailsDto>($"api/User/{chat.TargetUserId}");
+            chatRecipient = await _http.GetFromJsonAsync<UserDetailsDto>($"api/User/{chat.TargetUserOid}");
             UpdateQuery();
             StateHasChanged();
         }

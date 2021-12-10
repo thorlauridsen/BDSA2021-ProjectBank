@@ -20,7 +20,7 @@
             {
                 @foreach (var comment in _postComments)
                 {
-                    <Comment CurrentUser="@CurrentUser" CurrentPost="@Post" UserID="@comment.UserId" CommentID="@comment.Id" Published="@comment.DateAdded"
+                    <Comment CurrentUser="@CurrentUser" CurrentPost="@Post" UserID="@comment.UserOid" CommentID="@comment.Id" Published="@comment.DateAdded"
                 Content="@comment.Content"></Comment>
                 }
             }
@@ -77,7 +77,7 @@
         var comment = new CommentCreateDto
         {
             Content = commentModel.comment,
-            UserId = user.oid,
+            UserOid = user.Oid,
             postid = Post.Id
         };
         
@@ -91,7 +91,7 @@
         var response = await _http.PostAsJsonAsync("api/Comment", comment);
         if (response.IsSuccessStatusCode)
         {
-            if(!CurrentUser.oid.Equals(Post.SupervisorOid)){
+            if(!CurrentUser.Oid.Equals(Post.SupervisorOid)){
                 await _http.PostAsJsonAsync("api/Notification", notification);
             }
             uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true); 

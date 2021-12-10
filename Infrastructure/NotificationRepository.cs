@@ -41,15 +41,15 @@ namespace ProjectBank.Infrastructure
                 Id = entity.Id,
                 Title = entity.Title,
                 Content = entity.Content,
-                UserOid = entity.User.oid,
+                UserOid = entity.User.Oid,
                 Timestamp = entity.Timestamp,
                 Link = entity.Link,
                 Seen = entity.Seen
             });
         }
 
-        public async Task<IReadOnlyCollection<NotificationDetailsDto>> GetNotificationsAsync(string userId) =>
-            (await _context.Notifications.Where(n => n.User.oid == userId)
+        public async Task<IReadOnlyCollection<NotificationDetailsDto>> GetNotificationsAsync(string userOid) =>
+            (await _context.Notifications.Where(n => n.User.Oid == userOid)
                 .OrderByDescending(n => n.Timestamp)
                 .Select(n => new NotificationDetailsDto
                 {
@@ -76,7 +76,7 @@ namespace ProjectBank.Infrastructure
             return Updated;
         }
 
-        private async Task<User?> GetUserAsync(string userId) =>
-            await _context.Users.FirstOrDefaultAsync(u => u.oid == userId);
+        private async Task<User?> GetUserAsync(string userOid) =>
+            await _context.Users.FirstOrDefaultAsync(u => u.Oid == userOid);
     }
 }

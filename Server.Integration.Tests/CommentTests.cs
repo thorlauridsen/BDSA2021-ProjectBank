@@ -36,7 +36,7 @@ namespace ProjectBank.Server.Integration.Tests
             Assert.NotNull(comment);
             Assert.Equal(1, comment?.Id);
             Assert.Equal("Nice post", comment?.Content);
-            Assert.Equal("2", comment?.UserId);
+            Assert.Equal("2", comment?.UserOid);
         }
 
         [Fact]
@@ -45,7 +45,7 @@ namespace ProjectBank.Server.Integration.Tests
             var comment = new CommentCreateDto
             {
                 Content = "Hello there",
-                UserId = "1",
+                UserOid = "1",
                 postid = 1
             };
             var response = await _client.PostAsJsonAsync("/api/Comment", comment);
@@ -58,7 +58,7 @@ namespace ProjectBank.Server.Integration.Tests
             Assert.NotNull(created);
             Assert.Equal(2, created?.Id);
             Assert.Equal("Hello there", created?.Content);
-            Assert.Equal("1", created?.UserId);
+            Assert.Equal("1", created?.UserOid);
         }
     }
 }

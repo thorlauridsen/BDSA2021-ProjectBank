@@ -41,7 +41,7 @@ namespace ProjectBank.Core
                 entity.Title,
                 entity.Content,
                 entity.DateAdded,
-                entity.User.oid,
+                entity.User.Oid,
                 entity.Tags.ToHashSet(),
                 entity.PostState,
                 entity.ViewCount
@@ -55,7 +55,7 @@ namespace ProjectBank.Core
                     p.Title,
                     p.Content,
                     p.DateAdded,
-                    p.User.oid,
+                    p.User.Oid,
                     p.Tags.ToHashSet(),
                     p.PostState,
                     p.ViewCount
@@ -69,7 +69,7 @@ namespace ProjectBank.Core
                     p.Title,
                     p.Content,
                     p.DateAdded,
-                    p.User.oid,
+                    p.User.Oid,
                     p.Tags.ToHashSet(),
                     p.PostState,
                     p.ViewCount
@@ -78,22 +78,22 @@ namespace ProjectBank.Core
             .AsReadOnly();
 
 
-        public async Task<(Status, IReadOnlyCollection<PostDto>)> ReadAsyncBySupervisor(string userId)
+        public async Task<(Status, IReadOnlyCollection<PostDto>)> ReadAsyncBySupervisor(string userOid)
         {
-            var user = await GetUserAsync(userId);
+            var user = await GetUserAsync(userOid);
             if (user == null)
             {
                 return (NotFound, new List<PostDto>() { });
             }
 
             var posts = (await _context.Posts
-                .Where(p => p.User.oid == userId)
+                .Where(p => p.User.Oid == userOid)
                 .Select(p => new PostDto(
                     p.Id,
                     p.Title,
                     p.Content,
                     p.DateAdded,
-                    p.User.oid,
+                    p.User.Oid,
                     p.Tags.ToHashSet(),
                     p.PostState,
                     p.ViewCount
@@ -120,7 +120,7 @@ namespace ProjectBank.Core
                             p.Title,
                             p.Content,
                             p.DateAdded,
-                            p.User.oid,
+                            p.User.Oid,
                             p.Tags.ToHashSet(),
                             p.PostState,
                             p.ViewCount
@@ -143,7 +143,7 @@ namespace ProjectBank.Core
                     comment.Id,
                     comment.Content,
                     comment.DateAdded,
-                    comment.User.oid)).ToList();
+                    comment.User.Oid)).ToList();
         }
 
         public async Task<Status> UpdateAsync(int postId, PostUpdateDto post)
@@ -189,7 +189,7 @@ namespace ProjectBank.Core
             return (Success, ++post.ViewCount);
         }
 
-        private async Task<User?> GetUserAsync(string userId) =>
-            await _context.Users.FirstOrDefaultAsync(u => u.oid == userId);
+        private async Task<User?> GetUserAsync(string userOid) =>
+            await _context.Users.FirstOrDefaultAsync(u => u.Oid == userOid);
     }
 }

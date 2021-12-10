@@ -47,7 +47,7 @@
 
     private async void updateAsync()
     {
-        var targetUser = await _http.GetFromJsonAsync<UserDetailsDto>($"/api/User/{_chat.TargetUserId}");
+        var targetUser = await _http.GetFromJsonAsync<UserDetailsDto>($"/api/User/{_chat.TargetUserOid}");
         if (targetUser != null)
         {
             Recipient = targetUser.Name;

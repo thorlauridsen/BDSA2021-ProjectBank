@@ -23,7 +23,7 @@ namespace Infrastructure.Tests
 
             var user = new User
             {
-                oid = "1",
+                Oid = "1",
                 Name = "Claus",
                 Email = "claus@outlook.com"
             };
@@ -39,14 +39,14 @@ namespace Infrastructure.Tests
         {
             var user = new UserCreateDto
             {
-                oid = "2",
+                Oid = "2",
                 Name = "Karsten",
                 Email = "karsten@outlook.com"
             };
 
             var (status, content) = await _repository.CreateAsync(user);
 
-            Assert.Equal("2", content?.oid);
+            Assert.Equal("2", content?.Oid);
             Assert.Equal(user.Name, content?.Name);
             Assert.Equal(user.Email, content?.Email);
 

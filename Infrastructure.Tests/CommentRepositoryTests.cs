@@ -22,8 +22,8 @@ namespace Infrastructure.Tests
             var context = new ProjectBankContext(builder.Options);
             context.Database.EnsureCreated();
 
-            var supervisor = new User() { oid = "1", Name = "bo", Email = "bo@outlook.com" };
-            var student = new User() { oid = "2", Name = "alice", Email = "alice@outlook.com" };
+            var supervisor = new User() { Oid = "1", Name = "bo", Email = "bo@outlook.com" };
+            var student = new User() { Oid = "2", Name = "alice", Email = "alice@outlook.com" };
 
             var post = new Post()
             {
@@ -88,7 +88,7 @@ namespace Infrastructure.Tests
         {
             var comment = new CommentCreateDto
             {
-                UserId = "2",
+                UserOid = "2",
                 Content = "some question",
                 postid = 1
             };
@@ -104,7 +104,7 @@ namespace Infrastructure.Tests
         {
             var comment = new CommentCreateDto
             {
-                UserId = "2",
+                UserOid = "2",
                 Content = "some question",
                 postid = 14134314
             };
@@ -119,7 +119,7 @@ namespace Infrastructure.Tests
         {
             var comment = new CommentCreateDto
             {
-                UserId = "2",
+                UserOid = "2",
                 Content = "some question"
             };
             var (option, content) = await _repository.CreateAsync(comment);
@@ -133,7 +133,7 @@ namespace Infrastructure.Tests
         {
             var comment = new CommentCreateDto
             {
-                UserId = "11111111111",
+                UserOid = "11111111111",
                 Content = "some question"
             };
             var (option, content) = await _repository.CreateAsync(comment);
