@@ -27,7 +27,7 @@ namespace ProjectBank.Server.Integration.Tests
         [Fact]
         public async Task Get_returns_Comments()
         {
-            var comments = await _client.GetFromJsonAsync<CommentDto[]>("/api/Post/1/comments");
+            var comments = await _client.GetFromJsonAsync<CommentDetailsDto[]>("/api/Post/1/comments");
 
             Assert.NotNull(comments);
             Assert.True(comments?.Length >= 1);

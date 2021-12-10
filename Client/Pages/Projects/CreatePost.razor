@@ -62,7 +62,7 @@
         {
             Title = postFormModel.Title,
             Content = postFormModel.Content,
-            SupervisorOid = (await localStore.GetItemAsync<UserDetailsDto>("user")).Oid,
+            UserOid = (await localStore.GetItemAsync<UserDetailsDto>("user")).Oid,
             Tags = postFormModel.Tags.Split(",").Select(t => t.Trim()).ToHashSet()
         };
         var response = await _http.PostAsJsonAsync("api/Post", post);

@@ -15,7 +15,7 @@ namespace ProjectBank.Core
 
         public async Task<(Status, PostDetailsDto?)> CreateAsync(PostCreateDto post)
         {
-            var user = await GetUserAsync(post.SupervisorOid);
+            var user = await GetUserAsync(post.UserOid);
 
             if (user == null ||
                 post.Title.Trim().Equals("") ||
@@ -36,77 +36,81 @@ namespace ProjectBank.Core
             _context.Posts.Add(entity);
             await _context.SaveChangesAsync();
 
-            return (Created, new PostDetailsDto(
-                entity.Id,
-                entity.Title,
-                entity.Content,
-                entity.DateAdded,
-                entity.User.Oid,
-                entity.Tags.ToHashSet(),
-                entity.PostState,
-                entity.ViewCount
-            ));
+            return (Created, new PostDetailsDto
+            {
+                Id = entity.Id,
+                Title = entity.Title,
+                Content = entity.Content,
+                DateAdded = entity.DateAdded,
+                UserOid = entity.User.Oid,
+                Tags = entity.Tags.ToHashSet(),
+                PostState = entity.PostState,
+                ViewCount = entity.ViewCount
+            });
         }
 
         public async Task<Option<PostDetailsDto>> ReadAsync(int postId) =>
             await _context.Posts.Where(p => p.Id == postId)
-                .Select(p => new PostDetailsDto(
-                    p.Id,
-                    p.Title,
-                    p.Content,
-                    p.DateAdded,
-                    p.User.Oid,
-                    p.Tags.ToHashSet(),
-                    p.PostState,
-                    p.ViewCount
-                ))
+                .Select(p => new PostDetailsDto
+                {
+                    Id = p.Id,
+                    Title = p.Title,
+                    Content = p.Content,
+                    DateAdded = p.DateAdded,
+                    UserOid = p.User.Oid,
+                    Tags = p.Tags.ToHashSet(),
+                    PostState = p.PostState,
+                    ViewCount = p.ViewCount
+                })
                 .FirstOrDefaultAsync();
 
-        public async Task<IReadOnlyCollection<PostDto>> ReadAsync() =>
+        public async Task<IReadOnlyCollection<PostDetailsDto>> ReadAsync() =>
             (await _context.Posts
-                .Select(p => new PostDto(
-                    p.Id,
-                    p.Title,
-                    p.Content,
-                    p.DateAdded,
-                    p.User.Oid,
-                    p.Tags.ToHashSet(),
-                    p.PostState,
-                    p.ViewCount
-                ))
+                .Select(p => new PostDetailsDto
+                {
+                    Id = p.Id,
+                    Title = p.Title,
+                    Content = p.Content,
+                    DateAdded = p.DateAdded,
+                    UserOid = p.User.Oid,
+                    Tags = p.Tags.ToHashSet(),
+                    PostState = p.PostState,
+                    ViewCount = p.ViewCount
+                })
                 .ToListAsync())
             .AsReadOnly();
 
 
-        public async Task<(Status, IReadOnlyCollection<PostDto>)> ReadAsyncBySupervisor(string userOid)
+        public async Task<(Status, IReadOnlyCollection<PostDetailsDto>)> ReadAsyncBySupervisor(string userOid)
         {
             var user = await GetUserAsync(userOid);
             if (user == null)
             {
-                return (NotFound, new List<PostDto>() { });
+                return (NotFound, new List<PostDetailsDto>() { });
             }
 
             var posts = (await _context.Posts
                 .Where(p => p.User.Oid == userOid)
-                .Select(p => new PostDto(
-                    p.Id,
-                    p.Title,
-                    p.Content,
-                    p.DateAdded,
-                    p.User.Oid,
-                    p.Tags.ToHashSet(),
-                    p.PostState,
-                    p.ViewCount
-                ))
+                .Select(p => new PostDetailsDto
+                {
+                    Id = p.Id,
+                    Title = p.Title,
+                    Content = p.Content,
+                    DateAdded = p.DateAdded,
+                    UserOid = p.User.Oid,
+                    Tags = p.Tags.ToHashSet(),
+                    PostState = p.PostState,
+                    ViewCount = p.ViewCount
+                })
                 .ToListAsync())
             .AsReadOnly();
 
             return (Success, posts);
         }
 
-        public async Task<IReadOnlyCollection<PostDto>> ReadAsyncByTag(string tag)
+        public async Task<IReadOnlyCollection<PostDetailsDto>> ReadAsyncByTag(string tag)
         {
-            var list = new List<PostDto>();
+            var list = new List<PostDetailsDto>();
             foreach (var p in _context.Posts)
             {
                 var tags = p.Tags?.ToList();
@@ -115,35 +119,38 @@ namespace ProjectBank.Core
                 {
                     if (tags.Contains(tag))
                     {
-                        list.Add(new PostDto(
-                            p.Id,
-                            p.Title,
-                            p.Content,
-                            p.DateAdded,
-                            p.User.Oid,
-                            p.Tags.ToHashSet(),
-                            p.PostState,
-                            p.ViewCount
-                        ));
+                        list.Add(new PostDetailsDto
+                        {
+                            Id = p.Id,
+                            Title = p.Title,
+                            Content = p.Content,
+                            DateAdded = p.DateAdded,
+                            UserOid = p.User.Oid,
+                            Tags = p.Tags.ToHashSet(),
+                            PostState = p.PostState,
+                            ViewCount = p.ViewCount
+                        });
                     }
                 }
             }
             return list;
         }
 
-        public async Task<IReadOnlyCollection<CommentDto>> ReadAsyncComments(int postId)
+        public async Task<IReadOnlyCollection<CommentDetailsDto>> ReadAsyncComments(int postId)
         {
             var post = await _context.Posts.Include("Comments.User").FirstOrDefaultAsync(p => p.Id == postId);
             if (post == null)
             {
-                return new List<CommentDto>() { };
+                return new List<CommentDetailsDto>() { };
             }
 
-            return post.Comments.Select(comment => new CommentDto(
-                    comment.Id,
-                    comment.Content,
-                    comment.DateAdded,
-                    comment.User.Oid)).ToList();
+            return post.Comments.Select(comment => new CommentDetailsDto
+            {
+                Id = comment.Id,
+                Content = comment.Content,
+                DateAdded = comment.DateAdded,
+                UserOid = comment.User.Oid
+            }).ToList();
         }
 
         public async Task<Status> UpdateAsync(int postId, PostUpdateDto post)

@@ -111,7 +111,12 @@ namespace Infrastructure.Tests
                 LatestChatMessage = new ChatMessageDto()
                 {
                     Content = "to Per",
-                    FromUser = new UserDto("3", "Alice", "alice@outlook.com"),
+                    FromUser = new UserDetailsDto
+                    {
+                        Oid = "3",
+                        Name = "Alice",
+                        Email = "alice@outlook.com"
+                    },
                     Timestamp = DateTime.Now
                 },
                 SeenLatestMessage = false
@@ -123,7 +128,12 @@ namespace Infrastructure.Tests
                 LatestChatMessage = new ChatMessageDto()
                 {
                     Content = "to Bo",
-                    FromUser = new UserDto("1", "Per", "per@outlook.com"),
+                    FromUser = new UserDetailsDto
+                    {
+                        Oid = "1",
+                        Name = "Per",
+                        Email = "per@outlook.com"
+                    },
                     Timestamp = DateTime.Now
                 },
                 SeenLatestMessage = false
@@ -183,7 +193,12 @@ namespace Infrastructure.Tests
             var expectedLatestChatMessage = new ChatMessageDto()
             {
                 Content = fromPerToBo.Content,
-                FromUser = new UserDto(fromPerToBo.FromUser.Oid, fromPerToBo.FromUser.Name, fromPerToBo.FromUser.Email),
+                FromUser = new UserDetailsDto
+                {
+                    Oid = fromPerToBo.FromUser.Oid,
+                    Name = fromPerToBo.FromUser.Name,
+                    Email = fromPerToBo.FromUser.Email
+                },
                 Timestamp = fromPerToBo.Timestamp
             };
             var expected = new ChatDetailsDto()

@@ -26,7 +26,7 @@ namespace ProjectBank.Server.Integration.Tests
         [Fact]
         public async Task Get_returns_Users()
         {
-            var users = await _client.GetFromJsonAsync<UserDto[]>("/api/User");
+            var users = await _client.GetFromJsonAsync<UserDetailsDto[]>("/api/User");
 
             Assert.NotNull(users);
             Assert.True(users?.Length >= 2);

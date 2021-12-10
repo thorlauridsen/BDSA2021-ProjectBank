@@ -49,7 +49,7 @@
                 <div class="col-md-3 col-10">
                     <div class="shadow p-4 text-center m-2">
                         <img alt="Profile picture of supervisor" class="rounded-circle shadow supervisor-image"
-                        src="@Creator?.image">
+                        src="@Creator?.Image">
                         <h3>@Creator?.Name</h3>
                         <p>Email: <a href="mailto:@Creator?.Email">@Creator?.Email</a></p>
                     </div>
@@ -67,7 +67,7 @@
                         </div>
                     </AuthorizeView>
 
-                    @if (currentUser.Oid == Post?.SupervisorOid)
+                    @if (currentUser.Oid == Post?.UserOid)
                     {
                         <div class="d-grid my-4 p-4 shadow text-center">
                             <!--!-->
@@ -90,7 +90,7 @@
 
     [CascadingParameter] public IModalService Modal { get; set; }
 
-    private PostDto? Post { get; set; }
+    private PostDetailsDto? Post { get; set; }
     private UserDetailsDto? Creator { get; set; }
     private UserDetailsDto currentUser { get; set; }
     private ModalParameters ApplyModalParameters { get; set; }
@@ -100,8 +100,8 @@
         currentUser = await localStore.GetItemAsync<UserDetailsDto>("user");
         try
         {
-            Post = await _http.GetFromJsonAsync<PostDto>("api/Post/" + Id);
-            Creator = await _http.GetFromJsonAsync<UserDetailsDto>("api/User/" + Post?.SupervisorOid);
+            Post = await _http.GetFromJsonAsync<PostDetailsDto>("api/Post/" + Id);
+            Creator = await _http.GetFromJsonAsync<UserDetailsDto>("api/User/" + Post?.UserOid);
             ApplyModalParameters = new ModalParameters();
             ApplyModalParameters.Add("CurrentUser", currentUser);
             ApplyModalParameters.Add("Post", Post);

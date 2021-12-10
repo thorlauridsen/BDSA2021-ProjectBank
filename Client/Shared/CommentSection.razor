@@ -20,18 +20,19 @@
             {
                 @foreach (var comment in _postComments)
                 {
-                    <Comment CurrentUser="@CurrentUser" CurrentPost="@Post" UserID="@comment.UserOid" CommentID="@comment.Id" Published="@comment.DateAdded"
-                Content="@comment.Content"></Comment>
+                    <Comment CurrentUser="@CurrentUser" CurrentPost="@Post" UserID="@comment.UserOid" CommentID="@comment.Id"
+                Published="@comment.DateAdded" Content="@comment.Content"></Comment>
                 }
             }
-            @if(Post.PostState.Equals(PostState.Active)){
+            @if (Post.PostState.Equals(PostState.Active))
+            {
                 <EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit">
                     <DataAnnotationsValidator />
                     <ValidationSummary />
                     <div class="d-flex my-4">
                         <div class="col-9">
                             <InputText @bind-Value="commentModel.comment" type="text" id="comment-input"
-                                       class="form-control" placeholder="Message" />
+                            class="form-control" placeholder="Message" />
                         </div>
                         <div class="col-3 d-flex">
                             <button type="submit" class="btn btn-primary col-12" disabled="@formInvalid">Comment</button>
@@ -45,12 +46,12 @@
 
 @code {
     [Parameter]
-    public PostDto Post { get; set; }
+    public PostDetailsDto Post { get; set; }
 
     [Parameter]
     public UserDetailsDto CurrentUser { get; set; }
-    
-    private IList<CommentDto>? _postComments { get; set; }
+
+    private IList<CommentDetailsDto>? _postComments { get; set; }
     CommentModel commentModel = new CommentModel();
 
     private EditContext? editContext;
@@ -80,21 +81,22 @@
             UserOid = user.Oid,
             postid = Post.Id
         };
-        
+
         var notification = new NotificationCreateDto
         {
             Title = "New comment",
             Content = $"{user.Name} has commented on your post",
-            UserOid = Post.SupervisorOid,
+            UserOid = Post.UserOid,
             Link = $"/projects/{Post.Id}"
         };
         var response = await _http.PostAsJsonAsync("api/Comment", comment);
         if (response.IsSuccessStatusCode)
         {
-            if(!CurrentUser.Oid.Equals(Post.SupervisorOid)){
+            if (!CurrentUser.Oid.Equals(Post.UserOid))
+            {
                 await _http.PostAsJsonAsync("api/Notification", notification);
             }
-            uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true); 
+            uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
         }
         else
         {
@@ -121,7 +123,7 @@
     {
         try
         {
-            _postComments = await _http.GetFromJsonAsync<List<CommentDto>>("api/Post/" + Post.Id + "/comments");
+            _postComments = await _http.GetFromJsonAsync<List<CommentDetailsDto>>("api/Post/" + Post.Id + "/comments");
         }
         catch (AccessTokenNotAvailableException exception)
         {

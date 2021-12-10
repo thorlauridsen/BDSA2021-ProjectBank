@@ -6,10 +6,10 @@ namespace ProjectBank.Core
         Task<Status> DeleteAsync(int postId);
         Task<(Status, int)> IncrementViewCountAsync(int postId);
         Task<Option<PostDetailsDto>> ReadAsync(int postId);
-        Task<IReadOnlyCollection<PostDto>> ReadAsync();
-        Task<(Status, IReadOnlyCollection<PostDto>)> ReadAsyncBySupervisor(string userOid);
-        Task<IReadOnlyCollection<PostDto>> ReadAsyncByTag(string tag);
-        Task<IReadOnlyCollection<CommentDto>> ReadAsyncComments(int postId);
+        Task<IReadOnlyCollection<PostDetailsDto>> ReadAsync();
+        Task<(Status, IReadOnlyCollection<PostDetailsDto>)> ReadAsyncBySupervisor(string userOid);
+        Task<IReadOnlyCollection<PostDetailsDto>> ReadAsyncByTag(string tag);
+        Task<IReadOnlyCollection<CommentDetailsDto>> ReadAsyncComments(int postId);
         Task<Status> UpdateAsync(int postId, PostUpdateDto post);
     }
 }

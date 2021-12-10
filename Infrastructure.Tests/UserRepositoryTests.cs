@@ -25,7 +25,8 @@ namespace Infrastructure.Tests
             {
                 Oid = "1",
                 Name = "Claus",
-                Email = "claus@outlook.com"
+                Email = "claus@outlook.com",
+                Image = ""
             };
             context.Users.Add(user);
             context.SaveChanges();
@@ -41,7 +42,8 @@ namespace Infrastructure.Tests
             {
                 Oid = "2",
                 Name = "Karsten",
-                Email = "karsten@outlook.com"
+                Email = "karsten@outlook.com",
+                Image = ""
             };
 
             var (status, content) = await _repository.CreateAsync(user);
@@ -52,9 +54,24 @@ namespace Infrastructure.Tests
 
             var users = await _repository.ReadAsync();
 
+            var expected1 = new UserDetailsDto
+            {
+                Oid = "1",
+                Name = "Claus",
+                Email = "claus@outlook.com",
+                Image = ""
+            };
+            var expected2 = new UserDetailsDto
+            {
+                Oid = "2",
+                Name = "Karsten",
+                Email = "karsten@outlook.com",
+                Image = ""
+            };
+
             Assert.Collection(users,
-                s => Assert.Equal(new UserDto("1", "Claus", "claus@outlook.com"), s),
-                s => Assert.Equal(new UserDto("2", "Karsten", "karsten@outlook.com"), s)
+                s => Assert.Equal(expected1, s),
+                s => Assert.Equal(expected2, s)
             );
 
             var response = await _repository.DeleteAsync("2");
@@ -65,9 +82,15 @@ namespace Infrastructure.Tests
         public async Task ReadAsync_returns_all_users()
         {
             var users = await _repository.ReadAsync();
-
+            var expected = new UserDetailsDto
+            {
+                Oid = "1",
+                Name = "Claus",
+                Email = "claus@outlook.com",
+                Image = ""
+            };
             Assert.Collection(users,
-                s => Assert.Equal(new UserDto("1", "Claus", "claus@outlook.com"), s)
+                s => Assert.Equal(expected, s)
             );
         }
 

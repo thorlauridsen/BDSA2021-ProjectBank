@@ -40,7 +40,7 @@
 
         if (authUser.Identity is not {IsAuthenticated: true }) return;
         var user = await localStore.GetItemAsync<UserDetailsDto>("user");
-        if (user != null) imgSrc = user.image;
+        if (user != null) imgSrc = user.Image;
         StateHasChanged();
     }
 

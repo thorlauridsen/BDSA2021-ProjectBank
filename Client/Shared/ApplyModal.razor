@@ -26,7 +26,7 @@
 @code {
 
     [Parameter]
-    public PostDto? Post { get; set; }
+    public PostDetailsDto? Post { get; set; }
     [Parameter]
     public UserDetailsDto CurrentUser { get; set; }
 
@@ -54,7 +54,7 @@
     {
         var chatCreateDto = new ChatCreateDto()
         {
-            ChatUserOids = new HashSet<string>() { CurrentUser.Oid, Post.SupervisorOid },
+            ChatUserOids = new HashSet<string>() { CurrentUser.Oid, Post.UserOid },
             FromUserOid = CurrentUser.Oid,
             ProjectId = Post.Id
         };
@@ -83,7 +83,7 @@
         {
             Title = "New Application",
             Content = $"{user.Name} has applied to {Post.Title}",
-            UserOid = Post.SupervisorOid,
+            UserOid = Post.UserOid,
             Link = $"/Messages/?chat={chat.ChatId}"
         };
         var messageResponse = await _http.PostAsJsonAsync("api/Chat/message", message);

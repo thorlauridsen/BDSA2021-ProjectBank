@@ -15,16 +15,16 @@ namespace ProjectBank.Server.Tests.Controllers
             // Arrange
             var toCreate = new PostCreateDto();
             var created = new PostDetailsDto
-            (
-                1,
-                "Biology Project",
-                "My Cool Biology Project",
-                DateTime.Now,
-                "1",
-                new HashSet<string>() { "Biology" },
-                PostState.Active,
-                0
-            );
+            {
+                Id = 1,
+                Title = "Biology Project",
+                Content = "My Cool Biology Project",
+                DateAdded = DateTime.Now,
+                UserOid = "1",
+                Tags = new HashSet<string>() { "Biology" },
+                PostState = PostState.Active,
+                ViewCount = 0
+            };
             var repository = new Mock<IPostRepository>();
             repository.Setup(m => m.CreateAsync(toCreate)).ReturnsAsync((Created, created));
             var controller = new PostController(logger.Object, repository.Object);
@@ -42,7 +42,7 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task Get_returns_Posts_from_repo()
         {
             // Arrange
-            var expected = Array.Empty<PostDto>();
+            var expected = Array.Empty<PostDetailsDto>();
             var repository = new Mock<IPostRepository>();
             repository.Setup(m => m.ReadAsync()).ReturnsAsync(expected);
             var controller = new PostController(logger.Object, repository.Object);
@@ -75,16 +75,16 @@ namespace ProjectBank.Server.Tests.Controllers
             // Arrange
             var repository = new Mock<IPostRepository>();
             var post = new PostDetailsDto
-            (
-                1,
-                "Biology Project",
-                "My Cool Biology Project",
-                DateTime.Now,
-                "1",
-                new HashSet<string>() { "Biology" },
-                PostState.Active,
-                0
-            );
+            {
+                Id = 1,
+                Title = "Biology Project",
+                Content = "My Cool Biology Project",
+                DateAdded = DateTime.Now,
+                UserOid = "1",
+                Tags = new HashSet<string>() { "Biology" },
+                PostState = PostState.Active,
+                ViewCount = 0
+            };
             repository.Setup(m => m.ReadAsync(1)).ReturnsAsync(post);
             var controller = new PostController(logger.Object, repository.Object);
 
@@ -99,7 +99,7 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task GetBySupervisor_given_existing_returns_Post()
         {
             // Arrange
-            var expected = Array.Empty<PostDto>();
+            var expected = Array.Empty<PostDetailsDto>();
             var repository = new Mock<IPostRepository>();
             repository.Setup(m => m.ReadAsyncBySupervisor("1")).ReturnsAsync((Created, expected));
             var controller = new PostController(logger.Object, repository.Object);
@@ -117,7 +117,7 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task GetByTag_given_existing_returns_Post()
         {
             // Arrange
-            var expected = Array.Empty<PostDto>();
+            var expected = Array.Empty<PostDetailsDto>();
             var repository = new Mock<IPostRepository>();
             repository.Setup(m => m.ReadAsyncByTag("Math")).ReturnsAsync(expected);
             var controller = new PostController(logger.Object, repository.Object);
@@ -133,7 +133,7 @@ namespace ProjectBank.Server.Tests.Controllers
         public async Task GetComments_given_existing_postId_returns_Comments()
         {
             // Arrange
-            var expected = Array.Empty<CommentDto>();
+            var expected = Array.Empty<CommentDetailsDto>();
             var repository = new Mock<IPostRepository>();
             repository.Setup(m => m.ReadAsyncComments(1)).ReturnsAsync(expected);
             var controller = new PostController(logger.Object, repository.Object);
