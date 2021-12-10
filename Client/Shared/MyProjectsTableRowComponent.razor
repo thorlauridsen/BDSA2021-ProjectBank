@@ -2,19 +2,34 @@
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using ProjectBank.Client.Extensions
 @using System.Globalization
+@inject HttpClient _http
+@implements IDisposable
+@inject NavigationManager uriHelper
+@inject IJSRuntime JsRuntime
+
 @if (Post != null)
 {
     <tr>
         <td>@Post.Title</td>
         <td>@Post.DateAdded.ToString(CultureInfo.CurrentCulture)</td>
-        <td>tbd, post.state</td>
+        <td>@Post.PostState</td>
         <td>
-            <EditForm Model="postSelectorModel">
-                <InputSelect class="form-select" @bind-Value="postSelectorModel.projectTitle">
+            <EditForm EditContext="EditContext">
+                <InputSelect class="form-select" @bind-Value="actionSelectorModel.action">
                     <option selected>Actions</option>
                     <option>Edit</option>
-                    <option>Close</option>
-                    <option>Archive</option>
+                    @if (!Post.PostState.Equals(PostState.Closed))
+                    {
+                        <option>Close</option>
+                    }
+                    @if (!Post.PostState.Equals(PostState.Archived))
+                    {
+                        <option>Archive</option>
+                    }
+                    @if (!Post.PostState.Equals(PostState.Active))
+                    {
+                        <option>Active</option>
+                    }
                     <option>Delete</option>
                 </InputSelect>
             </EditForm>
@@ -28,11 +43,101 @@
     [Parameter]
     public PostDto? Post { get; set; }
 
-    PostSelectorModel postSelectorModel = new PostSelectorModel();
+    ActionSelectorModel actionSelectorModel = new();
 
-    class PostSelectorModel
+    private EditContext EditContext;
+
+    class ActionSelectorModel
     {
-        public string projectTitle { get; set; }
+        public string action { get; set; }
+    }
+
+
+    protected override void OnInitialized()
+    {
+        EditContext = new EditContext(actionSelectorModel);
+        EditContext.OnFieldChanged += EditContext_HandleFieldChanged;
+
+        base.OnInitialized();
+    }
+
+    private void EditContext_HandleFieldChanged(object? sender, FieldChangedEventArgs e)
+    {
+        ActionHandler();
+        StateHasChanged();
+    }
+
+    private async void ActionHandler()
+    {
+        var action = actionSelectorModel.action;
+
+        switch (action)
+        {
+            case "Edit":
+                uriHelper.NavigateTo($"/projects/edit/{Post.Id}");
+                break;
+ // TODO: FILL IN EVERYTHING IN THE UPDATE DTO NOT JUST THE STATE 
+            case "Close":
+                var closeResponse = await _http.PutAsJsonAsync($"api/Post/{Post.Id}", new PostUpdateDto {PostState = PostState.Closed});
+                if (closeResponse.IsSuccessStatusCode)
+                {
+                    ReloadPage();
+                }
+                else
+                {
+                    await JsRuntime.InvokeAsync<bool>("alert", $"Changing the state of the post from {Post.PostState.ToString()} to Closed failed"); 
+                }
+                break;
+
+            case "Archive":
+                var archiveResponse = await _http.PutAsJsonAsync($"api/Post/{Post.Id}", new PostUpdateDto {PostState = PostState.Archived});
+                if (archiveResponse.IsSuccessStatusCode)
+                {
+                    ReloadPage();
+                }
+                else
+                {
+                    await JsRuntime.InvokeAsync<bool>("alert", $"Changing the state of the post from {Post.PostState.ToString()} to Archived failed"); 
+                }
+                break;
+
+            case "Active":
+                var activeResponse = await _http.PutAsJsonAsync($"api/Post/{Post.Id}", new PostUpdateDto {PostState = PostState.Active});
+                if (activeResponse.IsSuccessStatusCode)
+                {
+                    ReloadPage();
+                }
+                else
+                {
+                    await JsRuntime.InvokeAsync<bool>("alert", $"Changing the state of the post from {Post.PostState.ToString()} to Active failed"); 
+                }
+                break;
+                
+            case "Delete":
+                var deleteResponse = await _http.DeleteAsync($"api/Post/{Post.Id}");
+                if (deleteResponse.IsSuccessStatusCode)
+                {
+                    ReloadPage();
+                }
+                else
+                {
+                    await JsRuntime.InvokeAsync<bool>("alert", "Failed to delete post"); 
+                }
+                break;
+            default:
+    /*Do nothing*/
+                break;
+        }
+    }
+
+    private void ReloadPage()
+    {
+        uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
+    }
+
+    public void Dispose()
+    {
+        EditContext.OnFieldChanged -= EditContext_HandleFieldChanged;
     }
 
 }
