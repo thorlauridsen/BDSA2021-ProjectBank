@@ -18,8 +18,8 @@
             var currentUser = await _localStore.GetItemAsync<UserDetailsDto>("user");
             var chatCreateDto = new ChatCreateDto()
             {
-                ChatUserIds = new HashSet<string>() {currentUser.oid, supervisorOid},
-                FromUserId = currentUser.oid,
+                ChatUserOids = new HashSet<string>() {currentUser.Oid, supervisorOid},
+                FromUserOid = currentUser.Oid,
                 ProjectId = null
             };
             var chatResponse = await _http.PostAsJsonAsync("api/Chat", chatCreateDto);
@@ -39,7 +39,7 @@
             var message = new ChatMessageCreateDto()
             {
                 Content = $"{currentUser.Name?.Split(" ")[0]} started a conversation",
-                FromUserId = currentUser.oid,
+                FromUserOid = currentUser.Oid,
                 ChatId = chat.ChatId
             };
             var notification = new NotificationCreateDto()
