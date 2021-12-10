@@ -50,16 +50,17 @@ namespace ProjectBank.Infrastructure
 
         public async Task<IReadOnlyCollection<NotificationDetailsDto>> GetNotificationsAsync(string userId) =>
             (await _context.Notifications.Where(n => n.User.oid == userId)
-                                         .Select(n => new NotificationDetailsDto
-                                         {
-                                             Id = n.Id,
-                                             Title = n.Title,
-                                             Content = n.Content,
-                                             Timestamp = n.Timestamp,
-                                             Link = n.Link,
-                                             Seen = n.Seen
+                .OrderByDescending(n => n.Timestamp)
+                .Select(n => new NotificationDetailsDto
+                {
+                    Id = n.Id,
+                    Title = n.Title,
+                    Content = n.Content,
+                    Timestamp = n.Timestamp,
+                    Link = n.Link,
+                    Seen = n.Seen
 
-                                         }).ToListAsync()).AsReadOnly();
+                }).ToListAsync().ConfigureAwait(false)).AsReadOnly();
 
         public async Task<Status> SeenNotificationAsync(int notificationId)
         {

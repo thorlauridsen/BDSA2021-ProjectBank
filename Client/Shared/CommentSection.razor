@@ -79,7 +79,7 @@
         {
             Title = "New comment",
             Content = $"{user.Name} has commented on your post",
-            UserOid = user.oid,
+            UserOid = Post.SupervisorOid,
             Link = $"/projects/{Post.Id}"
         };
         var response = await _http.PostAsJsonAsync("api/Comment", comment);

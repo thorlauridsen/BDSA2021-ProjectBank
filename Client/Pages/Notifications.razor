@@ -1,7 +1,7 @@
 @page "/Notifications"
 @using Core
 @inject HttpClient _http
-@inject ILocalStorageService localStore
+@inject ILocalStorageService _localStore
 <div class="d-flex flex-nowrap col-12">
     <div class="d-flex flex-column col-12 align-items-stretch flex-shrink-0 bg-white">
         <div
@@ -9,9 +9,9 @@
             <span class="fs-5 fw-semibold">Notifications</span>
         </div>
         <div class="list-group list-group-flush border-bottom scrollarea message-list">
-            @if (@NotificationList.Count() > 0)
+            @if (_notificationList != null && _notificationList.Any())
             {
-                @foreach (var notification in NotificationList)
+                @foreach (var notification in _notificationList)
                 {
                     <NotificationItem Read="@notification.Seen" Title="@notification.Title" Description="@notification.Content"
                 Link="@notification.Link" Date="@notification.Timestamp">
@@ -28,25 +28,14 @@
 
 @code {
 
-    private UserDetailsDto currentUser { get; set; }
+    private UserDetailsDto? currentUser { get; set; }
 
-    private List<NotificationDetailsDto> NotificationList = new List<NotificationDetailsDto>();
+    private List<NotificationDetailsDto>? _notificationList = new();
 
     protected override async Task OnInitializedAsync()
     {
-        currentUser = await localStore.GetItemAsync<UserDetailsDto>("user");
-
-        //Test code to actually display a notification...
-        //TODO: Remove when a user actually has notifications
-        var noti = new NotificationCreateDto
-        {
-            Title = "New notification title",
-            Content = "Some content",
-            UserOid = currentUser.oid,
-            Link = "https://google.com"
-        };
-        var response = await _http.PostAsJsonAsync("api/Notification", noti);
-
-        NotificationList = await _http.GetFromJsonAsync<List<NotificationDetailsDto>>("api/Notification/" + currentUser.oid);
+        currentUser = await _localStore.GetItemAsync<UserDetailsDto>("user");
+        
+        _notificationList = await _http.GetFromJsonAsync<List<NotificationDetailsDto>>("api/Notification/" + currentUser.oid);
     }
 }

@@ -82,9 +82,9 @@
         var user = await localStore.GetItemAsync<UserDetailsDto>("user");
         var notification = new NotificationCreateDto()
         {
-            Title = "New comment",
-            Content = $"{user.Name} has commented on your post",
-            UserOid = user.oid,
+            Title = "New Application",
+            Content = $"{user.Name} has applied to {Post.Title}",
+            UserOid = Post.SupervisorOid,
             Link = $"/Messages/?chat={chat.ChatId}"
         };
         var messageResponse = await _http.PostAsJsonAsync("api/Chat/message", message);
