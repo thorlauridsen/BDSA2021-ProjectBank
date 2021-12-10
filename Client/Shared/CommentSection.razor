@@ -20,7 +20,7 @@
             {
                 @foreach (var comment in _postComments)
                 {
-                    <Comment UserID="@comment.UserId" CommentID="@comment.Id" Published="@comment.DateAdded"
+                    <Comment CurrentUser="@CurrentUser" CurrentPost="@Post" UserID="@comment.UserId" CommentID="@comment.Id" Published="@comment.DateAdded"
                 Content="@comment.Content"></Comment>
                 }
             }
@@ -45,6 +45,9 @@
     [Parameter]
     public PostDto Post { get; set; }
 
+    [Parameter]
+    public UserDetailsDto CurrentUser { get; set; }
+    
     private IList<CommentDto>? _postComments { get; set; }
     CommentModel commentModel = new CommentModel();
 
