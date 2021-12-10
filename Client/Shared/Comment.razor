@@ -67,7 +67,7 @@
         bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?"); // Confirm
         if (confirmed)
         {
-            var _response = await _http.DeleteAsync($"api/Comment/{CommentID}");
+            var _response = await _http.DeleteAsync($"api/Comment/{CurrentPost.Id}/{CommentID}");
             if (_response.IsSuccessStatusCode)
             {
                 reloadPage();

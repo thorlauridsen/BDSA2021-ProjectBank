@@ -55,13 +55,13 @@ namespace ProjectBank.Infrastructure
 
         public async Task<Status> DeleteAsync(int postId, int commentId)
         {
-            var postEntity = await _context.Posts.FindAsync(postId);
+            var postEntity = await _context.Posts.Include("Comments").FirstOrDefaultAsync(p => p.Id == postId).ConfigureAwait(false);
 
             if (postEntity == null)
             {
                 return NotFound;
             }
-            if (!postEntity.Comments.Any(c => c.Id == commentId))
+            if (postEntity.Comments.All(c => c.Id != commentId))
             {
                 return NotFound;
             }
