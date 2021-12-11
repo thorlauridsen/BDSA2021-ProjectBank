@@ -36,6 +36,22 @@ namespace ProjectBank.Infrastructure
                 .Property(p => p.PostState)
                 .HasMaxLength(50)
                 .HasConversion(new EnumToStringConverter<PostState>());
+
+            modelBuilder
+                .Entity<Post>()
+                .HasMany<Chat>()
+                .WithOne(e => e.Post)
+                .OnDelete(DeleteBehavior.ClientCascade);
+            modelBuilder.Entity<Chat>()
+                .HasMany<ChatMessage>()
+                .WithOne(message => message.Chat)
+                .OnDelete(DeleteBehavior.ClientCascade);
+            modelBuilder.Entity<Chat>()
+                .HasMany<ChatUser>(e => e.ChatUsers)
+                .WithOne()
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+
         }
     }
 }

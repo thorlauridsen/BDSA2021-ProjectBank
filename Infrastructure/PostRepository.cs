@@ -183,6 +183,16 @@ namespace ProjectBank.Core
             {
                 return NotFound;
             }
+
+            var chats = await _context.Chats.Include("ChatUsers").Include("Post").Where(c => c.Post != null && c.Post.Id == postId).ToListAsync();
+            foreach (var chat in chats)
+            {
+                var chatMessages = await _context.ChatMessages.Include("Chat").Where(cm => cm.Chat.Id == chat.Id).ToListAsync();
+                _context.ChatMessages.RemoveRange(chatMessages);
+                _context.Chats.Remove(chat);   
+            }
+            await _context.SaveChangesAsync();
+            
             _context.Posts.Remove(entity);
             await _context.SaveChangesAsync();
 
