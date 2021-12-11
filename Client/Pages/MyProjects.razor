@@ -15,7 +15,7 @@
             <h3>Showing my projects</h3>
             <EditForm EditContext="@EditContext">
                 <InputSelect class="form-select" @bind-Value="tagModel.Name">
-                    <option selected>Sort by project</option>
+                    <option selected>Sort by tags</option>
                     @if (@AllPosts != null)
                     {
                         @foreach (var tag in AllPosts.GetTagsFromPosts())
