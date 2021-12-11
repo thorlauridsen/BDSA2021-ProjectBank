@@ -57,6 +57,7 @@
         try
         {
             Posts = await _http.GetFromJsonAsync<List<PostDetailsDto>>("api/Post");
+            Posts = Posts?.OrderByDescending(dto => dto.DateAdded).ToList();
         }
         catch (AccessTokenNotAvailableException exception)
         {

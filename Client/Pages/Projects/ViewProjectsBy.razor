@@ -61,6 +61,7 @@
         try
         {
             Posts = await _http.GetFromJsonAsync<List<PostDetailsDto>>($"api/Post/supervisor/{supervisorOid}");
+            Posts = Posts?.OrderByDescending(dto => dto.DateAdded).ToList();
             Supervisor = await _http.GetFromJsonAsync<UserDetailsDto>($"api/User/{supervisorOid}");
             if (Supervisor == null) unknownSupervisor = true;
         }
