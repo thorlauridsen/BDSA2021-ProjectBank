@@ -90,13 +90,19 @@
     private async void HandleValidSubmit()
     {
         Logger.LogInformation("EditPost called");
+        var tags = new HashSet<string>();
+        /*DO NOT DELETE this if statement even if the IDE says that it is always true*/
+        if (postFormModel.Tags != null && postFormModel.Tags.Length > 0)
+        {
+            tags = postFormModel.Tags.Split(",").Select(t => t.Trim()).ToHashSet();
+        }
         var postUpdateDto = new PostUpdateDto()
         {
             Id = _post.Id,
             Title = postFormModel.Title,
             Content = postFormModel.Content,
             UserOid = _post.UserOid,
-            Tags = postFormModel.Tags.Split(",").Select(t => t.Trim()).ToHashSet()
+            Tags = tags
         };
         var response = await _http.PutAsJsonAsync("api/Post/" + _post.Id, postUpdateDto);
         if (response.IsSuccessStatusCode)

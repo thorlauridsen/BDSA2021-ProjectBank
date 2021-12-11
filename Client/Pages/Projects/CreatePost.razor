@@ -58,12 +58,18 @@
     private async void HandleValidSubmit()
     {
         Logger.LogInformation("CreatePost called");
+        var tags = new HashSet<string>();
+        /*DO NOT DELETE this if statement even if the IDE says that it is always true*/
+        if (postFormModel.Tags != null && postFormModel.Tags.Length > 0)
+        {
+            tags = postFormModel.Tags.Split(",").Select(t => t.Trim()).ToHashSet();
+        }
         var post = new PostCreateDto()
         {
             Title = postFormModel.Title,
             Content = postFormModel.Content,
             UserOid = (await localStore.GetItemAsync<UserDetailsDto>("user")).Oid,
-            Tags = postFormModel.Tags.Split(",").Select(t => t.Trim()).ToHashSet()
+            Tags = tags
         };
         var response = await _http.PostAsJsonAsync("api/Post", post);
         if (response.IsSuccessStatusCode)
