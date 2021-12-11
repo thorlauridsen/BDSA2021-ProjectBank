@@ -5,7 +5,7 @@
 @using ProjectBank.Core
 @using ProjectBank.Shared.forms
 @using System.Linq
-@attribute [Authorize]
+@attribute [Authorize (Roles = "Supervisor")]
 @implements IDisposable
 @inject ILogger<CreatePost> Logger
 @inject NavigationManager uriHelper;

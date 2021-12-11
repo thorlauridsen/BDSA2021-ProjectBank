@@ -1,5 +1,7 @@
 @page "/Notifications"
 @using Core
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize (Roles = "Supervisor")]
 @inject HttpClient _http
 @inject ILocalStorageService _localStore
 <div class="d-flex flex-nowrap col-12">

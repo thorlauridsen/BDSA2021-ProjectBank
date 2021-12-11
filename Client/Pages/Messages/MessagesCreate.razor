@@ -1,7 +1,9 @@
 @page "/Messages/create/{supervisorOid}"
 @using ProjectBank.Core
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using Microsoft.AspNetCore.Authorization
 @inject HttpClient _http
+@attribute [Authorize]
 @inject ILocalStorageService _localStore
 @inject NavigationManager _uriHelper
 @inject ILogger<MessagesCreate> Logger
