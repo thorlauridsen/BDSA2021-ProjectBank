@@ -10,9 +10,9 @@
 @if (Post != null)
 {
     <tr>
-        <td>@Post.Title</td>
+        <td><a href="/projects/@Post.Id.ToString()">@Post.Title</a></td>
         <td>@Post.DateAdded.ToString(CultureInfo.CurrentCulture)</td>
-        <td>@Post.PostState</td>
+        <td>@Post.PostState.ToString()</td>
         <td>
             <EditForm EditContext="EditContext">
                 <InputSelect class="form-select" @bind-Value="actionSelectorModel.action">
