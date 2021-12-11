@@ -33,13 +33,17 @@ Run code coverage within a specific test directory:
 
     dotnet test /p:CollectCoverage=true
     
+We recommend opening test users in incognito mode for testing the different user roles
+
 Supervisor test user:
 - Email: john@phlegetonoutlook.onmicrosoft.com
 - Password: 82ss8zhC5Hxynfp9hDLMT4kU2aswAXD
+- Do not setup two factor auth for this account
 
 Student test user:
 - Email: chris@phlegetonoutlook.onmicrosoft.com
 - Password: NnqaGYX4P2RmDFQcBAfAYNfECuDk7ck
+- Do not setup two factor auth for this account
  
 ITU mail login:
 - Login with your ITU mail (Only works for pate@itu.dk, rnie@itu.dk and the group)
