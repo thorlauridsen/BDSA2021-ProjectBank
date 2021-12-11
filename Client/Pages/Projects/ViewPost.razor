@@ -71,6 +71,7 @@
                     {
                         <div class="d-grid my-4 p-4 shadow text-center">
                             <!--!-->
+                            <p>This post has been viewed @Post.ViewCount.ToString() times</p>
                     <a href="/projects/edit/@Id" class="btn btn-primary m-2">Edit</a>
                             <a href="/messages/?filter=@Id" class="btn btn-success btn-view-conversations m-2">View related
                                 conversations</a>
@@ -105,7 +106,6 @@
             ApplyModalParameters = new ModalParameters();
             ApplyModalParameters.Add("CurrentUser", currentUser);
             ApplyModalParameters.Add("Post", Post);
-
         }
         catch (AccessTokenNotAvailableException exception)
         {
