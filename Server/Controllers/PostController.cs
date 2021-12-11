@@ -96,8 +96,8 @@ namespace ProjectBank.Server.Controllers
             => (await _repository.DeleteAsync(postId)).ToActionResult();
 
         [Authorize]
-        [HttpGet("{postId}")]
-        public async Task<ActionResult<int>> IncrimentViewCount(int postId)
+        [HttpGet("increment-view/{postId}")]
+        public async Task<ActionResult<int>> IncrementViewCount(int postId)
         {
             var (status, count) = (await _repository.IncrementViewCountAsync(postId));
             if (status == Status.BadRequest)

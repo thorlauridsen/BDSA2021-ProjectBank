@@ -203,8 +203,10 @@ namespace ProjectBank.Core
         {
             var post = await _context.Posts.FirstOrDefaultAsync(p => p.Id == postId);
             if (post == null) return (NotFound, -1);
-
-            return (Success, ++post.ViewCount);
+            ++post.ViewCount;
+            _context.Posts.Update(post);
+            await _context.SaveChangesAsync();
+            return (Success, post.ViewCount);
         }
 
         private async Task<User?> GetUserAsync(string userOid) =>
