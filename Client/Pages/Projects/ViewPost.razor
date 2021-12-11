@@ -12,7 +12,8 @@
     <Padding>
         @if (Post == null)
         {
-            @if(notfound){
+            @if (notfound)
+            {
                 <h3>Post not found</h3>
             }
             else
@@ -28,7 +29,8 @@
                         <h3>@Post.Title</h3>
 
                         <small class="italic">Published on: @Post?.DateAdded.ToLongDateString()</small>
-                        <small>Current state:
+                        <small>
+                            Current state:
                             @if (Post?.PostState != null)
                             {
                                 <Span>@Post?.PostState</Span>
@@ -53,34 +55,54 @@
                     <CommentSection CurrentUser="@currentUser" post="@Post"></CommentSection>
                 </div>
                 <div class="col-md-3 col-10">
-                    <div class="shadow p-4 text-center m-2">
-                        <img alt="Profile picture of supervisor" class="rounded-circle shadow supervisor-image"
-                        src="@Creator?.Image">
-                        <h3>@Creator?.Name</h3>
-                        <p>Email: <a href="mailto:@Creator?.Email">@Creator?.Email</a></p>
-                    </div>
 
-                    <AuthorizeView Roles="Student">
-                        <div class="d-grid my-4 p-4 shadow text-center">
-                            <!--!-->
-                            <a href="/messages/create/@Creator?.Oid"
-                               class="btn btn-block btn-primary m-2">Contact</a>
-                            @if(Post.PostState.Equals(PostState.Active))
-                            {
-                                <button @onclick="@(() => Modal.Show<ApplyModal>("Apply for project", ApplyModalParameters))"
-                                        class="btn btn-primary m-2">Apply</button>
-                            }
+                    @if (Creator != null)
+                    {
+                        <div class="shadow p-4 text-center m-2">
+                            <img alt="Profile picture of supervisor" class="rounded-circle shadow supervisor-image"
+                                 src="@Creator?.Image">
+                            <h3>@Creator?.Name</h3>
+                            <p>Email: <a href="mailto:@Creator?.Email">@Creator?.Email</a></p>
+                            <p>All projects:<a href="/projects/@Creator?.Oid">View</a></p>
                         </div>
-                    </AuthorizeView>
 
+                        <AuthorizeView Roles="Student">
+                            <div class="d-grid my-4 p-4 shadow text-center">
+                                <!--!-->
+                                <a href="/messages/create/@Creator?.Oid"
+                                   class="btn btn-block btn-primary m-2">
+                                    Contact
+                                </a>
+                                @if (Post.PostState.Equals(PostState.Active))
+                                {
+                                    <button @onclick="@(() => Modal.Show<ApplyModal>("Apply for project", ApplyModalParameters))"
+                                            class="btn btn-primary m-2">
+                                        Apply
+                                    </button>
+                                }
+                            </div>
+                        </AuthorizeView>
+                    }
                     @if (currentUser.Oid == Post?.UserOid)
                     {
                         <div class="d-grid my-4 p-4 shadow text-center">
                             <!--!-->
-                            <small>This post has been viewed @((Post.ViewCount+1).ToString()) @if(Post.ViewCount == 0){<span> time</span>}else{<span> times</span>}</small>
-                    <a href="/projects/edit/@Id" class="btn btn-primary m-2">Edit</a>
-                            <a href="/messages/?filter=@Id" class="btn btn-success btn-view-conversations m-2">View related
-                                conversations</a>
+                            <small>
+                                This post has been viewed @((Post.ViewCount + 1).ToString())
+                                @if (Post.ViewCount == 0)
+                                {
+                                    <span> time</span>
+                                }
+                                else
+                                {
+                                    <span> times</span>
+                                }
+                            </small>
+                            <a href="/projects/edit/@Id" class="btn btn-primary m-2">Edit</a>
+                            <a href="/messages/?filter=@Id" class="btn btn-success btn-view-conversations m-2">
+                                View related
+                                conversations
+                            </a>
                             <button class="btn btn-delete m-2" onclick=@DeletePost>Delete</button>
                         </div>
                     }
@@ -95,7 +117,8 @@
     [Parameter]
     public int Id { get; set; }
 
-    [CascadingParameter] public IModalService Modal { get; set; }
+    [CascadingParameter]
+    public IModalService Modal { get; set; }
 
     private bool notfound { get; set; }
     private PostDetailsDto? Post { get; set; }
@@ -147,7 +170,6 @@
         {
             exception.Redirect();
         }
-
     }
 
 
