@@ -177,7 +177,7 @@ namespace ProjectBank.Core
 
         public async Task<Status> DeleteAsync(int postId)
         {
-            var entity = await _context.Posts.FindAsync(postId);
+            var entity = await _context.Posts.Include("Comments").FirstOrDefaultAsync(p=> p.Id == postId);
 
             if (entity == null)
             {
