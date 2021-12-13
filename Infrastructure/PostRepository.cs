@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using ProjectBank.Infrastructure;
+using ProjectBank.Core;
 using static ProjectBank.Core.Status;
 
-namespace ProjectBank.Core
+namespace ProjectBank.Infrastructure
 {
     public class PostRepository : IPostRepository
     {

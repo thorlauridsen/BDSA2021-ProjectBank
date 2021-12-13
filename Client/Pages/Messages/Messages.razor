@@ -19,7 +19,7 @@
             <EditForm EditContext="@filterEditContext">
                 <AuthorizeView Context="Auth" Roles="Supervisor">
                     <InputSelect class="form-select" @bind-Value="@filterModel.Title">
-                        <option selected>Sort by project</option>
+                        <option selected>Filter by project</option>
                         @if (Posts != null)
                         {
                             foreach (var post in Posts)
