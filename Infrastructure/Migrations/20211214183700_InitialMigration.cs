@@ -134,8 +134,7 @@ namespace ProjectBank.Infrastructure.Migrations
                         name: "FK_ChatMessages_Chats_ChatId",
                         column: x => x.ChatId,
                         principalTable: "Chats",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ChatMessages_Users_FromUserOid",
                         column: x => x.FromUserOid,

@@ -38,17 +38,5 @@ namespace ProjectBank.Server.Tests.Controllers
             // Assert
             Assert.Equal(expected, actual);
         }
-
-        [Fact]
-        public async Task CreateNewChatAsync()
-        {
-            //TODO: Implement CreateNewChatAsync unit test
-        }
-
-        [Fact]
-        public async Task CreateNewChatMessageAsync()
-        {
-            //TODO: Implement CreateNewChatMessageAsync unit test
-        }
     }
 }

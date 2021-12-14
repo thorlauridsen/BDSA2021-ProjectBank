@@ -75,7 +75,7 @@
         if (response.IsSuccessStatusCode)
         {
             var postId = await response.Content.ReadFromJsonAsync<PostDetailsDto>();
-            uriHelper.NavigateTo("/Projects/" + postId.Id);
+            uriHelper.NavigateTo("/Projects/" + postId?.Id);
         }
         else
         {

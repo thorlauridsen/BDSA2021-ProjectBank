@@ -7,7 +7,7 @@
 @inject NavigationManager uriHelper;
 @inject ILocalStorageService localStore
 
-<p>@Post.Title</p>
+<p>@Post?.Title</p>
 
 <EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit">
     <DataAnnotationsValidator />

@@ -65,7 +65,7 @@
             <div
             class="d-flex align-items-center justify-content-between flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
                 <span class="fs-5 fw-semibold"></span>
-                <span class="fs-5 fw-semibold">@chatRecipient.Name</span>
+                <span class="fs-5 fw-semibold">@chatRecipient?.Name</span>
                 <span class="fs-5 fw-semibold"></span>
             </div>
             <div class="chat-area-inner d-flex flex-row align-items-end">
@@ -96,15 +96,15 @@
 @code {
 
     private List<PostDetailsDto>? Posts;
-    
-    private string _FilterSelectValue;
+
+    private string _filterSelectValue;
 
     private string FilterSelectValue
     {
-        get => _FilterSelectValue;
+        get => _filterSelectValue;
         set
         {
-            _FilterSelectValue = value;
+            _filterSelectValue = value;
             var post = GetPostByTitle(value);
             if (post == null) filter = -1;
             else filter = post.Id;
@@ -207,8 +207,8 @@
             chatRecipient = await _http.GetFromJsonAsync<UserDetailsDto>($"api/User/{chat.TargetUserOid}");
             if (!chat.SeenLatestMessage)
             {
-                var res = await _http.PutAsync($"api/Chat/{chat.ChatId}/seen/{currentUser.Oid}",null);
-                
+                var res = await _http.PutAsync($"api/Chat/{chat.ChatId}/seen/{currentUser.Oid}", null);
+
             }
             UpdateQuery();
             StateHasChanged();

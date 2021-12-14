@@ -50,12 +50,5 @@ namespace ProjectBank.Server.Tests.Controllers
             var resultObject = GetCreatedResultContent<NotificationDetailsDto>(result);
             Assert.Equal(notification, resultObject);
         }
-
-        [Fact]
-        public async Task SeenNotification()
-        {
-            //TODO: Implement SeenNotification unit test
-            
-        }
     }
 }

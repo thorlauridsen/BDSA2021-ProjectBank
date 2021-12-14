@@ -17,7 +17,7 @@ namespace ProjectBank.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("ProductVersion", "6.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -235,7 +235,8 @@ namespace ProjectBank.Infrastructure.Migrations
                 {
                     b.HasOne("ProjectBank.Infrastructure.Post", "Post")
                         .WithMany()
-                        .HasForeignKey("PostId");
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.Navigation("Post");
                 });
@@ -245,7 +246,7 @@ namespace ProjectBank.Infrastructure.Migrations
                     b.HasOne("ProjectBank.Infrastructure.Chat", "Chat")
                         .WithMany()
                         .HasForeignKey("ChatId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("ProjectBank.Infrastructure.User", "FromUser")
@@ -263,7 +264,8 @@ namespace ProjectBank.Infrastructure.Migrations
                 {
                     b.HasOne("ProjectBank.Infrastructure.Chat", null)
                         .WithMany("ChatUsers")
-                        .HasForeignKey("ChatId");
+                        .HasForeignKey("ChatId")
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.HasOne("ProjectBank.Infrastructure.User", "User")
                         .WithMany()
