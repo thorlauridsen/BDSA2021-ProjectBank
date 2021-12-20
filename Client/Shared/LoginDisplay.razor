@@ -1,15 +1,15 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using ProjectBank.Core
-@inject NavigationManager Navigation
-@inject SignOutSessionStateManager SignOutManager
-@inject AuthenticationStateProvider AuthenticationStateProvider
-@inject ILocalStorageService localStore
+@inject NavigationManager _navigation
+@inject SignOutSessionStateManager _signOutManager
+@inject AuthenticationStateProvider _authenticationStateProvider
+@inject ILocalStorageService _localStore
 
 <AuthorizeView>
     <Authorized>
         Hello, @context.User.Identity?.Name!
-        <img class="login-display-img" alt="profile picture" src="@imgSrc"/>
+        <img class="login-display-img" alt="profile picture" src="@ImgSrc"/>
         <button class="nav-link btn btn-link" @onclick="BeginLogout">Log out</button>
     </Authorized>
     <NotAuthorized>
@@ -18,28 +18,28 @@
 </AuthorizeView>
 
 @code {
-    private string imgSrc { get; set; } = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAACXBIWXMAAAsSAAALEgHS3X78AAACMVBMVEVHcEyYmJiYmJiYmJiZmZmYmJiYmJiYmJiZmZmYmJiZmZmZmZmZmZmYmJiZmZmZmZmYmJiYmJiampqYmJiZmZmYmJiampqYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiXl5eYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiUlJSYmJiYmJiYmJiXl5eYmJiYmJiYmJiYmJiYmJiYmJiYmJiXl5eYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiSkpKYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiXl5eYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiPj4+Ojo6YmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiXl5eYmJiYmJiYmJiYmJiYmJiXl5eYmJiYmJiYmJiXl5eYmJiYmJiYmJiXl5eYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiVlZWYmJiYmJiYmJiYmJiYmJiYmJiYmJiWlpaYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiZmZmioqKjo6Ofn5+ampqhoaGbm5ucnJykpKSdnZ2enp6goKCYmJhtUMYQAAAArnRSTlMAA/v8+gIB/v79+wL9BPwBQ6ECfgP5AaOn52F8ZHf69+yBBU8/xO1TtZqDAlaO0QSM9ciNIITwB53pmBHTwqTLlgyoVQ96JUI31coByb4Ox3O7XqaHKgoVoB8pr/IutNifHkx1AgGtsjscaaxK333zhiRncZUOGUcoLTIXIonlFsaSMAa6v2wzdnvN8R1vEl8EzzYabSvaFgVo7uNI4UsNQO8bOFFGgqqQgI9/6GszSDKLAAAD7klEQVRYw81W1ZbcRhCtaUF3azSz5PV6nUUzxcyMQYeZmZmZYwza4TjMqBYO+OtSrYUMSC0pT6kXndNn7p26xQD/YzNLlbny218x/gvcKMefBWviT7koh9EDcN3CFQ8tvnDnrqGB557BF7MIvgSwqG9J3Q28esMTbvTq0y/Gj3nFA9yyLBKhrRONc43oLBJnh26Acl73Ae4igU04pQ51GHMo5ZYjNl8ZU+fB3zPPdQhCqTNtFEn0MFibi8GEu291dd4Cn6bgVXdrPglXuXrseZshH7XcTdlxKMHlwpLauwwfbW9pVi4MuHHM50l4yaBFw69lhKEHbgpIMl4y6O65MEftwP0ho536Z+PAqP/YRqULZbheWGkOoAvUEo+qomDCjuGQMyfdtMbqlcoU3Fm3KU3HYzK1FxQaKjBQ0xV4JKh68xUa+mFIEEdlVK9djf+Tbpd4GlMyEHE7/k96FA83qkoCSoJ5MFfhwWWemoBlEVzRzJLgLlc0VD/0ZQdxQBHECozKVlSl0a6vUqTRgEXYCspC8sdfVjbDtY9EilJmjuYtVnbzHHjF1dObiWEzHVWOFAOeH3TS29nh0fD76oliwHaR5gJ2ki6OZ8w0E17aFmmJDOgX8VZ/mD1Ul3o2d7pVyE72+WnI3LJlmBTVzrUwhWfN+fkW5FqXae0M0iHiNz/OtR4xyAP1us7p2Rkdcj1y3eMj+dariXP7m6/d0NIond6tVLMisfPHfBsef9P7HXy74Uvh+bjfCRnTbb8Z/HUI4OdPsilMAz7aHZJNn8Nno3sGGzVXCLfWGN/19z44uDdaN7kmgwFztGpC2I749IstABsP/L711/3b/zzwA8COQ9sC5runjinjgPg3mpGO+6MenNn71b6Z94M/9U2IyJKR1EYUR4IBby1zq5oMnFaNRPT9+t1/TP7y2/49mxsitOLqIn7weCqDAVuOxKcBlRcJt1joiRqa8ELb4jIh8sywxYb0/L8t8XTmGqDyvkLDSwsp6XQ94qGyIjkOPbAcZ0FbH0kWrKf2J24nV3QJngyST5POI4H72pvdPWXAE+tCno2XDMQ7uTJBwH3BWB781FwZ7RRRgoVeNXWWdYkI33m3K5frPS2XA/Fs1EXHrVSChxs2ZU5OAsbDJc+2udAD92IK8hLEt9JTrVEw4YGb/fx4eSt5r7crGGlWKc2Px0yQa1o0lDO3cveKCh5s3dILbqvzIgrkqdP3b0eYcMe4X0QBuqA1Lrq4pYx7fVYIj90eTlzaEsMPsAydYgz+4HmzUazAe+rDJLmeL5htyQqcUB+oSQTMP7+F4BwkKGjM720nKOYA9kM7gTtY0AEcslME/wBy9oMTGoJCiwAAAABJRU5ErkJggg==";
+    private string ImgSrc { get; set; } = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAACXBIWXMAAAsSAAALEgHS3X78AAACMVBMVEVHcEyYmJiYmJiYmJiZmZmYmJiYmJiYmJiZmZmYmJiZmZmZmZmZmZmYmJiZmZmZmZmYmJiYmJiampqYmJiZmZmYmJiampqYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiXl5eYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiUlJSYmJiYmJiYmJiXl5eYmJiYmJiYmJiYmJiYmJiYmJiYmJiXl5eYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiSkpKYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiXl5eYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiPj4+Ojo6YmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiXl5eYmJiYmJiYmJiYmJiYmJiXl5eYmJiYmJiYmJiXl5eYmJiYmJiYmJiXl5eYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiVlZWYmJiYmJiYmJiYmJiYmJiYmJiYmJiWlpaYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiZmZmioqKjo6Ofn5+ampqhoaGbm5ucnJykpKSdnZ2enp6goKCYmJhtUMYQAAAArnRSTlMAA/v8+gIB/v79+wL9BPwBQ6ECfgP5AaOn52F8ZHf69+yBBU8/xO1TtZqDAlaO0QSM9ciNIITwB53pmBHTwqTLlgyoVQ96JUI31coByb4Ox3O7XqaHKgoVoB8pr/IutNifHkx1AgGtsjscaaxK333zhiRncZUOGUcoLTIXIonlFsaSMAa6v2wzdnvN8R1vEl8EzzYabSvaFgVo7uNI4UsNQO8bOFFGgqqQgI9/6GszSDKLAAAD7klEQVRYw81W1ZbcRhCtaUF3azSz5PV6nUUzxcyMQYeZmZmZYwza4TjMqBYO+OtSrYUMSC0pT6kXndNn7p26xQD/YzNLlbny218x/gvcKMefBWviT7koh9EDcN3CFQ8tvnDnrqGB557BF7MIvgSwqG9J3Q28esMTbvTq0y/Gj3nFA9yyLBKhrRONc43oLBJnh26Acl73Ae4igU04pQ51GHMo5ZYjNl8ZU+fB3zPPdQhCqTNtFEn0MFibi8GEu291dd4Cn6bgVXdrPglXuXrseZshH7XcTdlxKMHlwpLauwwfbW9pVi4MuHHM50l4yaBFw69lhKEHbgpIMl4y6O65MEftwP0ho536Z+PAqP/YRqULZbheWGkOoAvUEo+qomDCjuGQMyfdtMbqlcoU3Fm3KU3HYzK1FxQaKjBQ0xV4JKh68xUa+mFIEEdlVK9djf+Tbpd4GlMyEHE7/k96FA83qkoCSoJ5MFfhwWWemoBlEVzRzJLgLlc0VD/0ZQdxQBHECozKVlSl0a6vUqTRgEXYCspC8sdfVjbDtY9EilJmjuYtVnbzHHjF1dObiWEzHVWOFAOeH3TS29nh0fD76oliwHaR5gJ2ki6OZ8w0E17aFmmJDOgX8VZ/mD1Ul3o2d7pVyE72+WnI3LJlmBTVzrUwhWfN+fkW5FqXae0M0iHiNz/OtR4xyAP1us7p2Rkdcj1y3eMj+dariXP7m6/d0NIond6tVLMisfPHfBsef9P7HXy74Uvh+bjfCRnTbb8Z/HUI4OdPsilMAz7aHZJNn8Nno3sGGzVXCLfWGN/19z44uDdaN7kmgwFztGpC2I749IstABsP/L711/3b/zzwA8COQ9sC5runjinjgPg3mpGO+6MenNn71b6Z94M/9U2IyJKR1EYUR4IBby1zq5oMnFaNRPT9+t1/TP7y2/49mxsitOLqIn7weCqDAVuOxKcBlRcJt1joiRqa8ELb4jIh8sywxYb0/L8t8XTmGqDyvkLDSwsp6XQ94qGyIjkOPbAcZ0FbH0kWrKf2J24nV3QJngyST5POI4H72pvdPWXAE+tCno2XDMQ7uTJBwH3BWB781FwZ7RRRgoVeNXWWdYkI33m3K5frPS2XA/Fs1EXHrVSChxs2ZU5OAsbDJc+2udAD92IK8hLEt9JTrVEw4YGb/fx4eSt5r7crGGlWKc2Px0yQa1o0lDO3cveKCh5s3dILbqvzIgrkqdP3b0eYcMe4X0QBuqA1Lrq4pYx7fVYIj90eTlzaEsMPsAydYgz+4HmzUazAe+rDJLmeL5htyQqcUB+oSQTMP7+F4BwkKGjM720nKOYA9kM7gTtY0AEcslME/wBy9oMTGoJCiwAAAABJRU5ErkJggg==";
 
     private async Task BeginLogout(MouseEventArgs args)
     {
-        await SignOutManager.SetSignOutState();
-        Navigation.NavigateTo("authentication/logout");
+        await _signOutManager.SetSignOutState();
+        _navigation.NavigateTo("authentication/logout");
     }
 
     protected override void OnInitialized()
     {
-        localStore.Changed += (sender, args) => { updateImage(); };
-        updateImage();
+        _localStore.Changed += (sender, args) => { UpdateImage(); };
+        UpdateImage();
     }
 
-    private async void updateImage()
+    private async void UpdateImage()
     {
-        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
         var authUser = authState.User;
 
         if (authUser.Identity is not {IsAuthenticated: true }) return;
-        var user = await localStore.GetItemAsync<UserDetailsDto>("user");
-        if (user != null) imgSrc = user.Image;
+        var user = await _localStore.GetItemAsync<UserDetailsDto>("user");
+        if (user != null) ImgSrc = user.Image;
         StateHasChanged();
     }
 

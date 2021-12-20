@@ -6,12 +6,12 @@
 @attribute [Authorize]
 @inject ILocalStorageService _localStore
 @inject NavigationManager _uriHelper
-@inject ILogger<MessagesCreate> Logger
+@inject ILogger<MessagesCreate> _logger
 <h3>Creating chat...</h3>
 
 @code {
     [Parameter]
-    public string? supervisorOid { get; set; }
+    public string? SupervisorOid { get; set; }
     
     protected override async Task OnInitializedAsync()
     {
@@ -20,7 +20,7 @@
             var currentUser = await _localStore.GetItemAsync<UserDetailsDto>("user");
             var chatCreateDto = new ChatCreateDto()
             {
-                ChatUserOids = new HashSet<string>() {currentUser.Oid, supervisorOid},
+                ChatUserOids = new HashSet<string>() {currentUser.Oid, SupervisorOid},
                 FromUserOid = currentUser.Oid,
                 ProjectId = null
             };
@@ -28,14 +28,14 @@
         
             if (!chatResponse.IsSuccessStatusCode)
             {
-                Logger.LogCritical("Critical status code: " + chatResponse.StatusCode);
+                _logger.LogCritical("Critical status code: " + chatResponse.StatusCode);
                 return;
             }
         
             var chat = await chatResponse.Content.ReadFromJsonAsync<ChatDto>();
             if (chat == null)
             {
-                Logger.LogCritical("Critical chat is null");
+                _logger.LogCritical("Critical chat is null");
                 return;
             }
             var message = new ChatMessageCreateDto()
@@ -48,7 +48,7 @@
             {
                 Title = "New Conversation",
                 Content = $"{currentUser.Name?.Split(" ")[0]} started a conversation",
-                UserOid = supervisorOid,
+                UserOid = SupervisorOid,
                 Link = $"/Messages/?chat={chat.ChatId}"
             };
             var messageResponse = await _http.PostAsJsonAsync("api/Chat/message", message);
@@ -59,7 +59,7 @@
             }
             else
             {
-                Logger.LogCritical("Critical status code: " + messageResponse.StatusCode);
+                _logger.LogCritical("Critical status code: " + messageResponse.StatusCode);
             }
         }
         catch (AccessTokenNotAvailableException exception)

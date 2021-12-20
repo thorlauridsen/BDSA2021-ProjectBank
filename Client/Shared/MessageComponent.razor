@@ -1,5 +1,5 @@
 @using System.ComponentModel.DataAnnotations
-<div class="message @_cssClasses">
+<div class="message @CssClasses">
     <p>@Text</p>
 </div>
 
@@ -12,11 +12,11 @@
     [Parameter]
     public bool Received { get; set; }
 
-    private string _cssClasses { get; set; }
+    private string CssClasses { get; set; }
 
     protected override void OnInitialized()
     {
         //Convert related posts to string
-        _cssClasses = Received ? "received" : "";
+        CssClasses = Received ? "received" : "";
     }
 }

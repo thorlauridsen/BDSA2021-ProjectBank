@@ -1,9 +1,9 @@
 ﻿@using ProjectBank.Client.Extensions
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using ProjectBank.Core
-@inject IJSRuntime JsRuntime
+@inject IJSRuntime _jsRuntime
 @inject HttpClient _http
-@inject NavigationManager uriHelper;
+@inject NavigationManager _uriHelper;
 
 <div class="d-flex flex-start my-4">
     <img class="rounded-circle shadow me-3" src="@ImgSrc" alt="avatar" width="40" height="40" />
@@ -12,7 +12,7 @@
             <p class="mb-1">
                 @Name <span class="small">- @Published.GetTimeSince()</span>
             </p>
-            @if (CurrentUser.Oid.Equals(CurrentPost.UserOid) || CurrentUser.Oid.Equals(UserID))
+            @if (CurrentUser.Oid.Equals(CurrentPost.UserOid) || CurrentUser.Oid.Equals(UserId))
             {
                 <a class="link-danger" onclick="@DeleteComment">Delete</a>
             }
@@ -32,10 +32,10 @@
     public PostDetailsDto CurrentPost { get; set; }
 
     [Parameter]
-    public int CommentID { get; set; }
+    public int CommentId { get; set; }
 
     [Parameter]
-    public string UserID { get; set; }
+    public string UserId { get; set; }
 
     private string ImgSrc { get; set; }
 
@@ -52,9 +52,9 @@
     {
         try
         {
-            var _user = await _http.GetFromJsonAsync<UserDetailsDto>("api/User/" + UserID);
-            Name = _user.Name;
-            ImgSrc = _user.Image;
+            var user = await _http.GetFromJsonAsync<UserDetailsDto>("api/User/" + UserId);
+            Name = user.Name;
+            ImgSrc = user.Image;
         }
         catch (AccessTokenNotAvailableException exception)
         {
@@ -64,24 +64,24 @@
 
     private async Task DeleteComment(MouseEventArgs mouseEventArgs)
     {
-        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?"); // Confirm
+        var confirmed = await _jsRuntime.InvokeAsync<bool>("confirm", "Are you sure?"); // Confirm
         if (confirmed)
         {
-            var _response = await _http.DeleteAsync($"api/Comment/{CurrentPost.Id}/{CommentID}");
-            if (_response.IsSuccessStatusCode)
+            var response = await _http.DeleteAsync($"api/Comment/{CurrentPost.Id}/{CommentId}");
+            if (response.IsSuccessStatusCode)
             {
-                reloadPage();
+                ReloadPage();
             }
             else
             {
-                await JsRuntime.InvokeAsync<bool>("alert", "Deletion of comment failed"); // Confirm
+                await _jsRuntime.InvokeAsync<bool>("alert", "Deletion of comment failed"); // Confirm
             }
         }
     }
 
-    private void reloadPage()
+    private void ReloadPage()
     {
-        uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
+        _uriHelper.NavigateTo(_uriHelper.Uri, forceLoad: true);
     }
 
 }

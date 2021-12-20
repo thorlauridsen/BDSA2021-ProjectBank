@@ -5,89 +5,89 @@
 @using ProjectBank.Shared.forms
 @attribute [Authorize (Roles = "Supervisor")]
 @implements IDisposable
-@inject ILogger<CreatePost> Logger
-@inject NavigationManager uriHelper;
+@inject ILogger<CreatePost> _logger
+@inject NavigationManager _uriHelper;
 @inject HttpClient _http
-@inject ILocalStorageService localStore
+@inject ILocalStorageService _localStore
 
 <PageTitle>Create post</PageTitle>
 <Content>
     <Padding>
         <h1>Create post</h1>
-        <EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit">
+        <EditForm EditContext="@_editContext" OnValidSubmit="@HandleValidSubmit">
             <DataAnnotationsValidator/>
             <ValidationSummary/>
             <div class="form-floating my-3">
                 <InputText id="title" class="form-control" placeholder="Title of the project"
-                           @bind-Value="postFormModel.Title"/>
+                           @bind-Value="_postFormModel.Title"/>
                 <label for="title">Title</label>
             </div>
             <div class="form-floating my-3">
                 <InputTextArea id="content" class="form-control" placeholder="Content of the project" style="height: 100px"
-                               @bind-Value="postFormModel.Content">
+                               @bind-Value="_postFormModel.Content">
                 </InputTextArea>
                 <label for="content">Content</label>
             </div>
-            <InputTag Id="tags" Label="test" @bind-Value="postFormModel.Tags"></InputTag>
+            <InputTag Id="tags" Label="test" @bind-Value="_postFormModel.Tags"></InputTag>
             <div class="d-grid gap-2 col-6 mx-auto">
-                <button type="submit" class="btn btn-outline-primary btn-lg" disabled="@formInvalid">Submit</button>
+                <button type="submit" class="btn btn-outline-primary btn-lg" disabled="@_formInvalid">Submit</button>
             </div>
         </EditForm>
     </Padding>
 </Content>
 
 @code {
-    private PostFormModel postFormModel = new();
+    private readonly PostFormModel _postFormModel = new();
 
-    private bool formInvalid = true;
-    private EditContext? editContext;
+    private bool _formInvalid = true;
+    private EditContext? _editContext;
 
     protected override void OnInitialized()
     {
-        editContext = new EditContext(postFormModel);
-        editContext.OnFieldChanged += HandleFieldChanged;
+        _editContext = new EditContext(_postFormModel);
+        _editContext.OnFieldChanged += HandleFieldChanged;
     }
 
     private void HandleFieldChanged(object? sender, FieldChangedEventArgs e)
     {
-        if (editContext is null) return;
-        formInvalid = !editContext.Validate();
+        if (_editContext is null) return;
+        _formInvalid = !_editContext.Validate();
         StateHasChanged();
     }
 
     private async void HandleValidSubmit()
     {
-        Logger.LogInformation("CreatePost called");
+        _logger.LogInformation("CreatePost called");
         var tags = new HashSet<string>();
         /*DO NOT DELETE this if statement even if the IDE says that it is always true*/
-        if (postFormModel.Tags != null && postFormModel.Tags.Length > 0)
+        if (_postFormModel.Tags != null && _postFormModel.Tags.Length > 0)
         {
-            tags = postFormModel.Tags.Split(",").Select(t => t.Trim()).ToHashSet();
+            tags = _postFormModel.Tags.Split(",").Select(t => t.Trim().ToUpper()).ToHashSet();
         }
         var post = new PostCreateDto()
         {
-            Title = postFormModel.Title,
-            Content = postFormModel.Content,
-            UserOid = (await localStore.GetItemAsync<UserDetailsDto>("user")).Oid,
+            Title = _postFormModel.Title,
+            Content = _postFormModel.Content,
+            UserOid = (await _localStore.GetItemAsync<UserDetailsDto>("user")).Oid,
             Tags = tags
         };
         var response = await _http.PostAsJsonAsync("api/Post", post);
         if (response.IsSuccessStatusCode)
         {
             var postId = await response.Content.ReadFromJsonAsync<PostDetailsDto>();
-            uriHelper.NavigateTo("/Projects/" + postId?.Id);
+            _uriHelper.NavigateTo("/Projects/" + postId?.Id);
         }
         else
         {
-            Logger.LogCritical("Critical status code: " + response.StatusCode);
+            _logger.LogCritical("Critical status code: " + response.StatusCode);
         }
     }
 
     public void Dispose()
     {
-        if (editContext is not null)
+        if (_editContext is not null)
         {
-            editContext.OnFieldChanged -= HandleFieldChanged;
+            _editContext.OnFieldChanged -= HandleFieldChanged;
         }
     }
 

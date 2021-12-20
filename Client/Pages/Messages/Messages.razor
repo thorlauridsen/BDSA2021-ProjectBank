@@ -6,25 +6,25 @@
 @using ProjectBank.Shared.forms
 @using System.ComponentModel.DataAnnotations
 @attribute [Authorize]
-@inject NavigationManager uriHelper;
+@inject NavigationManager _uriHelper;
 @inject HttpClient _http
-@inject ILocalStorageService localStore
-@inject IJSRuntime jsRuntime
+@inject ILocalStorageService _localStore
+@inject IJSRuntime _jsRuntime
 @implements IDisposable
 <div class="d-flex flex-nowrap messageContainer col-12">
     <div class="d-flex flex-column col-4 align-items-stretch flex-shrink-0 bg-white messagesSideBar">
         <div
             class="d-flex align-items-center justify-content-between flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
             <span class="fs-5 fw-semibold">Messages</span>
-            <EditForm EditContext="@filterEditContext">
+            <EditForm EditContext="@_filterEditContext">
                 <AuthorizeView Context="Auth" Roles="Supervisor">
-                    <InputSelect class="form-select" @bind-Value="@filterModel.Title">
+                    <InputSelect class="form-select" @bind-Value="@_filterModel.Title">
                         <option selected>Filter by project</option>
-                        @if (Posts != null)
+                        @if (_posts != null)
                         {
-                            foreach (var post in Posts)
+                            foreach (var post in _posts)
                             {
-                                @if (post.Id == filter)
+                                @if (post.Id == _filter)
                                 {
                                     <option selected="selected">@post.Title</option>
                                 }
@@ -39,16 +39,16 @@
             </EditForm>
         </div>
         <div class="list-group list-group-flush border-bottom scrollarea message-list">
-            @if (_chats == null || _chats.Count == 0)
+            @if (Chats == null || Chats.Count == 0)
             {
                 <p>You have no active chats</p>
             }
             else
             {
-                @foreach (var _chat in _chats)
+                @foreach (var chatDetailsDto in Chats)
                 {
-                    <div @onclick="@(() => SelectChat(_chat))">
-                        <MessageItem Active="@(chat != null && chat.ChatId == _chat.ChatId)" Chat="@_chat">
+                    <div @onclick="@(() => SelectChat(chatDetailsDto))">
+                        <MessageItem Active="@(_chat != null && _chat.ChatId == chatDetailsDto.ChatId)" Chat="@chatDetailsDto">
                         </MessageItem>
                     </div>
                 }
@@ -56,7 +56,7 @@
         </div>
     </div>
     <div class="d-flex flex-column chat-area col-8">
-        @if (chatMessages == null || chat == null)
+        @if (_chatMessages == null || _chat == null)
         {
             <p>Select a chat</p>
         }
@@ -65,24 +65,24 @@
             <div
             class="d-flex align-items-center justify-content-between flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
                 <span class="fs-5 fw-semibold"></span>
-                <span class="fs-5 fw-semibold">@chatRecipient?.Name</span>
+                <span class="fs-5 fw-semibold">@_chatRecipient?.Name</span>
                 <span class="fs-5 fw-semibold"></span>
             </div>
             <div class="chat-area-inner d-flex flex-row align-items-end">
                 <div class="chat-messages scrollarea">
-                    @foreach (var message in chatMessages)
+                    @foreach (var message in _chatMessages)
                     {
-                        <MessageComponent Text="@message.Content" Received="@(!message.FromUser.Oid.Equals(currentUser.Oid))">
+                        <MessageComponent Text="@message.Content" Received="@(!message.FromUser.Oid.Equals(_currentUser.Oid))">
                         </MessageComponent>
                     }
                 </div>
             </div>
-            <EditForm Model="messageModel" OnValidSubmit="@HandleValidMessageSubmit">
+            <EditForm Model="_messageModel" OnValidSubmit="@HandleValidMessageSubmit">
                 <div class="align-content-center chat-area-input d-flex p-2 row">
                     <DataAnnotationsValidator />
                     <ValidationSummary />
                     <div class="col-9">
-                        <InputText @bind-Value="messageModel.Message" type="text" id="message-input" class="form-control" />
+                        <InputText @bind-Value="_messageModel.Message" type="text" id="message-input" class="form-control" />
                     </div>
                     <div class="col-3 d-flex">
                         <button type="submit" class="btn btn-primary col-12">Submit</button>
@@ -95,7 +95,7 @@
 
 @code {
 
-    private List<PostDetailsDto>? Posts;
+    private List<PostDetailsDto>? _posts;
 
     private string _filterSelectValue;
 
@@ -106,23 +106,23 @@
         {
             _filterSelectValue = value;
             var post = GetPostByTitle(value);
-            if (post == null) filter = -1;
-            else filter = post.Id;
+            if (post == null) _filter = -1;
+            else _filter = post.Id;
             UpdateQuery();
         }
     }
 
-    private int filter = -1;
+    private int _filter = -1;
 
-    private ChatDetailsDto? chat;
-    private ICollection<ChatMessageDto>? chatMessages;
-    private UserDetailsDto? chatRecipient;
+    private ChatDetailsDto? _chat;
+    private ICollection<ChatMessageDto>? _chatMessages;
+    private UserDetailsDto? _chatRecipient;
 
-    private EditContext filterEditContext;
-    MessageModel messageModel = new();
-    FilterModel filterModel = new();
+    private EditContext _filterEditContext;
+    private readonly MessageModel _messageModel = new();
+    private readonly FilterModel _filterModel = new();
 
-    class MessageModel
+    private class MessageModel
     {
         [Required]
         [MinLength(1)]
@@ -132,36 +132,36 @@
 
     protected override void OnInitialized()
     {
-        filterEditContext = new EditContext(filterModel);
-        filterEditContext.OnFieldChanged += HandleFilterFieldChanged;
+        _filterEditContext = new EditContext(_filterModel);
+        _filterEditContext.OnFieldChanged += HandleFilterFieldChanged;
 
-        var _filter = uriHelper.QueryString("filter");
-        if (_filter != null && _filter.Trim() != "" && _filter.Trim() != "-1") filter = Convert.ToInt32(_filter);
+        var filter = _uriHelper.QueryString("filter");
+        if (filter != null && filter.Trim() != "" && filter.Trim() != "-1") this._filter = Convert.ToInt32(filter);
     }
 
-    private IReadOnlyCollection<ChatDetailsDto>? _allChats { get; set; }
-    private IReadOnlyCollection<ChatDetailsDto>? _chats { get; set; }
-    private UserDetailsDto currentUser;
+    private IReadOnlyCollection<ChatDetailsDto>? AllChats { get; set; }
+    private IReadOnlyCollection<ChatDetailsDto>? Chats { get; set; }
+    private UserDetailsDto _currentUser;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            currentUser = await localStore.GetItemAsync<UserDetailsDto>("user");
-            var postsRes = await _http.GetAsync($"api/Post/supervisor/{currentUser.Oid}");
+            _currentUser = await _localStore.GetItemAsync<UserDetailsDto>("user");
+            var postsRes = await _http.GetAsync($"api/Post/supervisor/{_currentUser.Oid}");
             if (postsRes.IsSuccessStatusCode)
             {
-                Posts = await postsRes.Content.ReadFromJsonAsync<List<PostDetailsDto>>();
+                _posts = await postsRes.Content.ReadFromJsonAsync<List<PostDetailsDto>>();
             }
-            _allChats = await _http.GetFromJsonAsync<IReadOnlyCollection<ChatDetailsDto>>($"api/Chat/user/{currentUser.Oid}");
-            _chats = new List<ChatDetailsDto>(_allChats);
+            AllChats = await _http.GetFromJsonAsync<IReadOnlyCollection<ChatDetailsDto>>($"api/Chat/user/{_currentUser.Oid}");
+            if (AllChats != null) Chats = new List<ChatDetailsDto>(AllChats);
             UpdateFilter();
-            var _chat = uriHelper.QueryString("chat");
+            var _chat = _uriHelper.QueryString("chat");
             if (_chat != null && _chat.Trim() != "")
             {
                 var chatid = Convert.ToInt32(_chat);
-                chat = await _http.GetFromJsonAsync<ChatDetailsDto>($"api/Chat/{chatid}/{currentUser.Oid}");
-                SelectChat(chat);
+                this._chat = await _http.GetFromJsonAsync<ChatDetailsDto>($"api/Chat/{chatid}/{_currentUser.Oid}");
+                SelectChat(this._chat);
             }
         }
         catch (AccessTokenNotAvailableException exception)
@@ -172,42 +172,42 @@
 
     private void HandleFilterFieldChanged(object? sender, FieldChangedEventArgs e)
     {
-        if (filterEditContext is null) return;
-        FilterSelectValue = filterModel.Title;
+        if (_filterEditContext is null) return;
+        FilterSelectValue = _filterModel.Title;
     }
 
     private async void HandleValidMessageSubmit()
     {
         var chatMessageCrateDto = new ChatMessageCreateDto()
         {
-            ChatId = chat.ChatId,
-            Content = messageModel.Message,
-            FromUserOid = currentUser.Oid
+            ChatId = _chat.ChatId,
+            Content = _messageModel.Message,
+            FromUserOid = _currentUser.Oid
         };
         var res = await _http.PostAsJsonAsync<ChatMessageCreateDto>("api/chat/message", chatMessageCrateDto);
         if (!res.IsSuccessStatusCode) return;
-        chatMessages?.Add(new ChatMessageDto()
+        _chatMessages?.Add(new ChatMessageDto()
         {
-            Content = messageModel.Message,
-            FromUser = currentUser,
+            Content = _messageModel.Message,
+            FromUser = _currentUser,
             Timestamp = DateTime.Now
         });
-        messageModel.Message = "";
+        _messageModel.Message = "";
         StateHasChanged();
     }
 
     private async void SelectChat(ChatDetailsDto? chatDetailsDto)
     {
-        chat = chatDetailsDto;
-        if (chat != null)
+        _chat = chatDetailsDto;
+        if (_chat != null)
         {
-            chatMessages = (await _http.GetFromJsonAsync<IReadOnlyCollection<ChatMessageDto>>($"api/Chat/{chat.ChatId}/messages") ??
+            _chatMessages = (await _http.GetFromJsonAsync<IReadOnlyCollection<ChatMessageDto>>($"api/Chat/{_chat.ChatId}/messages") ??
             new List<ChatMessageDto>())
             .Select(m => m).ToList();
-            chatRecipient = await _http.GetFromJsonAsync<UserDetailsDto>($"api/User/{chat.TargetUserOid}");
-            if (!chat.SeenLatestMessage)
+            _chatRecipient = await _http.GetFromJsonAsync<UserDetailsDto>($"api/User/{_chat.TargetUserOid}");
+            if (!_chat.SeenLatestMessage)
             {
-                var res = await _http.PutAsync($"api/Chat/{chat.ChatId}/seen/{currentUser.Oid}", null);
+                var res = await _http.PutAsync($"api/Chat/{_chat.ChatId}/seen/{_currentUser.Oid}", null);
 
             }
             UpdateQuery();
@@ -217,43 +217,43 @@
 
     private void UpdateQuery()
     {
-        string urlString = $"{uriHelper.BaseUri}/messages";
+        string urlString = $"{_uriHelper.BaseUri}/messages";
         bool addedQuery = false;
-        if (filter != -1)
+        if (_filter != -1)
         {
-            urlString += "?filter=" + filter;
+            urlString += "?filter=" + _filter;
             addedQuery = true;
         }
-        if (chat != null)
+        if (_chat != null)
         {
             if (addedQuery)
             {
-                urlString += "&chat=" + chat.ChatId;
+                urlString += "&chat=" + _chat.ChatId;
             }
             else
             {
-                urlString += "?chat=" + chat.ChatId;
+                urlString += "?chat=" + _chat.ChatId;
             }
         }
-        jsRuntime.InvokeVoidAsync("ChangeUrl", urlString);
-        _chats = new List<ChatDetailsDto>(_allChats);
+        _jsRuntime.InvokeVoidAsync("ChangeUrl", urlString);
+        if (AllChats != null) Chats = new List<ChatDetailsDto>(AllChats);
         UpdateFilter();
     }
 
     private void UpdateFilter()
     {
-        if (filter != -1) _chats = _allChats.Where(c => c.ProjectId == filter).ToList();
+        if (_filter != -1) if (AllChats != null) Chats = AllChats.Where(c => c.ProjectId == _filter).ToList();
         StateHasChanged();
     }
 
     private PostDetailsDto? GetPostByTitle(string title) =>
-    Posts?.FirstOrDefault(p => p.Title == title);
+    _posts?.FirstOrDefault(p => p.Title == title);
 
     public void Dispose()
     {
-        if (filterEditContext is not null)
+        if (_filterEditContext is not null)
         {
-            filterEditContext.OnFieldChanged -= HandleFilterFieldChanged;
+            _filterEditContext.OnFieldChanged -= HandleFilterFieldChanged;
         }
     }
 

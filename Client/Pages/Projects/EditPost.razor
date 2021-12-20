@@ -7,8 +7,8 @@
 @using System.Linq
 @attribute [Authorize (Roles = "Supervisor")]
 @implements IDisposable
-@inject ILogger<CreatePost> Logger
-@inject NavigationManager uriHelper;
+@inject ILogger<CreatePost> _logger
+@inject NavigationManager _uriHelper;
 @inject HttpClient _http
 
 <PageTitle>Edit post</PageTitle>
@@ -21,23 +21,23 @@
         else
         {
             <h1>Edit post</h1>
-            <EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit">
+            <EditForm EditContext="@_editContext" OnValidSubmit="@HandleValidSubmit">
                 <DataAnnotationsValidator/>
                 <ValidationSummary/>
                 <div class="form-floating my-3">
                     <InputText id="title" class="form-control" placeholder="Title of the project"
-                               @bind-Value="postFormModel.Title"/>
+                               @bind-Value="_postFormModel.Title"/>
                     <label for="title">Title</label>
                 </div>
                 <div class="form-floating my-3">
                     <InputTextArea id="content" class="form-control" placeholder="Content of the project" style="height: 100px"
-                                   @bind-Value="postFormModel.Content">
+                                   @bind-Value="_postFormModel.Content">
                     </InputTextArea>
                     <label for="content">Content</label>
                 </div>
-                <InputTag Id="tags" Label="test" DefaultTags="@tags" @bind-Value="postFormModel.Tags"></InputTag>
+                <InputTag Id="tags" Label="test" DefaultTags="@Tags" @bind-Value="_postFormModel.Tags"></InputTag>
                 <div class="d-grid gap-2 col-6 mx-auto">
-                    <button type="submit" class="btn btn-outline-primary btn-lg" disabled="@formInvalid">Submit</button>
+                    <button type="submit" class="btn btn-outline-primary btn-lg" disabled="@_formInvalid">Submit</button>
                 </div>
             </EditForm>
         }
@@ -50,17 +50,17 @@
     public int Id { get; set; }
 
     private PostDetailsDto? _post;
-    private string tags { get; set; }
-    private PostFormModel postFormModel = new();
+    private string Tags { get; set; }
+    private readonly PostFormModel _postFormModel = new();
 
-    private bool formInvalid = false;
-    private EditContext? editContext;
+    private bool _formInvalid = false;
+    private EditContext? _editContext;
 
     protected override void OnInitialized()
     {
-        tags = "";
-        editContext = new EditContext(postFormModel);
-        editContext.OnFieldChanged += HandleFieldChanged;
+        Tags = "";
+        _editContext = new EditContext(_postFormModel);
+        _editContext.OnFieldChanged += HandleFieldChanged;
     }
 
     protected override async Task OnInitializedAsync()
@@ -68,11 +68,11 @@
         try
         {
             _post = await _http.GetFromJsonAsync<PostDetailsDto>("api/Post/" + Id);
-            postFormModel.Title = _post.Title;
-            postFormModel.Content = _post.Content;
-            postFormModel.Tags = string.Join(", ", _post.Tags);
-            Logger.LogInformation(postFormModel.Tags);
-            tags = postFormModel.Tags;
+            _postFormModel.Title = _post.Title;
+            _postFormModel.Content = _post.Content;
+            _postFormModel.Tags = string.Join(", ", _post.Tags);
+            _logger.LogInformation(_postFormModel.Tags);
+            Tags = _postFormModel.Tags;
         }
         catch (AccessTokenNotAvailableException exception)
         {
@@ -82,44 +82,46 @@
 
     private void HandleFieldChanged(object? sender, FieldChangedEventArgs e)
     {
-        if (editContext is null) return;
-        formInvalid = !editContext.Validate();
+        if (_editContext is null) return;
+        _formInvalid = !_editContext.Validate();
         StateHasChanged();
     }
 
     private async void HandleValidSubmit()
     {
-        Logger.LogInformation("EditPost called");
+        _logger.LogInformation("EditPost called");
         var tags = new HashSet<string>();
         /*DO NOT DELETE this if statement even if the IDE says that it is always true*/
-        if (postFormModel.Tags != null && postFormModel.Tags.Length > 0)
+        if (_postFormModel.Tags != null && _postFormModel.Tags.Length > 0)
         {
-            tags = postFormModel.Tags.Split(",").Select(t => t.Trim()).ToHashSet();
+            tags = _postFormModel.Tags.Split(",").Select(t => t.Trim().ToUpper()).ToHashSet();
         }
         var postUpdateDto = new PostUpdateDto()
         {
             Id = _post.Id,
-            Title = postFormModel.Title,
-            Content = postFormModel.Content,
+            Title = _postFormModel.Title,
+            Content = _postFormModel.Content,
             UserOid = _post.UserOid,
+            ViewCount = _post.ViewCount,
+            PostState = _post.PostState,
             Tags = tags
         };
         var response = await _http.PutAsJsonAsync("api/Post/" + _post.Id, postUpdateDto);
         if (response.IsSuccessStatusCode)
         {
-            uriHelper.NavigateTo("/Projects/" + _post.Id);
+            _uriHelper.NavigateTo("/Projects/" + _post.Id);
         }
         else
         {
-            Logger.LogCritical("Critical status code: " + response.StatusCode);
+            _logger.LogCritical("Critical status code: " + response.StatusCode);
         }
     }
 
     public void Dispose()
     {
-        if (editContext is not null)
+        if (_editContext is not null)
         {
-            editContext.OnFieldChanged -= HandleFieldChanged;
+            _editContext.OnFieldChanged -= HandleFieldChanged;
         }
     }
 

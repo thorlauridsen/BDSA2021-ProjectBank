@@ -6,6 +6,6 @@ public static class PostExtensions
 {
     public static IEnumerable<string> GetTagsFromPosts(this List<PostDetailsDto> posts)
     {
-        return posts.SelectMany(p => p.Tags);
+        return posts.SelectMany(p => p.Tags).Distinct();
     }
 }

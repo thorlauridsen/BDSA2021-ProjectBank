@@ -1,12 +1,12 @@
 ﻿@using ProjectBank.Core
 @using ProjectBank.Client.Extensions
 @inject HttpClient _http;
-<div class="list-group-item cursor list-group-item-action py-3 lh-tight @_extraCSS @ActiveString" aria-current="true">
+<div class="list-group-item cursor list-group-item-action py-3 lh-tight @ExtraCss @ActiveString" aria-current="true">
     <div class="d-flex w-100 align-items-center justify-content-between">
         <strong class="mb-1">@Recipient</strong>
         <small>@LastMessageDateString</small>
     </div>
-    <small class="col-10 mb-1 text-muted">@_relatedPostString</small>
+    <small class="col-10 mb-1 text-muted">@RelatedPostString</small>
 </div>
 
 @code {
@@ -33,23 +33,23 @@
         set
         {
             _chat = value;
-            updateAsync();
+            UpdateAsync();
         }
     }
 
-    private string _relatedPostString { get; set; }
+    private string RelatedPostString { get; set; }
 
     [Parameter]
     public bool Read { get; set; }
 
-    private string _extraCSS { get; set; }
+    private string ExtraCss { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        updateAsync();
+        await UpdateAsync();
     }
 
-    private async void updateAsync()
+    private async Task UpdateAsync()
     {
         var targetUser = await _http.GetFromJsonAsync<UserDetailsDto>($"/api/User/{_chat.TargetUserOid}");
         if (targetUser != null)
@@ -58,17 +58,17 @@
         }
         if (_chat.ProjectId == null)
         {
-            _relatedPostString = "General";
+            RelatedPostString = "General";
         }
         else
         {
             var relatedPost = await _http.GetFromJsonAsync<PostDetailsDto>($"/api/Post/{_chat.ProjectId}");
-            if (relatedPost?.Title != null) _relatedPostString = relatedPost.Title;
+            if (relatedPost?.Title != null) RelatedPostString = relatedPost.Title;
         }
 
         LastMessageDateString = Chat.LatestChatMessage.Timestamp.GetTimeSince();
         
-        _extraCSS = Chat.SeenLatestMessage ? "" : "unread";
+        ExtraCss = Chat.SeenLatestMessage ? "" : "unread";
         StateHasChanged();
     }
 

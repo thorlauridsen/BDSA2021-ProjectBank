@@ -2,8 +2,8 @@
 @using System.Globalization
 @inject HttpClient _http
 @implements IDisposable
-@inject NavigationManager uriHelper
-@inject IJSRuntime JsRuntime
+@inject NavigationManager _uriHelper
+@inject IJSRuntime _jsRuntime
 
 @if (Post != null)
 {
@@ -13,8 +13,8 @@
         <td>@Post.ViewCount.ToString()</td>
         <td>@Post.PostState.ToString()</td>
         <td>
-            <EditForm EditContext="EditContext">
-                <InputSelect class="form-select" @bind-Value="actionSelectorModel.action">
+            <EditForm EditContext="_editContext">
+                <InputSelect class="form-select" @bind-Value="_actionSelectorModel.Action">
                     <option selected>Actions</option>
                     <option>Edit</option>
                     @if (!Post.PostState.Equals(PostState.Closed))
@@ -42,20 +42,20 @@
     [Parameter]
     public PostDetailsDto? Post { get; set; }
 
-    ActionSelectorModel actionSelectorModel = new();
+    private readonly ActionSelectorModel _actionSelectorModel = new();
 
-    private EditContext EditContext;
+    private EditContext _editContext;
 
-    class ActionSelectorModel
+    private class ActionSelectorModel
     {
-        public string action { get; set; }
+        public string Action { get; set; }
     }
 
 
     protected override void OnInitialized()
     {
-        EditContext = new EditContext(actionSelectorModel);
-        EditContext.OnFieldChanged += EditContext_HandleFieldChanged;
+        _editContext = new EditContext(_actionSelectorModel);
+        _editContext.OnFieldChanged += EditContext_HandleFieldChanged;
 
         base.OnInitialized();
     }
@@ -68,12 +68,12 @@
 
     private async void ActionHandler()
     {
-        var action = actionSelectorModel.action;
-
+        var action = _actionSelectorModel.Action;
+        if (Post == null) return;
         switch (action)
         {
             case "Edit":
-                uriHelper.NavigateTo($"/projects/edit/{Post.Id}");
+                _uriHelper.NavigateTo($"/projects/edit/{Post.Id}");
                 break;
             case "Close":
                 var closeResponse = await _http.PutAsJsonAsync($"api/Post/{Post.Id}", new PostUpdateDto
@@ -81,7 +81,8 @@
                     Id = Post.Id,
                     Title = Post.Title,
                     Content = Post.Content,
-                    UserOid = Post.UserOid, 
+                    UserOid = Post.UserOid,
+                    ViewCount = Post.ViewCount,
                     Tags = Post.Tags,
                     PostState = PostState.Closed
                 });
@@ -91,7 +92,7 @@
                 }
                 else
                 {
-                    await JsRuntime.InvokeAsync<bool>("alert", $"Changing the state of the post from {Post.PostState.ToString()} to Closed failed"); 
+                    await _jsRuntime.InvokeAsync<bool>("alert", $"Changing the state of the post from {Post.PostState.ToString()} to Closed failed"); 
                 }
                 break;
 
@@ -101,6 +102,7 @@
                     Title = Post.Title,
                     Content = Post.Content,
                     UserOid = Post.UserOid, 
+                    ViewCount = Post.ViewCount,
                     Tags = Post.Tags,
                     PostState = PostState.Archived
                 });
@@ -110,7 +112,7 @@
                 }
                 else
                 {
-                    await JsRuntime.InvokeAsync<bool>("alert", $"Changing the state of the post from {Post.PostState.ToString()} to Archived failed"); 
+                    await _jsRuntime.InvokeAsync<bool>("alert", $"Changing the state of the post from {Post.PostState.ToString()} to Archived failed"); 
                 }
                 break;
 
@@ -119,6 +121,7 @@
                     Id = Post.Id,
                     Title = Post.Title,
                     Content = Post.Content,
+                    ViewCount = Post.ViewCount,
                     UserOid = Post.UserOid, 
                     Tags = Post.Tags,
                     PostState = PostState.Active
@@ -129,7 +132,7 @@
                 }
                 else
                 {
-                    await JsRuntime.InvokeAsync<bool>("alert", $"Changing the state of the post from {Post.PostState.ToString()} to Active failed"); 
+                    await _jsRuntime.InvokeAsync<bool>("alert", $"Changing the state of the post from {Post.PostState.ToString()} to Active failed"); 
                 }
                 break;
                 
@@ -141,7 +144,7 @@
                 }
                 else
                 {
-                    await JsRuntime.InvokeAsync<bool>("alert", "Failed to delete post"); 
+                    await _jsRuntime.InvokeAsync<bool>("alert", "Failed to delete post"); 
                 }
                 break;
             default:
@@ -152,12 +155,12 @@
 
     private void ReloadPage()
     {
-        uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
+        _uriHelper.NavigateTo(_uriHelper.Uri, forceLoad: true);
     }
 
     public void Dispose()
     {
-        EditContext.OnFieldChanged -= EditContext_HandleFieldChanged;
+        _editContext.OnFieldChanged -= EditContext_HandleFieldChanged;
     }
 
 }

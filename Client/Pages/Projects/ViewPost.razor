@@ -4,15 +4,15 @@
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize]
 @inject HttpClient _http
-@inject ILocalStorageService localStore
-@inject IJSRuntime JS
-@inject NavigationManager uriHelper
+@inject ILocalStorageService _localStore
+@inject IJSRuntime _js
+@inject NavigationManager _uriHelper
 
 <Content>
     <Padding>
         @if (Post == null)
         {
-            @if (notfound)
+            @if (Notfound)
             {
                 <h3>Post not found</h3>
             }
@@ -52,7 +52,7 @@
                         </div>
                     </div>
 
-                    <CommentSection CurrentUser="@currentUser" post="@Post"></CommentSection>
+                    <CommentSection CurrentUser="@CurrentUser" post="@Post"></CommentSection>
                 </div>
                 <div class="col-md-3 col-10">
 
@@ -73,7 +73,7 @@
                                    class="btn btn-block btn-primary m-2">
                                     Contact
                                 </a>
-                                @if (Post.PostState.Equals(PostState.Active))
+                                @if (Post is {PostState: PostState.Active })
                                 {
                                     <button @onclick="@(() => Modal.Show<ApplyModal>("Apply for project", ApplyModalParameters))"
                                             class="btn btn-primary m-2">
@@ -83,7 +83,7 @@
                             </div>
                         </AuthorizeView>
                     }
-                    @if (currentUser.Oid == Post?.UserOid)
+                    @if (CurrentUser.Oid == Post?.UserOid)
                     {
                         <div class="d-grid my-4 p-4 shadow text-center">
                             <!--!-->
@@ -120,25 +120,25 @@
     [CascadingParameter]
     public IModalService Modal { get; set; }
 
-    private bool notfound { get; set; }
+    private bool Notfound { get; set; }
     private PostDetailsDto? Post { get; set; }
     private UserDetailsDto? Creator { get; set; }
-    private UserDetailsDto currentUser { get; set; }
+    private UserDetailsDto CurrentUser { get; set; }
     private ModalParameters ApplyModalParameters { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        currentUser = await localStore.GetItemAsync<UserDetailsDto>("user");
+        CurrentUser = await _localStore.GetItemAsync<UserDetailsDto>("user");
         try
         {
             Post = await _http.GetFromJsonAsync<PostDetailsDto>("api/Post/" + Id);
             if (Post == null)
             {
-                notfound = true;
+                Notfound = true;
             }
             Creator = await _http.GetFromJsonAsync<UserDetailsDto>("api/User/" + Post?.UserOid);
             ApplyModalParameters = new ModalParameters();
-            ApplyModalParameters.Add("CurrentUser", currentUser);
+            ApplyModalParameters.Add("CurrentUser", CurrentUser);
             ApplyModalParameters.Add("Post", Post);
             await _http.GetAsync($"api/Post/increment-view/{Post?.Id}");
         }
@@ -148,9 +148,9 @@
         }
     }
 
-    protected async void DeletePost()
+    private async void DeletePost()
     {
-        bool confirmed = await JS.InvokeAsync<bool>("confirm", "Are you sure you want to delete this post?"); // Confirm
+        var confirmed = await _js.InvokeAsync<bool>("confirm", "Are you sure you want to delete this post?"); // Confirm
 
         if (!confirmed) return;
 
@@ -159,11 +159,11 @@
             var deleteResponse = await _http.DeleteAsync($"api/Post/{Post?.Id}");
             if (deleteResponse.IsSuccessStatusCode)
             {
-                uriHelper.NavigateTo($"/");
+                _uriHelper.NavigateTo($"/");
             }
             else
             {
-                await JS.InvokeAsync<bool>("alert", "Failed to delete post");
+                await _js.InvokeAsync<bool>("alert", "Failed to delete post");
             }
         }
         catch (AccessTokenNotAvailableException exception)

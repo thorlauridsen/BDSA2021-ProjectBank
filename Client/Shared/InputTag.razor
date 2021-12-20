@@ -5,7 +5,7 @@
     <p class="italic">Split tags using a comma</p>
     <input class="form-control @CssClass visually-hidden" autocomplete="off" @onkeyup="KeyPressEventHandler" id="@Id" @bind-value:event="oninput"
            @bind-value="TagsString"/>
-    <label class="tab-label form-control-label flex p-3 col-12 border rounded @extraCSS" for="@Id">
+    <label class="tab-label form-control-label flex p-3 col-12 border rounded @_extraCss" for="@Id">
         @foreach (var tag in Tags)
         {
             <Tag Name="@tag"></Tag>
@@ -19,25 +19,25 @@
     [Parameter]
     public string Id { get; set; }
 
-    private string _TagsString;
+    private string _tagsString;
 
-    private string extraCSS;
+    private string _extraCss;
     
     [Parameter]
     public string DefaultTags { get; set; }
-    
-    public string TagsString
+
+    private string TagsString
     {
-        get => _TagsString;
+        get => _tagsString;
         set
         {
-            _TagsString = value;
+            _tagsString = value;
             UpdateTags();
             CurrentValue = value;
         }
     }
 
-    public IEnumerable<string> Tags = new List<string>();
+    private IEnumerable<string> Tags = new List<string>();
 
     protected override void OnInitialized()
     {
@@ -63,30 +63,28 @@
     private void KeyPressEventHandler(KeyboardEventArgs args)
     {
         var code = args.Code;
-        if (code is "Enter" or "NumpadEnter" && !args.ShiftKey)
-        {
-            if (!TagsString.Trim().Equals("") && !TagsString.TrimEnd().EndsWith(",")) TagsString += ", ";
-        }
+        if (code is not ("Enter" or "NumpadEnter") || args.ShiftKey) return;
+        if (!TagsString.Trim().Equals("") && !TagsString.TrimEnd().EndsWith(",")) TagsString += ", ";
     }
 
     private void UpdateTags()
     {
-        if (_TagsString == null || _TagsString.Trim().Equals(""))
+        if (_tagsString == null || _tagsString.Trim().Equals(""))
         {
             Tags = new List<string>();
             return;
         }
-        Tags = _TagsString.Split(",").Select(t => t.Trim());
-        if (_TagsString.TrimEnd().EndsWith(",") || _TagsString.Trim().Equals(""))
+        Tags = _tagsString.Split(",").Select(t => t.Trim());
+        if (_tagsString.TrimEnd().EndsWith(",") || _tagsString.Trim().Equals(""))
         {
-            extraCSS = "";
+            _extraCss = "";
         }
         else
         {
-            extraCSS = "moveLabelHighlighterBack";
-            if(_TagsString.EndsWith(" "))
+            _extraCss = "moveLabelHighlighterBack";
+            if(_tagsString.EndsWith(" "))
             {
-                extraCSS += " endWithSpace";
+                _extraCss += " endWithSpace";
             }
         }
     }

@@ -30,14 +30,14 @@
 
 @code {
 
-    private UserDetailsDto? currentUser { get; set; }
+    private UserDetailsDto? CurrentUser { get; set; }
 
     private List<NotificationDetailsDto>? _notificationList = new();
 
     protected override async Task OnInitializedAsync()
     {
-        currentUser = await _localStore.GetItemAsync<UserDetailsDto>("user");
+        CurrentUser = await _localStore.GetItemAsync<UserDetailsDto>("user");
 
-        _notificationList = await _http.GetFromJsonAsync<List<NotificationDetailsDto>>("api/Notification/" + currentUser.Oid);
+        _notificationList = await _http.GetFromJsonAsync<List<NotificationDetailsDto>>("api/Notification/" + CurrentUser.Oid);
     }
 }

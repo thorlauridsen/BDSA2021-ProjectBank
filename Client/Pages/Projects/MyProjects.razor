@@ -12,12 +12,12 @@
     <Padding>
         <div class="d-flex justify-content-between">
             <h3>Showing my projects</h3>
-            <EditForm EditContext="@EditContext">
-                <InputSelect class="form-select" @bind-Value="tagModel.Name">
+            <EditForm EditContext="@_editContext">
+                <InputSelect class="form-select" @bind-Value="_tagModel.Name">
                     <option selected>Filter by tag</option>
-                    @if (@AllPosts != null)
+                    @if (_allPosts != null)
                     {
-                        @foreach (var tag in AllPosts.GetTagsFromPosts())
+                        @foreach (var tag in _allPosts.GetTagsFromPosts())
                         {
                             <option>@tag</option>
                         }
@@ -25,7 +25,7 @@
                 </InputSelect>
             </EditForm>
         </div>
-        @if (Posts == null || Posts.Count == 0)
+        @if (_posts == null || _posts.Count == 0)
         {
             <p>You have no posts to show</p>
         }
@@ -42,7 +42,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var post in Posts)
+                    @foreach (var post in _posts)
                     {
                         <MyProjectsTableRowComponent Post="@post"></MyProjectsTableRowComponent>
                     }
@@ -54,21 +54,21 @@
 
 @code {
 
-    private EditContext EditContext;
-    TagSelectorModel tagModel = new();
+    private EditContext _editContext;
+    private readonly TagSelectorModel _tagModel = new();
 
     class TagSelectorModel
     {
         public string Name { get; set; }
     }
 
-    private List<PostDetailsDto>? AllPosts;
-    private List<PostDetailsDto>? Posts;
+    private List<PostDetailsDto>? _allPosts;
+    private List<PostDetailsDto>? _posts;
 
     protected override void OnInitialized()
     {
-        EditContext = new EditContext(tagModel);
-        EditContext.OnFieldChanged += EditContext_HandleFieldChanged;
+        _editContext = new EditContext(_tagModel);
+        _editContext.OnFieldChanged += EditContext_HandleFieldChanged;
 
         base.OnInitialized();
     }
@@ -78,11 +78,11 @@
         try
         {
             var user = await _localStore.GetItemAsync<UserDetailsDto>("user");
-            AllPosts = await _http.GetFromJsonAsync<List<PostDetailsDto>>("api/Post/supervisor/" + user.Oid);
-            if (AllPosts != null)
+            _allPosts = await _http.GetFromJsonAsync<List<PostDetailsDto>>("api/Post/supervisor/" + user.Oid);
+            if (_allPosts != null)
             {
-                AllPosts = AllPosts?.OrderByDescending(dto => dto.DateAdded).ToList();
-                Posts = new List<PostDetailsDto>(AllPosts);
+                _allPosts = _allPosts?.OrderByDescending(dto => dto.DateAdded).ToList();
+                if (_allPosts != null) _posts = new List<PostDetailsDto>(_allPosts);
             }
 
         }
@@ -94,15 +94,15 @@
 
     private void EditContext_HandleFieldChanged(object? sender, FieldChangedEventArgs e)
     {
-        var tag = tagModel.Name;
-        if (AllPosts != null) Posts = new List<PostDetailsDto>(AllPosts);
-        if (!tag.Equals("Filter by tag")) Posts = Posts?.Where(p => p.Tags.Contains(tag)).ToList();
+        var tag = _tagModel.Name;
+        if (_allPosts != null) _posts = new List<PostDetailsDto>(_allPosts);
+        if (!tag.Equals("Filter by tag")) _posts = _posts?.Where(p => p.Tags.Contains(tag)).ToList();
         StateHasChanged();
     }
 
     public void Dispose()
     {
-        EditContext.OnFieldChanged -= EditContext_HandleFieldChanged;
+        _editContext.OnFieldChanged -= EditContext_HandleFieldChanged;
     }
 
 }

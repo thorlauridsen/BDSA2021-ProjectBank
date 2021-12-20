@@ -1,8 +1,8 @@
 ﻿@using ProjectBank.Client.Extensions
-<a href="@Link" class="list-group-item list-group-item-action py-3 lh-tight @_extraCSS" aria-current="true">
+<a href="@Link" class="list-group-item list-group-item-action py-3 lh-tight @ExtraCss" aria-current="true">
     <div class="d-flex w-100 align-items-center justify-content-between">
         <strong class="mb-1">@Title</strong>
-        <small>@_DateString</small>
+        <small>@DateString</small>
     </div>
     <div class="col-10 mb-1 small">@Description.</div>
 </a>
@@ -15,7 +15,7 @@
     [Parameter]
     public DateTime Date { get; set; }
 
-    private string? _DateString { get; set; }
+    private string? DateString { get; set; }
 
     [Parameter]
     public string Description { get; set; }
@@ -25,14 +25,14 @@
 
     [Parameter]
     public bool Read { get; set; }
-    private string _extraCSS { get; set; }
+    private string ExtraCss { get; set; }
 
     protected override void OnInitialized()
     {
         //Calculate time
-        _DateString = Date.GetTimeSince();
+        DateString = Date.GetTimeSince();
 
-        _extraCSS = Read ? "" : "unread";
+        ExtraCss = Read ? "" : "unread";
 
     }
 }

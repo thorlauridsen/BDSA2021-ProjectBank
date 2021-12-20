@@ -1,8 +1,8 @@
 ﻿@using ProjectBank.Core
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
-@inject HttpClient Http
-<a href="/Projects/@PostID" class="post-container-link">
-    <div class="post-container container border rounded p-3 my-4 bg-ligt bg-gradient">
+@inject HttpClient _http
+<a href="/Projects/@PostId" class="post-container-link">
+    <div class="post-container container border rounded p-3 my-4 bg-light bg-gradient">
         <div class="d-flex justify-content-between">
             <h2 class="bold">
                 @Title
@@ -15,17 +15,21 @@
             @Content
         </div>
         <div class="d-flex justify-content-start flex-wrap">
-            @foreach (var tag in @Tags)
+            @if (Tags != null)
             {
-                <Tag Name="@tag"></Tag>
+                @foreach (var tag in Tags)
+                {
+                    <Tag Name="@tag"></Tag>
+                }
             }
         </div>
     </div>
 </a>
+
 @code {
     // Title of the project
     [Parameter]
-    public int PostID { get; set; }
+    public int PostId { get; set; }
 
     // Title of the project
     [Parameter]
@@ -52,12 +56,13 @@
     {
         try
         {
-            var User = await Http.GetFromJsonAsync<UserDetailsDto>("api/User/" + SupervisorId);
-            Name = User.Name;
+            var user = await _http.GetFromJsonAsync<UserDetailsDto>("api/User/" + SupervisorId);
+            Name = user.Name;
         }
         catch (AccessTokenNotAvailableException exception)
         {
             exception.Redirect();
         }
     }
+
 }

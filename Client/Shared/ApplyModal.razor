@@ -2,14 +2,14 @@
 @using ProjectBank.Shared.forms
 @using Microsoft.AspNetCore.Components
 @implements IDisposable
-@inject ILogger<ApplyModal> Logger
+@inject ILogger<ApplyModal> _logger
 @inject HttpClient _http
-@inject NavigationManager uriHelper;
-@inject ILocalStorageService localStore
+@inject NavigationManager _uriHelper;
+@inject ILocalStorageService _localStore
 
 <p>@Post?.Title</p>
 
-<EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit">
+<EditForm EditContext="@_editContext" OnValidSubmit="@HandleValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <div class="form-floating my-3">
@@ -19,7 +19,7 @@
         <label for="content">Cover letter</label>
     </div>
     <div class="d-grid gap-2 col-6 mx-auto">
-        <button type="submit" class="btn btn-outline-primary btn-lg" disabled="@formInvalid">Send application</button>
+        <button type="submit" class="btn btn-outline-primary btn-lg" disabled="@_formInvalid">Send application</button>
     </div>
 </EditForm>
 
@@ -30,28 +30,30 @@
     [Parameter]
     public UserDetailsDto CurrentUser { get; set; }
 
-    [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
+    [CascadingParameter] 
+    public BlazoredModalInstance ModalInstance { get; set; }
 
-    private ApplyFormModel _applyFormModel = new();
+    private readonly ApplyFormModel _applyFormModel = new();
 
-    private bool formInvalid = true;
-    private EditContext? editContext;
+    private bool _formInvalid = true;
+    private EditContext? _editContext;
 
     protected override void OnInitialized()
     {
-        editContext = new EditContext(_applyFormModel);
-        editContext.OnFieldChanged += HandleFieldChanged;
+        _editContext = new EditContext(_applyFormModel);
+        _editContext.OnFieldChanged += HandleFieldChanged;
     }
 
     private void HandleFieldChanged(object? sender, FieldChangedEventArgs e)
     {
-        if (editContext is null) return;
-        formInvalid = !editContext.Validate();
+        if (_editContext is null) return;
+        _formInvalid = !_editContext.Validate();
         StateHasChanged();
     }
 
     private async void HandleValidSubmit()
     {
+        if (Post == null) return;
         var chatCreateDto = new ChatCreateDto()
         {
             ChatUserOids = new HashSet<string>() { CurrentUser.Oid, Post.UserOid },
@@ -62,14 +64,14 @@
 
         if (!chatResponse.IsSuccessStatusCode)
         {
-            Logger.LogCritical("Critical status code: " + chatResponse.StatusCode);
+            _logger.LogCritical("Critical status code: " + chatResponse.StatusCode);
             return;
         }
 
         var chat = await chatResponse.Content.ReadFromJsonAsync<ChatDto>();
         if (chat == null)
         {
-            Logger.LogCritical("Critical chat is null");
+            _logger.LogCritical("Critical chat is null");
             return;
         }
         var message = new ChatMessageCreateDto()
@@ -78,7 +80,7 @@
             FromUserOid = CurrentUser.Oid,
             ChatId = chat.ChatId
         };
-        var user = await localStore.GetItemAsync<UserDetailsDto>("user");
+        var user = await _localStore.GetItemAsync<UserDetailsDto>("user");
         var notification = new NotificationCreateDto()
         {
             Title = "New Application",
@@ -90,19 +92,19 @@
         if (messageResponse.IsSuccessStatusCode)
         {
             await _http.PostAsJsonAsync("api/Notification", notification);
-            uriHelper.NavigateTo($"/Messages/?chat={chat.ChatId}");
+            _uriHelper.NavigateTo($"/Messages/?chat={chat.ChatId}");
         }
         else
         {
-            Logger.LogCritical("Critical status code: " + messageResponse.StatusCode);
+            _logger.LogCritical("Critical status code: " + messageResponse.StatusCode);
         }
     }
 
     public void Dispose()
     {
-        if (editContext is not null)
+        if (_editContext is not null)
         {
-            editContext.OnFieldChanged -= HandleFieldChanged;
+            _editContext.OnFieldChanged -= HandleFieldChanged;
         }
     }
 

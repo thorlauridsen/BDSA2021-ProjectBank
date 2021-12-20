@@ -4,11 +4,11 @@
 @using ProjectBank.Client.Extensions
 @using ProjectBank.Core
 @using System.Net
-@inject ILogger<Authentication> Logger
+@inject ILogger<Authentication> _logger
 @inject HttpClient _http
-@inject AuthenticationStateProvider AuthenticationStateProvider
-@inject ILocalStorageService localStore
-@inject IJSRuntime JsRuntime
+@inject AuthenticationStateProvider _authenticationStateProvider
+@inject ILocalStorageService _localStore
+@inject IJSRuntime _jsRuntime
 
 
 <Content>
@@ -23,25 +23,25 @@
     [Parameter]
     public string? Action { get; set; }
 
-    private IEnumerable<Claim> claims = Enumerable.Empty<Claim>();
-    private bool firstLogin = true;
+    private IEnumerable<Claim> _claims = Enumerable.Empty<Claim>();
+    private bool _firstLogin = true;
 
     private async void OnLoginSuccess()
     {
-        if (!firstLogin) return;
-        firstLogin = false;
-        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        if (!_firstLogin) return;
+        _firstLogin = false;
+        var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
         var authUser = authState.User;
         var account = new CustomUserAccount();
 
         if (authUser.Identity is not { IsAuthenticated: true }) return;
-        claims = authUser.Claims;
-        var enumerableClaims = claims.ToList();
+        _claims = authUser.Claims;
+        var enumerableClaims = _claims.ToList();
         var oidClaim = enumerableClaims.GetClaim("oid");
         var nameClaim = authUser.Identity.Name;
         var emailClaim = enumerableClaims.GetClaim("email");
         var appRoleClaim = enumerableClaims.GetClaim("appRole");
-        Logger.LogInformation("User role: " + appRoleClaim);
+        _logger.LogInformation("User role: " + appRoleClaim);
 
         var getRes = await _http.GetAsync("api/User/" + oidClaim);
         if (getRes.IsSuccessStatusCode)
@@ -52,7 +52,7 @@
         }
         if (!getRes.StatusCode.Equals(HttpStatusCode.NotFound))
         {
-            await JsRuntime.InvokeAsync<bool>("alert", "Error detected while retrieving user data");
+            await _jsRuntime.InvokeAsync<bool>("alert", "Error detected while retrieving user data");
         }
         //User does not exist
         var postRes = await _http.PostAsJsonAsync("api/User/", new UserCreateDto
@@ -65,11 +65,11 @@
         {
             var user = await postRes.Content.ReadFromJsonAsync<UserDetailsDto>();
             if (user != null) _setLocalStorageFromUser(user);
-            Logger.LogInformation("Successfully created user");
+            _logger.LogInformation("Successfully created user");
         }
         else
         {
-            await JsRuntime.InvokeAsync<bool>("alert", "Error detected while creating user");
+            await _jsRuntime.InvokeAsync<bool>("alert", "Error detected while creating user");
         }
     }
 
@@ -77,14 +77,14 @@
 
     private async void _setLocalStorageFromUser(UserDetailsDto user)
     {
-        await localStore.SetItemAsync("user", user);
+        await _localStore.SetItemAsync("user", user);
     }
 
     private async void _clearLocalStorageFromUser()
     {
-        if (await localStore.ContainKeyAsync("user"))
+        if (await _localStore.ContainKeyAsync("user"))
         {
-            await localStore.RemoveItemAsync("user");
+            await _localStore.RemoveItemAsync("user");
         }
     }
 }
