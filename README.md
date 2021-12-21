@@ -25,6 +25,10 @@ Setup user secrets:
     $connectionString = "Server=localhost;Database=$database;User Id=sa;Password=$password"
     dotnet user-secrets set "ConnectionStrings:ProjectBank" "$connectionString" --project ./Server/
     
+Trust HTTPS development certificate (Only if there is no valid HTTPS certificate present)
+    
+    dotnet dev-certs https --trust
+    
 Run initial migration: (Only necessary if there is no existing InitialMigration folder)
     
     dotnet ef migrations add InitialMigration -p ./Infrastructure/ -s ./Server/
