@@ -11,7 +11,7 @@ Write-Host "Configuring Connection String"
 dotnet user-secrets set "ConnectionStrings:ProjectBank" "$connectionString" --project ./Server/
 Write-Host ""
 
-Write-Host -ForegroundColor Green "Trusting HTTP development certificate..."
+Write-Host -ForegroundColor Green "Trusting HTTPS development certificate..."
 dotnet dev-certs https --trust
 Write-Host ""
 
