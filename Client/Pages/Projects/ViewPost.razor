@@ -10,7 +10,7 @@
 
 <Content>
     <Padding>
-        @if (Post == null)
+        @if (Post == null || Creator == null)
         {
             @if (Notfound)
             {
@@ -20,6 +20,10 @@
             {
                 <h3>Loading...</h3>
             }
+        }
+        else if (Post.PostState == PostState.Archived && !Creator.Oid.Equals(CurrentUser.Oid))
+        {
+            <h3>Access Denied - This post has been archived</h3>   
         }
         else
         {
