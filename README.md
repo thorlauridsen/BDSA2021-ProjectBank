@@ -4,6 +4,8 @@
 
 To run the program you must first navigate to the project directory.
 
+**DOCKER NEEDS TO BE OPEN**
+
 Run the 'launch.ps1' script in powershell while making sure that port 1433 is not already exposed. 
 After launch of the server then the website is available at localhost:7103
 
@@ -17,7 +19,7 @@ Start database in docker:
 
     $password = New-Guid
     docker rm --force ProjectBank
-    docker run --name ProjectBank -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=$password" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2019-latest 
+    docker run --name ProjectBank -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=$password" -p 1433:1433 -d mcr.microsoft.com/azure-sql-edge:latest
     $database = "ProjectBank"
     
 Setup user secrets:
