@@ -1,7 +1,7 @@
 Write-Host -ForegroundColor Green "Starting SQL server in docker container..."
 $password = New-Guid
 docker rm --force ProjectBank
-docker run --name ProjectBank -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=$password" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2019-latest 
+docker run --name ProjectBank -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=$password" -p 1433:1433 -d mcr.microsoft.com/azure-sql-edge:latest
 $database = "ProjectBank"
 $connectionString = "Server=localhost;Database=$database;User Id=sa;Password=$password"
 Write-Host ""
